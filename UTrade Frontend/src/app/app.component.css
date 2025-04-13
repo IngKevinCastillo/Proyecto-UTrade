@@ -1,0 +1,15 @@
+app-sidebar {
+    width: 100px;
+    flex-shrink: 0;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: #f9f5ff;
+}
+
+
+.main-content {
+    margin-left: 100px;
+}  

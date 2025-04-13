@@ -1,0 +1,16 @@
+<aside class="sidebar">
+    <button class="icon-btn active">
+        <mat-icon>school</mat-icon>
+    </button>
+    <button class="icon-btn" [class.active]="activeBtn === 'home'" (click)="setActive('home')">
+        <mat-icon>home</mat-icon>
+    </button>
+
+    <button class="icon-btn" [class.active]="activeBtn === 'chat'" (click)="setActive('chat')">
+        <mat-icon>chat</mat-icon>
+    </button>
+
+    <button class="icon-btn" [class.active]="activeBtn === 'settings'" (click)="setActive('settings')">
+        <mat-icon>settings</mat-icon>
+    </button>
+</aside>
