@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { VentanaComponent } from '../../components/ventana/ventana.component';
 
 @Component({
   selector: 'app-home-page',
@@ -6,6 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
+  constructor(
+    public dialog: MatDialog
+  ) { }
+
   lista: any[] = [
     {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
     {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
@@ -21,4 +27,23 @@ export class HomePageComponent {
   
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = this.lista;
+
+  crearServicio() {
+    const dialogRef = this.dialog.open(VentanaComponent, {
+      panelClass: 'no-radious-dialog',
+      disableClose: true,
+      autoFocus: true,
+      closeOnNavigation: false,
+      position: { top: '30px' },
+      width: '700px',
+      data: {
+        tipo: 'CREAR'
+
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
