@@ -7,9 +7,10 @@
     padding-top: 2rem;
     width: 100px;
     height: 100vh;
-    background-color: #f9f5ff;
-    border-radius: 20px;
+    background-color: white;
     z-index: 0;
+    /*border-right: 1px solid gray;*/
+    border-right: 1px solid #eee;
 
     /*&::before {
         content: '';
@@ -64,4 +65,10 @@
             color: white;
         }
     }
+}
+
+.bottom-btn {
+    margin-top: auto;
+    margin-bottom: 1.5rem;
+    /* opcional: ajusta el espaciado inferior */
 }
