@@ -2,6 +2,7 @@
     height: 60px;
     background-color: #f9f5ff;
     border-bottom: 1px solid #eee;
+    /*border-bottom: 1px solid gray;*/
 
     .search-input {
         border-radius: 20px;

@@ -6,7 +6,8 @@ app-sidebar {
     top: 0;
     left: 0;
     z-index: 1000;
-    background-color: #f9f5ff;
+    background-color: white;
+    border-right: 1px solid gray;
 }
 
 
