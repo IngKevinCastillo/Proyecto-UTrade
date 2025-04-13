@@ -13,6 +13,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import {MatBadgeModule} from '@angular/material/badge';
+import { ComprasPageComponent } from './features/compras/pages/compras-page/compras-page.component';
+import { RentasPageComponent } from './features/rentas/pages/rentas-page/rentas-page.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import {MatBadgeModule} from '@angular/material/badge';
     NotificationIconComponent,
     UserProfileComponent,
     HomePageComponent,
-    MainContentComponent
+    MainContentComponent,
+    ComprasPageComponent,
+    RentasPageComponent
   ],
   imports: [
     BrowserModule,

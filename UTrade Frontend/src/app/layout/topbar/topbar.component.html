@@ -2,13 +2,17 @@
     <input class="search-input" type="text" placeholder="Buscar" />
 
     <div class="filters d-flex gap-3">
-        <button class="filter-btn" [class.active]="activeFilter === 'todo'" (click)="setFilter('todo')">Todo</button>
+        <button class="filter-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            Todo
+        </button>
 
-        <button class="filter-btn" [class.active]="activeFilter === 'compras'"
-            (click)="setFilter('compras')">Compras</button>
+        <button class="filter-btn" routerLink="/compras" routerLinkActive="active">
+            Compras
+        </button>
 
-        <button class="filter-btn" [class.active]="activeFilter === 'rentas'"
-            (click)="setFilter('rentas')">Rentas</button>
+        <button class="filter-btn" routerLink="/rentas" routerLinkActive="active">
+            Rentas
+        </button>
     </div>
 
     <div class="d-flex align-items-center gap-3">
