@@ -1,20 +1,43 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-ventana',
   templateUrl: './ventana.component.html',
-  styleUrl: './ventana.component.css'
+  styleUrls: ['./ventana.component.css']
 })
-export class VentanaComponent {
+export class VentanaComponent implements OnInit {
+  username: string = 'Juan mrd';
+  userHandle: string = 'vendogalletas';
+  userAvatar: string = '/public/icons/oceana.png';
+  
+  title: string = '';
+  price: string = '';
+  category: string = '';
+  description: string = '';
+  
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<VentanaComponent>
+    public dialogRef: MatDialogRef<VentanaComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
-  salir() {
-     this.dialogRef.close();
+
+  ngOnInit(): void {
+    if (this.data) {
+      this.username = this.data.username || this.username;
+      this.userHandle = this.data.userHandle || this.userHandle;
+      this.userAvatar = this.data.userAvatar || this.userAvatar;
+      if (this.data.title) this.title = this.data.title;
+      if (this.data.price) this.price = this.data.price;
+      if (this.data.category) this.category = this.data.category;
+      if (this.data.description) this.description = this.data.description;
+    }
   }
-  longText = `The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog
-  from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
-  originally bred for hunting.`;
+
+  salir(): void {
+    this.dialogRef.close();
+  }
+
+  agregarFotos(): void {
+    console.log('Agregar fotos clicked');
+  }
 }
