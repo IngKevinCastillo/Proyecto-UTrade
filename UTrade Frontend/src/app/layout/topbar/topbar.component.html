@@ -1,22 +1,31 @@
 <div class="topbar d-flex align-items-center justify-content-between px-4 py-2">
-    <input class="search-input" type="text" placeholder="Buscar" />
+  <input class="search-input" type="text" placeholder="Buscar" />
 
-    <div class="filters d-flex gap-3">
-        <button class="filter-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            Todo
-        </button>
+  <div class="filters d-flex gap-3">
+    <button
+      class="filter-btn"
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Todo
+    </button>
 
-        <button class="filter-btn" routerLink="/compras" routerLinkActive="active">
-            Compras
-        </button>
+    <button class="filter-btn" routerLink="/compras" routerLinkActive="active">
+      Compras
+    </button>
 
-        <button class="filter-btn" routerLink="/rentas" routerLinkActive="active">
-            Rentas
-        </button>
-    </div>
+    <button class="filter-btn" routerLink="/rentas" routerLinkActive="active">
+      Rentas
+    </button>
+  </div>
 
-    <div class="d-flex align-items-center gap-3">
-        <app-notification-icon></app-notification-icon>
-        <app-user-profile></app-user-profile>
-    </div>
+  <div class="d-flex align-items-center gap-3">
+    <app-notification-icon></app-notification-icon>
+    <app-user-profile
+      [username]="username"
+      [userHandle]="userHandle"
+      [avatarUrl]="avatarUrl"
+    ></app-user-profile>
+  </div>
 </div>
