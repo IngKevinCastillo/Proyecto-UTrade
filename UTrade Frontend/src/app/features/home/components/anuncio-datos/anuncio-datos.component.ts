@@ -46,7 +46,42 @@ export class AnuncioDatosComponent {
     this.closeClicked.emit();
   }
   
-  agregarFotos(): void {
-    this.addPhotosClicked.emit();
+  fotos: File[] = [];
+
+  abrirInput(): void {
+    const input = document.getElementById('fileInput') as HTMLInputElement;
+    input?.click();
+  }
+
+  manejarFotos(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.agregarArchivos(input.files);
+      input.value = ''; 
+    }
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer?.files) {
+      this.agregarArchivos(event.dataTransfer.files);
+    }
+  }
+
+  agregarArchivos(fileList: FileList): void {
+    const nuevosArchivos = Array.from(fileList).slice(0, 10 - this.fotos.length); 
+    this.fotos.push(...nuevosArchivos);
+    console.log('Fotos cargadas:', this.fotos);
   }
 }
