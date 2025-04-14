@@ -41,7 +41,7 @@
           <mat-icon>share</mat-icon>
         </button>
         <div class="ms-auto">
-          <button mat-raised-button color="primary">Ver más</button>
+          <button mat-raised-button color="primary" (click)="toggleVerMas()">{{ verMas ? 'Ver menos' : 'Ver más' }}</button>
         </div>
       </div>
     </mat-card-content>

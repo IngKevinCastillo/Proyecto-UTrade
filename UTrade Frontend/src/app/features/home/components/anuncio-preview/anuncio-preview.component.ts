@@ -13,16 +13,20 @@ export class AnuncioPreviewComponent {
   @Input() price: string = '';
   @Input() category: string = '';
   @Input() description: string = '';
-  
-  placeholderImages: number[] = [1, 2, 3, 4];
-  
-  get previewUsername(): string {
-    return this.username || 'Usuario';
-  }
-
   @Input() fotos: File[] = [];
 
+  verMas: boolean = false;
+
   get previewUrls(): string[] {
-    return this.fotos.slice(0, 4).map(file => URL.createObjectURL(file));
+    return (this.verMas ? this.fotos.slice(0, 10) : this.fotos.slice(0, 4))
+      .map(file => URL.createObjectURL(file));
+  }
+
+  toggleVerMas(): void {
+    this.verMas = !this.verMas;
+  }
+
+  get previewUsername(): string {
+    return this.username || 'Usuario';
   }
 }
