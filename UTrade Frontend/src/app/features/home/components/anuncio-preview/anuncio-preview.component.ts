@@ -19,4 +19,10 @@ export class AnuncioPreviewComponent {
   get previewUsername(): string {
     return this.username || 'Usuario';
   }
+
+  @Input() fotos: File[] = [];
+
+  get previewUrls(): string[] {
+    return this.fotos.slice(0, 4).map(file => URL.createObjectURL(file));
+  }
 }

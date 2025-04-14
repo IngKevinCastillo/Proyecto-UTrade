@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class AnuncioDatosComponent {
   @Input() username: string = 'Juan mrd';
-  @Input() userHandle: string = 'vendogalletas';
+  @Input() userHandle: string = '@vendogalletas';
   @Input() userAvatar: string = 'icons/oceana.png';
   
   @Input() title: string = '';
@@ -45,8 +45,6 @@ export class AnuncioDatosComponent {
   salir(): void {
     this.closeClicked.emit();
   }
-  
-  fotos: File[] = [];
 
   abrirInput(): void {
     const input = document.getElementById('fileInput') as HTMLInputElement;
@@ -80,8 +78,12 @@ export class AnuncioDatosComponent {
   }
 
   agregarArchivos(fileList: FileList): void {
-    const nuevosArchivos = Array.from(fileList).slice(0, 10 - this.fotos.length); 
-    this.fotos.push(...nuevosArchivos);
-    console.log('Fotos cargadas:', this.fotos);
+    const nuevosArchivos = Array.from(fileList).slice(0, 10 - this.fotos.length);
+    this.fotos = [...this.fotos, ...nuevosArchivos];
+    this.fotosChange.emit(this.fotos);
   }
+
+  @Input() fotos: File[] = [];
+  @Output() fotosChange = new EventEmitter<File[]>();
+
 }

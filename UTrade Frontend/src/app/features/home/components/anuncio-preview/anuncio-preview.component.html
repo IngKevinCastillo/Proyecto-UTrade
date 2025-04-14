@@ -23,8 +23,10 @@
       <p class="text-muted">{{ description || "Descripción" }}</p>
 
       <div class="row mb-3">
-        <div *ngFor="let img of placeholderImages" class="col-6 mb-2">
-          <div class="bg-light rounded" style="height: 100px"></div>
+        <div *ngFor="let imgUrl of previewUrls" class="col-6 mb-2">
+          <div class="bg-light rounded" style="height: 100px; overflow: hidden">
+            <img [src]="imgUrl" class="w-100 h-100 object-fit-cover" />
+          </div>
         </div>
       </div>
 
