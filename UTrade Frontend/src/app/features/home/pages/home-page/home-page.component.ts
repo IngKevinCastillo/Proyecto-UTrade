@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { VentanaComponent } from '../../components/ventana/ventana.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-page',
@@ -10,7 +11,7 @@ import { VentanaComponent } from '../../components/ventana/ventana.component';
 export class HomePageComponent {
   constructor(
     public dialog: MatDialog,
-    //private toastr: ToastrService
+    private toastr: ToastrService
   ) { }
 
   lista: any[] = [
@@ -49,6 +50,6 @@ export class HomePageComponent {
   }
 
   publicar() {
-    //this.toastr.success('Elemento <b> eliminado </b> correctamente', 'Confirmacion');
+    this.toastr.success('Elemento <b> eliminado </b> correctamente', 'Confirmacion');
   }
 }

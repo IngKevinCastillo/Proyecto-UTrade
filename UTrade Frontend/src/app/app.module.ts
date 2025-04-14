@@ -48,7 +48,11 @@ import { ToastrModule } from 'ngx-toastr';
     MatCardModule,
     MatButtonModule,
     MatDialogModule,
-    ToastrModule
+    ToastrModule.forRoot({
+      closeButton: true,
+      progressBar: true,
+      enableHtml: true
+    })
   ],
   exports: [
     MatIconModule,
