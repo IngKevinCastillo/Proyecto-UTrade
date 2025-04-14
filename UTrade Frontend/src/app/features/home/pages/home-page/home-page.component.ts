@@ -30,17 +30,17 @@ export class HomePageComponent {
 
   crearServicio() {
     const dialogRef = this.dialog.open(VentanaComponent, {
-      panelClass: 'no-radious-dialog',
-      disableClose: true,
-      autoFocus: true,
-      closeOnNavigation: false,
-      position: { top: '30px' },
-      width: '700px',
-      data: {
-        tipo: 'CREAR'
+    disableClose: true,
+    autoFocus: true,
+    closeOnNavigation: false,
+    position: { top: '30px' },
+    width: '90vw',
+    maxWidth: '1200px',
+    data: {
+      tipo: 'CREAR'
+    }
+  });
 
-      }
-    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class AnuncioDatosComponent {
   @Input() username: string = 'Juan mrd';
   @Input() userHandle: string = 'vendogalletas';
-  @Input() userAvatar: string = '/public/icons/oceana.png';
+  @Input() userAvatar: string = 'icons/oceana.png';
   
   @Input() title: string = '';
   @Input() price: string = '';
