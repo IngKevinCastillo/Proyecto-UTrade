@@ -8,8 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class VentanaComponent implements OnInit {
   username: string = 'Juan mrd';
-  userHandle: string = 'vendogalletas';
-  userAvatar: string = '/public/icons/oceana.png';
+  userHandle: string = '@vendogalletas';
+  userAvatar: string = 'icons/oceana.png';
   
   title: string = '';
   price: string = '';
