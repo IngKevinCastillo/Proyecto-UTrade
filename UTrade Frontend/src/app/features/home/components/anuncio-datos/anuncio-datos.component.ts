@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class AnuncioDatosComponent {
   @Input() username: string = 'Juan mrd';
-  @Input() userHandle: string = 'vendogalletas';
+  @Input() userHandle: string = '@vendogalletas';
   @Input() userAvatar: string = 'icons/oceana.png';
   
   @Input() title: string = '';
@@ -45,8 +45,45 @@ export class AnuncioDatosComponent {
   salir(): void {
     this.closeClicked.emit();
   }
-  
-  agregarFotos(): void {
-    this.addPhotosClicked.emit();
+
+  abrirInput(): void {
+    const input = document.getElementById('fileInput') as HTMLInputElement;
+    input?.click();
   }
+
+  manejarFotos(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.agregarArchivos(input.files);
+      input.value = ''; 
+    }
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer?.files) {
+      this.agregarArchivos(event.dataTransfer.files);
+    }
+  }
+
+  agregarArchivos(fileList: FileList): void {
+    const nuevosArchivos = Array.from(fileList).slice(0, 10 - this.fotos.length);
+    this.fotos = [...this.fotos, ...nuevosArchivos];
+    this.fotosChange.emit(this.fotos);
+  }
+
+  @Input() fotos: File[] = [];
+  @Output() fotosChange = new EventEmitter<File[]>();
+
 }

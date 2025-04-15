@@ -10,16 +10,16 @@
         <mat-card-actions class="post-actions">
             <div class="ml-3">
                 <div class="icons">
-                    <mat-icon>image</mat-icon>
-                    <mat-icon>sentiment_very_satisfied</mat-icon>
-                    <mat-icon>location_on</mat-icon>
+                    <mat-icon (click)="crearServicio()" >image</mat-icon>
+                    <mat-icon (click)="crearServicio()" >sentiment_very_satisfied</mat-icon>
+                    <mat-icon (click)="crearServicio()" >location_on</mat-icon>
                 </div>
             </div>
-            <button mat-flat-button color="primary" class="publish-btn">Publicar</button>
+            <button mat-flat-button color="primary" (click)="publicar()" class="publish-btn">Publicar</button>
         </mat-card-actions>
     </mat-card>
     <br>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!--<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef> No. </th>
@@ -44,5 +44,5 @@
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    </table>-->
 </div>

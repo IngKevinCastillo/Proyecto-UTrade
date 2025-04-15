@@ -20,6 +20,7 @@ import { VentanaComponent } from './features/home/components/ventana/ventana.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnuncioPreviewComponent } from './features/home/components/anuncio-preview/anuncio-preview.component';
 import { AnuncioDatosComponent } from './features/home/components/anuncio-datos/anuncio-datos.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -46,14 +47,21 @@ import { AnuncioDatosComponent } from './features/home/components/anuncio-datos/
     MatBadgeModule,
     MatCardModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    ToastrModule.forRoot({
+      closeButton: true,
+      progressBar: true,
+      enableHtml: true,
+      positionClass: 'toast-bottom-right' //esto es para que salga abajo Diego.
+    })
   ],
   exports: [
     MatIconModule,
     MatTableModule,
     MatBadgeModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    ToastrModule
   ],
   providers: [
   ],

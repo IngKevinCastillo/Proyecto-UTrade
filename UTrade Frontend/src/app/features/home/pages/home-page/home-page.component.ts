@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { VentanaComponent } from '../../components/ventana/ventana.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-page',
@@ -9,7 +10,8 @@ import { VentanaComponent } from '../../components/ventana/ventana.component';
 })
 export class HomePageComponent {
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private toastr: ToastrService
   ) { }
 
   lista: any[] = [
@@ -45,5 +47,9 @@ export class HomePageComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  publicar() {
+    this.toastr.success('Elemento <b> publicado </b> correctamente', 'Confirmacion');
   }
 }
