@@ -50,6 +50,6 @@ export class HomePageComponent {
   }
 
   publicar() {
-    this.toastr.success('Elemento <b> eliminado </b> correctamente', 'Confirmacion');
+    this.toastr.success('Elemento <b> publicado </b> correctamente', 'Confirmacion');
   }
 }

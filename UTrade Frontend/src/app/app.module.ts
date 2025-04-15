@@ -51,7 +51,8 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({
       closeButton: true,
       progressBar: true,
-      enableHtml: true
+      enableHtml: true,
+      positionClass: 'toast-bottom-right' //esto es para que salga abajo Diego
     })
   ],
   exports: [
