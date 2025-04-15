@@ -52,7 +52,7 @@ import { ToastrModule } from 'ngx-toastr';
       closeButton: true,
       progressBar: true,
       enableHtml: true,
-      positionClass: 'toast-bottom-right' //esto es para que salga abajo Diego
+      positionClass: 'toast-bottom-right' //esto es para que salga abajo Diego.
     })
   ],
   exports: [
