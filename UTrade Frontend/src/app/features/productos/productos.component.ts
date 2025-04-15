@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { productosLista, Productos } from '../simulacionProductos';
 
 @Component({
   selector: 'app-productos',
@@ -6,23 +7,21 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent {
-  @Input() username: string = 'Juan Mejía';
-  @Input() userHandle: string = '@juanmejia';
-  @Input() Fecha: string = '8 de abril';
-  @Input() tiempoTranscurrido: string = '2h';
-  @Input() ubicacion: string = 'Universidad Popular del Cesar';
-  @Input() userAvatar: string = 'icons/oceana.png'; 
-  @Input() title: string = 'APARTAESTUDIO';
-  @Input() price: string = '350.000 COP';
-  @Input() category: string = 'Apartamento';
-  @Input() description: string = `Acogedor apartaestudio disponible en excelente ubicación, ideal para estudiantes, profesionales o parejas. 
-  El espacio cuenta con diseño moderno y funcional, con ambiente tipo loft que integra sala, comedor y cocina en un solo ambiente…`;
+  /*productos = productosLista;
+  product1: Productos = productosLista[0];
 
-  fotos: string[] = [
-    'icons/cuarto1.png',
-    'icons/cuarto2.jpg',
-    'icons/cuarto3.jpg'
-  ];
+  @Input() username: string = this.product1.nombre || '';
+  @Input() userHandle: string = this.product1.correo || '';
+  @Input() Fecha: string = this.product1.fecha || '';
+  @Input() tiempoTranscurrido: string = this.product1.tiempoTranscurrido || '';
+  @Input() ubicacion: string = this.product1.ubicacion || '';
+  @Input() userAvatar: string = this.product1.userAvatar || ''; 
+  @Input() title: string = this.product1.title || '';
+  @Input() price: string = this.product1.precio?.toString() || '';
+  @Input() category: string = this.product1.category || '';
+  @Input() description: string = this.product1.description || '';
+
+  fotos: string[] = Array.isArray(this.product1.fotos) ? this.product1.fotos : [this.product1.fotos || ''];
 
   verMas: boolean = false;
 
@@ -35,6 +34,17 @@ export class ProductosComponent {
   }
 
   get previewUsername(): string {
-    return this.username || 'Juan mrd';
+    return this.username;
+  }*/
+  
+  productos: Productos[] = productosLista;
+  verMas: boolean = false;
+
+  toggleVerMas(): void {
+    this.verMas = !this.verMas;
+  }
+
+  getPreviewUrls(fotos: string[]): string[] {
+    return this.verMas ? fotos : fotos.slice(0, 3);
   }
 }

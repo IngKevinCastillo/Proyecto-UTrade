@@ -10,7 +10,18 @@ app-sidebar {
     border-right: 1px solid gray;
 }
 
+app-topbar {
+    position: fixed;
+    top: 0;
+    left: 100px;
+    right: 0;
+    height: 60px;
+    z-index: 999;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+}
 
 .main-content {
     margin-left: 100px;
+    padding-top: 60px;
 }  
