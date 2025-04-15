@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnuncioPreviewComponent } from './features/home/components/anuncio-preview/anuncio-preview.component';
 import { AnuncioDatosComponent } from './features/home/components/anuncio-datos/anuncio-datos.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ProductosComponent } from './features/productos/productos.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { ToastrModule } from 'ngx-toastr';
     VentanaComponent,
     AnuncioPreviewComponent,
     AnuncioDatosComponent,
+    ProductosComponent,
   ],
   imports: [
     BrowserModule,
