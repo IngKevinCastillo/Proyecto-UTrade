@@ -22,6 +22,10 @@ import { AnuncioPreviewComponent } from './features/home/components/anuncio-prev
 import { AnuncioDatosComponent } from './features/home/components/anuncio-datos/anuncio-datos.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ProductosComponent } from './features/productos/productos.component';
+import { ChatComponent } from './features/mensajes/chat/chat.component';
+import { ConversationListComponent } from './features/mensajes/conversation-list/conversation-list.component';
+import { MessageAreaComponent } from './features/mensajes/message-area/message-area.component';
+import { MessageComponent } from './features/mensajes/message/message.component';
 
 
 @NgModule({
@@ -38,6 +42,10 @@ import { ProductosComponent } from './features/productos/productos.component';
     AnuncioPreviewComponent,
     AnuncioDatosComponent,
     ProductosComponent,
+    ChatComponent,
+    ConversationListComponent,
+    MessageAreaComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
