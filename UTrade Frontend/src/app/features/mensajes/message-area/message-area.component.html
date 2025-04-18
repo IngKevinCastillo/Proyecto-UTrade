@@ -1,0 +1,57 @@
+<div class="message-container">
+  <!-- Header -->
+  <div class="chat-header d-flex align-items-center p-3 border-bottom">
+    <div class="flex-grow-1" *ngIf="selectedConversation">
+      <app-user-profile
+        [username]="selectedConversation.username"
+        [avatarUrl]="selectedConversation.avatarUrl"
+      >
+      </app-user-profile>
+    </div>
+    <div>
+      <button class="btn btn-link text-primary">
+        <i class="bi bi-camera-video-fill"></i>
+      </button>
+      <button class="btn btn-link text-primary">
+        <i class="bi bi-telephone-fill"></i>
+      </button>
+      <button class="btn btn-link text-primary">
+        <i class="bi bi-three-dots-vertical"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="messages-list p-3">
+    <app-message *ngFor="let message of messages" [message]="message">
+    </app-message>
+  </div>
+
+  <!-- Message Input -->
+  <div class="message-input-container p-3 border-top">
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Write a message..."
+        [(ngModel)]="newMessage"
+        #messageInput
+        (keyup.enter)="sendMessage()"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-link text-primary">
+          <i class="bi bi-emoji-smile"></i>
+        </button>
+        <button class="btn btn-link text-primary">
+          <i class="bi bi-paperclip"></i>
+        </button>
+        <button class="btn btn-link text-primary">
+          <i class="bi bi-image"></i>
+        </button>
+        <button class="btn btn-primary" (click)="sendMessage()">
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
