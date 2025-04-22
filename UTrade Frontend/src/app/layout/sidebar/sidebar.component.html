@@ -19,6 +19,14 @@
   </button>
 
   <button
+    class="icon-btn"
+    [class.active]="activeBtn === 'map'"
+    (click)="setActive('map')"
+  >
+    <mat-icon>map</mat-icon>
+  </button>
+
+  <button
     class="icon-btn bottom-btn"
     [class.active]="activeBtn === 'settings'"
     (click)="setActive('settings')"
