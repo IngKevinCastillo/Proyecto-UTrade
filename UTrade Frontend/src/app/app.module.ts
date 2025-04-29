@@ -11,7 +11,7 @@ import { NotificationIconComponent } from './shared/components/notification-icon
 import { UserProfileComponent } from './shared/components/user-profile/user-profile.component';
 import { HomePageComponent } from './features/home/pages/home-page/home-page.component';
 import { MatTableModule } from '@angular/material/table';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 import { ComprasPageComponent } from './features/compras/pages/compras-page/compras-page.component';
 import { RentasPageComponent } from './features/rentas/pages/rentas-page/rentas-page.component';
 import { MatCardModule } from '@angular/material/card';
@@ -26,6 +26,8 @@ import { ChatComponent } from './features/mensajes/chat/chat.component';
 import { ConversationListComponent } from './features/mensajes/conversation-list/conversation-list.component';
 import { MessageAreaComponent } from './features/mensajes/message-area/message-area.component';
 import { MessageComponent } from './features/mensajes/message/message.component';
+import { VentanaSoporteComponent } from './features/soporte/components/ventana-soporte/ventana-soporte.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -46,6 +48,7 @@ import { MessageComponent } from './features/mensajes/message/message.component'
     ConversationListComponent,
     MessageAreaComponent,
     MessageComponent,
+    VentanaSoporteComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,8 +65,9 @@ import { MessageComponent } from './features/mensajes/message/message.component'
       closeButton: true,
       progressBar: true,
       enableHtml: true,
-      positionClass: 'toast-bottom-right' //esto es para que salga abajo Diego.
-    })
+      positionClass: 'toast-bottom-right'
+    }),
+    ReactiveFormsModule,
   ],
   exports: [
     MatIconModule,

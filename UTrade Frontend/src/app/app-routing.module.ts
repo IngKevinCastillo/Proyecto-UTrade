@@ -4,6 +4,7 @@ import { HomePageComponent } from './features/home/pages/home-page/home-page.com
 import { ComprasPageComponent } from './features/compras/pages/compras-page/compras-page.component';
 import { RentasPageComponent } from './features/rentas/pages/rentas-page/rentas-page.component';
 import { ChatComponent } from './features/mensajes/chat/chat.component';
+import { VentanaSoporteComponent } from './features/soporte/components/ventana-soporte/ventana-soporte.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'compras', component: ComprasPageComponent },
   { path: 'rentas', component: RentasPageComponent },
   { path: 'chat', component: ChatComponent },
+  { path: 'soporte', component: VentanaSoporteComponent },
   { path: '**', redirectTo: '/home' }
 ];
 
