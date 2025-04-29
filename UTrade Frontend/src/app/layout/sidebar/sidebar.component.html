@@ -27,6 +27,14 @@
   </button>
 
   <button
+    class="icon-btn"
+    [class.active]="activeBtn === 'soporte'"
+    (click)="setActive('soporte')"
+  >
+    <mat-icon>support_agent</mat-icon>
+  </button>
+
+  <button
     class="icon-btn bottom-btn"
     [class.active]="activeBtn === 'settings'"
     (click)="setActive('settings')"
