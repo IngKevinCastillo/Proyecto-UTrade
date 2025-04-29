@@ -10,22 +10,43 @@
     >
       Todo
     </button>
-
     <button class="filter-btn" routerLink="/compras" routerLinkActive="active">
       Compras
     </button>
-
     <button class="filter-btn" routerLink="/rentas" routerLinkActive="active">
       Rentas
     </button>
   </div>
 
-  <div class="d-flex align-items-center gap-3">
-    <app-notification-icon></app-notification-icon>
-    <app-user-profile
-      [username]="username"
-      [userHandle]="userHandle"
-      [avatarUrl]="avatarUrl"
-    ></app-user-profile>
+  <div class="profile-container position-relative">
+    <div class="d-flex align-items-center gap-3" (click)="toggleMenu($event)">
+      <app-user-profile
+        [username]="username"
+        [userHandle]="userHandle"
+        [avatarUrl]="avatarUrl"
+      ></app-user-profile>
+      <i class="dropdown-icon" [ngClass]="{ rotated: menuVisible }"></i>
+    </div>
+
+    <div *ngIf="menuVisible" class="user-menu">
+      <ul class="menu-list">
+        <li class="menu-item" (click)="editProfile()">
+          <i class="bi bi-pencil menu-icon"></i>
+          <span>Editar perfil</span>
+        </li>
+        <li class="menu-item" (click)="changePassword()">
+          <i class="bi bi-key menu-icon"></i>
+          <span>Cambiar contraseña</span>
+        </li>
+        <li class="menu-item" (click)="toggleTheme()">
+          <i class="bi bi-brightness-high menu-icon"></i>
+          <span>Alternar tema</span>
+        </li>
+        <li class="menu-item" (click)="logout()">
+          <i class="bi bi-box-arrow-right menu-icon"></i>
+          <span>Cerrar sesión</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
