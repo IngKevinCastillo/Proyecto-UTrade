@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-topbar',
@@ -13,6 +14,8 @@ export class TopbarComponent {
   avatarUrl: string = 'icons/oceana.png';
 
   menuVisible: boolean = false;
+
+  constructor(private router: Router) {}
 
   setFilter(filter: string) {
     this.activeFilter = filter;
@@ -43,7 +46,7 @@ export class TopbarComponent {
   }
 
   logout() {
-    console.log('Cerrar sesión');
+    this.router.navigate(['/login']);
   }
 
 }
