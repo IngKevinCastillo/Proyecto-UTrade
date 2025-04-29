@@ -28,6 +28,8 @@ import { MessageAreaComponent } from './features/mensajes/message-area/message-a
 import { MessageComponent } from './features/mensajes/message/message.component';
 import { VentanaSoporteComponent } from './features/soporte/components/ventana-soporte/ventana-soporte.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './features/login/components/login/login.component';
+import { LayoutComponent } from './layout/layout/layout.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MessageAreaComponent,
     MessageComponent,
     VentanaSoporteComponent,
+    LoginComponent,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
