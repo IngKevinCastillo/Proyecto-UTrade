@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { Notificaciones, notificacionesLista } from '../simulacionNotificaciones';
 
 @Component({
   selector: 'app-topbar',
@@ -12,10 +13,15 @@ export class TopbarComponent {
   username: string = 'Juan mrd';
   userHandle: string = '@vendogalletas';
   avatarUrl: string = 'icons/oceana.png';
+  notificaciones: boolean = false;
 
   menuVisible: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
+  
+  listaNotificaciones = notificacionesLista;
+  notificationCount = this.listaNotificaciones.length;
+
 
   setFilter(filter: string) {
     this.activeFilter = filter;
@@ -24,6 +30,11 @@ export class TopbarComponent {
   toggleMenu(event: Event) {
     event.stopPropagation();
     this.menuVisible = !this.menuVisible;
+  }
+
+  toggleNotificacion(event: Event) {
+    event.stopPropagation();
+    this.notificaciones = !this.notificaciones;
   }
 
   @HostListener('document:click', ['$event'])

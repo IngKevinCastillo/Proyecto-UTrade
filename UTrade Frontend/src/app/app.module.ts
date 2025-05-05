@@ -32,6 +32,7 @@ import { LoginComponent } from './features/login/components/login/login.componen
 import { LayoutComponent } from './layout/layout/layout.component';
 import { NoMatchComponent } from './shared/components/no-match/no-match.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { CartaNotificacionComponent } from './features/home/components/carta-notificacion/carta-notificacion.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { FooterComponent } from './layout/footer/footer.component';
     LayoutComponent,
     NoMatchComponent,
     FooterComponent,
+    CartaNotificacionComponent,
   ],
   imports: [
     BrowserModule,
