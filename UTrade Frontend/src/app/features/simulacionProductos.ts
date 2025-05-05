@@ -40,9 +40,9 @@ export class Productos {
 
 export const productosLista: Productos[] = [
   new Productos(
-    "Pensión Maikol",
+    "Rosa Manjarrez",
     300000,
-    "@vendogalletas",
+    "@rosamanjarrez",
     "17/04/2025",
     "2h",
     "Universidad Popular del Cesar",
@@ -53,9 +53,9 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
   new Productos(
-    "Ropas Sandra",
+    "Alberto Pérez",
     45000,
-    "@ropasandra",
+    "@albertoperez",
     "16/04/2025",
     "5h",
     "Centro Comercial Las Flores",
@@ -66,9 +66,9 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
   new Productos(
-    "Muebles Torres",
+    "Camila Gómez",
     900000,
-    "@torresmuebles",
+    "@camila",
     "15/04/2025",
     "1d",
     "Barrio San Jorge",
@@ -79,9 +79,9 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
   new Productos(
-    "Pensión Las Palmas",
+    "Rosario López",
     350000,
-    "@laspalmas",
+    "@rosariolopez",
     "14/04/2025",
     "3d",
     "Avenida Simón Bolívar",
@@ -92,9 +92,9 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
   new Productos(
-    "Vestidos Alicia",
+    "Aurelio Martínez",
     60000,
-    "@aliciafashion",
+    "@aureliomartinez",
     "14/04/2025",
     "12h",
     "Centro Comercial Guatapurí",
@@ -105,9 +105,9 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
   new Productos(
-    "Carpintería El Roble",
+    "Aristocracia",
     550000,
-    "@roblemaderas",
+    "@aristocracia45",
     "13/04/2025",
     "2d",
     "Zona Industrial Norte",
@@ -118,9 +118,9 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
   new Productos(
-    "Arriendos Bucare",
+    "Juan Estrada",
     280000,
-    "@arriendobucare",
+    "@juanestrada",
     "13/04/2025",
     "1d",
     "Frente a la UPC Sabanas",
@@ -131,9 +131,9 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
   new Productos(
-    "Calzado y Ropa Nova",
+    "Rosalva",
     40000,
-    "@novastore",
+    "@rosalva",
     "12/04/2025",
     "6h",
     "Calle 10 #5-30",
@@ -144,9 +144,9 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
   new Productos(
-    "Muebles & Hogar",
+    "Stiwart",
     750000,
-    "@hogarmuebles",
+    "@stiwart",
     "11/04/2025",
     "5d",
     "Av. Fundadores",
@@ -157,9 +157,9 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
   new Productos(
-    "Pensión Don José",
+    "Don José",
     320000,
-    "@donjosepension",
+    "@donjose",
     "10/04/2025",
     "1sem",
     "Cra 12 con Calle 15",
