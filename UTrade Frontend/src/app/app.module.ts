@@ -30,6 +30,7 @@ import { VentanaSoporteComponent } from './features/soporte/components/ventana-s
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './features/login/components/login/login.component';
 import { LayoutComponent } from './layout/layout/layout.component';
+import { NoMatchComponent } from './shared/components/no-match/no-match.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { LayoutComponent } from './layout/layout/layout.component';
     VentanaSoporteComponent,
     LoginComponent,
     LayoutComponent,
+    NoMatchComponent,
   ],
   imports: [
     BrowserModule,
