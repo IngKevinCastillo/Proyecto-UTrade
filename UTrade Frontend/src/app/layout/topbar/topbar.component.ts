@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import { Notificaciones, notificacionesLista } from '../simulacionNotificaciones';
+import { notificacionesLista } from '../simulacionNotificaciones';
+import { Notificaciones } from '../simulacionNotificaciones';
 
 @Component({
   selector: 'app-topbar',
@@ -37,6 +38,7 @@ export class TopbarComponent {
   }
 
   verTodasNotificaciones() {
+    this.notificaciones = false;
     this.router.navigate(['/notificaciones']);
   }
 
