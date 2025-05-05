@@ -8,6 +8,7 @@ import { VentanaSoporteComponent } from './features/soporte/components/ventana-s
 import { LoginComponent } from './features/login/components/login/login.component';
 import { LayoutComponent } from './layout/layout/layout.component';
 import { NoMatchComponent } from './shared/components/no-match/no-match.component';
+import { NotificacionesComponent } from './features/notificaciones/notificaciones.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'rentas', component: RentasPageComponent },
       { path: 'chat', component: ChatComponent },
       { path: 'soporte', component: VentanaSoporteComponent },
+      {path: 'notificaciones', component: NotificacionesComponent}, 
     ]
   },
 

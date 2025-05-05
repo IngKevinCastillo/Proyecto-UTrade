@@ -1,5 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { notificacionesLista } from '../simulacionNotificaciones';
+import { Notificaciones } from '../simulacionNotificaciones';
 
 @Component({
   selector: 'app-topbar',
@@ -13,7 +15,11 @@ export class TopbarComponent {
   userHandle: string = '@vendogalletas';
   avatarUrl: string = 'icons/oceana.png';
 
+  notificaciones: boolean = false;
   menuVisible: boolean = false;
+
+  listaNotificaciones = notificacionesLista;
+  notificationCount = this.listaNotificaciones.length;
 
   constructor(private router: Router) {}
 
@@ -26,10 +32,25 @@ export class TopbarComponent {
     this.menuVisible = !this.menuVisible;
   }
 
+  toggleNotificacion(event: Event) {
+    event.stopPropagation();
+    this.notificaciones = !this.notificaciones;
+  }
+
+  verTodasNotificaciones() {
+    this.notificaciones = false;
+    this.router.navigate(['/notificaciones']);
+  }
+
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
-    if (this.menuVisible && event.target instanceof Element && !event.target.closest('.d-flex')) {
+    if (
+      (this.menuVisible || this.notificaciones) &&
+      event.target instanceof Element &&
+      !event.target.closest('.d-flex')
+    ) {
       this.menuVisible = false;
+      this.notificaciones = false;
     }
   }
 
@@ -48,5 +69,4 @@ export class TopbarComponent {
   logout() {
     this.router.navigate(['/login']);
   }
-
 }
