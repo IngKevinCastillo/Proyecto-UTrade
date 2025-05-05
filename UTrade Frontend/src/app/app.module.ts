@@ -31,6 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './features/login/components/login/login.component';
 import { LayoutComponent } from './layout/layout/layout.component';
 import { NoMatchComponent } from './shared/components/no-match/no-match.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { NoMatchComponent } from './shared/components/no-match/no-match.componen
     LoginComponent,
     LayoutComponent,
     NoMatchComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
