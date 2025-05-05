@@ -11,21 +11,23 @@
   </div>
 
   <div class="profile-container position-relative">
-    <div class="d-flex align-items-center grap-3 me-4" (click)="toggleNotificacion($event)">
-      <app-notification-icon
-        [notificationCount]="notificationCount"
-      ></app-notification-icon>
-      <i class="dropdown-icon" [ngClass]="{ rotated: notificaciones}"></i>
+    <div class="d-flex align-items-center gap-3 me-4" (click)="toggleNotificacion($event)">
+      <app-notification-icon [notificationCount]="notificationCount"></app-notification-icon>
     </div>
 
-    <div *ngIf="notificaciones" class="user-notifications position-absolute end-0 mt-2"
-      style="width: 300px; z-index: 1050;">
-      <app-carta-notificacion 
-        *ngFor="let noti of listaNotificaciones" 
-        [nombre]="noti.nombre"
-        [tipo]="noti.tipo"
-        [descripcion]="noti.descripcion">
-      </app-carta-notificacion>
+    <div *ngIf="notificaciones" class="user-menu">
+      <ul class="menu-list">
+        <li class="menu-item" *ngFor="let noti of listaNotificaciones.slice(0, 5)">
+          <i class="bi bi-bell menu-icon"></i>
+          <div>
+            <div style="font-weight: 600;">{{ noti.nombre }}</div>
+            <div style="font-size: 12px; opacity: 0.7;">{{ noti.tipo }}</div>
+          </div>
+        </li>
+        <li class="menu-item text-center" (click)="verTodasNotificaciones()">
+          <strong>Ver todas las notificaciones</strong>
+        </li>
+      </ul>
     </div>
 
     <div class="d-flex align-items-center gap-3" (click)="toggleMenu($event)">

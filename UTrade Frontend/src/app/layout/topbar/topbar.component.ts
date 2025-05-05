@@ -13,15 +13,14 @@ export class TopbarComponent {
   username: string = 'Juan mrd';
   userHandle: string = '@vendogalletas';
   avatarUrl: string = 'icons/oceana.png';
-  notificaciones: boolean = false;
 
+  notificaciones: boolean = false;
   menuVisible: boolean = false;
 
-  constructor(private router: Router) { }
-  
   listaNotificaciones = notificacionesLista;
   notificationCount = this.listaNotificaciones.length;
 
+  constructor(private router: Router) {}
 
   setFilter(filter: string) {
     this.activeFilter = filter;
@@ -37,10 +36,19 @@ export class TopbarComponent {
     this.notificaciones = !this.notificaciones;
   }
 
+  verTodasNotificaciones() {
+    this.router.navigate(['/notificaciones']);
+  }
+
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
-    if (this.menuVisible && event.target instanceof Element && !event.target.closest('.d-flex')) {
+    if (
+      (this.menuVisible || this.notificaciones) &&
+      event.target instanceof Element &&
+      !event.target.closest('.d-flex')
+    ) {
       this.menuVisible = false;
+      this.notificaciones = false;
     }
   }
 
@@ -59,5 +67,4 @@ export class TopbarComponent {
   logout() {
     this.router.navigate(['/login']);
   }
-
 }
