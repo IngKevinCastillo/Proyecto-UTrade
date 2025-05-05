@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.username === 'admin' && this.password === '123') {
-      this.router.navigate(['/src/app/layout/layout.component.html']);
+      this.router.navigate(['/home']);
     } else {
       this.errorMessage = 'Usuario o contraseña incorrectos';
     }

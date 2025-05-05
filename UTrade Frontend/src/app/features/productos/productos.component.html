@@ -1,61 +1,3 @@
-<!--<mat-card class="mb-4">
-    <mat-card-content>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="d-flex align-items-center mb-2">
-                    <img [src]="userAvatar" class="rounded-circle me-2" width="45" height="45" alt="Avatar" />
-                    <div>
-                        <div class="fw-bold">{{ previewUsername }}</div>
-                        <small class="text-muted">{{ Fecha }} || {{ tiempoTranscurrido }}</small>
-                    </div>
-                </div>
-
-                <h4 class="fw-bold">APARTAESTUDIO</h4>
-                <h5 class="fw-bold text-primary">$ {{ price }} COP / MES</h5>
-
-                <p class="text-muted">
-                    {{ description }}
-                </p>
-
-                <div class="d-flex align-items-center mt-2">
-                    <button mat-icon-button><mat-icon>thumb_up</mat-icon></button>
-                    <button mat-icon-button><mat-icon>chat_bubble_outline</mat-icon></button>
-                    <button mat-icon-button><mat-icon>share</mat-icon></button>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex flex-column align-items-end">
-                <div class="text-muted mb-2 d-flex align-items-center">
-                    <mat-icon class="me-1">location_on</mat-icon>
-                    <small class="fw-semibold">{{ ubicacion }}</small>
-                </div>
-                <div class="w-100">
-                    <div class="d-flex" style="gap: 8px;">
-                        <div style="flex: 1;">
-                            <img *ngIf="previewUrls.length > 0" [src]="previewUrls[0]" class="rounded"
-                                style="width: 100%; height: 180px; object-fit: cover;" />
-                        </div>
-                        <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
-                            <img *ngIf="previewUrls.length > 1" [src]="previewUrls[1]" class="rounded"
-                                style="width: 100%; height: 85px; object-fit: cover;" />
-                            <img *ngIf="previewUrls.length > 2" [src]="previewUrls[2]" class="rounded"
-                                style="width: 100%; height: 85px; object-fit: cover;" />
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <button mat-stroked-button color="primary" class="rounded-pill px-4 py-1 fw-semibold"
-                        (click)="toggleVerMas()">
-                        {{ verMas ? 'Ver menos' : 'Ver más' }}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </mat-card-content>
-</mat-card>
-
-ESTO ES PARA QUE CARGUE SOLO UNO
-
--->
 <mat-card class="mb-4" *ngFor="let producto of productos">
     <mat-card-content>
         <div class="row">
@@ -89,24 +31,24 @@ ESTO ES PARA QUE CARGUE SOLO UNO
                 <div class="w-100">
                     <div class="d-flex" style="gap: 8px;">
                         <div style="flex: 1;">
-                            <img *ngIf="getPreviewUrls(producto.fotos || []).length > 0"
-                                [src]="getPreviewUrls(producto.fotos || [])[0]" class="rounded"
+                            <img *ngIf="getPreviewUrls(producto.fotos || [], producto.verMas).length > 0"
+                                [src]="getPreviewUrls(producto.fotos || [], producto.verMas)[0]" class="rounded"
                                 style="width: 100%; height: 180px; object-fit: cover;" />
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
-                            <img *ngIf="getPreviewUrls(producto.fotos || []).length > 1"
-                                [src]="getPreviewUrls(producto.fotos || [])[1]" class="rounded"
+                            <img *ngIf="getPreviewUrls(producto.fotos || [], producto.verMas).length > 1"
+                                [src]="getPreviewUrls(producto.fotos || [], producto.verMas)[1]" class="rounded"
                                 style="width: 100%; height: 85px; object-fit: cover;" />
-                            <img *ngIf="getPreviewUrls(producto.fotos || []).length > 2"
-                                [src]="getPreviewUrls(producto.fotos || [])[2]" class="rounded"
+                            <img *ngIf="getPreviewUrls(producto.fotos || [], producto.verMas).length > 2"
+                                [src]="getPreviewUrls(producto.fotos || [], producto.verMas)[2]" class="rounded"
                                 style="width: 100%; height: 85px; object-fit: cover;" />
                         </div>
                     </div>
                 </div>
                 <div class="mt-3">
                     <button mat-stroked-button color="primary" class="rounded-pill px-4 py-1 fw-semibold"
-                        (click)="toggleVerMas()">
-                        {{ verMas ? 'Ver menos' : 'Ver más' }}
+                        (click)="toggleVerMas(producto)">
+                        {{ producto.verMas ? 'Ver menos' : 'Ver más' }}
                     </button>
                 </div>
             </div>

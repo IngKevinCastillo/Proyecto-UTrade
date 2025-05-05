@@ -2,14 +2,6 @@
   <input class="search-input" type="text" placeholder="Buscar" />
 
   <div class="filters d-flex gap-3">
-    <button
-      class="filter-btn"
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      Todo
-    </button>
     <button class="filter-btn" routerLink="/compras" routerLinkActive="active">
       Compras
     </button>
@@ -19,6 +11,7 @@
   </div>
 
   <div class="profile-container position-relative">
+    <app-notification-icon class="me-4"></app-notification-icon>
     <div class="d-flex align-items-center gap-3" (click)="toggleMenu($event)">
       <app-user-profile
         [username]="username"
