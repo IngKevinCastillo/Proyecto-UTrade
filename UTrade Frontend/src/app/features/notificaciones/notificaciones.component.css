@@ -1,0 +1,54 @@
+.notificaciones-container {
+    max-width: 650px;
+    margin: auto;
+    padding: 16px;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.notificaciones-titulo {
+    text-align: center;
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+.notificaciones-botones {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.boton-filtro {
+    padding: 4px 16px;
+    font-size: 12px;
+}
+
+.notificacion-card {
+    margin-bottom: 12px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.notificacion-contenido {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.notificacion-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-top: 4px;
+}
+
+.notificacion-texto {
+    font-size: 14px;
+}
+
+.notificacion-meta {
+    color: gray;
+    font-size: 12px;
+    margin-top: 4px;
+}
