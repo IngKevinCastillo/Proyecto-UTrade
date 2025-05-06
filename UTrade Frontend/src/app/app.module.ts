@@ -11,7 +11,7 @@ import { NotificationIconComponent } from './shared/components/notification-icon
 import { UserProfileComponent } from './shared/components/user-profile/user-profile.component';
 import { HomePageComponent } from './features/home/pages/home-page/home-page.component';
 import { MatTableModule } from '@angular/material/table';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 import { ComprasPageComponent } from './features/compras/pages/compras-page/compras-page.component';
 import { RentasPageComponent } from './features/rentas/pages/rentas-page/rentas-page.component';
 import { MatCardModule } from '@angular/material/card';
@@ -20,6 +20,19 @@ import { VentanaComponent } from './features/home/components/ventana/ventana.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnuncioPreviewComponent } from './features/home/components/anuncio-preview/anuncio-preview.component';
 import { AnuncioDatosComponent } from './features/home/components/anuncio-datos/anuncio-datos.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ProductosComponent } from './features/productos/productos.component';
+import { ChatComponent } from './features/mensajes/chat/chat.component';
+import { ConversationListComponent } from './features/mensajes/conversation-list/conversation-list.component';
+import { MessageAreaComponent } from './features/mensajes/message-area/message-area.component';
+import { MessageComponent } from './features/mensajes/message/message.component';
+import { VentanaSoporteComponent } from './features/soporte/components/ventana-soporte/ventana-soporte.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './features/login/components/login/login.component';
+import { LayoutComponent } from './layout/layout/layout.component';
+import { NoMatchComponent } from './shared/components/no-match/no-match.component';
+import { FooterComponent } from './layout/footer/footer.component';
+import { NotificacionesComponent } from './features/notificaciones/notificaciones.component';
 
 
 @NgModule({
@@ -35,6 +48,17 @@ import { AnuncioDatosComponent } from './features/home/components/anuncio-datos/
     VentanaComponent,
     AnuncioPreviewComponent,
     AnuncioDatosComponent,
+    ProductosComponent,
+    ChatComponent,
+    ConversationListComponent,
+    MessageAreaComponent,
+    MessageComponent,
+    VentanaSoporteComponent,
+    LoginComponent,
+    LayoutComponent,
+    NoMatchComponent,
+    FooterComponent,
+    NotificacionesComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,14 +70,22 @@ import { AnuncioDatosComponent } from './features/home/components/anuncio-datos/
     MatBadgeModule,
     MatCardModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    ToastrModule.forRoot({
+      closeButton: true,
+      progressBar: true,
+      enableHtml: true,
+      positionClass: 'toast-bottom-right'
+    }),
+    ReactiveFormsModule,
   ],
   exports: [
     MatIconModule,
     MatTableModule,
     MatBadgeModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    ToastrModule
   ],
   providers: [
   ],

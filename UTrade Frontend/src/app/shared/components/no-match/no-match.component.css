@@ -1,0 +1,17 @@
+.bg-light-purple {
+    background-color: #f9f5ff;
+}
+
+.error-code {
+    font-size: 8rem;
+    color: #007bff;
+    font-weight: bold;
+    margin: 0;
+}
+
+.error-message {
+    font-size: 2rem;
+    color: #000;
+    font-weight: 500;
+    margin-top: 1rem;
+}

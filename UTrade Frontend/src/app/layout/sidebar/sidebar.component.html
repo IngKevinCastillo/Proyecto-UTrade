@@ -1,5 +1,5 @@
 <aside class="sidebar">
-  <button class="icon-btn active">
+  <button class="icon-btn active" (click)="setActive('home')">
     <img src="icons/iconoPrueba.png" width="32" height="32" />
   </button>
   <button
@@ -16,6 +16,22 @@
     (click)="setActive('chat')"
   >
     <mat-icon>chat</mat-icon>
+  </button>
+
+  <button
+    class="icon-btn"
+    [class.active]="activeBtn === 'map'"
+    (click)="setActive('map')"
+  >
+    <mat-icon>map</mat-icon>
+  </button>
+
+  <button
+    class="icon-btn"
+    [class.active]="activeBtn === 'soporte'"
+    (click)="setActive('soporte')"
+  >
+    <mat-icon>support_agent</mat-icon>
   </button>
 
   <button

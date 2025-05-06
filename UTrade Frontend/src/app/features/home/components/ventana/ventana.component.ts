@@ -10,16 +10,18 @@ export class VentanaComponent implements OnInit {
   username: string = 'Juan mrd';
   userHandle: string = '@vendogalletas';
   userAvatar: string = 'icons/oceana.png';
-  
+
   title: string = '';
   price: string = '';
   category: string = '';
   description: string = '';
-  
+
+  fotos: File[] = []; 
+
   constructor(
     public dialogRef: MatDialogRef<VentanaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.data) {
@@ -39,5 +41,9 @@ export class VentanaComponent implements OnInit {
 
   agregarFotos(): void {
     console.log('Agregar fotos clicked');
+  }
+
+  actualizarFotos(nuevasFotos: File[]) {
+    this.fotos = nuevasFotos;
   }
 }

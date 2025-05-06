@@ -12,6 +12,8 @@
         (descriptionChange)="description = $event"
         (closeClicked)="salir()"
         (addPhotosClicked)="agregarFotos()"
+        [fotos]="fotos"
+        (fotosChange)="actualizarFotos($event)"
       ></app-anuncio-datos>
     </div>
 
@@ -24,6 +26,7 @@
         [price]="price"
         [category]="category"
         [description]="description"
+        [fotos]="fotos"
       ></app-anuncio-preview>
     </div>
   </div>

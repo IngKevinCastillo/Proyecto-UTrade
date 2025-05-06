@@ -1,0 +1,117 @@
+<div class="container-fluid login-container">
+  <div class="row shadow rounded">
+    <div class="col-md-6 left-panel p-5">
+      <div class="login-form-container">
+        <div class="logo mb-4">
+          <img
+            src="icons/logo.png"
+            alt="Logo"
+            class="img-fluid"
+            style="max-height: 40px"
+          />
+        </div>
+
+        <h2 class="mb-2">Iniciar sesión en tu cuenta</h2>
+        <p class="text-muted mb-4">
+          ¡Bienvenido de vuelta! Selecciona un método para iniciar sesión.
+        </p>
+
+        <div class="row mb-3">
+          <div class="col-6">
+            <button
+              class="btn btn-outline-secondary w-100"
+              (click)="loginWithGoogle()"
+            >
+              <i class="fab fa-google me-2"></i> Google
+            </button>
+          </div>
+          <div class="col-6">
+            <button
+              class="btn btn-outline-secondary w-100"
+              (click)="loginWithFacebook()"
+            >
+              <i class="fab fa-facebook-f me-2"></i> Facebook
+            </button>
+          </div>
+        </div>
+
+        <div class="separator my-4">
+          <span class="text-muted">o continuar con email</span>
+        </div>
+
+        <form (ngSubmit)="login()">
+          <div class="mb-3">
+            <label for="email" class="form-label">
+              <i class="bi bi-envelope me-2"></i> Email
+            </label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="username"
+              placeholder="Ingresa tu email"
+              [(ngModel)]="username"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">
+              <i class="bi bi-lock me-2"></i> Contraseña
+            </label>
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="Ingresa tu contraseña"
+                [(ngModel)]="password"
+                required
+              />
+              <button class="btn btn-outline-secondary" type="button">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mb-4">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="rememberMe"
+                name="rememberMe"
+                [(ngModel)]="rememberMe"
+              />
+              <label class="form-check-label" for="rememberMe">
+                Recordarme
+              </label>
+            </div>
+            <a href="#" class="text-primary">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 py-2 mb-4">
+            Iniciar sesión
+          </button>
+
+          <div *ngIf="errorMessage" class="text-danger text-center mb-3">
+            {{ errorMessage }}
+          </div>
+
+          <div class="text-center">
+            <span class="text-muted">¿No tienes una cuenta?</span>
+            <a href="#" class="text-primary ms-2">Crear una cuenta</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-6 right-panel d-none d-md-flex">
+      <div class="text-center">
+        <h3 class="text-white">UTrade</h3>
+        <p class="text-white">Somos las fokin máquinas del mercado.</p>
+      </div>
+    </div>
+  </div>
+</div>
