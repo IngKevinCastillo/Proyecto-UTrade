@@ -21,7 +21,7 @@ body {
 }
 
 .login-container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -142,10 +142,19 @@ body {
   color: #6c757d;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 576px) {
+
+  .logo img {
+    max-height: 80px;
+  }
+
   .login-container {
     flex-direction: column;
     height: auto;
+  }
+
+  .login-form-container {
+    max-width: 100%;
   }
 
   .right-panel {
@@ -153,6 +162,6 @@ body {
   }
 
   .left-panel {
-    padding: 2rem;
+    padding: 1.5rem 1rem;
   }
 }
