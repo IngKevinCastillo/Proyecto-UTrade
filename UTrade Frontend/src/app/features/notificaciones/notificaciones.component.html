@@ -2,8 +2,8 @@
     <h3 class="notificaciones-titulo">Notificaciones</h3>
 
     <div class="notificaciones-botones">
-        <button mat-stroked-button class="boton-filtro">Todas</button>
-        <button mat-stroked-button class="boton-filtro">No Leídas</button>
+        <button mat-stroked-button class="boton-filtro" (click)="notificacionesTodas()">Todas</button>
+        <button mat-stroked-button class="boton-filtro" (click)="notificacionesNoLeidas()">No Leídas</button>
     </div>
 
     <ng-container *ngFor="let notificacion of listaNotificaciones">

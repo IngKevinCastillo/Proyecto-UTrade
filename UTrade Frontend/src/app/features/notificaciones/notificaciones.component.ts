@@ -12,7 +12,8 @@ export class NotificacionesComponent {
     foto: string = 'icons/oceana.png';
     @Input() tipo: string = '';
   
-    listaNotificaciones: Notificaciones[] = notificacionesLista;
+  listaNotificaciones: Notificaciones[] = [];
+  listaNotificacionesFiltradas: Notificaciones[] = notificacionesLista;
   
   imagenRuta(): string {
     return this.foto;
@@ -26,6 +27,17 @@ export class NotificacionesComponent {
     if (diffDias === 0) return 'Hoy';
     if (diffDias === 1) return 'Ayer';
     return `${diffDias} Días`;
+  }
+
+  notificacionesTodas() {
+    this.listaNotificaciones = [];
+    this.listaNotificaciones = notificacionesLista;
+  }
+
+  notificacionesNoLeidas() {
+    this.listaNotificaciones = [];
+    const listaNueva: Notificaciones[] = notificacionesLista.filter((notificacion) => notificacion.leido === false);
+    this.listaNotificaciones = listaNueva;
   }
 
 }
