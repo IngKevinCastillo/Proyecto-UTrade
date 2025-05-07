@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
   rememberMe: boolean = false;
   errorMessage: string = '';
+  showPassword: boolean = false;
 
 
   constructor(private router: Router) { }
