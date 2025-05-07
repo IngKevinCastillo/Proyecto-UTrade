@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Notificaciones, notificacionesLista } from '../../layout/simulacionNotificaciones';
 
 @Component({
@@ -6,14 +6,16 @@ import { Notificaciones, notificacionesLista } from '../../layout/simulacionNoti
   templateUrl: './notificaciones.component.html',
   styleUrl: './notificaciones.component.css'
 })
-export class NotificacionesComponent {
+export class NotificacionesComponent implements OnInit {
     @Input() titulo: string = '';
     @Input() fecha: string = '';
     foto: string = 'icons/oceana.png';
     @Input() tipo: string = '';
-  
   listaNotificaciones: Notificaciones[] = [];
-  listaNotificacionesFiltradas: Notificaciones[] = notificacionesLista;
+
+  ngOnInit(): void {
+      this.listaNotificaciones = notificacionesLista;
+  }
   
   imagenRuta(): string {
     return this.foto;
