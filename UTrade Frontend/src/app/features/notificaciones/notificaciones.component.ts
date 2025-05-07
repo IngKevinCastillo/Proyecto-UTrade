@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Notificaciones, notificacionesLista } from '../../layout/simulacionNotificaciones';
 
 @Component({
@@ -6,13 +6,16 @@ import { Notificaciones, notificacionesLista } from '../../layout/simulacionNoti
   templateUrl: './notificaciones.component.html',
   styleUrl: './notificaciones.component.css'
 })
-export class NotificacionesComponent {
-    @Input() titulo: string = 'Juan Carlos te mando una solicitud a un servico de pensionado.';
-    @Input() fecha: string = '7 Días';
+export class NotificacionesComponent implements OnInit {
+    @Input() titulo: string = '';
+    @Input() fecha: string = '';
     foto: string = 'icons/oceana.png';
-    @Input() tipo: string = 'Solicitud';
-  
-    listaNotificaciones: Notificaciones[] = notificacionesLista;
+    @Input() tipo: string = '';
+  listaNotificaciones: Notificaciones[] = [];
+
+  ngOnInit(): void {
+      this.listaNotificaciones = notificacionesLista;
+  }
   
   imagenRuta(): string {
     return this.foto;
@@ -26,6 +29,17 @@ export class NotificacionesComponent {
     if (diffDias === 0) return 'Hoy';
     if (diffDias === 1) return 'Ayer';
     return `${diffDias} Días`;
+  }
+
+  notificacionesTodas() {
+    this.listaNotificaciones = [];
+    this.listaNotificaciones = notificacionesLista;
+  }
+
+  notificacionesNoLeidas() {
+    this.listaNotificaciones = [];
+    const listaNueva: Notificaciones[] = notificacionesLista.filter((notificacion) => notificacion.leido === false);
+    this.listaNotificaciones = listaNueva;
   }
 
 }

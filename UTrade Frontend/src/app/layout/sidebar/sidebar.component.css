@@ -9,26 +9,9 @@
     height: 100vh;
     background-color: white;
     z-index: 0;
-    /*border-right: 1px solid gray;*/
     border-right: 1px solid #eee;
 
-    /*&::before {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        z-index: -1;
-        background: linear-gradient(180deg, #403f47, #444354);
-        border-radius: 22px;    
-        padding: 2px;
-        -webkit-mask:
-            linear-gradient(#fff 0 0) content-box,
-            linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-    }*/
+    
 }
 
 .icon-btn {
