@@ -7,10 +7,10 @@ import { Notificaciones, notificacionesLista } from '../../layout/simulacionNoti
   styleUrl: './notificaciones.component.css'
 })
 export class NotificacionesComponent {
-    @Input() titulo: string = 'Juan Carlos te mando una solicitud a un servico de pensionado.';
-    @Input() fecha: string = '7 Días';
+    @Input() titulo: string = '';
+    @Input() fecha: string = '';
     foto: string = 'icons/oceana.png';
-    @Input() tipo: string = 'Solicitud';
+    @Input() tipo: string = '';
   
     listaNotificaciones: Notificaciones[] = notificacionesLista;
   
