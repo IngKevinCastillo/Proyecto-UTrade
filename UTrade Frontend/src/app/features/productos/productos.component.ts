@@ -13,11 +13,18 @@ interface ProductoExtendido extends Productos {
 export class ProductosComponent implements OnChanges {
 
   @Input() Filtro?: string;
+  @Input() FiltroLista?: Productos[];
 
   productos: ProductoExtendido[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['Filtro'] && this.Filtro) {
+    if (changes['FiltroLista'] && this.FiltroLista) {
+      this.productos = this.FiltroLista.map(producto => ({
+        ...producto,
+        verMas: false
+      }));
+    }
+    else if (changes['Filtro'] && this.Filtro) {
       const filtrados = productosLista.filter(producto => producto.category === this.Filtro);
       this.productos = filtrados.map(producto => ({
         ...producto,
