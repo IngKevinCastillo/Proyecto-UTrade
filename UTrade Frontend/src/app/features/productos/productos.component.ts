@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { productosLista, Productos } from '../simulacionProductos';
 
-// Extender la interfaz para agregar verMas
 interface ProductoExtendido extends Productos {
   verMas: boolean;
 }
@@ -11,11 +10,21 @@ interface ProductoExtendido extends Productos {
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent {
-  productos: ProductoExtendido[] = productosLista.map(producto => ({
-    ...producto,
-    verMas: false
-  }));
+export class ProductosComponent implements OnChanges {
+
+  @Input() Filtro?: string;
+
+  productos: ProductoExtendido[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['Filtro'] && this.Filtro) {
+      const filtrados = productosLista.filter(producto => producto.category === this.Filtro);
+      this.productos = filtrados.map(producto => ({
+        ...producto,
+        verMas: false
+      }));
+    }
+  }
 
   toggleVerMas(producto: ProductoExtendido): void {
     producto.verMas = !producto.verMas;

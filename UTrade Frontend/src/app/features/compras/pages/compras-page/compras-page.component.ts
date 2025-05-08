@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './compras-page.component.css'
 })
 export class ComprasPageComponent {
-
+  filtroSeleccionado: string = 'compras';
 }
