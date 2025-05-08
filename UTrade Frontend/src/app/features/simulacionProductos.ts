@@ -48,7 +48,7 @@ export const productosLista: Productos[] = [
     "Universidad Popular del Cesar",
     "icons/oceana.png",
     "APARTAESTUDIO",
-    "pension",
+    "renta",
     "Acogedor apartaestudio ideal para estudiantes o parejas jóvenes. Diseño moderno con ambiente tipo loft.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
@@ -61,7 +61,7 @@ export const productosLista: Productos[] = [
     "Centro Comercial Las Flores",
     "icons/oceana.png",
     "Chaqueta de Jean",
-    "ropa",
+    "compras",
     "Chaqueta de jean unisex, disponible en todas las tallas. Calidad garantizada.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
@@ -74,7 +74,7 @@ export const productosLista: Productos[] = [
     "Barrio San Jorge",
     "icons/oceana.png",
     "Sofá en L de 3 puestos",
-    "muebles",
+    "compras",
     "Sofá cómodo y moderno en tela gris. Perfecto para sala o estudio.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
@@ -87,7 +87,7 @@ export const productosLista: Productos[] = [
     "Avenida Simón Bolívar",
     "icons/oceana.png",
     "Habitación amplia con baño",
-    "pension",
+    "renta",
     "Habitación amplia con cama doble, baño privado, internet y aire acondicionado.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
@@ -100,7 +100,7 @@ export const productosLista: Productos[] = [
     "Centro Comercial Guatapurí",
     "icons/oceana.png",
     "Vestido floral talla M",
-    "ropa",
+    "compras",
     "Vestido casual con estampado floral, ideal para clima cálido.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
@@ -113,7 +113,7 @@ export const productosLista: Productos[] = [
     "Zona Industrial Norte",
     "icons/oceana.png",
     "Comedor de madera 4 puestos",
-    "muebles",
+    "compras",
     "Comedor rústico artesanal en madera de roble. Incluye mesa y 4 sillas.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
@@ -126,7 +126,7 @@ export const productosLista: Productos[] = [
     "Frente a la UPC Sabanas",
     "icons/oceana.png",
     "Cuarto individual para estudiantes",
-    "pension",
+    "renta",
     "Cuarto con cama sencilla, closet, ventilador y escritorio. Baño compartido.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
@@ -139,7 +139,7 @@ export const productosLista: Productos[] = [
     "Calle 10 #5-30",
     "icons/oceana.png",
     "Camisa estampada hombre",
-    "ropa",
+    "compras",
     "Camisa de algodón con diseño estampado. Tallas S a XL.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
@@ -152,7 +152,7 @@ export const productosLista: Productos[] = [
     "Av. Fundadores",
     "icons/oceana.png",
     "Cama doble con colchón",
-    "muebles",
+    "compras",
     "Cama de madera con respaldo tapizado. Incluye colchón ortopédico.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   ),
@@ -165,7 +165,7 @@ export const productosLista: Productos[] = [
     "Cra 12 con Calle 15",
     "icons/oceana.png",
     "Habitación para señoritas",
-    "pension",
+    "renta",
     "Cuarto individual en ambiente familiar. Baño privado, incluye servicios.",
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   )

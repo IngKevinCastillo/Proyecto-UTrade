@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-rentas-page',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './rentas-page.component.css'
 })
 export class RentasPageComponent {
-
+  filtroSeleccionado: string = 'renta';
 }
