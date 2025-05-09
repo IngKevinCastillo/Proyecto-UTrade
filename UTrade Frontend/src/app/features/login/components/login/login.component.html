@@ -1,14 +1,9 @@
 <div class="container-fluid login-container">
   <div class="row shadow rounded">
-    <div class="col-md-6 left-panel p-5">
+    <div class="col-md-6 left-panel">
       <div class="login-form-container">
         <div class="logo mb-4 text-center">
-          <img
-            src="icons/logo.png"
-            alt="Logo"
-            class="img-fluid"
-            style="max-height: 150px"
-          />
+          <img src="icons/logo.png" alt="Logo" class="img-fluid" />
         </div>
 
         <h2 class="mb-2 text-center poppins-title">Iniciar sesión en tu cuenta</h2>
@@ -18,18 +13,12 @@
 
         <div class="row mb-3">
           <div class="col-6">
-            <button
-              class="btn btn-outline-secondary w-100"
-              (click)="loginWithGoogle()"
-            >
+            <button class="btn btn-outline-secondary w-100" (click)="loginWithGoogle()">
               <i class="fab fa-google me-2"></i> Google
             </button>
           </div>
           <div class="col-6">
-            <button
-              class="btn btn-outline-secondary w-100"
-              (click)="loginWithFacebook()"
-            >
+            <button class="btn btn-outline-secondary w-100" (click)="loginWithFacebook()">
               <i class="fab fa-facebook-f me-2"></i> Facebook
             </button>
           </div>
@@ -42,14 +31,14 @@
         <form (ngSubmit)="login()">
           <div class="mb-3">
             <label for="email" class="form-label">
-              <i class="bi bi-envelope me-2"></i> Email
+              <i class="bi bi-envelope me-2"></i> Email o número telefonico
             </label>
             <input
               type="email"
               class="form-control"
               id="email"
               name="username"
-              placeholder="Ingresa tu email"
+              placeholder="Ingresa tu email o número telefonico"
               [(ngModel)]="username"
               required
             />
@@ -97,7 +86,7 @@
 
           <button type="submit" class="btn btn-primary w-100 py-2 mb-4 btn-hover-scale-glow">
             Iniciar sesión
-          </button>          
+          </button>
 
           <div *ngIf="errorMessage" class="text-danger text-center mb-3">
             {{ errorMessage }}
@@ -105,7 +94,7 @@
 
           <div class="text-center">
             <span class="text-muted">¿No tienes una cuenta?</span>
-            <a href="/NoMatchComponent" class="text-primary ms-2">Crear una cuenta</a>
+            <a href="/registro" class="text-primary ms-2">Crear una cuenta</a>
           </div>
         </form>
       </div>
@@ -114,7 +103,7 @@
     <div class="col-md-6 right-panel d-none d-md-flex">
       <div class="text-center">
         <h3 class="text-white poppins-title">UTrade</h3>
-        <p class="text-white">Somos las fokin máquinas del mercado.</p>
+        <p class="text-white">Tu plataforma de mercado favorita</p>
       </div>
     </div>
   </div>

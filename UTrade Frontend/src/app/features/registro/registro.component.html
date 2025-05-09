@@ -1,0 +1,230 @@
+<div class="container-fluid register-container">
+  <div class="row shadow rounded">
+    <div class="col-md-5 left-panel d-none d-md-flex">
+      <div class="text-center">
+        <h3 class="text-white poppins-title">UTrade</h3>
+        <p class="text-white">Tu plataforma de mercado favorita</p>
+      </div>
+    </div>
+
+    <div class="col-md-7 right-panel">
+      <div class="register-form-container">
+        <div class="header-section">
+          <div class="logo mb-3 text-center">
+            <img src="icons/logo.png" alt="Logo" class="img-fluid" />
+          </div>
+
+          <h2 class="mb-2 text-center poppins-title">Crear una cuenta nueva</h2>
+          <p class="text-muted mb-3">
+            ¡Bienvenido! Completa tus datos para unirte a nuestra plataforma.
+          </p>
+
+          <div class="social-buttons mb-3">
+            <button class="btn btn-outline-secondary" (click)="registerWithGoogle()">
+              <i class="fab fa-google me-2"></i> Google
+            </button>
+            <button class="btn btn-outline-secondary" (click)="registerWithFacebook()">
+              <i class="fab fa-facebook-f me-2"></i> Facebook
+            </button>
+          </div>
+
+          <div class="separator mb-3">
+            <span class="text-muted">o regístrate con tus datos</span>
+          </div>
+        </div>
+
+        <form #registroForm="ngForm" (ngSubmit)="registro()">
+          <div class="form-grid">
+            <!-- Primera fila -->
+            <div class="form-grid-item">
+              <label for="nombres" class="form-label">
+                <i class="bi bi-person me-2"></i> Nombres
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombres"
+                name="nombres"
+                placeholder="Ingresa tus nombres"
+                [(ngModel)]="registroData.nombres"
+                required
+              />
+            </div>
+            
+            <div class="form-grid-item">
+              <label for="apellidos" class="form-label">
+                <i class="bi bi-person me-2"></i> Apellidos
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="apellidos"
+                name="apellidos"
+                placeholder="Ingresa tus apellidos"
+                [(ngModel)]="registroData.apellidos"
+                required
+              />
+            </div>
+
+            <div class="form-grid-item">
+              <label class="form-label">
+                <i class="bi bi-gender-ambiguous me-2"></i> Género
+              </label>
+              <div class="gender-selector">
+                <div class="btn-group w-100" role="group" aria-label="Selección de género">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="genero"
+                  id="masculino"
+                  value="masculino"
+                  [(ngModel)]="registroData.genero"
+                  autocomplete="off"
+                />
+                <label class="btn btn-outline-secondary gender-btn" for="masculino">
+                  <i class="bi bi-gender-male me-1"></i> Masculino              
+                </label>
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="genero"
+                  id="femenino"
+                  value="femenino"
+                  [(ngModel)]="registroData.genero"
+                  autocomplete="off"
+                />
+                <label class="btn btn-outline-secondary gender-btn" for="femenino">
+                  <i class="bi bi-gender-female me-1"></i> Femenino
+                </label>
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="genero"
+                  id="otro"
+                  value="otro"
+                  [(ngModel)]="registroData.genero"
+                  autocomplete="off"
+                />
+                <label class="btn btn-outline-secondary gender-btn" for="otro">
+                  <i class="bi bi-asterisk me-1"></i> Otro
+                </label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Segunda fila -->
+            <div class="form-grid-item">
+              <label for="email" class="form-label">
+                <i class="bi bi-envelope me-2"></i> Correo o número telefónico
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Ingresa tu correo o número telefónico"
+                [(ngModel)]="registroData.email"
+                required
+              />
+            </div>
+
+            <div class="form-grid-item">
+              <label for="fechaNacimiento" class="form-label">
+                <i class="bi bi-calendar me-2"></i> Fecha de nacimiento
+              </label>
+              <input
+                type="date"
+                class="form-control"
+                id="fechaNacimiento"
+                name="fechaNacimiento"
+                [(ngModel)]="registroData.fechaNacimiento"
+                required
+              />
+            </div>
+            
+            <div class="form-grid-item">
+              <label for="password" class="form-label">
+                <i class="bi bi-lock me-2"></i> Contraseña
+              </label>
+              <div class="input-group">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Ingresa tu contraseña"
+                  [(ngModel)]="registroData.password"
+                  required
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="showPassword = !showPassword"
+                >
+                  <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-grid-item">
+              <label for="confirmPassword" class="form-label">
+                <i class="bi bi-lock-fill me-2"></i> Confirmar contraseña
+              </label>
+              <div class="input-group">
+                <input
+                  [type]="showConfirmPassword ? 'text' : 'password'"
+                  class="form-control"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Confirma tu contraseña"
+                  [(ngModel)]="registroData.confirmPassword"
+                  required
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="showConfirmPassword = !showConfirmPassword"
+                >
+                  <i [class]="showConfirmPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-grid-item">
+              <div class="form-check terms-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="termsAndConditions"
+                  name="termsAndConditions"
+                  [(ngModel)]="registroData.termsAccepted"
+                  required
+                />
+                <label class="form-check-label" for="termsAndConditions">
+                  Acepto los <a href="#" class="text-primary">términos y condiciones</a>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-grid-item button-container">
+              <button type="submit" class="btn btn-primary w-100 py-2 btn-hover-scale-glow">
+                Crear cuenta
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="errorMessage" class="text-danger text-center mb-3">
+            {{ errorMessage }}
+          </div>
+
+          <div class="text-center login-link">
+            <span class="text-muted">¿Ya tienes una cuenta?</span>
+            <a href="/login" class="text-primary ms-2">Iniciar sesión</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
