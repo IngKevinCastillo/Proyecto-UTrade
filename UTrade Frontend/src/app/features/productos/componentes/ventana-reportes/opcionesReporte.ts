@@ -12,17 +12,14 @@ export interface OpcionReporte {
   
   export const opcionesReporte: OpcionesReporte = {
     principal: [
-      { id: 'menor', texto: 'Problema que involucra a un menor de 18 años', tieneSubopciones: true },
-      { id: 'bullying', texto: 'Bullying, acoso o abuso', tieneSubopciones: true },
-      { id: 'suicidio', texto: 'Suicidio o autoagresión', tieneSubopciones: true },
       { id: 'violento', texto: 'Contenido violento, perturbador o que incita al odio', tieneSubopciones: true },
-      { id: 'spam', texto: 'Spam', tieneSubopciones: false },
+      { id: 'spam', texto: 'Spam', tieneSubopciones: true },
       { id: 'info_falsa', texto: 'Información falsa', tieneSubopciones: true },
       { id: 'restringido', texto: 'Venta o promoción de artículos restringidos', tieneSubopciones: true },
       { id: 'adultos', texto: 'Contenido para adultos', tieneSubopciones: true },
       { id: 'fraude', texto: 'Estafa, fraude o suplantación de identidad', tieneSubopciones: true },
-      { id: 'no_ver', texto: 'No quiero ver esto', tieneSubopciones: false },
-      { id: 'otro', texto: 'Otro', tieneSubopciones: false }
+      { id: 'no_ver', texto: 'No quiero ver esto', tieneSubopciones: true },
+      { id: 'otro', texto: 'Otro', tieneSubopciones: true }
     ],
     fraude: [
       { id: 'fraude_estafa', texto: 'Fraude o estafa', tieneSubopciones: false, idPadre: 'fraude' },

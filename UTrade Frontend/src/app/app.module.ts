@@ -37,7 +37,8 @@ import { RegistroComponent } from './features/registro/registro.component';
 import { ReportesComponent } from './features/reportes/reportes.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VentanaReportesComponent } from './features/productos/componentes/ventana-reportes/ventana-reportes.component';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -87,7 +88,8 @@ import {MatDividerModule} from '@angular/material/divider';
     }),
     ReactiveFormsModule,
     MatButtonToggleModule,
-    MatDividerModule
+    MatDividerModule,
+    MatToolbarModule
   ],
   exports: [
     MatIconModule,
@@ -96,7 +98,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatCardModule,
     MatButtonModule,
     ToastrModule,
-    MatDividerModule
+    MatDividerModule,
+    MatToolbarModule
   ],
   providers: [
   ],

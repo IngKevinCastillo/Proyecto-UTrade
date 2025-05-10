@@ -74,6 +74,7 @@ export class VentanaReportesComponent {
         timeOut: 0,
         extendedTimeOut: 0,
         closeButton: true,
+        toastClass: 'ngx-toastr confirmation-toast',
         enableHtml: true,
       }
     ).onTap.subscribe(() => {
