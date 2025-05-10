@@ -1,5 +1,4 @@
 <div class="contenedor-reporte">
-  <!-- Encabezado -->
   <mat-toolbar class="encabezado-reporte" color="primary">
     <div *ngIf="categoriaActual !== 'principal'" class="boton-regresar" (click)="regresar()">
       <button mat-icon-button>
@@ -14,10 +13,8 @@
     </div>
   </mat-toolbar>
 
-  <!-- Divisor -->
   <mat-divider></mat-divider>
 
-  <!-- Pregunta principal -->
   <div class="pregunta-reporte">
     <h3 *ngIf="categoriaActual === 'principal'">¿Por qué quieres reportar esta publicación?</h3>
     <h3 *ngIf="categoriaActual !== 'principal'">{{ obtenerTituloCategoria() }}</h3>
@@ -27,7 +24,6 @@
     </p>
   </div>
 
-  <!-- Opciones -->
   <div class="opciones-reporte">
     <button mat-button *ngFor="let opcion of opcionesActuales" class="opcion-reporte"
       [ngClass]="{ 'opcion-activa': opcion === opcionSeleccionada }" (click)="seleccionarOpcion(opcion)">
@@ -36,7 +32,6 @@
     </button>
   </div>
 
-  <!-- Botón de enviar -->
   <div *ngIf="mostrarBotonEnviar" class="contenedor-enviar">
     <button mat-raised-button color="primary" class="boton-enviar" (click)="confirmarReporte()">
       Enviar reporte

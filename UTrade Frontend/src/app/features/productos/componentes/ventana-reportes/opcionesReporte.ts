@@ -18,8 +18,7 @@ export interface OpcionReporte {
       { id: 'restringido', texto: 'Venta o promoción de artículos restringidos', tieneSubopciones: true },
       { id: 'adultos', texto: 'Contenido para adultos', tieneSubopciones: true },
       { id: 'fraude', texto: 'Estafa, fraude o suplantación de identidad', tieneSubopciones: true },
-      { id: 'no_ver', texto: 'No quiero ver esto', tieneSubopciones: true },
-      { id: 'otro', texto: 'Otro', tieneSubopciones: true }
+      { id: 'no_ver', texto: 'No quiero ver esto', tieneSubopciones: true }
     ],
     fraude: [
       { id: 'fraude_estafa', texto: 'Fraude o estafa', tieneSubopciones: false, idPadre: 'fraude' },
@@ -42,6 +41,5 @@ export interface OpcionReporte {
       { id: 'armas', texto: 'Armas', tieneSubopciones: false, idPadre: 'restringido' },
       { id: 'animales', texto: 'Animales', tieneSubopciones: false, idPadre: 'restringido' }
     ]
-    // Puedes agregar más categorías aquí
   };
   
