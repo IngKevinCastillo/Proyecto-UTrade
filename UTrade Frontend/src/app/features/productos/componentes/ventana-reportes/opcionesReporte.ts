@@ -41,6 +41,5 @@ export interface OpcionReporte {
       { id: 'armas', texto: 'Armas', tieneSubopciones: false, idPadre: 'restringido' },
       { id: 'animales', texto: 'Animales', tieneSubopciones: false, idPadre: 'restringido' }
     ]
-    // Puedes agregar más categorías aquí
   };
   
