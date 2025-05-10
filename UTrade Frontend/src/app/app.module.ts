@@ -36,7 +36,8 @@ import { NotificacionesComponent } from './features/notificaciones/notificacione
 import { RegistroComponent } from './features/registro/registro.component';
 import { ReportesComponent } from './features/reportes/reportes.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { VentanaReportesComponent } from './features/productos/componentes/ventana-reportes/ventana-reportes.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     FooterComponent,
     NotificacionesComponent,
     RegistroComponent,
-    ReportesComponent
+    ReportesComponent,
+    VentanaReportesComponent
   ],
   imports: [
     BrowserModule,
@@ -85,6 +87,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     }),
     ReactiveFormsModule,
     MatButtonToggleModule,
+    MatDividerModule
   ],
   exports: [
     MatIconModule,
@@ -93,6 +96,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatCardModule,
     MatButtonModule,
     ToastrModule,
+    MatDividerModule
   ],
   providers: [
   ],
