@@ -32,7 +32,8 @@ import { LoginComponent } from './features/login/components/login/login.componen
 import { LayoutComponent } from './layout/layout/layout.component';
 import { NoMatchComponent } from './shared/components/no-match/no-match.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import { NotificacionesComponent } from './features/notificaciones/notificaciones.component';
+import { NotificacionesComponent } from './features/notificaciones/notificaciones.component'; 
+import { RegistroComponent } from './features/registro/registro.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { NotificacionesComponent } from './features/notificaciones/notificacione
     NoMatchComponent,
     FooterComponent,
     NotificacionesComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +87,7 @@ import { NotificacionesComponent } from './features/notificaciones/notificacione
     MatBadgeModule,
     MatCardModule,
     MatButtonModule,
-    ToastrModule
+    ToastrModule,
   ],
   providers: [
   ],
