@@ -1,0 +1,45 @@
+<div class="contenedor-reporte">
+  <!-- Encabezado -->
+  <mat-toolbar class="encabezado-reporte" color="primary">
+    <div *ngIf="categoriaActual !== 'principal'" class="boton-regresar" (click)="regresar()">
+      <button mat-icon-button>
+        <mat-icon style="font-size: 24px; color: white">arrow_back</mat-icon>
+      </button>
+    </div>
+    <span class="titulo-encabezado">Reportar</span>
+    <div class="boton-cerrar" (click)="salir()">
+      <button mat-icon-button>
+        <mat-icon style="font-size: 24px; color: white">close</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <!-- Divisor -->
+  <mat-divider></mat-divider>
+
+  <!-- Pregunta principal -->
+  <div class="pregunta-reporte">
+    <h3 *ngIf="categoriaActual === 'principal'">¿Por qué quieres reportar esta publicación?</h3>
+    <h3 *ngIf="categoriaActual !== 'principal'">{{ obtenerTituloCategoria() }}</h3>
+    <p *ngIf="categoriaActual === 'principal'" class="advertencia-seguridad">
+      Selecciona una opción para ayudar a mantener la seguridad de la comunidad. Si no estás seguro, puedes elegir "No
+      quiero ver esto".
+    </p>
+  </div>
+
+  <!-- Opciones -->
+  <div class="opciones-reporte">
+    <button mat-button *ngFor="let opcion of opcionesActuales" class="opcion-reporte"
+      [ngClass]="{ 'opcion-activa': opcion === opcionSeleccionada }" (click)="seleccionarOpcion(opcion)">
+      <span class="texto-opcion">{{ opcion.texto }}</span>
+      <mat-icon *ngIf="opcion.tieneSubopciones">chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <!-- Botón de enviar -->
+  <div *ngIf="mostrarBotonEnviar" class="contenedor-enviar">
+    <button mat-raised-button color="primary" class="boton-enviar" (click)="confirmarReporte()">
+      Enviar reporte
+    </button>
+  </div>
+</div>

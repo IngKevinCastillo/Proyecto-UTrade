@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { productosLista, Productos } from '../simulacionProductos';
+import { MatDialog } from '@angular/material/dialog';
+import { VentanaReportesComponent } from './componentes/ventana-reportes/ventana-reportes.component';
 
 interface ProductoExtendido extends Productos {
   verMas: boolean;
@@ -14,6 +16,9 @@ export class ProductosComponent implements OnChanges {
 
   @Input() Filtro?: string;
   @Input() FiltroLista?: Productos[];
+  constructor(
+    public dialog: MatDialog
+    ) { }
 
   productos: ProductoExtendido[] = [];
 
@@ -32,6 +37,25 @@ export class ProductosComponent implements OnChanges {
       }));
     }
   }
+
+  reportarProducto(): void {
+      const dialogRef = this.dialog.open(VentanaReportesComponent, {
+      disableClose: true,
+      autoFocus: true,
+      closeOnNavigation: false,
+      position: { top: '30px' },
+      width: '90vw',
+      maxWidth: '800px',
+      data: {
+        tipo: 'CREAR'
+      }
+    });
+  
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
 
   toggleVerMas(producto: ProductoExtendido): void {
     producto.verMas = !producto.verMas;

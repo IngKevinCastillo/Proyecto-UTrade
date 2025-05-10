@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,14 +12,13 @@ export class SidebarComponent {
 
   constructor(private router: Router) {
     this.setActiveFromUrl(this.router.url);
-    
+
     this.router.events.subscribe((event) => {
-      if (event.constructor.name === 'NavigationEnd') {
+      if (event instanceof NavigationEnd) {
         this.setActiveFromUrl(this.router.url);
       }
     });
-
-}
+  }
 
   setActiveFromUrl(url: string) {
     if (url.includes('/home')) {
@@ -27,6 +27,12 @@ export class SidebarComponent {
       this.activeBtn = 'chat';
     } else if (url.includes('/settings')) {
       this.activeBtn = 'settings';
+    } else if (url.includes('/soporte')) {
+      this.activeBtn = 'soporte';
+    } else if (url.includes('/reportes')) {
+      this.activeBtn = 'reportes';
+    } else {
+      this.activeBtn = '';
     }
   }
 
@@ -34,5 +40,4 @@ export class SidebarComponent {
     this.activeBtn = route;
     this.router.navigate(['/' + route]);
   }
-
 }
