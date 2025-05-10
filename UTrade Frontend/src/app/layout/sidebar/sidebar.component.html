@@ -35,6 +35,14 @@
   </button>
 
   <button
+    class="icon-btn"
+    [class.active]="activeBtn === 'reportes'"
+    (click)="setActive('reportes')"
+  >
+    <mat-icon>description</mat-icon>
+  </button>
+  
+  <button
     class="icon-btn bottom-btn"
     [class.active]="activeBtn === 'settings'"
     (click)="setActive('settings')"

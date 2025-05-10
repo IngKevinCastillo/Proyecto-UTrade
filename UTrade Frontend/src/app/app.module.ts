@@ -34,6 +34,9 @@ import { NoMatchComponent } from './shared/components/no-match/no-match.componen
 import { FooterComponent } from './layout/footer/footer.component';
 import { NotificacionesComponent } from './features/notificaciones/notificaciones.component'; 
 import { RegistroComponent } from './features/registro/registro.component';
+import { ReportesComponent } from './features/reportes/reportes.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
 
 
 @NgModule({
@@ -60,7 +63,8 @@ import { RegistroComponent } from './features/registro/registro.component';
     NoMatchComponent,
     FooterComponent,
     NotificacionesComponent,
-    RegistroComponent
+    RegistroComponent,
+    ReportesComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +84,7 @@ import { RegistroComponent } from './features/registro/registro.component';
       positionClass: 'toast-bottom-right'
     }),
     ReactiveFormsModule,
+    MatButtonToggleModule,
   ],
   exports: [
     MatIconModule,

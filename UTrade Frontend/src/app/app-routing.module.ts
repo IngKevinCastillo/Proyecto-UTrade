@@ -10,6 +10,7 @@ import { LayoutComponent } from './layout/layout/layout.component';
 import { NoMatchComponent } from './shared/components/no-match/no-match.component';
 import { NotificacionesComponent } from './features/notificaciones/notificaciones.component';
 import { RegistroComponent } from './features/registro/registro.component';
+import { ReportesComponent } from './features/reportes/reportes.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
       { path: 'chat', component: ChatComponent },
       { path: 'soporte', component: VentanaSoporteComponent },
       { path: 'notificaciones', component: NotificacionesComponent}, 
+      { path: 'reportes', component: ReportesComponent},
     ]
   },
 
