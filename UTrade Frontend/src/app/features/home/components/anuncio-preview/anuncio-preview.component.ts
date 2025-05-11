@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ToastrService   } from 'ngx-toastr'; 
+import { VentanaComponent } from '../ventana/ventana.component';
 
 @Component({
   selector: 'app-anuncio-preview',
@@ -17,6 +20,11 @@ export class AnuncioPreviewComponent {
 
   verMas: boolean = false;
 
+  constructor(
+    private toastr: ToastrService,
+    public dialogRef: MatDialogRef<VentanaComponent>,
+      @Inject(MAT_DIALOG_DATA) public datos: any) {}
+
   get previewUrls(): string[] {
     return (this.verMas ? this.fotos.slice(0, 10) : this.fotos.slice(0, 4))
       .map(file => URL.createObjectURL(file));
@@ -28,5 +36,10 @@ export class AnuncioPreviewComponent {
 
   get previewUsername(): string {
     return this.username || 'Usuario';
+  }
+
+  publicar(): void {
+    this.toastr.success('Anuncio <b>publicado</b> con éxito', 'Éxito');
+    this.dialogRef.close();
   }
 }

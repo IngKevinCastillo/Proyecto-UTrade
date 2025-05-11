@@ -42,8 +42,7 @@ export class VentanaReportesComponent {
     const titulos: { [key: string]: string } = {
       'fraude': 'Selecciona el tipo de estafa o fraude',
       'adultos': 'Selecciona el tipo de contenido para adultos',
-      'restringido': 'Selecciona el tipo de artículo restringido',
-      // Puedes agregar más títulos según sea necesario
+      'restringido': 'Selecciona el tipo de artículo restringido'
     };
 
     return titulos[this.categoriaActual] || 'Selecciona una opción';
