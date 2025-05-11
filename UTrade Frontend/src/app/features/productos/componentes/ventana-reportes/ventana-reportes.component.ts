@@ -66,22 +66,6 @@ export class VentanaReportesComponent {
     }
   }
 
-  confirmarReporte(): void {
-    this.toastr.info(
-      'Estás a punto de enviar un reporte. ¿Estás seguro? (click para confirmar)',
-      'Confirmar reporte',
-      {
-        timeOut: 0,
-        extendedTimeOut: 0,
-        closeButton: true,
-        toastClass: 'ngx-toastr confirmation-toast',
-        enableHtml: true,
-      }
-    ).onTap.subscribe(() => {
-      this.enviarReporte();
-    });
-  }
-
   enviarReporte(): void {
     let textoReporte = '';
     this.rutaReporte.forEach((opcion, indice) => {
