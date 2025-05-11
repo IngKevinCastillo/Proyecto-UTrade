@@ -4,11 +4,7 @@
   <mat-card class="mb-4">
     <mat-card-content>
       <div class="d-flex align-items-center mb-3">
-        <app-user-profile
-          [username]="username"
-          [userHandle]="userHandle"
-          [avatarUrl]="userAvatar"
-        ></app-user-profile>
+        <app-user-profile [username]="username" [userHandle]="userHandle" [avatarUrl]="userAvatar"></app-user-profile>
         <div class="ms-2">
           <div>{{ previewUsername }}</div>
           <small class="text-muted">Fecha / Tiempo transcurrido</small>
@@ -41,9 +37,14 @@
           <mat-icon>share</mat-icon>
         </button>
         <div class="ms-auto">
-          <button mat-raised-button color="primary" (click)="toggleVerMas()">{{ verMas ? 'Ver menos' : 'Ver más' }}</button>
+          <button mat-raised-button color="primary" (click)="toggleVerMas()">{{ verMas ? 'Ver menos' : 'Ver más'
+            }}</button>
         </div>
       </div>
     </mat-card-content>
   </mat-card>
+
+  <div class="d-flex justify-content-end mt-3">
+    <button mat-raised-button color="accent" (click)="publicar()">Publicar</button>
+  </div>
 </div>

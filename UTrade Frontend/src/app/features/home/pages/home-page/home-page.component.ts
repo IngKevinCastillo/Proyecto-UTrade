@@ -37,6 +37,7 @@ export class HomePageComponent {
   }
 
   publicar() {
-    this.toastr.success('Elemento <b> publicado </b> correctamente', 'Confirmacion');
+    this.toastr.error('Debes crear el producto o servicio ', 'Todavia no campeón');
+    this.crearServicio();
   }
 }

@@ -21,3 +21,7 @@ mat-card {
 mat-icon {
   vertical-align: middle;
 }
+
+.custom-snackbar .mat-simple-snackbar span:first-child {
+  font-weight: bold;
+}
