@@ -37,7 +37,7 @@ export class HomePageComponent {
   }
 
   publicar() {
-    this.toastr.error('Debes crear el producto o servicio ', 'Todavia no campeón');
+    this.toastr.error('Debes crear el producto o servicio ', 'Todavia no campeon(a)');
     this.crearServicio();
   }
 }

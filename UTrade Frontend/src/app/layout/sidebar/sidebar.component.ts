@@ -25,8 +25,6 @@ export class SidebarComponent {
       this.activeBtn = 'home';
     } else if (url.includes('/chat')) {
       this.activeBtn = 'chat';
-    } else if (url.includes('/settings')) {
-      this.activeBtn = 'settings';
     } else if (url.includes('/soporte')) {
       this.activeBtn = 'soporte';
     } else if (url.includes('/reportes')) {
