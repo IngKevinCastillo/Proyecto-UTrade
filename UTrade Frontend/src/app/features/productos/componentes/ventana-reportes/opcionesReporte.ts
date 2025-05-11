@@ -39,7 +39,8 @@ export interface OpcionReporte {
     restringido: [
       { id: 'drogas', texto: 'Drogas', tieneSubopciones: false, idPadre: 'restringido' },
       { id: 'armas', texto: 'Armas', tieneSubopciones: false, idPadre: 'restringido' },
-      { id: 'animales', texto: 'Animales', tieneSubopciones: false, idPadre: 'restringido' }
+      { id: 'animales', texto: 'Animales', tieneSubopciones: false, idPadre: 'restringido' },
+      {id: 'residuos_humanos', texto: 'Residuos humanos', tieneSubopciones: false, idPadre: 'restringido' },
     ]
   };
   
