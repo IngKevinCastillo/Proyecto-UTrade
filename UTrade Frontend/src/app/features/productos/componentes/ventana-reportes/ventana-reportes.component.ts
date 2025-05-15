@@ -1,88 +1,56 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ToastrService } from 'ngx-toastr';
-import { OpcionReporte, opcionesReporte } from './opcionesReporte';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-ventana-reportes',
   templateUrl: './ventana-reportes.component.html',
   styleUrl: './ventana-reportes.component.css'
 })
-export class VentanaReportesComponent {
-  categoriaActual: string = 'principal';
-  opcionSeleccionada: OpcionReporte | null = null;
-  rutaReporte: OpcionReporte[] = [];
-  mostrarBotonEnviar: boolean = false;
+export class VentanaReportesComponent implements OnInit {
+  // Variables para el formulario
+  tipoReporte: string = 'publicacion';
+  razonSeleccionada: string = '';
+  descripcionReporte: string = '';
 
-  opciones = opcionesReporte;
-
-  get opcionesActuales(): OpcionReporte[] {
-    return this.opciones[this.categoriaActual] || this.opciones['principal'];
-  }
+  // Lista de razones para el reporte
+  razonesReporte = [
+    { valor: 'contenido_inapropiado', texto: 'Contenido inapropiado' },
+    { valor: 'spam', texto: 'Spam o publicidad' },
+    { valor: 'acoso', texto: 'Acoso o bullying' },
+    { valor: 'informacion_falsa', texto: 'Información falsa' },
+    { valor: 'violencia', texto: 'Incitación a la violencia' },
+    { valor: 'derechos_autor', texto: 'Infracción de derechos de autor' },
+    { valor: 'otra', texto: 'Otra razón' }
+  ];
 
   constructor(
-    public dialogRef: MatDialogRef<VentanaReportesComponent>,
-    @Inject(MAT_DIALOG_DATA) public datos: any,
-    private toastr: ToastrService
-  ) {}
+    public dialogRef: MatDialogRef<VentanaReportesComponent>
+  ) { }
 
-  seleccionarOpcion(opcion: OpcionReporte): void {
-    this.opcionSeleccionada = opcion;
-    this.rutaReporte.push(opcion);
-
-    if (opcion.tieneSubopciones && this.opciones[opcion.id]) {
-      this.categoriaActual = opcion.id;
-      this.mostrarBotonEnviar = false;
-    } else {
-      this.mostrarBotonEnviar = true;
-    }
+  ngOnInit(): void {
   }
 
-  obtenerTituloCategoria(): string {
-    const titulos: { [key: string]: string } = {
-      'fraude': 'Selecciona el tipo de estafa o fraude',
-      'adultos': 'Selecciona el tipo de contenido para adultos',
-      'restringido': 'Selecciona el tipo de artículo restringido'
-    };
-
-    return titulos[this.categoriaActual] || 'Selecciona una opción';
-  }
-
-  regresar(): void {
-    if (this.rutaReporte.length > 0) {
-      this.rutaReporte.pop();
-
-      if (this.rutaReporte.length === 0) {
-        this.categoriaActual = 'principal';
-        this.opcionSeleccionada = null;
-      } else {
-        const opcionAnterior = this.rutaReporte[this.rutaReporte.length - 1];
-        this.categoriaActual = opcionAnterior.id;
-        this.opcionSeleccionada = opcionAnterior;
-      }
-
-      this.mostrarBotonEnviar = false;
-    }
-  }
-
-  enviarReporte(): void {
-    let textoReporte = '';
-    this.rutaReporte.forEach((opcion, indice) => {
-      textoReporte += opcion.texto;
-      if (indice < this.rutaReporte.length - 1) {
-        textoReporte += ' > ';
-      }
-    });
-
-    this.toastr.success(
-      `Reporte enviado: ${textoReporte}`,
-      'Gracias por tu reporte'
-    );
-
-    this.dialogRef.close(this.rutaReporte);
-  }
-
+  // Método para cerrar el diálogo
   salir(): void {
     this.dialogRef.close();
+  }
+
+  // Método para enviar el reporte
+  enviarReporte(): void {
+    // Crear objeto con la información del reporte
+    const datosReporte = {
+      tipo: this.tipoReporte,
+      razon: this.razonSeleccionada,
+      descripcion: this.descripcionReporte
+    };
+    
+    console.log('Enviando reporte:', datosReporte);
+    
+    // Aquí iría la lógica para enviar el reporte al backend
+    // this.reporteService.enviarReporte(datosReporte).subscribe(...);
+    
+    // Cerrar el diálogo y pasar los datos como resultado
+    this.dialogRef.close(datosReporte);
   }
 }

@@ -39,7 +39,10 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VentanaReportesComponent } from './features/productos/componentes/ventana-reportes/ventana-reportes.component';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatToolbarModule} from '@angular/material/toolbar';
-
+import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -89,7 +92,11 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     ReactiveFormsModule,
     MatButtonToggleModule,
     MatDividerModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
   ],
   exports: [
     MatIconModule,
