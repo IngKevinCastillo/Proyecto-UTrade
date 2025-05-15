@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\kevin\\OneDrive\\Escritorio\\Material Web\\Proyecto - Web\\UTrade Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2}|BLL\\BLL.csproj|c:\\users\\kevin\\onedrive\\escritorio\\material web\\proyecto - web\\utrade backend\\bll\\bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2}|BLL\\BLL.csproj|solutionrelative:bll\\bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{5C954FF7-3C9B-466D-848F-784B8793E8C0}|API\\API.csproj|c:\\users\\kevin\\onedrive\\escritorio\\material web\\proyecto - web\\utrade backend\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C954FF7-3C9B-466D-848F-784B8793E8C0}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BLL",
-              "DocumentMoniker": "C:\\Users\\kevin\\OneDrive\\Escritorio\\Material Web\\Proyecto - Web\\UTrade Backend\\BLL\\BLL.csproj",
-              "RelativeDocumentMoniker": "BLL\\BLL.csproj",
-              "ToolTip": "C:\\Users\\kevin\\OneDrive\\Escritorio\\Material Web\\Proyecto - Web\\UTrade Backend\\BLL\\BLL.csproj",
-              "RelativeToolTip": "BLL\\BLL.csproj",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\kevin\\OneDrive\\Escritorio\\Material Web\\Proyecto - Web\\UTrade Backend\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "C:\\Users\\kevin\\OneDrive\\Escritorio\\Material Web\\Proyecto - Web\\UTrade Backend\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-14T22:49:18.312Z",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T01:06:47.912Z",
               "EditorCaption": ""
             }
           ]
