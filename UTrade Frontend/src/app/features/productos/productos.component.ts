@@ -38,24 +38,28 @@ export class ProductosComponent implements OnChanges {
     }
   }
 
-  reportarProducto(): void {
-      const dialogRef = this.dialog.open(VentanaReportesComponent, {
-      disableClose: true,
-      autoFocus: true,
-      closeOnNavigation: false,
-      position: { top: '30px' },
-      width: '90vw',
-      maxWidth: '800px',
-      data: {
-        tipo: 'CREAR'
-      }
-    });
-  
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-      });
+reportarProducto(): void {
+  const dialogRef = this.dialog.open(VentanaReportesComponent, {
+    disableClose: false,
+    autoFocus: true,
+    closeOnNavigation: true,
+    panelClass: 'modal-reporte-personalizado',
+    width: '650px',
+    maxWidth: '95%',
+    data: {
+      tipo: 'CREAR',
+      tipoObjeto: 'publicacion'
     }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      console.log('Reporte enviado:', result);
+    } else {
+      console.log('Diálogo cerrado sin enviar reporte');
+    }
+  });
+}
 
   toggleVerMas(producto: ProductoExtendido): void {
     producto.verMas = !producto.verMas;

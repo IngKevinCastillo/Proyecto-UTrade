@@ -1,123 +1,129 @@
 .contenedor-reporte {
-    background-color: #f9f5ff;
-    color: black;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    max-height: 80vh;
-    overflow-y: auto;
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .encabezado-reporte {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 25px;
-    font-weight: bold;
-    padding: 16px;
-    top: 0;
-    background-color: #f9f5ff;
-    z-index: 1;
-}
-
-.boton-regresar,
-.boton-cerrar {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    cursor: pointer;
-    background-color: #2c248b;
-    color: #e4e6eb;
-}
-
-.boton-regresar:hover,
-.boton-cerrar:hover {
-    background-color: #2c248b;
+  background-color: #30248c;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .titulo-encabezado {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0;
-    flex-grow: 1;
-    text-align: center;
+  font-size: 18px;
+  font-weight: 500;
 }
 
-mat-divider {
-    margin: 0;
-    border-top-color: #3a3b3c;
+.boton-cerrar {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
 }
 
-.pregunta-reporte {
-    padding: 16px;
+.cuerpo-reporte {
+  padding: 20px 30px;
 }
 
-.pregunta-reporte h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0 0 8px 0;
+.seccion-titulo h3 {
+  margin: 20px 0 15px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #333;
 }
 
-.advertencia-seguridad {
-    font-size: 14px;
-    color: black;
-    margin: 8px 0;
-    line-height: 1.4;
+.seccion-tipo-reporte {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 15px;
+  padding: 5px 0;
 }
 
-.opciones-reporte {
-    display: flex;
-    flex-direction: column;
-    padding: 0 16px;
+.radio-container {
+  display: flex;
+  align-items: center;
 }
 
-.opcion-reporte {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    text-align: left;
-    background-color: white    ;
-    color: #1a60c7;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.radio-container input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  accent-color: #30248c;
 }
 
-.opcion-reporte:hover {
-    background-color: #2c248b;
-    color: white;
+.radio-container label {
+  cursor: pointer;
 }
 
-.texto-opcion {
-    flex-grow: 1;
+.combobox-container {
+  margin-bottom: 25px;
+}
+
+.selector-razon {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  background-color: white;
+}
+
+.selector-razon:focus {
+  border-color: #30248c;
+}
+
+.textarea-container {
+  margin-bottom: 25px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #30248c;
 }
 
 .contenedor-enviar {
-    padding: 16px;
-    display: flex;
-    justify-content: center;
-    margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  padding-bottom: 10px;
 }
 
 .boton-enviar {
-    background-color: #2c248b;
-    color: white;
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    font-weight: 600;
+  background-color: #30248c;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 40px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 160px;
 }
 
-.opcion-activa {
-    background-color: #2c248b !important;
-    color: white !important;
+.boton-enviar:hover {
+  background-color: #251c70;
 }
