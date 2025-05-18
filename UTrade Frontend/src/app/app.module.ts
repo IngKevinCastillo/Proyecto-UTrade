@@ -43,6 +43,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MiCuentaComponent } from './features/cuenta/mi-cuenta/mi-cuenta.component';
+import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-perfil.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,9 @@ import { MatSelectModule } from '@angular/material/select';
     NotificacionesComponent,
     RegistroComponent,
     ReportesComponent,
-    VentanaReportesComponent
+    VentanaReportesComponent,
+    MiCuentaComponent,
+    EditarPerfilComponent
   ],
   imports: [
     BrowserModule,
