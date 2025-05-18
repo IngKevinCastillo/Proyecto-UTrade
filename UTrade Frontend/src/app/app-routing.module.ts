@@ -11,6 +11,8 @@ import { NoMatchComponent } from './shared/components/no-match/no-match.componen
 import { NotificacionesComponent } from './features/notificaciones/notificaciones.component';
 import { RegistroComponent } from './features/registro/registro.component';
 import { ReportesComponent } from './features/reportes/reportes.component';
+import { MiCuentaComponent } from './features/cuenta/mi-cuenta/mi-cuenta.component';
+import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-perfil.component';
 
 
 const routes: Routes = [
@@ -29,6 +31,8 @@ const routes: Routes = [
       { path: 'soporte', component: VentanaSoporteComponent },
       { path: 'notificaciones', component: NotificacionesComponent}, 
       { path: 'reportes', component: ReportesComponent},
+      { path: 'mi-cuenta', component: MiCuentaComponent },
+      { path: 'mi-cuenta/editar-perfil', component: EditarPerfilComponent },
     ]
   },
 

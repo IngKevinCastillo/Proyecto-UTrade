@@ -55,11 +55,8 @@ export class TopbarComponent {
   }
 
   editProfile() {
-    console.log('Editar perfil');
-  }
-
-  changePassword() {
-    console.log('Cambiar contraseña');
+    this.menuVisible = false;
+    this.router.navigate(['/mi-cuenta']);
   }
 
   toggleTheme() {
