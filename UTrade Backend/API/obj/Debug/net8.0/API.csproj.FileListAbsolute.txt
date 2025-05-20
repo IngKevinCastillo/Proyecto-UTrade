@@ -81,7 +81,6 @@ C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\AP
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\API.AssemblyInfoInputs.cache
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\API.AssemblyInfo.cs
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\API.csproj.CoreCompileInputs.cache
-C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\API.sourcelink.json
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\scopedcss\bundle\API.styles.css
@@ -101,3 +100,5 @@ C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\AP
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\API.pdb
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\obj\Debug\net8.0\ref\API.dll
+C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
