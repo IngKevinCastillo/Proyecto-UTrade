@@ -14,3 +14,19 @@ C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\DA
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\DAL\obj\Debug\net8.0\refint\DAL.dll
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\DAL\obj\Debug\net8.0\DAL.pdb
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\DAL\obj\Debug\net8.0\ref\DAL.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\bin\Debug\net8.0\DAL.deps.json
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\bin\Debug\net8.0\DAL.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\bin\Debug\net8.0\DAL.pdb
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\bin\Debug\net8.0\Model.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\bin\Debug\net8.0\Model.pdb
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\DAL.csproj.AssemblyReference.cache
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\DAL.AssemblyInfoInputs.cache
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\DAL.AssemblyInfo.cs
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\DAL.csproj.CoreCompileInputs.cache
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\DAL.sourcelink.json
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\DAL.csproj.Up2Date
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\DAL.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\refint\DAL.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\DAL.pdb
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\DAL\obj\Debug\net8.0\ref\DAL.dll
