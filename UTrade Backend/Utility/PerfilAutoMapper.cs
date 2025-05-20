@@ -59,8 +59,12 @@ namespace Utility
             #endregion
 
             #region Persona
-            CreateMap<Persona, PersonaDTO>().ReverseMap();
-            CreateMap<Persona, SesionDTO>().ReverseMap();
+            CreateMap<Persona, PersonaDTO>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ReverseMap();
+            CreateMap<Persona, SesionDTO>()
+            .ForMember(dest => dest.IdUsuario, opt => opt.MapFrom(src => src.Id))
+            .ReverseMap();
             #endregion
 
             #region Publicaciones
