@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace BLL.Servicios.Contrato
 {
-    public interface IUsuarioServicio
+    public interface IPersonaServicio
     {
         Task<List<PersonaDTO>> Listar();
-        Task<SesionDTO> ValidarCredenciales(string correo, string? telefono, string clave);
+        Task<SesionDTO> ValidarCredenciales(string correo, string? telefono, string contraseña);
         Task<PersonaDTO> Crear(PersonaDTO modelo);
         Task<bool> Editar(PersonaDTO modelo);
         Task<bool> Eliminar(string id);
