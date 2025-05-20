@@ -45,6 +45,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MiCuentaComponent } from './features/cuenta/mi-cuenta/mi-cuenta.component';
 import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-perfil.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-pe
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    HttpClientModule
   ],
   exports: [
     MatIconModule,
