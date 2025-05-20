@@ -16,3 +16,21 @@ C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\Ut
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\Utility\obj\Debug\net8.0\refint\Utility.dll
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\Utility\obj\Debug\net8.0\Utility.pdb
 C:\Users\kevin\OneDrive\Escritorio\Material Web\Proyecto - Web\UTrade Backend\Utility\obj\Debug\net8.0\ref\Utility.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\bin\Debug\net8.0\Utility.deps.json
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\bin\Debug\net8.0\Utility.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\bin\Debug\net8.0\Utility.pdb
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\bin\Debug\net8.0\DTO.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\bin\Debug\net8.0\Model.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\bin\Debug\net8.0\DTO.pdb
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\bin\Debug\net8.0\Model.pdb
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\Utility.csproj.AssemblyReference.cache
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\Utility.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\Utility.AssemblyInfoInputs.cache
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\Utility.AssemblyInfo.cs
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\Utility.csproj.CoreCompileInputs.cache
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\Utility.sourcelink.json
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\Utility.csproj.Up2Date
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\Utility.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\refint\Utility.dll
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\Utility.pdb
+C:\Users\Diego Andres\Desktop\Proyecto-UTrade\UTrade Backend\Utility\obj\Debug\net8.0\ref\Utility.dll
