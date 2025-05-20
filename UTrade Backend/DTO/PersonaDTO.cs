@@ -29,7 +29,5 @@ namespace DTO
         public string? Telefono { get; set; }
 
         public string? FotoPerfil { get; set; }
-
-        public virtual RolDTO IdRolNavigation { get; set; }
     }
 }

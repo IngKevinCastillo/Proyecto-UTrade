@@ -200,30 +200,6 @@
           "fotoPerfil": {
             "type": "string",
             "nullable": true
-          },
-          "idRolNavigation": {
-            "$ref": "#/components/schemas/RolDTO"
-          }
-        },
-        "additionalProperties": false
-      },
-      "RolDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "nullable": true
-          },
-          "nombre": {
-            "type": "string",
-            "nullable": true
-          },
-          "personas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PersonaDTO"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
