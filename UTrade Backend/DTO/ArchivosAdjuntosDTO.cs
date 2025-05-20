@@ -10,7 +10,7 @@ namespace DTO
     {
         public string Id { get; set; }
 
-        public string Archivo { get; set; }
+        public byte[] Archivo { get; set; }
 
         public string IdMensaje { get; set; }
 

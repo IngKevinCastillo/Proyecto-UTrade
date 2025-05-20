@@ -63,10 +63,7 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
-            entity.Property(e => e.Archivo)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("archivo");
+            entity.Property(e => e.Archivo).HasColumnName("archivo");
             entity.Property(e => e.IdMensaje)
                 .HasMaxLength(50)
                 .HasColumnName("idMensaje");
@@ -312,10 +309,7 @@ public partial class UtradedbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("correo");
             entity.Property(e => e.FechaNacimiento).HasColumnName("fechaNacimiento");
-            entity.Property(e => e.FotoPerfil)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("fotoPerfil");
+            entity.Property(e => e.FotoPerfil).HasColumnName("fotoPerfil");
             entity.Property(e => e.Genero)
                 .HasMaxLength(1)
                 .IsUnicode(false)
