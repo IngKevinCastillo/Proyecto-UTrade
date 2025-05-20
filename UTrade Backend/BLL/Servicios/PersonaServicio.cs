@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace BLL.Servicios
 {
-    public class UsuarioServicio : IUsuarioServicio
+    public class PersonaServicio : IPersonaServicio
     {
         private readonly IRepositorioGenerico<Persona> _personaRepositorio;
         private readonly IMapper _mapper;
-        public UsuarioServicio(IRepositorioGenerico<Persona> usuarioRepositorio, IMapper mapper)
+        public PersonaServicio(IRepositorioGenerico<Persona> usuarioRepositorio, IMapper mapper)
         {
             _personaRepositorio = usuarioRepositorio;
             _mapper = mapper;
@@ -87,7 +87,8 @@ namespace BLL.Servicios
             try
             {
                 var queryUsuario = await _personaRepositorio.Consultar();
-                var listaUsuario = queryUsuario.Include(persona => persona.Id).ToList();
+                var listaUsuario = queryUsuario.ToList();
+
                 return _mapper.Map<List<PersonaDTO>>(listaUsuario);
             }
             catch
@@ -96,20 +97,22 @@ namespace BLL.Servicios
             }
         }
 
-        public async Task<SesionDTO> ValidarCredenciales(string correo, string? telefono, string clave)
+
+        public async Task<SesionDTO> ValidarCredenciales(string correo, string? telefono, string contraseña)
         {
             try
             {
                 var queryPersona = await _personaRepositorio.Consultar(x =>
-                    x.Correo == correo &&
-                    x.Contraseña == clave
-                    || x.Telefono == telefono &&
-                    x.Contraseña == clave
+                    (x.Correo == correo && x.Contraseña == contraseña) ||
+                    (x.Telefono == telefono && x.Contraseña == contraseña)
                 );
-                if (queryPersona.FirstOrDefault() == null)
-                    throw new TaskCanceledException("Usuario no encontrado");
-                Persona devolverPersona = queryPersona.Include(persona => persona.Id).First();
-                return _mapper.Map<SesionDTO>(devolverPersona);
+
+                var personaEncontrada = queryPersona.FirstOrDefault();
+
+                if (personaEncontrada == null)
+                    throw new TaskCanceledException("Persona no encontrada");
+
+                return _mapper.Map<SesionDTO>(personaEncontrada);
             }
             catch
             {

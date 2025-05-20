@@ -60,6 +60,7 @@ namespace Utility
 
             #region Persona
             CreateMap<Persona, PersonaDTO>().ReverseMap();
+            CreateMap<Persona, SesionDTO>().ReverseMap();
             #endregion
 
             #region Publicaciones
