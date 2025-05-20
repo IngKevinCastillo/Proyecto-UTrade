@@ -1,4 +1,6 @@
-﻿using DAL;
+﻿using BLL.Servicios.Contrato;
+using BLL.Servicios;
+using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Repositorios.Contrato;
+using DAL.Repositorios;
+using Utility;
 
 namespace IOC
 {
@@ -18,6 +23,9 @@ namespace IOC
             {
                 options.UseSqlServer(configuration.GetConnectionString("cadenaSQL"));
             });
+            services.AddTransient(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
+            services.AddAutoMapper(typeof(PerfilAutoMapper));
+            services.AddScoped<IUsuarioServicio, UsuarioServicio>();
         }
     }
 }

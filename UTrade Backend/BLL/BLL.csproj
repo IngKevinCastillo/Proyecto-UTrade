@@ -13,8 +13,4 @@
     <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Servicios\Contrato\" />
-  </ItemGroup>
-
 </Project>
