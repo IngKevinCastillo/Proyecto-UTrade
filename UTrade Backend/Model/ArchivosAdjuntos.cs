@@ -7,7 +7,7 @@ public partial class ArchivosAdjuntos
 {
     public string Id { get; set; } = null!;
 
-    public string Archivo { get; set; } = null!;
+    public byte[] Archivo { get; set; } = null!;
 
     public string IdMensaje { get; set; } = null!;
 

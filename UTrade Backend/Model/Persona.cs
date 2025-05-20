@@ -25,7 +25,7 @@ public partial class Persona
 
     public string? Telefono { get; set; }
 
-    public string? FotoPerfil { get; set; }
+    public byte[]? FotoPerfil { get; set; }
 
     public virtual ICollection<Chat> ChatUsuario1s { get; set; } = new List<Chat>();
 
