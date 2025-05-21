@@ -32,6 +32,8 @@ public partial class UtradedbContext : DbContext
 
     public virtual DbSet<Mensajes> Mensajes { get; set; }
 
+    public virtual DbSet<MensajeAccion> MensajeAccions { get; set; }
+
     public virtual DbSet<MotivosReporte> MotivosReportes { get; set; }
 
     public virtual DbSet<Notificaciones> Notificaciones { get; set; }
@@ -239,6 +241,19 @@ public partial class UtradedbContext : DbContext
                 .HasForeignKey(d => d.ChatId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Mensajes_Chat");
+        });
+
+        modelBuilder.Entity<MensajeAccion>(entity =>
+        {
+            entity.ToTable("MensajeAccion");
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(50)
+                .HasColumnName("id");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("descripcion");
         });
 
         modelBuilder.Entity<MotivosReporte>(entity =>
@@ -512,14 +527,22 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
-            entity.Property(e => e.Descripcion)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("descripcion");
-            entity.Property(e => e.Nombre)
+            entity.Property(e => e.IdPersonaRemitente)
                 .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("nombre");
+                .HasColumnName("idPersonaRemitente");
+            entity.Property(e => e.IdTipoMensaje)
+                .HasMaxLength(50)
+                .HasColumnName("idTipoMensaje");
+
+            entity.HasOne(d => d.IdPersonaRemitenteNavigation).WithMany(p => p.TipoAccions)
+                .HasForeignKey(d => d.IdPersonaRemitente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TipoAccion_Persona");
+
+            entity.HasOne(d => d.IdTipoMensajeNavigation).WithMany(p => p.TipoAccions)
+                .HasForeignKey(d => d.IdTipoMensaje)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TipoAccion_MensajeAccion");
         });
 
         modelBuilder.Entity<TiposReporte>(entity =>

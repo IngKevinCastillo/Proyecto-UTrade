@@ -100,6 +100,10 @@ namespace Utility
             #region TiposReporte
             CreateMap<TiposReporte, TiposReporteDTO>().ReverseMap();
             #endregion
+
+            #region MensajeAccion
+            CreateMap<MensajeAccion, MensajeAccionDTO>().ReverseMap();
+            #endregion
         }
     }
 }
