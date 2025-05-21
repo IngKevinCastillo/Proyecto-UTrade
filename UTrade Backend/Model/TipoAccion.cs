@@ -7,9 +7,13 @@ public partial class TipoAccion
 {
     public string Id { get; set; } = null!;
 
-    public string Nombre { get; set; } = null!;
+    public string IdTipoMensaje { get; set; } = null!;
 
-    public string? Descripcion { get; set; }
+    public string IdPersonaRemitente { get; set; } = null!;
+
+    public virtual Persona IdPersonaRemitenteNavigation { get; set; } = null!;
+
+    public virtual MensajeAccion IdTipoMensajeNavigation { get; set; } = null!;
 
     public virtual ICollection<Notificaciones> Notificaciones { get; set; } = new List<Notificaciones>();
 }
