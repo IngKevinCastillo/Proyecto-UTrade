@@ -278,6 +278,7 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
+            entity.Property(e => e.Estado).HasColumnName("estado");
             entity.Property(e => e.Fecha).HasColumnName("fecha");
             entity.Property(e => e.Hora).HasColumnName("hora");
             entity.Property(e => e.IdPersona)
@@ -530,14 +531,22 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.IdPersonaRemitente)
                 .HasMaxLength(50)
                 .HasColumnName("idPersonaRemitente");
+            entity.Property(e => e.IdPersonaReportada)
+                .HasMaxLength(50)
+                .HasColumnName("idPersonaReportada");
             entity.Property(e => e.IdTipoMensaje)
                 .HasMaxLength(50)
                 .HasColumnName("idTipoMensaje");
 
-            entity.HasOne(d => d.IdPersonaRemitenteNavigation).WithMany(p => p.TipoAccions)
+            entity.HasOne(d => d.IdPersonaRemitenteNavigation).WithMany(p => p.TipoAccionIdPersonaRemitenteNavigations)
                 .HasForeignKey(d => d.IdPersonaRemitente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TipoAccion_Persona");
+
+            entity.HasOne(d => d.IdPersonaReportadaNavigation).WithMany(p => p.TipoAccionIdPersonaReportadaNavigations)
+                .HasForeignKey(d => d.IdPersonaReportada)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TipoAccion_Persona1");
 
             entity.HasOne(d => d.IdTipoMensajeNavigation).WithMany(p => p.TipoAccions)
                 .HasForeignKey(d => d.IdTipoMensaje)

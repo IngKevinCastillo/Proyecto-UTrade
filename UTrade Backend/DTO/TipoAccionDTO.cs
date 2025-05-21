@@ -10,9 +10,17 @@ namespace DTO
     {
         public string Id { get; set; }
 
-        public string Nombre { get; set; }
+        public string IdTipoMensaje { get; set; }
 
-        public string? Descripcion { get; set; }
+        public string IdPersonaRemitente { get; set; }
+
+        public string IdPersonaReportada { get; set; }
+
+        public virtual PersonaDTO IdPersonaRemitenteNavigation { get; set; }
+
+        public virtual PersonaDTO IdPersonaReportadaNavigation { get; set; }
+
+        public virtual MensajeAccionDTO IdTipoMensajeNavigation { get; set; }
 
         public virtual ICollection<NotificacionesDTO> Notificaciones { get; set; }
     }
