@@ -106,5 +106,24 @@ namespace API.Controllers
             }
             return Ok(rsp);
         }
+
+        [HttpGet]
+        [Route("Obtener/{id}")]
+        public async Task<IActionResult> Obtener(string id)
+        {
+            var rsp = new Respuesta<PersonaDTO>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _personaServicio.Obtener(id);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
     }
 }

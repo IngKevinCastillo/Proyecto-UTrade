@@ -36,6 +36,7 @@
 
   <button
     class="icon-btn"
+    *ngIf="mostrarReportes"
     [class.active]="activeBtn === 'reportes'"
     (click)="setActive('reportes')"
   >
