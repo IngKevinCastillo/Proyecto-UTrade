@@ -189,6 +189,36 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="campo-perfil">
+          <label for="nombreUsuario" class="etiqueta-campo"
+            >Nombre de Usuario</label
+          >
+          <input
+            type="text"
+            id="nombreUsuario"
+            formControlName="nombreUsuario"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                profileForm.get('nombreUsuario')?.invalid &&
+                profileForm.get('nombreUsuario')?.touched
+            }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              profileForm.get('nombreUsuario')?.invalid &&
+              profileForm.get('nombreUsuario')?.touched
+            "
+          >
+            El nombre de usuario es requerido
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="contenedor-seccion mt-5">
       <h3>Vista Previa</h3>
       <div class="preview-card mt-3">
