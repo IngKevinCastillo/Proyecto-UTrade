@@ -16,12 +16,6 @@ namespace DTO
 
         public string IdPersonaReportada { get; set; }
 
-        public virtual PersonaDTO IdPersonaRemitenteNavigation { get; set; }
-
-        public virtual PersonaDTO IdPersonaReportadaNavigation { get; set; }
-
-        public virtual MensajeAccionDTO IdTipoMensajeNavigation { get; set; }
-
         public virtual ICollection<NotificacionesDTO> Notificaciones { get; set; }
     }
 }

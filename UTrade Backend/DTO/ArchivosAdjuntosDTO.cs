@@ -13,7 +13,5 @@ namespace DTO
         public byte[] Archivo { get; set; }
 
         public string IdMensaje { get; set; }
-
-        public virtual MensajesDTO IdMensajeNavigation { get; set; }
     }
 }
