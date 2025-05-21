@@ -1,0 +1,112 @@
+﻿using AutoMapper;
+using BLL.Servicios.Contrato;
+using DAL.Repositorios.Contrato;
+using DTO;
+using Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BLL.Servicios
+{
+    public class PublicacionesServicio : IPublicacionesServicio
+    {
+        private readonly IRepositorioGenerico<Publicaciones> _publicacionesRepositorio;
+        private readonly IMapper _mapper;
+        public PublicacionesServicio(IRepositorioGenerico<Publicaciones> publicacionesRepositorio, IMapper mapper)
+        {
+            _publicacionesRepositorio = publicacionesRepositorio;
+            _mapper = mapper;
+        }
+
+        public async Task<PublicacionesDTO> Buscar(string id)
+        {
+            try
+            {
+                var publicacionEncontrada = await _publicacionesRepositorio.Obtener(x => x.Id == id);
+                if (publicacionEncontrada == null)
+                    throw new TaskCanceledException("Usuario no existe");
+                return _mapper.Map<PublicacionesDTO>(publicacionEncontrada);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<PublicacionesDTO> Crear(PublicacionesDTO modelo)
+        {
+            try
+            {
+                var publicacionCreada = await _publicacionesRepositorio.Crear(_mapper.Map<Publicaciones>(modelo));
+                if (publicacionCreada.Id == null)
+                    throw new Exception("No se pudo crear");
+                return _mapper.Map<PublicacionesDTO>(publicacionCreada);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> Editar(PublicacionesDTO modelo)
+        {
+            try
+            {
+                var publicacionModelo = _mapper.Map<Publicaciones>(modelo);
+                var publicacionEncontrada = await _publicacionesRepositorio.Obtener(x => x.Id == modelo.Id);
+                if (publicacionEncontrada == null)
+                    throw new TaskCanceledException("La publicacion no existe");
+                publicacionEncontrada.Titulo = publicacionModelo.Titulo;
+                publicacionEncontrada.FechaPublicacion = publicacionModelo.FechaPublicacion;
+                publicacionEncontrada.Precio = publicacionModelo.Precio;
+                publicacionEncontrada.IdCategoria = publicacionModelo.IdCategoria;
+                publicacionEncontrada.Descripcion = publicacionModelo.Descripcion;
+                publicacionEncontrada.Ubicacion = publicacionModelo.Ubicacion;
+                bool respuesta = await _publicacionesRepositorio.Editar(publicacionEncontrada);
+                if (!respuesta)
+                    throw new TaskCanceledException("No se pudo editar");
+                return respuesta;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> Eliminar(string id)
+        {
+            try
+            {
+                var publicacionEncontrada = await _publicacionesRepositorio.Obtener(x => x.Id == id);
+                if (publicacionEncontrada == null)
+                    throw new TaskCanceledException("La publicacion no existe");
+                bool respuesta = await _publicacionesRepositorio.Eliminar(publicacionEncontrada);
+                if (!respuesta)
+                    throw new TaskCanceledException("No se pudo eliminar");
+                return respuesta;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<PublicacionesDTO>> Listar()
+        {
+            try
+            {
+                var queryPublicacion = await _publicacionesRepositorio.Consultar();
+                var listaPublicaciones = queryPublicacion.ToList();
+
+                return _mapper.Map<List<PublicacionesDTO>>(listaPublicaciones);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+    }
+}
