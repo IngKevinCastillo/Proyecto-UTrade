@@ -1,0 +1,25 @@
+.message-wrapper {
+  display: flex;
+  align-items: center;
+
+  &.own-message {
+    justify-content: flex-end;
+  }
+}
+
+.message {
+  max-width: 70%;
+  position: relative;
+
+  &.own {
+    background-color: #5470e6;
+    color: white;
+    border-radius: 18px 18px 0 18px;
+  }
+
+  &.other {
+    background-color: #5470e6;
+    color: white;
+    border-radius: 18px 18px 18px 0;
+  }
+}

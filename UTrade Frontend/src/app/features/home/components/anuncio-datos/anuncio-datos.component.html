@@ -1,0 +1,92 @@
+<div class="p-4">
+  <div
+    (click)="salir()"
+    class="rounded-circle d-flex justify-content-center align-items-center mb-4"
+    style="
+      width: 50px;
+      height: 50px;
+      background-color: #2c248b;
+      cursor: pointer;
+    "
+  >
+    <mat-icon (click)="salir()" style="font-size: 24px; color: white"
+      >close</mat-icon
+    >
+  </div>
+
+  <app-user-profile
+    [username]="username"
+    [userHandle]="userHandle"
+    [avatarUrl]="userAvatar"
+    class="mb-4"
+  ></app-user-profile>
+
+  <div class="mb-4">
+    <p class="mb-1 small">
+      Fotos - 0/10 - Puedes agregar un máximo de 10 fotos
+    </p>
+
+    <input type="file" id="fileInput" (change)="manejarFotos($event)" hidden multiple accept="image/*" />
+
+    <div class="border rounded p-4 text-center" style="cursor: pointer" (click)="abrirInput()"
+      (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+      <div class="rounded-circle d-flex justify-content-center align-items-center mx-auto mb-2"
+        style="width: 40px; height: 40px; border: 2px solid #2c248b">
+        <mat-icon style="color: #2c248b">add</mat-icon>
+      </div>
+      <p class="mb-0">Agregar fotos</p>
+      <small class="text-muted">o arrastra y suelta</small>
+    </div>
+  </div>
+
+
+  <div class="mb-3">
+    <h6 class="mb-3">Obligatorio</h6>
+    <p class="small text-muted mb-3">
+      Detalla al máximo para que la información sea lo más comprensible posible.
+    </p>
+
+    <div class="form-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Título"
+        [ngModel]="title"
+        (ngModelChange)="onTitleChange($event)"
+      />
+    </div>
+
+    <div class="form-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Precio"
+        [ngModel]="price"
+        (ngModelChange)="onPriceChange($event)"
+      />
+    </div>
+
+    <div class="form-group mb-3">
+      <select
+        class="form-select"
+        [ngModel]="category"
+        (ngModelChange)="onCategoryChange($event)"
+      >
+        <option value="" disabled selected>Categoría</option>
+        <option value="Pension">Pension</option>
+        <option value="Mueble">Muebles</option>
+        <option value="Ropa">Ropa</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <textarea
+        class="form-control"
+        rows="3"
+        placeholder="Descripción"
+        [ngModel]="description"
+        (ngModelChange)="onDescriptionChange($event)"
+      ></textarea>
+    </div>
+  </div>
+</div>

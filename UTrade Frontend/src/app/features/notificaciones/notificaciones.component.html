@@ -1,0 +1,22 @@
+<mat-card class="notificaciones-container my-3">
+    <h3 class="notificaciones-titulo">Notificaciones</h3>
+
+    <div class="notificaciones-botones">
+        <button mat-stroked-button class="boton-filtro" (click)="notificacionesTodas()">Todas</button>
+        <button mat-stroked-button class="boton-filtro" (click)="notificacionesNoLeidas()">No Leídas</button>
+    </div>
+
+    <ng-container *ngFor="let notificacion of listaNotificaciones">
+        <mat-card class="notificacion-card">
+            <mat-card-content class="notificacion-contenido">
+                <img [src]="imagenRuta()" class="notificacion-avatar" alt="Avatar" />
+                <div class="notificacion-texto">
+                    <strong>{{ notificacion.nombre }}</strong> {{ notificacion.descripcion }}
+                    <div class="notificacion-meta">{{ calcularTiempo(notificacion.fecha) }} / {{ notificacion.tipo }}
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+</mat-card>
+<app-footer></app-footer>

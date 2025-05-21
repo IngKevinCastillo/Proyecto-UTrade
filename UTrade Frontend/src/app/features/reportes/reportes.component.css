@@ -1,0 +1,162 @@
+.reportes-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+}
+
+.reportes-titulo {
+  text-align: center;
+  margin-bottom: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.reportes-botones {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.boton-filtro {
+  padding: 4px 16px;
+  font-size: 12px;
+  border-radius: 20px;
+}
+
+.filtro-tipo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.reporte-card {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.reporte-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.no-leido {
+  border-left: 4px solid #2196F3;
+}
+
+.reporte-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.tipo-usuario {
+  background-color: #E1F5FE;
+  color: #0288D1;
+}
+
+.tipo-anuncio {
+  background-color: #E8F5E9;
+  color: #388E3C;
+}
+
+.reporte-contenido {
+  padding: 8px 16px;
+}
+
+.reporte-descripcion {
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.reporte-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #757575;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.estado-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.estado-pendiente {
+  background-color: #FFF3E0;
+  color: #E65100;
+}
+
+.estado-en-revisión {
+  background-color: #E3F2FD;
+  color: #1976D2;
+}
+
+.estado-resuelto {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+}
+
+.estado-rechazado {
+  background-color: #FFEBEE;
+  color: #C62828;
+}
+
+mat-card-actions {
+  padding: 8px 16px 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.sin-reportes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+  color: #757575;
+}
+
+.sin-reportes mat-icon {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+  margin-bottom: 16px;
+  color: #BDBDBD;
+}
+
+@media (max-width: 600px) {
+  .reportes-botones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .estado-badge {
+    position: static;
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+  
+  .reporte-meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

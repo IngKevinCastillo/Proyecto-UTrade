@@ -1,0 +1,222 @@
+<div class="contenedor-perfil">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Perfiles</h2>
+    <button
+      type="button"
+      class="btn-close-circle"
+      aria-label="Close"
+      (click)="cancel()"
+    >
+      <span class="x-icon">×</span>
+    </button>
+  </div>
+
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        style="color: #2c258a; border-bottom: 2px solid #2c258a"
+        >Perfil principal</a
+      >
+    </li>
+  </ul>
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="campo-perfil">
+          <label for="nombres" class="etiqueta-campo">Nombres</label>
+          <input
+            type="text"
+            id="nombres"
+            formControlName="nombres"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                profileForm.get('nombres')?.invalid &&
+                profileForm.get('nombres')?.touched
+            }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              profileForm.get('nombres')?.invalid &&
+              profileForm.get('nombres')?.touched
+            "
+          >
+            Los nombres son requeridos
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <div class="campo-perfil">
+          <label for="correo" class="etiqueta-campo">Correo Electrónico</label>
+          <input
+            type="email"
+            id="correo"
+            formControlName="correo"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                profileForm.get('correo')?.invalid &&
+                profileForm.get('correo')?.touched
+            }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              profileForm.get('correo')?.invalid &&
+              profileForm.get('correo')?.touched
+            "
+          >
+            Ingrese un correo electrónico válido
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="campo-perfil">
+          <label for="apellidos" class="etiqueta-campo">Apellidos</label>
+          <input
+            type="text"
+            id="apellidos"
+            formControlName="apellidos"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                profileForm.get('apellidos')?.invalid &&
+                profileForm.get('apellidos')?.touched
+            }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              profileForm.get('apellidos')?.invalid &&
+              profileForm.get('apellidos')?.touched
+            "
+          >
+            Los apellidos son requeridos
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <div class="campo-perfil">
+          <label for="telefono" class="etiqueta-campo">Teléfono</label>
+          <input
+            type="tel"
+            id="telefono"
+            formControlName="telefono"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                profileForm.get('telefono')?.invalid &&
+                profileForm.get('telefono')?.touched
+            }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              profileForm.get('telefono')?.invalid &&
+              profileForm.get('telefono')?.touched
+            "
+          >
+            El teléfono es requerido
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <div class="campo-perfil">
+          <label for="genero" class="etiqueta-campo">Género</label>
+          <select
+            id="genero"
+            formControlName="genero"
+            class="form-select"
+            [ngClass]="{
+              'is-invalid':
+                profileForm.get('genero')?.invalid &&
+                profileForm.get('genero')?.touched
+            }"
+          >
+            <option *ngFor="let option of genderOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              profileForm.get('genero')?.invalid &&
+              profileForm.get('genero')?.touched
+            "
+          >
+            El género es requerido
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <div class="campo-perfil">
+          <label for="fechaNacimiento" class="etiqueta-campo"
+            >Fecha de Nacimiento</label
+          >
+          <input
+            type="date"
+            id="fechaNacimiento"
+            formControlName="fechaNacimiento"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                profileForm.get('fechaNacimiento')?.invalid &&
+                profileForm.get('fechaNacimiento')?.touched
+            }"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="
+              profileForm.get('fechaNacimiento')?.invalid &&
+              profileForm.get('fechaNacimiento')?.touched
+            "
+          >
+            La fecha de nacimiento es requerida
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contenedor-seccion mt-5">
+      <h3>Vista Previa</h3>
+      <div class="preview-card mt-3">
+        <div class="d-flex align-items-center">
+          <img src="icons/oceana.png" alt="Avatar" class="foto-perfil me-3" />
+          <div>
+            <h4 class="mb-1">
+              {{ profileForm.get("nombres")?.value }}
+              {{ profileForm.get("apellidos")?.value }}
+            </h4>
+            <p class="mb-0">{{ profileForm.get("correo")?.value }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-3 mt-4">
+      <button type="button" class="btn btn-light" (click)="cancel()">
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="btn text-white"
+        [disabled]="profileForm.invalid"
+        style="background-color: #2c258a"
+      >
+        Guardar cambios
+      </button>
+    </div>
+  </form>
+</div>
