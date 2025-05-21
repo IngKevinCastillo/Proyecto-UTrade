@@ -21,7 +21,7 @@ public partial class Persona
 
     public string Contraseña { get; set; } = null!;
 
-    public string Correo { get; set; } = null!;
+    public string? Correo { get; set; }
 
     public string? Telefono { get; set; }
 
