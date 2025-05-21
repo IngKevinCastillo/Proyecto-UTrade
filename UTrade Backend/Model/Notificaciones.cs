@@ -15,6 +15,8 @@ public partial class Notificaciones
 
     public TimeOnly Hora { get; set; }
 
+    public bool Estado { get; set; }
+
     public virtual Persona IdPersonaNavigation { get; set; } = null!;
 
     public virtual TipoAccion IdTipoAccionNavigation { get; set; } = null!;

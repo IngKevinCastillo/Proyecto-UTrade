@@ -62,6 +62,7 @@ namespace BLL.Servicios
                 notificacionEncontrada.IdTipoAccionNavigation = notificacionModelo.IdTipoAccionNavigation;
                 notificacionEncontrada.Fecha = notificacionModelo.Fecha;
                 notificacionEncontrada.Hora = notificacionModelo.Hora;
+                notificacionEncontrada.Estado = notificacionModelo.Estado;
                 bool respuesta = await _notificacionesRepositorio.Editar(notificacionEncontrada);
                 if (!respuesta)
                     throw new TaskCanceledException("No se pudo editar");

@@ -49,5 +49,7 @@ public partial class Persona
 
     public virtual ICollection<Reseña> Reseñas { get; set; } = new List<Reseña>();
 
-    public virtual ICollection<TipoAccion> TipoAccions { get; set; } = new List<TipoAccion>();
+    public virtual ICollection<TipoAccion> TipoAccionIdPersonaRemitenteNavigations { get; set; } = new List<TipoAccion>();
+
+    public virtual ICollection<TipoAccion> TipoAccionIdPersonaReportadaNavigations { get; set; } = new List<TipoAccion>();
 }

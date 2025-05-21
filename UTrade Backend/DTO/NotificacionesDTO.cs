@@ -12,11 +12,13 @@ namespace DTO
 
         public string IdPersona { get; set; }
 
-        public string IdTipoAccion { get; set; }
+        public string IdTipoAccion { get; set; } 
 
         public DateOnly Fecha { get; set; }
 
         public TimeOnly Hora { get; set; }
+
+        public bool Estado { get; set; }
 
         public virtual PersonaDTO IdPersonaNavigation { get; set; }
 

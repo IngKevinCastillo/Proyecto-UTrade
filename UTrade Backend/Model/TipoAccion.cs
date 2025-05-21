@@ -11,7 +11,11 @@ public partial class TipoAccion
 
     public string IdPersonaRemitente { get; set; } = null!;
 
+    public string IdPersonaReportada { get; set; } = null!;
+
     public virtual Persona IdPersonaRemitenteNavigation { get; set; } = null!;
+
+    public virtual Persona IdPersonaReportadaNavigation { get; set; } = null!;
 
     public virtual MensajeAccion IdTipoMensajeNavigation { get; set; } = null!;
 
