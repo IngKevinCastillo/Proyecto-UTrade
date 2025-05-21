@@ -64,6 +64,7 @@ export class TopbarComponent {
   }
 
   logout() {
+    localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
   }
 }

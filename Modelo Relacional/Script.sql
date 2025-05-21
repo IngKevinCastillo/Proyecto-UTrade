@@ -192,3 +192,20 @@ CREATE TABLE Reportes (
     CONSTRAINT FK_Reportes_Motivo FOREIGN KEY (idMotivo) REFERENCES MotivosReporte(id)
 );
 GO
+
+-- Anexo de los motivos de reporte a la tabla.
+
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO001', 'Contenido inapropiado');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO002', 'Spam o publicidad');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO003', 'Acoso o bullying');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO004', 'Información falsa');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO005', 'Incitación a la violencia');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO006', 'Infracción de derechos de autor');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO007', 'Otra razón');
+GO
+
+-- Anexo de los tipos de reporte a la tabla.
+
+INSERT INTO [dbo].[TiposReporte] ([id], [nombre]) VALUES ('TR001', 'Usuario');
+INSERT INTO [dbo].[TiposReporte] ([id], [nombre]) VALUES ('TR002', 'Publicación');
+GO

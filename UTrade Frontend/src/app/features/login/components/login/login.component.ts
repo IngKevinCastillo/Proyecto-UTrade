@@ -37,9 +37,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.username, this.password).subscribe({
       next: (res: LoginResponse) => {
         if (res.estado && res.valor.idUsuario) {
-          if (this.rememberMe) {
-            localStorage.setItem('usuario', JSON.stringify(res.valor));
-          }
+          localStorage.setItem('usuario', JSON.stringify(res.valor));
+          
           this.router.navigate(['/home']);
         } else {
           this.errorMessage = 'Usuario o contraseña incorrectos';
