@@ -35,7 +35,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("Buscar")]
+        [Route("Buscar/{id}")]
         public async Task<IActionResult> Buscar(string id)
         {
             var rsp = new Respuesta<NotificacionesDTO>();
