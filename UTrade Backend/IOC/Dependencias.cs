@@ -27,6 +27,7 @@ namespace IOC
             services.AddAutoMapper(typeof(PerfilAutoMapper));
             services.AddScoped<IPersonaServicio, PersonaServicio>();
             services.AddScoped<IRolServicio, RolServicio>();
+            services.AddScoped<INotificacionServicio, NotificacionServicio>();
         }
     }
 }

@@ -8,23 +8,23 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RolController : ControllerBase
+    public class NotificacionesController : ControllerBase
     {
-        private readonly IRolServicio _rolServicio;
-        public RolController(IRolServicio rolServicio)
+        private readonly INotificacionServicio _notificacionesServicio;
+        public NotificacionesController(INotificacionServicio notificacionesServicio)
         {
-            _rolServicio = rolServicio;
+            _notificacionesServicio = notificacionesServicio;
         }
 
         [HttpGet]
         [Route("Listar")]
         public async Task<IActionResult> listar()
         {
-            var rsp = new Respuesta<List<RolDTO>>();
+            var rsp = new Respuesta<List<NotificacionesDTO>>();
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _rolServicio.Listar();
+                rsp.Valor = await _notificacionesServicio.Listar();
             }
             catch (Exception ex)
             {
@@ -38,11 +38,11 @@ namespace API.Controllers
         [Route("Buscar")]
         public async Task<IActionResult> Buscar(string id)
         {
-            var rsp = new Respuesta<RolDTO>();
+            var rsp = new Respuesta<NotificacionesDTO>();
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _rolServicio.Buscar(id);
+                rsp.Valor = await _notificacionesServicio.Buscar(id);
             }
             catch (Exception ex)
             {
@@ -54,13 +54,13 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("Guardar")]
-        public async Task<IActionResult> Guardar([FromBody] RolDTO rol)
+        public async Task<IActionResult> Guardar([FromBody] NotificacionesDTO notificacion)
         {
-            var rsp = new Respuesta<RolDTO>();
+            var rsp = new Respuesta<NotificacionesDTO>();
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _rolServicio.Crear(rol);
+                rsp.Valor = await _notificacionesServicio.Crear(notificacion);
             }
             catch (Exception ex)
             {
@@ -72,13 +72,13 @@ namespace API.Controllers
 
         [HttpPut]
         [Route("Editar")]
-        public async Task<IActionResult> Editar([FromBody] RolDTO rol)
+        public async Task<IActionResult> Editar([FromBody] NotificacionesDTO notificacion)
         {
             var rsp = new Respuesta<bool>();
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _rolServicio.Editar(rol);
+                rsp.Valor = await _notificacionesServicio.Editar(notificacion);
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace API.Controllers
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _rolServicio.Eliminar(id);
+                rsp.Valor = await _notificacionesServicio.Eliminar(id);
             }
             catch (Exception ex)
             {
