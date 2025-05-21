@@ -5,18 +5,18 @@ USE UTradeDB;
 GO
 
 
--- Script SQL para creación de tablas basado en el diagrama
+-- Script SQL para creaciï¿½n de tablas basado en el diagrama
 -- Cada primer atributo es considerado como llave primaria
--- Las relaciones foráneas están basadas en el diagrama proporcionado
+-- Las relaciones forï¿½neas estï¿½n basadas en el diagrama proporcionado
 
--- Creación de tabla Rol
+-- Creaciï¿½n de tabla Rol
 CREATE TABLE Rol (
     id NVARCHAR(50) PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
 );
 GO
 
--- Creación de tabla TipoAccion
+-- Creaciï¿½n de tabla TipoAccion
 CREATE TABLE TipoAccion (
     id NVARCHAR(50) PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
@@ -24,41 +24,41 @@ CREATE TABLE TipoAccion (
 );
 GO
 
--- Creación de tabla TiposReporte
+-- Creaciï¿½n de tabla TiposReporte
 CREATE TABLE TiposReporte (
     id NVARCHAR(50) PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL
 );
 GO
 
--- Creación de tabla EstadosReporte
+-- Creaciï¿½n de tabla EstadosReporte
 CREATE TABLE EstadosReporte (
     id NVARCHAR(50) PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
 );
 GO
 
--- Creación de tabla MotivosReporte
+-- Creaciï¿½n de tabla MotivosReporte
 CREATE TABLE MotivosReporte (
     id NVARCHAR(50) PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL
 );
 GO
 
--- Creación de tabla Razones
+-- Creaciï¿½n de tabla Razones
 CREATE TABLE Razones (
     idRazon NVARCHAR(50) PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL
 );
 GO
 
--- Creación de tabla CategoriaPublicacion
+-- Creaciï¿½n de tabla CategoriaPublicacion
 CREATE TABLE CategoriaPublicacion (
     id NVARCHAR(50) PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL
 );
 GO
--- Creación de tabla Persona
+-- Creaciï¿½n de tabla Persona
 CREATE TABLE Persona (
     id NVARCHAR(50) PRIMARY KEY,
     nombres VARCHAR(100) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE Persona (
     genero CHAR(1),
     idRol NVARCHAR(50) NOT NULL,
     nombreUsuario VARCHAR(50) UNIQUE NOT NULL,
-    contraseña VARCHAR(255) NOT NULL,
+    contraseï¿½a VARCHAR(255) NOT NULL,
     correo VARCHAR(100) UNIQUE NOT NULL,
     telefono VARCHAR(20),
     fotoPerfil VARCHAR(255),
@@ -75,7 +75,7 @@ CREATE TABLE Persona (
 );
 GO
 
--- Creación de tabla Publicaciones
+-- Creaciï¿½n de tabla Publicaciones
 CREATE TABLE Publicaciones (
     id NVARCHAR(50) PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
@@ -85,12 +85,12 @@ CREATE TABLE Publicaciones (
     idCategoria NVARCHAR(50),
     descripcion TEXT,
     ubicacion VARCHAR(255),
-    idReseña NVARCHAR(50) NULL,
+    idReseï¿½a NVARCHAR(50) NULL,
     CONSTRAINT FK_Publicaciones_Persona FOREIGN KEY (idUsuario) REFERENCES Persona(id),
     CONSTRAINT FK_Publicaciones_Categoria FOREIGN KEY (idCategoria) REFERENCES CategoriaPublicacion(id)
 );
 GO
--- Creación de tabla Favoritos
+-- Creaciï¿½n de tabla Favoritos
 CREATE TABLE Favoritos (
     id NVARCHAR(50) PRIMARY KEY,
     idPersona NVARCHAR(50) NOT NULL,
@@ -100,22 +100,22 @@ CREATE TABLE Favoritos (
     CONSTRAINT UQ_Favorito UNIQUE (idPersona, idPublicacion)
 );
 GO
--- Creación de tabla Reseña
-CREATE TABLE Reseña (
+-- Creaciï¿½n de tabla Reseï¿½a
+CREATE TABLE Reseï¿½a (
     id NVARCHAR(50) PRIMARY KEY,
     calificacion INT NOT NULL,
     comentario TEXT,
     idPublicacion NVARCHAR(50) NOT NULL,
     idPersona NVARCHAR(50) NOT NULL,
-    CONSTRAINT FK_Reseña_Publicacion FOREIGN KEY (idPublicacion) REFERENCES Publicaciones(id),
-    CONSTRAINT FK_Reseña_Persona FOREIGN KEY (idPersona) REFERENCES Persona(id)
+    CONSTRAINT FK_Reseï¿½a_Publicacion FOREIGN KEY (idPublicacion) REFERENCES Publicaciones(id),
+    CONSTRAINT FK_Reseï¿½a_Persona FOREIGN KEY (idPersona) REFERENCES Persona(id)
 );
 GO
--- Actualización de la referencia circular entre Publicaciones y Reseña
+-- Actualizaciï¿½n de la referencia circular entre Publicaciones y Reseï¿½a
 ALTER TABLE Publicaciones
-ADD CONSTRAINT FK_Publicaciones_Reseña FOREIGN KEY (idReseña) REFERENCES Reseña(id);
+ADD CONSTRAINT FK_Publicaciones_Reseï¿½a FOREIGN KEY (idReseï¿½a) REFERENCES Reseï¿½a(id);
 GO
--- Creación de tabla FotosPublicaciones
+-- Creaciï¿½n de tabla FotosPublicaciones
 CREATE TABLE FotosPublicaciones (
     id NVARCHAR(50) PRIMARY KEY,
     foto VARCHAR(255) NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE FotosPublicaciones (
     CONSTRAINT FK_FotosPublicaciones_Publicacion FOREIGN KEY (idPublicacion) REFERENCES Publicaciones(id)
 );
 GO
--- Creación de tabla Notificaciones
+-- Creaciï¿½n de tabla Notificaciones
 CREATE TABLE Notificaciones (
     id NVARCHAR(50) PRIMARY KEY,
     idPersona NVARCHAR(50) NOT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE Notificaciones (
     CONSTRAINT FK_Notificaciones_TipoAccion FOREIGN KEY (idTipoAccion) REFERENCES TipoAccion(id)
 );
 GO
--- Creación de tabla Chat
+-- Creaciï¿½n de tabla Chat
 CREATE TABLE Chat (
     id NVARCHAR(50) PRIMARY KEY,
     usuario1_id NVARCHAR(50) NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE Chat (
     CONSTRAINT FK_Chat_Usuario2 FOREIGN KEY (usuario2_id) REFERENCES Persona(id)
 );
 GO
--- Creación de tabla Mensajes
+-- Creaciï¿½n de tabla Mensajes
 CREATE TABLE Mensajes (
     id NVARCHAR(50) PRIMARY KEY,
     chat_id NVARCHAR(50) NOT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE Mensajes (
     CONSTRAINT FK_Mensajes_Autor FOREIGN KEY (autor_id) REFERENCES Persona(id)
 );
 GO
--- Creación de tabla Contactanos
+-- Creaciï¿½n de tabla Contactanos
 CREATE TABLE Contactanos (
     id NVARCHAR(50) PRIMARY KEY,
     idPersona NVARCHAR(50) NOT NULL,
@@ -165,7 +165,7 @@ CREATE TABLE Contactanos (
     CONSTRAINT FK_Contactanos_Razon FOREIGN KEY (idRazon) REFERENCES Razones(idRazon)
 );
 GO
--- Creación de tabla ArchivosAdjuntos
+-- Creaciï¿½n de tabla ArchivosAdjuntos
 CREATE TABLE ArchivosAdjuntos (
     id NVARCHAR(50) PRIMARY KEY,
     archivo VARCHAR(255) NOT NULL,
@@ -173,7 +173,7 @@ CREATE TABLE ArchivosAdjuntos (
     CONSTRAINT FK_ArchivosAdjuntos_Mensaje FOREIGN KEY (idMensaje) REFERENCES Mensajes(id)
 );
 GO
--- Creación de tabla Reportes
+-- Creaciï¿½n de tabla Reportes
 CREATE TABLE Reportes (
     idReporte NVARCHAR(50) PRIMARY KEY,
     idTipoReporte NVARCHAR(50) NOT NULL,
@@ -198,14 +198,21 @@ GO
 INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO001', 'Contenido inapropiado');
 INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO002', 'Spam o publicidad');
 INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO003', 'Acoso o bullying');
-INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO004', 'Información falsa');
-INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO005', 'Incitación a la violencia');
-INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO006', 'Infracción de derechos de autor');
-INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO007', 'Otra razón');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO004', 'Informaciï¿½n falsa');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO005', 'Incitaciï¿½n a la violencia');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO006', 'Infracciï¿½n de derechos de autor');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO007', 'Otra razï¿½n');
 GO
 
 -- Anexo de los tipos de reporte a la tabla.
 
 INSERT INTO [dbo].[TiposReporte] ([id], [nombre]) VALUES ('TR001', 'Usuario');
-INSERT INTO [dbo].[TiposReporte] ([id], [nombre]) VALUES ('TR002', 'Publicación');
+INSERT INTO [dbo].[TiposReporte] ([id], [nombre]) VALUES ('TR002', 'Publicaciï¿½n');
+GO
+
+-- Anexo de los estados de reporte a la tabla.  
+
+INSERT INTO [dbo].[EstadosReporte] ([id], [nombre]) VALUES ('ER001', 'Pendiente');
+INSERT INTO [dbo].[EstadosReporte] ([id], [nombre]) VALUES ('ER002', 'En revisiÃ³n');
+INSERT INTO [dbo].[EstadosReporte] ([id], [nombre]) VALUES ('ER003', 'Resuelto');
 GO

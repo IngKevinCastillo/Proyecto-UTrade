@@ -28,6 +28,7 @@ namespace IOC
             services.AddScoped<IPersonaServicio, PersonaServicio>();
             services.AddScoped<IRolServicio, RolServicio>();
             services.AddScoped<INotificacionServicio, NotificacionServicio>();
+            services.AddScoped<IReporteServicio, ReporteServicio>();
         }
     }
 }

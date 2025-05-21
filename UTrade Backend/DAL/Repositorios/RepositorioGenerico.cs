@@ -18,17 +18,20 @@ namespace DAL.Repositorios
             _dbContext = utradedbContext;
         }
 
-        public async Task<IQueryable<TModelo>> Consultar(Expression<Func<TModelo, bool>> filtro = null)
+        public async Task<IQueryable<TModelo>> Consultar(Expression<Func<TModelo, bool>> filtro = null, Func<IQueryable<TModelo>, IQueryable<TModelo>> include = null)
         {
             try
             {
                 IQueryable<TModelo> queryModelo = filtro == null ? _dbContext.Set<TModelo>() : _dbContext.Set<TModelo>().Where(filtro);
+
+                if (include != null)
+                    queryModelo = include(queryModelo);
+
                 return queryModelo;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-
             }
         }
 
