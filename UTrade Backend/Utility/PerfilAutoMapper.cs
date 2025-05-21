@@ -82,7 +82,14 @@ namespace Utility
             #endregion
 
             #region Reportes
-            CreateMap<Reportes, ReportesDTO>().ReverseMap();
+            // De entidad a DTO
+            CreateMap<Reportes, ReportesDTO>()
+                .ForMember(dest => dest.IdEstado, opt => opt.MapFrom(src => src.IdEstado))
+                .ForMember(dest => dest.IdMotivo, opt => opt.MapFrom(src => src.IdMotivo))
+                .ForMember(dest => dest.IdTipoReporte, opt => opt.MapFrom(src => src.IdTipoReporte))
+                .ForMember(dest => dest.IdReportado, opt => opt.MapFrom(src => src.IdReportado))
+                .ForMember(dest => dest.IdReportante, opt => opt.MapFrom(src => src.IdReportante))
+                .ReverseMap();
             #endregion
 
             #region Reseña
