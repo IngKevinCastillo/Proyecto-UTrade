@@ -12,6 +12,7 @@ namespace BLL.Servicios.Contrato
         Task<List<RolDTO>> Listar();
         Task<RolDTO> Crear(RolDTO modelo);
         Task<bool> Editar(RolDTO modelo);
+        Task<RolDTO> Buscar(string id);
         Task<bool> Eliminar(string id);
     }
 }

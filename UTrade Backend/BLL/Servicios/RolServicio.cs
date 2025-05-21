@@ -50,6 +50,21 @@ namespace BLL.Servicios
             }
         }
 
+        public async Task<RolDTO> Buscar(string id)
+        {
+
+            try
+            {
+                var queryRol = await _rolRepositorio.Obtener(x => x.Id == id);
+
+                return _mapper.Map<RolDTO>(queryRol);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<bool> Eliminar(string id)
         {
             try
