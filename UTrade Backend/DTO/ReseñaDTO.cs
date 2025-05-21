@@ -18,10 +18,6 @@ namespace DTO
 
         public string IdPersona { get; set; }
 
-        public virtual PersonaDTO IdPersonaNavigation { get; set; }
-
-        public virtual PublicacionesDTO IdPublicacionNavigation { get; set; }
-
         public virtual ICollection<PublicacionesDTO> Publicaciones { get; set; }
     }
 }

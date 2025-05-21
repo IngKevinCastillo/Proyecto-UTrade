@@ -13,9 +13,5 @@ namespace DTO
         public string IdPersona { get; set; }
 
         public string IdPublicacion { get; set; }
-
-        public virtual PersonaDTO IdPersonaNavigation { get; set; }
-
-        public virtual PublicacionesDTO IdPublicacionNavigation { get; set; }
     }
 }
