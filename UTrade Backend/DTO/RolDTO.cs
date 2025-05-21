@@ -11,7 +11,5 @@ namespace DTO
         public string Id { get; set; } = null!;
 
         public string Nombre { get; set; } = null!;
-
-        public virtual ICollection<PersonaDTO> Personas { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace IOC
             services.AddTransient(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
             services.AddAutoMapper(typeof(PerfilAutoMapper));
             services.AddScoped<IPersonaServicio, PersonaServicio>();
+            services.AddScoped<IRolServicio, RolServicio>();
         }
     }
 }
