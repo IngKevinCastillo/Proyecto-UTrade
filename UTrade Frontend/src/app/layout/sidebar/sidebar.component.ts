@@ -1,23 +1,53 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { NavigationEnd } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { ConexionBackendService } from '../../Services/conexion-backend.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
-  activeBtn: string = 'home'; 
+export class SidebarComponent implements OnInit {
+  activeBtn: string = 'home';
+  mostrarReportes: boolean = true;
 
-  constructor(private router: Router) {
-    this.setActiveFromUrl(this.router.url);
-
+  constructor(
+    private router: Router,
+    private conexionBackend: ConexionBackendService,
+    private http: HttpClient
+  ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.setActiveFromUrl(this.router.url);
+        this.setActiveFromUrl(event.url);
       }
     });
+  }
+
+  ngOnInit(): void {
+    const usuario = JSON.parse(localStorage.getItem('usuario')!);
+
+    const id = usuario.idUsuario;
+
+    if (id) {
+      const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${id}`;
+
+      this.http.get(url).subscribe({
+        next: (res: any) => {
+          if (res?.estado && res?.valor?.idRol === 'ROL02') {
+            this.mostrarReportes = false;
+            if (this.router.url.includes('/reportes')) {
+              this.router.navigate(['/home']);
+            }
+          }
+        },
+        error: (err) => {
+          console.error('Error al obtener el rol:', err);
+        }
+      });
+    }
+
+    this.setActiveFromUrl(this.router.url);
   }
 
   setActiveFromUrl(url: string) {
@@ -25,6 +55,8 @@ export class SidebarComponent {
       this.activeBtn = 'home';
     } else if (url.includes('/chat')) {
       this.activeBtn = 'chat';
+    } else if (url.includes('/map')) {
+      this.activeBtn = 'map';
     } else if (url.includes('/soporte')) {
       this.activeBtn = 'soporte';
     } else if (url.includes('/reportes')) {

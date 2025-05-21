@@ -119,5 +119,21 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public async Task<PersonaDTO> Obtener(string id)
+        {
+            try
+            {
+                var personaEncontrada = await _personaRepositorio.Obtener(x => x.Id == id);
+                if (personaEncontrada == null)
+                    throw new TaskCanceledException("Usuario no existe");
+                return _mapper.Map<PersonaDTO>(personaEncontrada);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }
