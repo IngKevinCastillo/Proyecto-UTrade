@@ -12,17 +12,17 @@ namespace DTO
 
         public string Nombres { get; set; }
 
-        public string Apellidos { get; set; }
+        public string Apellidos { get; set; } 
 
         public DateOnly? FechaNacimiento { get; set; }
 
         public string? Genero { get; set; }
 
-        public string IdRol { get; set; }
+        public string IdRol { get; set; } 
 
-        public string NombreUsuario { get; set; }
+        public string NombreUsuario { get; set; } 
 
-        public string Contraseña { get; set; }
+        public string Contraseña { get; set; } 
 
         public string? Correo { get; set; }
 
@@ -30,5 +30,7 @@ namespace DTO
         public string? FotoPerfilBase64 { get; set; }
 
         public byte[]? FotoPerfil { get; set; }
+
+        public string? IdEstado { get; set; }
     }
 }

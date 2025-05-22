@@ -27,6 +27,8 @@ public partial class Persona
 
     public byte[]? FotoPerfil { get; set; }
 
+    public string? IdEstado { get; set; }
+
     public virtual ICollection<Chat> ChatUsuario1s { get; set; } = new List<Chat>();
 
     public virtual ICollection<Chat> ChatUsuario2s { get; set; } = new List<Chat>();
@@ -34,6 +36,8 @@ public partial class Persona
     public virtual ICollection<Contactanos> Contactanos { get; set; } = new List<Contactanos>();
 
     public virtual ICollection<Favoritos> Favoritos { get; set; } = new List<Favoritos>();
+
+    public virtual Estados? IdEstadoNavigation { get; set; }
 
     public virtual Rol IdRolNavigation { get; set; } = null!;
 
