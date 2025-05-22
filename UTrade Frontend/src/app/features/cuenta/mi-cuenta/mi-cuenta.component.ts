@@ -14,7 +14,6 @@ export class MiCuentaComponent implements OnInit {
     nombreUsuario: '',
     correo: '',
     telefono: '',
-
   };
 
   mostrarCorreo = false;

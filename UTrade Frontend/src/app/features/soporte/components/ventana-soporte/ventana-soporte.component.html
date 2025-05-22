@@ -55,20 +55,44 @@
             ></button>
           </div>
 
-          <form [formGroup]="soporteForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="soporteForm" (ngSubmit)="enviarSoporte()">
+            <div class="mb-3">
+              <label for="correo" class="form-label">Correo Electrónico</label>
+              <input
+                type="email"
+                class="form-control"
+                id="correo"
+                formControlName="correo"
+                placeholder="ejemplo@correo.com"
+                [ngClass]="{ 'is-invalid': submitted && f['correo'].errors }"
+              />
+              <div
+                *ngIf="submitted && f['correo'].errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f['correo'].errors['required']">
+                  El correo es requerido
+                </div>
+                <div *ngIf="f['correo'].errors['email']">
+                  Ingresa un correo válido
+                </div>
+              </div>
+            </div>
+
             <div class="mb-3">
               <label for="razon" class="form-label">Razón</label>
               <select
-                class="form-select"
                 id="razon"
                 formControlName="razon"
+                class="form-select"
                 [ngClass]="{ 'is-invalid': submitted && f['razon'].errors }"
               >
-                <option value="" disabled selected>Selecciona una razón</option>
-                <option *ngFor="let razon of razones" [value]="razon">
-                  {{ razon }}
+                <option value="">Seleccione una razón</option>
+                <option *ngFor="let r of razones" [value]="r.idRazon">
+                  {{ r.nombre }}
                 </option>
               </select>
+
               <div
                 *ngIf="submitted && f['razon'].errors"
                 class="invalid-feedback"
@@ -77,19 +101,6 @@
                   Selecciona una razón
                 </div>
               </div>
-            </div>
-
-            <div class="mb-3" *ngIf="mostrarOtraRazon()">
-              <label for="otraRazon" class="form-label"
-                >Especifique otra razón</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="otraRazon"
-                formControlName="otraRazon"
-                placeholder="Especifique su razón"
-              />
             </div>
 
             <div class="mb-4">
