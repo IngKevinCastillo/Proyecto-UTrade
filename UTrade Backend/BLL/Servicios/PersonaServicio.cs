@@ -3,6 +3,7 @@ using BLL.Servicios.Contrato;
 using DAL.Repositorios.Contrato;
 using DTO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,11 @@ namespace BLL.Servicios
                 personaEncontrado.Contraseña = personaModelo.Contraseña;
                 personaEncontrado.Correo = personaModelo.Correo;
                 personaEncontrado.Telefono = personaModelo.Telefono;
+                if (!string.IsNullOrEmpty(modelo.FotoPerfilBase64))
+                {
+                    modelo.FotoPerfil = Convert.FromBase64String(modelo.FotoPerfilBase64);
+                    personaEncontrado.FotoPerfil = modelo.FotoPerfil;
+                }
                 bool respuesta = await _personaRepositorio.Editar(personaEncontrado);
                 if (!respuesta)
                     throw new TaskCanceledException("No se pudo editar");

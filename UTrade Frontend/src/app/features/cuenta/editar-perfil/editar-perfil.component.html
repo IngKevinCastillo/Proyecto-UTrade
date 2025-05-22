@@ -217,17 +217,36 @@
           </div>
         </div>
       </div>
+
+      <div class="col-md-6 mb-3">
+        <div class="campo-perfil">
+          <label class="etiqueta-campo invisible">Espacio</label>
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              #fileInput
+              hidden
+              (change)="onFileSelected($event)"
+            />
+            <button
+              type="button"
+              class="btn text-white"
+              style="background-color: #2c258a"
+              (click)="cambiarFotoPerfil()"
+            >
+              Cambiar foto de perfil
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="contenedor-seccion mt-5">
       <h3>Vista Previa</h3>
       <div class="preview-card mt-3">
         <div class="d-flex align-items-center">
-          <img
-            src="icons/no-photo.webp"
-            alt="Avatar"
-            class="foto-perfil me-3"
-          />
+          <img [src]="fotoPreview" alt="Avatar" class="foto-perfil me-3" />
           <div>
             <h4 class="mb-1">
               {{ profileForm.get("nombres")?.value }}
