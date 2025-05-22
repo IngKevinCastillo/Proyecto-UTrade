@@ -5,8 +5,20 @@
   background-color: #fff;
 }
 
+a.opcion.activa {
+  color: #2c258a;
+  border-bottom: 2px solid #2c258a;
+  cursor: pointer;
+}
+
 a {
   cursor: pointer;
+}
+
+a.opcion {
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .nav-link.activa {

@@ -3,18 +3,18 @@
 
     <ul class="nav nav-tabs mb-4">
       <li class="nav-item">
-        <a class="nav-link" [class.activa]="seccionActual === 'seguridad'"
-          style="color: #2c258a; border-bottom: 2px solid #2c258a" (click)="cambiarSeccion('seguridad')">Seguridad</a>
+        <a class="nav-link opcion" [class.activa]="seccionActual === 'seguridad'"
+          (click)="cambiarSeccion('seguridad')">Seguridad</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [class.activa]="seccionActual === 'reputacion'"
+        <a class="nav-link opcion" [class.activa]="seccionActual === 'reputacion'"
           (click)="cambiarSeccion('reputacion')">Reputación</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [class.activa]="seccionActual === 'publicaciones'" (click)="cambiarSeccion('publicaciones')">Mis
-          Publicaciones</a>
+        <a class="nav-link opcion" [class.activa]="seccionActual === 'publicaciones'"
+          (click)="cambiarSeccion('publicaciones')">Mis Publicaciones</a>
       </li>
-    </ul>    
+    </ul>     
 
     <div *ngIf="seccionActual === 'seguridad'">
       <div class="encabezado-perfil mb-4">
