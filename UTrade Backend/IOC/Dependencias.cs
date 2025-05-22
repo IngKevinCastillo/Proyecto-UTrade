@@ -19,19 +19,25 @@ namespace IOC
     {
         public static void InyectarDependencias(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<UtradedbContext>(options =>
+            services.AddDbContext<UtradebdContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("cadenaSQL"));
             });
+
             services.AddTransient(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
             services.AddAutoMapper(typeof(PerfilAutoMapper));
             services.AddScoped<IPersonaServicio, PersonaServicio>();
             services.AddScoped<IRolServicio, RolServicio>();
             services.AddScoped<INotificacionServicio, NotificacionServicio>();
             services.AddScoped<IReporteServicio, ReporteServicio>();
+
+            services.AddScoped<ITipoAccionServicio, TipoAccionServicio>();
+            services.AddScoped<IMensajeAccionServicio, MensajeAccionServicio>();
+            services.AddScoped<IPublicacionesServicio, PublicacionesServicio>();
+            services.AddScoped<ICategoriaPublicacionServicio, CategoriaPublicacionServicio>();
+            services.AddScoped<IFotosPublicacionesServicio, FotosPublicacionesServicio>();
             services.AddScoped<IContactanosServicio, ContactanosServicio>();
             services.AddScoped<IRazonServicio, RazonesServicio>();
-            services.AddScoped<ITipoAccionServicio, TipoAccionServicio>();
         }
     }
 }
