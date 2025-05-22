@@ -19,9 +19,5 @@ namespace DTO
         public TimeOnly Hora { get; set; }
 
         public bool Estado { get; set; }
-
-        public virtual PersonaDTO IdPersonaNavigation { get; set; }
-
-        public virtual TipoAccionDTO IdTipoAccionNavigation { get; set; }
     }
 }

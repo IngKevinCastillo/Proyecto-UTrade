@@ -13,7 +13,5 @@ namespace DTO
         public string Foto { get; set; }
 
         public string IdPublicacion { get; set; }
-
-        public virtual PublicacionesDTO IdPublicacionNavigation { get; set; }
     }
 }

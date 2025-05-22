@@ -30,12 +30,6 @@ namespace DTO
 
         public virtual ICollection<FotosPublicacionesDTO> FotosPublicaciones { get; set; }
 
-        public virtual CategoriaPublicacionDTO IdCategoriaNavigation { get; set; }
-
-        public virtual ReseñaDTO IdReseñaNavigation { get; set; }
-
-        public virtual PersonaDTO IdUsuarioNavigation { get; set; }
-
         public virtual ICollection<ReseñaDTO> Reseñas { get; set; }
 
     }
