@@ -17,12 +17,10 @@ namespace BLL.Servicios
     {
         private readonly IRepositorioGenerico<Persona> _personaRepositorio;
         private readonly IMapper _mapper;
-        private readonly ILogger<PersonaServicio> _logger;
-        public PersonaServicio(IRepositorioGenerico<Persona> usuarioRepositorio, IMapper mapper, ILogger<PersonaServicio> logger)
+        public PersonaServicio(IRepositorioGenerico<Persona> usuarioRepositorio, IMapper mapper)
         {
             _personaRepositorio = usuarioRepositorio;
             _mapper = mapper;
-            _logger = logger;
         }
 
         public async Task<PersonaDTO> Crear(PersonaDTO modelo)
@@ -56,14 +54,6 @@ namespace BLL.Servicios
                 personaEncontrado.Contraseña = personaModelo.Contraseña;
                 personaEncontrado.Correo = personaModelo.Correo;
                 personaEncontrado.Telefono = personaModelo.Telefono;
-                if (modelo.FotoPerfilBase64 == null)
-                {
-                    _logger.LogInformation("Imagen llegó NULL");
-                }
-                else
-                {
-                    _logger.LogInformation("Tamaño de imagen base64: {Length}", modelo.FotoPerfilBase64.Length);
-                }
                 if (!string.IsNullOrEmpty(modelo.FotoPerfilBase64))
                 {
                     modelo.FotoPerfil = Convert.FromBase64String(modelo.FotoPerfilBase64);
