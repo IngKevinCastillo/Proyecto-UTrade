@@ -42,7 +42,7 @@ namespace IOC
             services.AddScoped<IContactanosServicio, ContactanosServicio>();
             services.AddScoped<IRazonServicio, RazonesServicio>();
             
-            services.AddScoped<IEstadosServicio, EstadosServicio>();
+            
         }
     }
 }
