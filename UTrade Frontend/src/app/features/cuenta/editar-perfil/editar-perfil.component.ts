@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ConexionBackendService } from '../../../Services/conexion-backend.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -21,7 +22,8 @@ export class EditarPerfilComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private conexionBackend: ConexionBackendService
+    private conexionBackend: ConexionBackendService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +64,10 @@ export class EditarPerfilComponent implements OnInit {
     const usuario = JSON.parse(localStorage.getItem('usuario')!);
     const id = usuario?.idUsuario;
     if (!id) {
-      console.error('No hay usuario en localStorage o no tiene idUsuario');
+      this.toastr.error('¡Ups! No encontramos tu sesión activa 🤔', 'Usuario no cargado', {
+        timeOut: 5000,
+        progressBar: true,
+      });
       return;
     }
 
@@ -95,12 +100,22 @@ export class EditarPerfilComponent implements OnInit {
               ? datos.fechaNacimiento.substring(0, 10)
               : ''
           });
+          this.toastr.info('Datos cargados exitosamente 😊', '¡Bienvenido de nuevo!', {
+            timeOut: 3000,
+            progressBar: true,
+          });
         } else {
-          console.error('Respuesta inválida al obtener datos del usuario');
+          this.toastr.warning('Recibimos una respuesta inesperada del servidor', 'Algo raro pasó…', {
+            timeOut: 5000,
+            progressBar: true,
+          });
         }
       },
-      error: (err) => {
-        console.error('Error al obtener datos del usuario:', err);
+      error: err => {
+        this.toastr.error('No pudimos conectar con el servidor 😵‍💫', 'Error de red', {
+          timeOut: 7000,
+          progressBar: true,
+        });
       }
     });
   }
@@ -111,17 +126,26 @@ export class EditarPerfilComponent implements OnInit {
 
       if ((!formValues.correo || formValues.correo.trim() === '') &&
           (!formValues.telefono || formValues.telefono.trim() === '')) {
-        alert('Debe ingresar al menos un correo o un teléfono');
+        this.toastr.warning('Debes ingresar al menos un correo o un teléfono 📱', 'Validación', {
+        timeOut: 5000,
+        progressBar: true,
+      });
         return;
       }
 
       if (formValues.correo && this.profileForm.get('correo')?.invalid) {
-        alert('Ingrese un correo electrónico válido');
+        this.toastr.error('Este correo no es válido. Ej: usuario@dominio.com', 'Correo inválido', {
+        timeOut: 5000,
+        progressBar: true,
+        });
         return;
       }
 
       if (formValues.telefono && this.profileForm.get('telefono')?.invalid) {
-        alert('Ingrese un teléfono válido');
+        this.toastr.error('Ingresa un teléfono con 10 dígitos', 'Teléfono inválido', {
+        timeOut: 5000,
+        progressBar: true,
+      });
         return;
       }
 
@@ -139,7 +163,10 @@ export class EditarPerfilComponent implements OnInit {
       }
       const usuario = JSON.parse(localStorage.getItem('usuario')!);
       if (!usuario) {
-        alert('No se encontró información del usuario.');
+        this.toastr.error('No encontramos tu información de usuario 😢', 'Error interno', {
+        timeOut: 5000,
+        progressBar: true,
+        });
         return;
       }
 
@@ -162,14 +189,23 @@ export class EditarPerfilComponent implements OnInit {
       this.http.put(url, payload).subscribe({
       next: (res: any) => {
         if (res.estado) {
-          alert('Perfil actualizado con éxito');
+          this.toastr.success('¡Listo! Tu perfil se actualizó sin problemas 💾', 'Actualización exitosa', {
+            timeOut: 3000,
+            progressBar: true,
+          });
           this.router.navigate(['/mi-cuenta']);
         } else {
-          alert('Error al actualizar perfil: ' + (res.mensaje || 'Error desconocido'));
+          this.toastr.error(`Algo falló: ${res.mensaje || 'mensaje desconocido'}`, 'Error al guardar', {
+            timeOut: 6000,
+            progressBar: true,
+          });
         }
       },
-      error: (err) => {
-        alert('Error de conexión con el servidor');
+      error: err => {
+        this.toastr.error('Fallo de comunicación con el servidor 🌐', 'Error de conexión', {
+          timeOut: 6000,
+          progressBar: true,
+        });
         console.error(err);
       }
     });
