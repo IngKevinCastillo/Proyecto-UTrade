@@ -27,7 +27,7 @@ namespace BLL.Servicios
             {
                 var categoriaPublicacionEncontrada = await _categoriaPublicacionRepositorio.Obtener(x => x.Id == id);
                 if (categoriaPublicacionEncontrada == null)
-                    throw new TaskCanceledException("Usuario no existe");
+                    throw new TaskCanceledException("La Categoria publicacion no existe");
                 return _mapper.Map<CategoriaPublicacionDTO>(categoriaPublicacionEncontrada);
             }
             catch
