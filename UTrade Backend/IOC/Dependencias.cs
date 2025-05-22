@@ -41,8 +41,7 @@ namespace IOC
             services.AddScoped<IFotosPublicacionesServicio, FotosPublicacionesServicio>();
             services.AddScoped<IContactanosServicio, ContactanosServicio>();
             services.AddScoped<IRazonServicio, RazonesServicio>();
-            
-            
+            services.AddScoped<IRegistroServicio, RegistroServicio>();
         }
     }
 }
