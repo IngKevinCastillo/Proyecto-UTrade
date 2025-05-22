@@ -7,7 +7,7 @@ import { notificacionesLista } from '../simulacionNotificaciones';
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.css']
+  styleUrls: ['./topbar.component.css'],
 })
 export class TopbarComponent implements OnInit {
   activeFilter: string = 'todo';
@@ -41,17 +41,20 @@ export class TopbarComponent implements OnInit {
             const datos = res.valor;
             this.username = `${datos.nombres} ${datos.apellidos}`;
             this.userHandle = `@${datos.nombreUsuario}`;
-            if (datos.fotoPerfilBase64 && datos.fotoPerfilBase64.trim() !== '') {
-            this.avatarUrl = 'data:image/jpeg;base64,' + datos.fotoPerfilBase64;
-          } else {
-            this.avatarUrl = 'icons/no-photo.webp';
-          }
-
+            if (
+              datos.fotoPerfilBase64 &&
+              datos.fotoPerfilBase64.trim() !== ''
+            ) {
+              this.avatarUrl =
+                'data:image/jpeg;base64,' + datos.fotoPerfilBase64;
+            } else {
+              this.avatarUrl = 'icons/no-photo.webp';
+            }
           }
         },
         error: (err) => {
           console.error('Error al obtener datos del usuario:', err);
-        }
+        },
       });
     }
   }
@@ -63,15 +66,15 @@ export class TopbarComponent implements OnInit {
   toggleMenu(event: Event) {
     event.stopPropagation();
     if (!this.menuVisible) {
-    this.notificaciones = false;
-  }
+      this.notificaciones = false;
+    }
     this.menuVisible = !this.menuVisible;
   }
 
   toggleNotificacion(event: Event) {
     event.stopPropagation();
     if (!this.notificaciones) {
-    this.menuVisible = false;
+      this.menuVisible = false;
     }
     this.notificaciones = !this.notificaciones;
   }

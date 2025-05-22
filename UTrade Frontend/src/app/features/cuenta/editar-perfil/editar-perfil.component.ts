@@ -1,9 +1,13 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  type OnInit,
+  type ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { ConexionBackendService } from '../../../Services/conexion-backend.service';
 import { ToastrService } from 'ngx-toastr';
+import { PerfilService } from '../../../Services/perfil.service';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -18,16 +22,23 @@ export class EditarPerfilComponent implements OnInit {
     { value: 'femenino', label: 'Femenino' },
     { value: 'otro', label: 'Otro' },
   ];
+  fotoPreview: string | ArrayBuffer | null = 'assets/icons/no-photo.webp';
+  fotoPerfilBase64: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient,
-    private conexionBackend: ConexionBackendService,
+    private profileService: PerfilService,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.setupFormValidators();
+    this.cargarDatosUsuario();
+  }
+
+  initForm(): void {
     this.profileForm = this.fb.group({
       nombreUsuario: ['', [Validators.required]],
       nombres: ['', [Validators.required]],
@@ -37,7 +48,9 @@ export class EditarPerfilComponent implements OnInit {
       telefono: [''],
       fechaNacimiento: ['', [Validators.required]],
     });
+  }
 
+  setupFormValidators(): void {
     this.profileForm.get('correo')?.valueChanges.subscribe((value) => {
       const correoControl = this.profileForm.get('correo');
       if (value && value.trim() !== '') {
@@ -57,14 +70,11 @@ export class EditarPerfilComponent implements OnInit {
       }
       telefonoControl?.updateValueAndValidity();
     });
-
-    this.cargarDatosUsuario();
   }
 
   cargarDatosUsuario(): void {
-    const usuario = JSON.parse(localStorage.getItem('usuario')!);
-    const id = usuario?.idUsuario;
-    if (!id) {
+    const idUsuario = this.profileService.obtenerIdUsuario();
+    if (!idUsuario) {
       this.toastr.error(
         '¡Ups! No encontramos tu sesión activa 🤔',
         'Usuario no cargado',
@@ -76,23 +86,11 @@ export class EditarPerfilComponent implements OnInit {
       return;
     }
 
-    const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${id}`;
-    this.http.get(url).subscribe({
-      next: (res: any) => {
+    this.profileService.obtenerPerfil(idUsuario).subscribe({
+      next: (res) => {
         if (res?.estado && res?.valor) {
           const datos = res.valor;
-          let generoMapeado = '';
-          switch (datos.genero) {
-            case 'M':
-              generoMapeado = 'masculino';
-              break;
-            case 'F':
-              generoMapeado = 'femenino';
-              break;
-            case 'O':
-              generoMapeado = 'otro';
-              break;
-          }
+          const generoMapeado = this.profileService.mapearGenero(datos.genero);
 
           this.profileForm.patchValue({
             nombreUsuario: datos.nombreUsuario || '',
@@ -105,6 +103,7 @@ export class EditarPerfilComponent implements OnInit {
               ? datos.fechaNacimiento.substring(0, 10)
               : '',
           });
+
           if (datos.fotoPerfil && datos.fotoPerfil.trim() !== '') {
             this.fotoPreview = 'data:image/jpeg;base64,' + datos.fotoPerfil;
             this.fotoPerfilBase64 = datos.fotoPerfil;
@@ -112,6 +111,7 @@ export class EditarPerfilComponent implements OnInit {
             this.fotoPreview = 'assets/icons/no-photo.webp';
             this.fotoPerfilBase64 = null;
           }
+
           this.toastr.info(
             'Datos cargados exitosamente 😊',
             '¡Bienvenido de nuevo!',
@@ -187,20 +187,12 @@ export class EditarPerfilComponent implements OnInit {
         return;
       }
 
-      let generoBackend = '';
-      switch (formValues.genero) {
-        case 'masculino':
-          generoBackend = 'M';
-          break;
-        case 'femenino':
-          generoBackend = 'F';
-          break;
-        case 'otro':
-          generoBackend = 'O';
-          break;
-      }
-      const usuario = JSON.parse(localStorage.getItem('usuario')!);
-      if (!usuario) {
+      const generoBackend = this.profileService.mapearGeneroParaBackend(
+        formValues.genero
+      );
+      const usuario = this.profileService.obtenerUsuarioLocal();
+
+      if (!usuario || !usuario.idUsuario) {
         this.toastr.error(
           'No encontramos tu información de usuario 😢',
           'Error interno',
@@ -213,7 +205,7 @@ export class EditarPerfilComponent implements OnInit {
       }
 
       const payload = {
-        id: usuario.idUsuario || '',
+        id: usuario.idUsuario,
         nombres: formValues.nombres,
         apellidos: formValues.apellidos,
         fechaNacimiento: formValues.fechaNacimiento,
@@ -226,10 +218,8 @@ export class EditarPerfilComponent implements OnInit {
         fotoPerfilBase64: this.fotoPerfilBase64,
       };
 
-      const url = `${this.conexionBackend.baseUrl}/Persona/Editar`;
-
-      this.http.put(url, payload).subscribe({
-        next: (res: any) => {
+      this.profileService.actualizarPerfil(payload).subscribe({
+        next: (res) => {
           if (res.estado) {
             this.toastr.success(
               '¡Listo! Tu perfil se actualizó sin problemas 💾',
@@ -281,9 +271,6 @@ export class EditarPerfilComponent implements OnInit {
   cancel(): void {
     this.router.navigate(['/mi-cuenta']);
   }
-
-  fotoPreview: string | ArrayBuffer | null = 'icons/no-photo.webp';
-  fotoPerfilBase64: string | null = null;
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
