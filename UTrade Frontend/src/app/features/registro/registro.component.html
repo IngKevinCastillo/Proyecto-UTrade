@@ -20,10 +20,16 @@
           </p>
 
           <div class="social-buttons mb-3">
-            <button class="btn btn-outline-secondary" (click)="registerWithGoogle()">
+            <button
+              class="btn btn-outline-secondary"
+              (click)="registerWithGoogle()"
+            >
               <i class="fab fa-google me-2"></i> Google
             </button>
-            <button class="btn btn-outline-secondary" (click)="registerWithFacebook()">
+            <button
+              class="btn btn-outline-secondary"
+              (click)="registerWithFacebook()"
+            >
               <i class="fab fa-facebook-f me-2"></i> Facebook
             </button>
           </div>
@@ -50,7 +56,7 @@
                 required
               />
             </div>
-            
+
             <div class="form-grid-item">
               <label for="apellidos" class="form-label">
                 <i class="bi bi-person me-2"></i> Apellidos
@@ -71,49 +77,62 @@
                 <i class="bi bi-gender-ambiguous me-2"></i> Género
               </label>
               <div class="gender-selector">
-                <div class="btn-group w-100" role="group" aria-label="Selección de género">
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="genero"
-                  id="masculino"
-                  value="masculino"
-                  [(ngModel)]="registroData.genero"
-                  autocomplete="off"
-                />
-                <label class="btn btn-outline-secondary gender-btn" for="masculino">
-                  <i class="bi bi-gender-male me-1"></i> Masculino              
-                </label>
+                <div
+                  class="btn-group w-100"
+                  role="group"
+                  aria-label="Selección de género"
+                >
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="genero"
+                    id="masculino"
+                    value="masculino"
+                    [(ngModel)]="registroData.genero"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary gender-btn"
+                    for="masculino"
+                  >
+                    <i class="bi bi-gender-male me-1"></i> Masculino
+                  </label>
 
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="genero"
-                  id="femenino"
-                  value="femenino"
-                  [(ngModel)]="registroData.genero"
-                  autocomplete="off"
-                />
-                <label class="btn btn-outline-secondary gender-btn" for="femenino">
-                  <i class="bi bi-gender-female me-1"></i> Femenino
-                </label>
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="genero"
+                    id="femenino"
+                    value="femenino"
+                    [(ngModel)]="registroData.genero"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary gender-btn"
+                    for="femenino"
+                  >
+                    <i class="bi bi-gender-female me-1"></i> Femenino
+                  </label>
 
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="genero"
-                  id="otro"
-                  value="otro"
-                  [(ngModel)]="registroData.genero"
-                  autocomplete="off"
-                />
-                <label class="btn btn-outline-secondary gender-btn" for="otro">
-                  <i class="bi bi-asterisk me-1"></i> Otro
-                </label>
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="genero"
+                    id="otro"
+                    value="otro"
+                    [(ngModel)]="registroData.genero"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary gender-btn"
+                    for="otro"
+                  >
+                    <i class="bi bi-asterisk me-1"></i> Otro
+                  </label>
                 </div>
               </div>
             </div>
-            
+
             <!-- Segunda fila -->
             <div class="form-grid-item">
               <label for="email" class="form-label">
@@ -143,7 +162,7 @@
                 required
               />
             </div>
-            
+
             <div class="form-grid-item">
               <label for="password" class="form-label">
                 <i class="bi bi-lock me-2"></i> Contraseña
@@ -163,7 +182,9 @@
                   class="btn btn-outline-secondary"
                   (click)="showPassword = !showPassword"
                 >
-                  <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                  <i
+                    [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
+                  ></i>
                 </button>
               </div>
             </div>
@@ -187,7 +208,11 @@
                   class="btn btn-outline-secondary"
                   (click)="showConfirmPassword = !showConfirmPassword"
                 >
-                  <i [class]="showConfirmPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                  <i
+                    [class]="
+                      showConfirmPassword ? 'bi bi-eye-slash' : 'bi bi-eye'
+                    "
+                  ></i>
                 </button>
               </div>
             </div>
@@ -203,13 +228,17 @@
                   required
                 />
                 <label class="form-check-label" for="termsAndConditions">
-                  Acepto los <a href="#" class="text-primary">términos y condiciones</a>
+                  Acepto los
+                  <a href="#" class="text-primary">términos y condiciones</a>
                 </label>
               </div>
             </div>
-            
+
             <div class="form-grid-item button-container">
-              <button type="submit" class="btn btn-primary w-100 py-2 btn-hover-scale-glow">
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-2 btn-hover-scale-glow"
+              >
                 Crear cuenta
               </button>
             </div>

@@ -1,13 +1,14 @@
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
   background-color: #f5f7fa;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .poppins-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .register-container {
@@ -28,7 +29,8 @@ html, body {
   border-radius: 20px !important;
 }
 
-.left-panel, .right-panel {
+.left-panel,
+.right-panel {
   padding: 2rem;
 }
 
@@ -143,7 +145,8 @@ html, body {
   margin: 1rem 0;
 }
 
-.separator::before, .separator::after {
+.separator::before,
+.separator::after {
   content: "";
   flex: 1;
   border-bottom: 1px solid #dee2e6;
@@ -178,7 +181,7 @@ html, body {
   transition: all 0.2s ease;
   font-size: 0.85rem;
   padding: 0.4rem 0.2rem;
-  gap: 0.15rem; 
+  gap: 0.15rem;
 }
 
 .gender-btn:first-child {
@@ -202,7 +205,10 @@ html, body {
 /* Pantallas grandes: >= 992px (2 columnas) */
 @media (min-width: 992px) {
   .form-grid {
-    grid-template-columns: repeat(2, 1fr); /* Antes eran 3 columnas por defecto, ahora mero son 2 */
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Antes eran 3 columnas por defecto, ahora mero son 2 */
   }
 
   .button-container {
@@ -211,7 +217,7 @@ html, body {
 
   .register-form-container {
     max-width: 1000px; /* Aumenta el ancho del formulario */
-    padding: 2rem;     /* Un poco más de aire interno */
+    padding: 2rem; /* Un poco más de aire interno */
   }
 
   .row.shadow.rounded {
