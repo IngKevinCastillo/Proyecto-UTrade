@@ -10,7 +10,7 @@ namespace DTO
     {
         public string Id { get; set; }
 
-        public string Titulo { get; set; }
+        public string Titulo { get; set; } 
 
         public DateTime FechaPublicacion { get; set; }
 
@@ -25,6 +25,8 @@ namespace DTO
         public string? Ubicacion { get; set; }
 
         public string? IdReseña { get; set; }
+
+        public string? IdEstado { get; set; }
 
     }
 }

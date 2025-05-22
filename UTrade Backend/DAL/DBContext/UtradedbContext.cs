@@ -24,6 +24,8 @@ public partial class UtradedbContext : DbContext
 
     public virtual DbSet<Contactanos> Contactanos { get; set; }
 
+    public virtual DbSet<Estados> Estados { get; set; }
+
     public virtual DbSet<EstadosReporte> EstadosReportes { get; set; }
 
     public virtual DbSet<Favoritos> Favoritos { get; set; }
@@ -147,6 +149,17 @@ public partial class UtradedbContext : DbContext
                 .HasForeignKey(d => d.IdRazon)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Contactanos_Razon");
+        });
+
+        modelBuilder.Entity<Estados>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .HasMaxLength(50)
+                .HasColumnName("id");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("nombre");
         });
 
         modelBuilder.Entity<EstadosReporte>(entity =>
@@ -331,6 +344,9 @@ public partial class UtradedbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("genero");
+            entity.Property(e => e.IdEstado)
+                .HasMaxLength(50)
+                .HasColumnName("idEstado");
             entity.Property(e => e.IdRol)
                 .HasMaxLength(50)
                 .HasColumnName("idRol");
@@ -346,6 +362,10 @@ public partial class UtradedbContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("telefono");
+
+            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Personas)
+                .HasForeignKey(d => d.IdEstado)
+                .HasConstraintName("FK_Persona_Estados");
 
             entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Personas)
                 .HasForeignKey(d => d.IdRol)
@@ -369,6 +389,9 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.IdCategoria)
                 .HasMaxLength(50)
                 .HasColumnName("idCategoria");
+            entity.Property(e => e.IdEstado)
+                .HasMaxLength(50)
+                .HasColumnName("idEstado");
             entity.Property(e => e.IdReseña)
                 .HasMaxLength(50)
                 .HasColumnName("idReseña");
@@ -390,6 +413,10 @@ public partial class UtradedbContext : DbContext
             entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Publicaciones)
                 .HasForeignKey(d => d.IdCategoria)
                 .HasConstraintName("FK_Publicaciones_Categoria");
+
+            entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Publicaciones)
+                .HasForeignKey(d => d.IdEstado)
+                .HasConstraintName("FK_Publicaciones_Estados");
 
             entity.HasOne(d => d.IdReseñaNavigation).WithMany(p => p.Publicaciones)
                 .HasForeignKey(d => d.IdReseña)

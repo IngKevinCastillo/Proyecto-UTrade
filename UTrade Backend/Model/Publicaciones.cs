@@ -23,11 +23,15 @@ public partial class Publicaciones
 
     public string? IdReseña { get; set; }
 
+    public string? IdEstado { get; set; }
+
     public virtual ICollection<Favoritos> Favoritos { get; set; } = new List<Favoritos>();
 
     public virtual ICollection<FotosPublicaciones> FotosPublicaciones { get; set; } = new List<FotosPublicaciones>();
 
     public virtual CategoriaPublicacion? IdCategoriaNavigation { get; set; }
+
+    public virtual Estados? IdEstadoNavigation { get; set; }
 
     public virtual Reseña? IdReseñaNavigation { get; set; }
 

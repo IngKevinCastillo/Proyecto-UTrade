@@ -117,6 +117,10 @@ namespace Utility
             #region MensajeAccion
             CreateMap<MensajeAccion, MensajeAccionDTO>().ReverseMap();
             #endregion
+
+            #region Estados
+            CreateMap<Estados, EstadosDTO>().ReverseMap();
+            #endregion
         }
     }
 }
