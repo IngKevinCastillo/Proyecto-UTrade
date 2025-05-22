@@ -26,11 +26,5 @@ namespace DTO
 
         public string? IdReseña { get; set; }
 
-        public virtual ICollection<FavoritosDTO> Favoritos { get; set; }
-
-        public virtual ICollection<FotosPublicacionesDTO> FotosPublicaciones { get; set; }
-
-        public virtual ICollection<ReseñaDTO> Reseñas { get; set; }
-
     }
 }
