@@ -1,19 +1,20 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ConexionBackendService } from '../../Services/conexion-backend.service';
 import { notificacionesLista } from '../simulacionNotificaciones';
-import { Notificaciones } from '../simulacionNotificaciones';
 
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.css']
 })
-export class TopbarComponent {
+export class TopbarComponent implements OnInit {
   activeFilter: string = 'todo';
 
-  username: string = 'Juan mrd';
-  userHandle: string = '@vendogalletas';
-  avatarUrl: string = 'icons/oceana.png';
+  username: string = '';
+  userHandle: string = '';
+  avatarUrl: string = 'icons/no-photo.webp';
 
   notificaciones: boolean = false;
   menuVisible: boolean = false;
@@ -21,7 +22,34 @@ export class TopbarComponent {
   listaNotificaciones = notificacionesLista;
   notificationCount = this.listaNotificaciones.length;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private conexionBackend: ConexionBackendService
+  ) {}
+
+  ngOnInit(): void {
+    const usuario = JSON.parse(localStorage.getItem('usuario')!);
+    const id = usuario?.idUsuario;
+
+    if (id) {
+      const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${id}`;
+
+      this.http.get(url).subscribe({
+        next: (res: any) => {
+          if (res?.estado && res?.valor) {
+            const datos = res.valor;
+            this.username = `${datos.nombres} ${datos.apellidos}`;
+            this.userHandle = `@${datos.nombreUsuario}`;
+            this.avatarUrl = datos.fotoPerfil?.trim() ? datos.fotoPerfil : 'icons/no-photo.webp';
+          }
+        },
+        error: (err) => {
+          console.error('Error al obtener datos del usuario:', err);
+        }
+      });
+    }
+  }
 
   setFilter(filter: string) {
     this.activeFilter = filter;
@@ -29,11 +57,17 @@ export class TopbarComponent {
 
   toggleMenu(event: Event) {
     event.stopPropagation();
+    if (!this.menuVisible) {
+    this.notificaciones = false;
+  }
     this.menuVisible = !this.menuVisible;
   }
 
   toggleNotificacion(event: Event) {
     event.stopPropagation();
+    if (!this.notificaciones) {
+    this.menuVisible = false;
+    }
     this.notificaciones = !this.notificaciones;
   }
 

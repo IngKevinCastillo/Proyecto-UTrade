@@ -17,7 +17,11 @@
   <div class="encabezado-perfil mb-4">
     <div class="d-flex align-items-center">
       <div class="contenedor-foto-perfil me-4">
-        <img src="icons/oceana.png" alt="Foto de perfil" class="foto-perfil" />
+        <img
+          [src]="usuario.fotoPerfil"
+          alt="Foto de perfil"
+          class="foto-perfil"
+        />
       </div>
       <div class="d-flex flex-column">
         <h3 class="mb-2">{{ usuario.nombreUsuario }}</h3>
@@ -37,7 +41,12 @@
         <div class="etiqueta-campo">Nombre De Visualización</div>
         <div class="valor-campo">{{ usuario.nombreVisible }}</div>
       </div>
-      <button class="btn btn-light boton-editar">Editar</button>
+      <button
+        class="btn btn-light boton-editar"
+        (click)="editarCampo('nombreVisible')"
+      >
+        Editar
+      </button>
     </div>
   </div>
 
@@ -47,7 +56,12 @@
         <div class="etiqueta-campo">Nombre De Usuario</div>
         <div class="valor-campo">{{ usuario.nombreUsuario }}</div>
       </div>
-      <button class="btn btn-light boton-editar">Editar</button>
+      <button
+        class="btn btn-light boton-editar"
+        (click)="editarCampo('nombreUsuario')"
+      >
+        Editar
+      </button>
     </div>
   </div>
 
@@ -56,9 +70,7 @@
       <div class="flex-grow-1">
         <div class="etiqueta-campo">Correo Electrónico</div>
         <div class="valor-campo">
-          {{
-            mostrarCorreo ? "usuario@gmail.com" : "******************@gmail.com"
-          }}
+          {{ mostrarCorreo ? usuario.correo : ocultarCorreo(usuario.correo) }}
           <a
             href="javascript:void(0)"
             class="ms-2 text-decoration-none"
@@ -69,7 +81,12 @@
           </a>
         </div>
       </div>
-      <button class="btn btn-light boton-editar">Editar</button>
+      <button
+        class="btn btn-light boton-editar"
+        (click)="editarCampo('correo')"
+      >
+        Editar
+      </button>
     </div>
   </div>
 
@@ -78,7 +95,11 @@
       <div class="flex-grow-1">
         <div class="etiqueta-campo">Número De Teléfono</div>
         <div class="valor-campo">
-          {{ mostrarTelefono ? "123456789" : "********5713" }}
+          {{
+            mostrarTelefono
+              ? usuario.telefono
+              : ocultarTelefono(usuario.telefono)
+          }}
           <a
             href="javascript:void(0)"
             class="ms-2 text-decoration-none"
@@ -93,7 +114,12 @@
         <button class="btn btn-light me-2" (click)="eliminarTelefono()">
           Eliminar
         </button>
-        <button class="btn btn-light boton-editar">Editar</button>
+        <button
+          class="btn btn-light boton-editar"
+          (click)="editarCampo('telefono')"
+        >
+          Editar
+        </button>
       </div>
     </div>
   </div>
