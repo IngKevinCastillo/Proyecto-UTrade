@@ -19,7 +19,7 @@ namespace IOC
     {
         public static void InyectarDependencias(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<UtradebdContext>(options =>
+            services.AddDbContext<UtradedbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("cadenaSQL"));
             });
