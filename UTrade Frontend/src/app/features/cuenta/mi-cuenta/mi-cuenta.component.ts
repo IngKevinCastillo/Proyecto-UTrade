@@ -19,6 +19,13 @@ export class MiCuentaComponent implements OnInit {
   mostrarCorreo = false;
   mostrarTelefono = false;
 
+  seccionActual: string = 'seguridad'; // 'seguridad' es la vista por defecto
+
+  cambiarSeccion(seccion: string) {
+    this.seccionActual = seccion;
+  }
+
+
   constructor(
     private router: Router,
     private http: HttpClient,
