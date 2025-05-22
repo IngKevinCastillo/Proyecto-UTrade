@@ -32,6 +32,7 @@ namespace IOC
             services.AddScoped<ITipoAccionServicio,  TipoAccionServicio>();
             services.AddScoped<IMensajeAccionServicio,  MensajeAccionServicio>();
             services.AddScoped<IPublicacionesServicio, PublicacionesServicio>();
+            services.AddScoped<ICategoriaPublicacionServicio, CategoriaPublicacionServicio>();
         }
     }
 }
