@@ -12,5 +12,6 @@ namespace BLL.Servicios.Contrato
         Task<List<ReportesDTO>> Listar();
         Task<ReportesDTO> Crear(ReportesDTO modelo);
         Task<bool> Actualizar(ReportesDTO modelo);
+        Task<ReportesDTO> ObtenerPorId(string id);
     }
 }

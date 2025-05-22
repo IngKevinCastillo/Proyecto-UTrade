@@ -79,5 +79,22 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public async Task<ReportesDTO> ObtenerPorId(string id)
+        {
+            try
+            {
+                var reporte = await _reporteRepositorio.Obtener(x => x.IdReporte == id);
+
+                if (reporte == null)
+                    throw new TaskCanceledException("Reporte no encontrado");
+
+                return _mapper.Map<ReportesDTO>(reporte);
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
