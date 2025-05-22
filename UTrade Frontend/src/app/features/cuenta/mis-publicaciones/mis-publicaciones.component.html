@@ -1,3 +1,89 @@
-<div class="container-fluid my-3">
-    <p>mis-publicaciones works!</p>
+<!-- mis-publicaciones.component.html -->
+<div class="container-fluid p-4">
+    <mat-card class="mb-3" *ngFor="let publicacion of publicaciones">
+        <mat-card-content class="p-0">
+            <div class="d-flex align-items-start position-relative">
+
+                <!-- Estado Badge -->
+                <div class="position-absolute top-0 start-0 m-3">
+                    <mat-chip [ngClass]="{
+                'estado-activo': publicacion.estado === 'Activo',
+                'estado-baneado': publicacion.estado === 'Baneado',
+                'estado-eliminado': publicacion.estado === 'Eliminado',
+                'estado-suspendido': publicacion.estado === 'Suspendido',
+                'estado-advertido': publicacion.estado === 'Advertido'
+              }">
+                        {{ publicacion.estado }}
+                    </mat-chip>
+                </div>
+
+                <!-- Imagen del producto -->
+                <div class="flex-shrink-0 p-3">
+                    <img [src]="publicacion.imagen" [alt]="publicacion.nombre" class="rounded-3"
+                        style="width: 120px; height: 120px; object-fit: cover;">
+                </div>
+
+                <!-- Información del producto -->
+                <div class="flex-grow-1 p-3">
+                    <div class="row h-100">
+                        <div class="col-md-8">
+                            <!-- Título y descripción -->
+                            <h5 class="fw-bold text-dark mb-2" style="margin-top: 20px;">
+                                {{ publicacion.nombre }}
+                            </h5>
+
+                            <!-- Tipo de servicio -->
+                            <div class="d-flex align-items-center mb-2">
+                                <mat-icon class="me-1 text-muted" style="font-size: 18px;">category</mat-icon>
+                                <span class="text-muted">{{ publicacion.tipoServicio }}</span>
+                            </div>
+
+                            <!-- Precio -->
+                            <div class="mb-2">
+                                <span class="fw-bold text-primary fs-5">
+                                    $ {{ publicacion.precio | number:'1.0-0' }} COP
+                                </span>
+                            </div>
+
+                            <!-- Fecha de publicación -->
+                            <div class="text-muted small">
+                                Publicado el: {{ publicacion.fechaPublicacion | date:'dd MMM, yyyy' }}
+                            </div>
+                        </div>
+
+                        <!-- Botones de acción -->
+                        <div class="col-md-4 d-flex flex-column justify-content-between align-items-end h-100">
+                            <div></div> <!-- Spacer -->
+
+                            <div class="d-flex gap-2 mt-3">
+                                <button mat-stroked-button color="primary" class="rounded-pill"
+                                    (click)="modificarPublicacion(publicacion)">
+                                    Modificar
+                                </button>
+
+                                <button mat-stroked-button color="warn" class="rounded-pill"
+                                    (click)="borrarPublicacion(publicacion)">
+                                    Borrar
+                                </button>
+
+                                <button mat-icon-button color="primary" matTooltip="Ver detalles"
+                                    (click)="verDetalles(publicacion)">
+                                    <mat-icon>chevron_right</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Mensaje cuando no hay publicaciones -->
+    <div *ngIf="publicaciones.length === 0" class="text-center py-5">
+        <mat-icon class="text-muted mb-3" style="font-size: 48px; height: 48px; width: 48px;">
+            inventory_2
+        </mat-icon>
+        <h5 class="text-muted">No tienes publicaciones aún</h5>
+        <p class="text-muted">Crea tu primera publicación para comenzar</p>
+    </div>
 </div>
