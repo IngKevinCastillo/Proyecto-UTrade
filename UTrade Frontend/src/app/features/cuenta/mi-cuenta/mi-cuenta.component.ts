@@ -85,10 +85,6 @@ export class MiCuentaComponent implements OnInit {
     this.router.navigate(['/mi-cuenta/editar-perfil']);
   }
 
-  editarCampo(campo: string) {
-    console.log('Editar campo:', campo);
-  }
-
   eliminarTelefono() {
     console.log('Eliminar teléfono');
   }

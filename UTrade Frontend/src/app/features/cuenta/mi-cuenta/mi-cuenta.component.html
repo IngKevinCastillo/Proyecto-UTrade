@@ -1,125 +1,152 @@
-  <div class="contenedor-perfil">
-    <h2 class="mb-4">Mi cuenta</h2>
+<div class="contenedor-perfil">
+  <h2 class="mb-4">Mi cuenta</h2>
 
-    <ul class="nav nav-tabs mb-4">
-      <li class="nav-item">
-        <a class="nav-link opcion" [class.activa]="seccionActual === 'seguridad'"
-          (click)="cambiarSeccion('seguridad')">Seguridad</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link opcion" [class.activa]="seccionActual === 'reputacion'"
-          (click)="cambiarSeccion('reputacion')">Reputación</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link opcion" [class.activa]="seccionActual === 'publicaciones'"
-          (click)="cambiarSeccion('publicaciones')">Mis Publicaciones</a>
-      </li>
-    </ul>     
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a
+        class="nav-link opcion"
+        [class.activa]="seccionActual === 'seguridad'"
+        (click)="cambiarSeccion('seguridad')"
+        >Seguridad</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link opcion"
+        [class.activa]="seccionActual === 'reputacion'"
+        (click)="cambiarSeccion('reputacion')"
+        >Reputación</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link opcion"
+        [class.activa]="seccionActual === 'publicaciones'"
+        (click)="cambiarSeccion('publicaciones')"
+        >Mis Publicaciones</a
+      >
+    </li>
+  </ul>
 
-    <div *ngIf="seccionActual === 'seguridad'">
-      <div class="encabezado-perfil mb-4">
-        <div class="d-flex align-items-center">
-          <div class="contenedor-foto-perfil me-4">
-            <img [src]="usuario.fotoPerfil" alt="Foto de perfil" class="foto-perfil" />
-          </div>
-          <div class="d-flex flex-column">
-            <h3 class="mb-2">{{ usuario.nombreUsuario }}</h3>
-            <button class="btn text-white boton-editar-perfil" (click)="editarPerfil()">
-              Editar perfil de usuario
-            </button>
-          </div>
+  <div *ngIf="seccionActual === 'seguridad'">
+    <div class="encabezado-perfil mb-4">
+      <div class="d-flex align-items-center">
+        <div class="contenedor-foto-perfil me-4">
+          <img
+            [src]="usuario.fotoPerfil"
+            alt="Foto de perfil"
+            class="foto-perfil"
+          />
         </div>
-      </div>
-      <div class="campo-perfil">
-        <div class="d-flex align-items-center">
-          <div class="flex-grow-1">
-            <div class="etiqueta-campo">Nombre De Visualización</div>
-            <div class="valor-campo">{{ usuario.nombreVisible }}</div>
-          </div>
-          <button class="btn btn-light boton-editar" (click)="editarCampo('nombreVisible')">
-            Editar
+        <div class="d-flex flex-column">
+          <h3 class="mb-2">{{ usuario.nombreUsuario }}</h3>
+          <button
+            class="btn text-white boton-editar-perfil"
+            (click)="editarPerfil()"
+          >
+            Editar perfil de usuario
           </button>
         </div>
       </div>
-      <div class="campo-perfil">
-        <div class="d-flex align-items-center">
-          <div class="flex-grow-1">
-            <div class="etiqueta-campo">Nombre De Usuario</div>
-            <div class="valor-campo">{{ usuario.nombreUsuario }}</div>
-          </div>
-          <button class="btn btn-light boton-editar" (click)="editarCampo('nombreUsuario')">
-            Editar
-          </button>
+    </div>
+    <div class="campo-perfil">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">
+          <div class="etiqueta-campo">Nombre De Visualización</div>
+          <div class="valor-campo">{{ usuario.nombreVisible }}</div>
         </div>
       </div>
-      <div class="campo-perfil">
-        <div class="d-flex align-items-center">
-          <div class="flex-grow-1">
-            <div class="etiqueta-campo">Correo Electrónico</div>
-            <div class="valor-campo">
-              {{ mostrarCorreo ? usuario.correo : ocultarCorreo(usuario.correo) }}
-              <a href="javascript:void(0)" class="ms-2 text-decoration-none" style="color: #2c258a"
-                (click)="alternarCorreo()">
-                {{ mostrarCorreo ? "Ocultar" : "Mostrar" }}
-              </a>
-            </div>
-          </div>
-          <button class="btn btn-light boton-editar" (click)="editarCampo('correo')">
-            Editar
-          </button>
+    </div>
+    <div class="campo-perfil">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">
+          <div class="etiqueta-campo">Nombre De Usuario</div>
+          <div class="valor-campo">{{ usuario.nombreUsuario }}</div>
         </div>
       </div>
-      <div class="campo-perfil">
-        <div class="d-flex align-items-center">
-          <div class="flex-grow-1">
-            <div class="etiqueta-campo">Número De Teléfono</div>
-            <div class="valor-campo">
-              {{
+    </div>
+    <div class="campo-perfil">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">
+          <div class="etiqueta-campo">Correo Electrónico</div>
+          <div class="valor-campo">
+            {{ mostrarCorreo ? usuario.correo : ocultarCorreo(usuario.correo) }}
+            <a
+              href="javascript:void(0)"
+              class="ms-2 text-decoration-none"
+              style="color: #2c258a"
+              (click)="alternarCorreo()"
+            >
+              {{ mostrarCorreo ? "Ocultar" : "Mostrar" }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="campo-perfil">
+      <div class="d-flex align-items-center">
+        <div class="flex-grow-1">
+          <div class="etiqueta-campo">Número De Teléfono</div>
+          <div class="valor-campo">
+            {{
               mostrarTelefono
-              ? usuario.telefono
-              : ocultarTelefono(usuario.telefono)
-              }}
-              <a href="javascript:void(0)" class="ms-2 text-decoration-none" style="color: #2c258a"
-                (click)="alternarTelefono()">
-                {{ mostrarTelefono ? "Ocultar" : "Mostrar" }}
-              </a>
-            </div>
-          </div>
-          <div>
-            <button class="btn btn-light me-2" (click)="eliminarTelefono()">
-              Eliminar
-            </button>
-            <button class="btn btn-light boton-editar" (click)="editarCampo('telefono')">
-              Editar
-            </button>
+                ? usuario.telefono
+                : ocultarTelefono(usuario.telefono)
+            }}
+            <a
+              href="javascript:void(0)"
+              class="ms-2 text-decoration-none"
+              style="color: #2c258a"
+              (click)="alternarTelefono()"
+            >
+              {{ mostrarTelefono ? "Ocultar" : "Mostrar" }}
+            </a>
           </div>
         </div>
-      </div>
-      <div class="contenedor-seccion">
-        <h3 class="mb-3">Contraseña y autenticación</h3>
         <div>
-          <button class="btn text-white" style="background-color: #2c258a" (click)="cambiarContrasena()">
-            Cambiar contraseña
+          <button class="btn btn-light me-2" (click)="eliminarTelefono()">
+            Eliminar
           </button>
         </div>
       </div>
-      <div class="contenedor-seccion">
-        <h3 class="mb-3">Opciones de cuenta</h3>
-        <div class="d-flex gap-3">
-          <button class="btn text-white" style="background-color: #dc3545" (click)="deshabilitarCuenta()">
-            Deshabilitar cuenta
-          </button>
-          <button class="btn text-white" style="background-color: #b30000" (click)="eliminarCuenta()">
-            Eliminar cuenta
-          </button>
-        </div>
+    </div>
+    <div class="contenedor-seccion">
+      <h3 class="mb-3">Contraseña y autenticación</h3>
+      <div>
+        <button
+          class="btn text-white"
+          style="background-color: #2c258a"
+          (click)="cambiarContrasena()"
+        >
+          Cambiar contraseña
+        </button>
       </div>
-      </div>  
     </div>
-    <div *ngIf="seccionActual === 'publicaciones'">
-        <app-mis-publicaciones></app-mis-publicaciones>
+    <div class="contenedor-seccion">
+      <h3 class="mb-3">Opciones de cuenta</h3>
+      <div class="d-flex gap-3">
+        <button
+          class="btn text-white"
+          style="background-color: #dc3545"
+          (click)="deshabilitarCuenta()"
+        >
+          Deshabilitar cuenta
+        </button>
+        <button
+          class="btn text-white"
+          style="background-color: #b30000"
+          (click)="eliminarCuenta()"
+        >
+          Eliminar cuenta
+        </button>
+      </div>
     </div>
-    <div *ngIf="seccionActual === 'reputacion'">
-      <app-reputacion></app-reputacion>
-    </div>    
+  </div>
+</div>
+<div *ngIf="seccionActual === 'publicaciones'">
+  <app-mis-publicaciones></app-mis-publicaciones>
+</div>
+<div *ngIf="seccionActual === 'reputacion'">
+  <app-reputacion></app-reputacion>
+</div>
 <app-footer></app-footer>

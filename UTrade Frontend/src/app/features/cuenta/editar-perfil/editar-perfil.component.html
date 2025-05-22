@@ -223,13 +223,19 @@
       <h3>Vista Previa</h3>
       <div class="preview-card mt-3">
         <div class="d-flex align-items-center">
-          <img src="icons/oceana.png" alt="Avatar" class="foto-perfil me-3" />
+          <img
+            src="icons/no-photo.webp"
+            alt="Avatar"
+            class="foto-perfil me-3"
+          />
           <div>
             <h4 class="mb-1">
               {{ profileForm.get("nombres")?.value }}
               {{ profileForm.get("apellidos")?.value }}
             </h4>
-            <p class="mb-0">{{ profileForm.get("correo")?.value }}</p>
+            <p class="mb-0">
+              {{ "@" + profileForm.get("nombreUsuario")?.value }}
+            </p>
           </div>
         </div>
       </div>
