@@ -27,6 +27,7 @@ namespace DTO
         public string? Correo { get; set; }
 
         public string? Telefono { get; set; }
+        public string? FotoPerfilBase64 { get; set; }
 
         public byte[]? FotoPerfil { get; set; }
     }

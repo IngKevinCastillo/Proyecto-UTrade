@@ -3,6 +3,7 @@ using BLL.Servicios.Contrato;
 using DAL.Repositorios.Contrato;
 using DTO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,12 @@ namespace BLL.Servicios
     {
         private readonly IRepositorioGenerico<Persona> _personaRepositorio;
         private readonly IMapper _mapper;
-        public PersonaServicio(IRepositorioGenerico<Persona> usuarioRepositorio, IMapper mapper)
+        private readonly ILogger<PersonaServicio> _logger;
+        public PersonaServicio(IRepositorioGenerico<Persona> usuarioRepositorio, IMapper mapper, ILogger<PersonaServicio> logger)
         {
             _personaRepositorio = usuarioRepositorio;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<PersonaDTO> Crear(PersonaDTO modelo)
@@ -53,6 +56,19 @@ namespace BLL.Servicios
                 personaEncontrado.Contraseña = personaModelo.Contraseña;
                 personaEncontrado.Correo = personaModelo.Correo;
                 personaEncontrado.Telefono = personaModelo.Telefono;
+                if (modelo.FotoPerfilBase64 == null)
+                {
+                    _logger.LogInformation("Imagen llegó NULL");
+                }
+                else
+                {
+                    _logger.LogInformation("Tamaño de imagen base64: {Length}", modelo.FotoPerfilBase64.Length);
+                }
+                if (!string.IsNullOrEmpty(modelo.FotoPerfilBase64))
+                {
+                    modelo.FotoPerfil = Convert.FromBase64String(modelo.FotoPerfilBase64);
+                    personaEncontrado.FotoPerfil = modelo.FotoPerfil;
+                }
                 bool respuesta = await _personaRepositorio.Editar(personaEncontrado);
                 if (!respuesta)
                     throw new TaskCanceledException("No se pudo editar");
