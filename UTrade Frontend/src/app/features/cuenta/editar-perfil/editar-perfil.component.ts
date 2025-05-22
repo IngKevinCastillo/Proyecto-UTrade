@@ -282,7 +282,7 @@ export class EditarPerfilComponent implements OnInit {
     this.router.navigate(['/mi-cuenta']);
   }
 
-  fotoPreview: string | ArrayBuffer | null = 'assets/icons/no-photo.webp';
+  fotoPreview: string | ArrayBuffer | null = 'icons/no-photo.webp';
   fotoPerfilBase64: string | null = null;
 
   onFileSelected(event: Event): void {
