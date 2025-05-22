@@ -85,7 +85,7 @@ export class VentanaSoporteComponent implements OnInit {
             const razon = resRazon.valor;
 
             const dto = {
-              correoDestino: "diegoandresariza54@gmail.com",
+              correoDestino: "utradesoporterecepcion@gmail.com",
               correoRespuesta: this.soporteForm.value.correo,
               asunto: razon.nombre,
               mensaje: this.soporteForm.value.descripcion,

@@ -41,12 +41,6 @@
         <div class="etiqueta-campo">Nombre De Visualización</div>
         <div class="valor-campo">{{ usuario.nombreVisible }}</div>
       </div>
-      <button
-        class="btn btn-light boton-editar"
-        (click)="editarCampo('nombreVisible')"
-      >
-        Editar
-      </button>
     </div>
   </div>
 
@@ -56,12 +50,6 @@
         <div class="etiqueta-campo">Nombre De Usuario</div>
         <div class="valor-campo">{{ usuario.nombreUsuario }}</div>
       </div>
-      <button
-        class="btn btn-light boton-editar"
-        (click)="editarCampo('nombreUsuario')"
-      >
-        Editar
-      </button>
     </div>
   </div>
 
@@ -81,12 +69,6 @@
           </a>
         </div>
       </div>
-      <button
-        class="btn btn-light boton-editar"
-        (click)="editarCampo('correo')"
-      >
-        Editar
-      </button>
     </div>
   </div>
 
@@ -109,17 +91,6 @@
             {{ mostrarTelefono ? "Ocultar" : "Mostrar" }}
           </a>
         </div>
-      </div>
-      <div>
-        <button class="btn btn-light me-2" (click)="eliminarTelefono()">
-          Eliminar
-        </button>
-        <button
-          class="btn btn-light boton-editar"
-          (click)="editarCampo('telefono')"
-        >
-          Editar
-        </button>
       </div>
     </div>
   </div>
