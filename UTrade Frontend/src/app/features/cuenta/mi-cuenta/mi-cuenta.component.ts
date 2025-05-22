@@ -41,17 +41,18 @@ export class MiCuentaComponent implements OnInit {
       this.http.get(url).subscribe({
         next: (res: any) => {
           if (res?.estado && res?.valor) {
-            const datos = res.valor;
-            this.usuario = {
-              nombreVisible: `${datos.nombres} ${datos.apellidos}`,
-              nombreUsuario: datos.nombreUsuario,
-              correo: datos.correo,
-              telefono: datos.telefono,
-              fotoPerfil: datos.fotoPerfil && datos.fotoPerfil.trim() !== ''
-              ? datos.fotoPerfil
+          const datos = res.valor;
+          this.usuario = {
+            nombreVisible: `${datos.nombres} ${datos.apellidos}`,
+            nombreUsuario: datos.nombreUsuario,
+            correo: datos.correo,
+            telefono: datos.telefono,
+            fotoPerfil: (datos.fotoPerfil && datos.fotoPerfil.trim() !== '')
+              ? 'data:image/jpeg;base64,' + datos.fotoPerfil
               : 'icons/no-photo.webp'
-            };
-          }
+          };
+        }
+
         },
         error: (err) => {
           console.error('Error al obtener datos del usuario:', err);

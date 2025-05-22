@@ -41,7 +41,12 @@ export class TopbarComponent implements OnInit {
             const datos = res.valor;
             this.username = `${datos.nombres} ${datos.apellidos}`;
             this.userHandle = `@${datos.nombreUsuario}`;
-            this.avatarUrl = datos.fotoPerfil?.trim() ? datos.fotoPerfil : 'icons/no-photo.webp';
+            if (datos.fotoPerfilBase64 && datos.fotoPerfilBase64.trim() !== '') {
+            this.avatarUrl = 'data:image/jpeg;base64,' + datos.fotoPerfilBase64;
+          } else {
+            this.avatarUrl = 'icons/no-photo.webp';
+          }
+
           }
         },
         error: (err) => {

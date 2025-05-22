@@ -60,8 +60,14 @@ namespace Utility
 
             #region Persona
             CreateMap<Persona, PersonaDTO>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ReverseMap();
+            .ForMember(dest => dest.FotoPerfilBase64, opt => opt.MapFrom(src =>
+                src.FotoPerfil != null ? Convert.ToBase64String(src.FotoPerfil) : null
+            ));
+
+            CreateMap<PersonaDTO, Persona>()
+                .ForMember(dest => dest.FotoPerfil, opt => opt.MapFrom(src =>
+                    !string.IsNullOrEmpty(src.FotoPerfilBase64) ? Convert.FromBase64String(src.FotoPerfilBase64) : null
+                ));
             CreateMap<Persona, SesionDTO>()
             .ForMember(dest => dest.IdUsuario, opt => opt.MapFrom(src => src.Id))
             .ReverseMap();
