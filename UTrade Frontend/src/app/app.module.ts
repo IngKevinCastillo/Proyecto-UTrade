@@ -46,6 +46,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MiCuentaComponent } from './features/cuenta/mi-cuenta/mi-cuenta.component';
 import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-perfil.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MisPublicacionesComponent } from './features/cuenta/mis-publicaciones/mis-publicaciones.component';
+import { ReputacionComponent } from './features/cuenta/reputacion/reputacion.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { HttpClientModule } from '@angular/common/http';
     ReportesComponent,
     VentanaReportesComponent,
     MiCuentaComponent,
-    EditarPerfilComponent
+    EditarPerfilComponent,
+    MisPublicacionesComponent,
+    ReputacionComponent
   ],
   imports: [
     BrowserModule,
