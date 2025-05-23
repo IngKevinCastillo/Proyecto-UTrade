@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { VentanaComponent } from '../../components/ventana/ventana.component';
 import { ToastrService } from 'ngx-toastr';
 import { productosLista ,Productos } from '../../../simulacionProductos';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ConexionBackendService } from '../../../../Services/conexion-backend.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,10 +13,44 @@ import { productosLista ,Productos } from '../../../simulacionProductos';
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
+  @Input() userAvatar: string = 'icons/no-photo.webp';
+
   constructor(
     public dialog: MatDialog,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
+    private http: HttpClient,
+    private conexionBackend: ConexionBackendService
   ) { }
+  
+    ngOnInit(): void {
+      const usuario = JSON.parse(localStorage.getItem('usuario')!);
+      const id = usuario?.idUsuario;
+  
+      if (id) {
+        const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${id}`;
+  
+        this.http.get(url).subscribe({
+          next: (res: any) => {
+            if (res?.estado && res?.valor) {
+              const datos = res.valor;
+              if (
+                datos.fotoPerfilBase64 &&
+                datos.fotoPerfilBase64.trim() !== ''
+              ) {
+                this.userAvatar =
+                  'data:image/jpeg;base64,' + datos.fotoPerfilBase64;
+              } else {
+                this.userAvatar = 'icons/no-photo.webp';
+              }
+            }
+          },
+          error: (err) => {
+            console.error('Error al obtener datos del usuario:', err);
+          },
+        });
+      }
+    }
 
   filtroSeleccionado: Productos[]= productosLista;
 

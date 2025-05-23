@@ -87,7 +87,6 @@
     right: 15px;
 }
 
-/* Miniaturas - CORREGIDO */
 .miniaturas-container {
     margin-top: 15px;
     padding: 10px 0;
@@ -313,7 +312,6 @@
     }
 }
 
-/* Scrollbars personalizados */
 .miniaturas-scroll::-webkit-scrollbar {
     height: 6px;
 }
