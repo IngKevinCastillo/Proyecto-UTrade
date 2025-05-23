@@ -12,6 +12,5 @@ namespace DTO
 
         public string Nombre { get; set; }
 
-        public virtual ICollection<ReportesDTO> Reportes { get; set; }
     }
 }
