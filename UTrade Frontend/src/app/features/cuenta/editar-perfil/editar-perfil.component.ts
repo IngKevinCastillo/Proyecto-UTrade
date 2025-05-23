@@ -108,7 +108,7 @@ export class EditarPerfilComponent implements OnInit {
             this.fotoPreview = 'data:image/jpeg;base64,' + datos.fotoPerfil;
             this.fotoPerfilBase64 = datos.fotoPerfil;
           } else {
-            this.fotoPreview = 'assets/icons/no-photo.webp';
+            this.fotoPreview = 'icons/no-photo.webp';
             this.fotoPerfilBase64 = null;
           }
 
