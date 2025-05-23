@@ -15,6 +15,7 @@ namespace BLL.Servicios.Contrato
         Task<bool> Editar(PersonaDTO modelo);
         Task<bool> Eliminar(string id);
         Task<PersonaDTO> Obtener(string id);
-
+        Task<PersonaDTO> ObtenerPorUsuario(string usuario);
+        Task<string> ObtenerIdNuevoUsuario();
     }
 }
