@@ -48,6 +48,8 @@ import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-pe
 import { HttpClientModule } from '@angular/common/http';
 import { MisPublicacionesComponent } from './features/cuenta/mis-publicaciones/mis-publicaciones.component';
 import { ReputacionComponent } from './features/cuenta/reputacion/reputacion.component';
+import { VerProductosComponent } from './features/productos/componentes/ver-productos/ver-productos.component';
+import { ModificarProductosComponent } from './features/productos/componentes/modificar-productos/modificar-productos.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,9 @@ import { ReputacionComponent } from './features/cuenta/reputacion/reputacion.com
     MiCuentaComponent,
     EditarPerfilComponent,
     MisPublicacionesComponent,
-    ReputacionComponent
+    ReputacionComponent,
+    VerProductosComponent,
+    ModificarProductosComponent
   ],
   imports: [
     BrowserModule,

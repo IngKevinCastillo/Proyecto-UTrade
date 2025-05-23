@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { VerProductosComponent } from '../../productos/componentes/ver-productos/ver-productos.component';
+import { ModificarProductosComponent } from '../../productos/componentes/modificar-productos/modificar-productos.component';
 
 export interface MiPublicacion {
   id: string;
@@ -21,7 +24,10 @@ export class MisPublicacionesComponent implements OnInit {
 
   publicaciones: MiPublicacion[] = [];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private toastr: ToastrService
+  ){ }
 
   ngOnInit(): void {
     this.cargarMisPublicaciones();
@@ -65,44 +71,49 @@ export class MisPublicacionesComponent implements OnInit {
   }
 
   modificarPublicacion(publicacion: MiPublicacion): void {
-    console.log('Modificar publicación:', publicacion);
-    // Aquí abrirías un modal o navegarías a la página de edición
-    // Ejemplo:
-    // this.router.navigate(['/editar-publicacion', publicacion.id]);
+    this.toastr.info(`Vas a modificar "${publicacion.nombre}"`, 'Modificar publicación');
+    const dialogRef = this.dialog.open(ModificarProductosComponent, {
+        disableClose: true,
+        autoFocus: true,
+        closeOnNavigation: false,
+        position: { top: '30px' },
+        width: '90vw',
+        maxWidth: '1200px',
+        data: {
+          tipo: 'CREAR'
+        }
+      });
+    
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
   }
+  
 
   borrarPublicacion(publicacion: MiPublicacion): void {
-    // Mostrar confirmación antes de borrar
-    const confirmacion = confirm(`¿Estás seguro de que deseas borrar "${publicacion.nombre}"?`);
-    
-    if (confirmacion) {
-      console.log('Borrar publicación:', publicacion);
-      
-      // Aquí harías la llamada a la API para borrar
+    if (confirm(`¿Estás seguro de que deseas borrar "${publicacion.nombre}"?`)) {
       this.publicaciones = this.publicaciones.filter(p => p.id !== publicacion.id);
-      
-      // Mostrar mensaje de éxito
-      // this.snackBar.open('Publicación eliminada correctamente', 'Cerrar', { duration: 3000 });
+      this.toastr.success('Publicación eliminada correctamente', 'Éxito');
     }
   }
 
   verDetalles(publicacion: MiPublicacion): void {
-    console.log('Ver detalles de publicación:', publicacion);
-    // Aquí podrías abrir un modal con los detalles o navegar a otra página
-    // Ejemplo con dialog:
-    /*
-    const dialogRef = this.dialog.open(DetallesPublicacionComponent, {
-      width: '80%',
-      maxWidth: '800px',
-      data: publicacion
+    const dialogRef = this.dialog.open(VerProductosComponent, {
+        disableClose: true,
+        autoFocus: true,
+        closeOnNavigation: false,
+        position: { top: '30px' },
+        width: '90vw',
+        maxWidth: '1200px',
+        data: {
+          tipo: 'CREAR'
+        }
     });
-
+    
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Acción realizada:', result);
-      }
+      console.log(`Dialog result: ${result}`);
     });
-    */
   }
 
   // Método auxiliar para obtener el color del estado (si lo necesitas)
