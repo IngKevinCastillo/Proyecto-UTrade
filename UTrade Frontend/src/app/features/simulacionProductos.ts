@@ -79,7 +79,7 @@ export const productosLista: Productos[] = [
     "APARTAESTUDIO",
     "renta",
     "Acogedor apartaestudio ideal para estudiantes o parejas jóvenes. Diseño moderno con ambiente tipo loft.",
-    ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg", "icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg", "icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg", "icons/cuarto1.png"]
+    ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg", "icons/cuarto1.png"]
   ),
   new Productos(
     "Alberto Pérez",
