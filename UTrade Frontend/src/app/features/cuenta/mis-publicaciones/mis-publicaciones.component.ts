@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { VerProductosComponent } from '../../productos/componentes/ver-productos/ver-productos.component';
 import { ModificarProductosComponent } from '../../productos/componentes/modificar-productos/modificar-productos.component';
+import Swal from 'sweetalert2';
 
 export interface MiPublicacion {
   id: string;
@@ -34,8 +35,6 @@ export class MisPublicacionesComponent implements OnInit {
   }
 
   cargarMisPublicaciones(): void {
-    // Aquí harías la llamada a tu API para obtener las publicaciones del usuario
-    // Por ahora uso datos de ejemplo
     this.publicaciones = [
       {
         id: '1',
@@ -92,10 +91,20 @@ export class MisPublicacionesComponent implements OnInit {
   
 
   borrarPublicacion(publicacion: MiPublicacion): void {
-    if (confirm(`¿Estás seguro de que deseas borrar "${publicacion.nombre}"?`)) {
-      this.publicaciones = this.publicaciones.filter(p => p.id !== publicacion.id);
-      this.toastr.success('Publicación eliminada correctamente', 'Éxito');
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Deseas borrar "${publicacion.nombre}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, borrar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.toastr.success('Publicación eliminada correctamente', 'Éxito');
+      }
+    });
   }
 
   verDetalles(publicacion: MiPublicacion): void {
@@ -105,18 +114,18 @@ export class MisPublicacionesComponent implements OnInit {
         closeOnNavigation: false,
         position: { top: '30px' },
         width: '90vw',
-        maxWidth: '1200px',
+        maxWidth: '1000px',
         data: {
-          tipo: 'CREAR'
+            tipo: 'VER_DETALLE', 
+            publicacion: publicacion
         }
     });
-    
+         
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+        console.log(`Dialog result: ${result}`);
     });
   }
 
-  // Método auxiliar para obtener el color del estado (si lo necesitas)
   getEstadoColor(estado: string): string {
     switch (estado) {
       case 'Activo': return 'primary';
