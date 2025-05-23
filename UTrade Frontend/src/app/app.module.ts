@@ -108,7 +108,6 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    HttpClientModule,
     ToastrModule.forRoot({
       closeButton: true,
       progressBar: true,
