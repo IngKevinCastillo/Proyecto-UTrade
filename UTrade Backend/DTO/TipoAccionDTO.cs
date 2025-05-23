@@ -16,6 +16,6 @@ namespace DTO
 
         public string IdPersonaReportada { get; set; }
 
-        public virtual ICollection<NotificacionesDTO> Notificaciones { get; set; }
+        public string TipoId { get; set; } 
     }
 }

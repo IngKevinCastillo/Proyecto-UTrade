@@ -22,6 +22,8 @@ public partial class UtradedbContext : DbContext
 
     public virtual DbSet<Chat> Chats { get; set; }
 
+    public virtual DbSet<CodigosVerificacion> CodigosVerificacions { get; set; }
+
     public virtual DbSet<Contactanos> Contactanos { get; set; }
 
     public virtual DbSet<Estados> Estados { get; set; }
@@ -121,6 +123,22 @@ public partial class UtradedbContext : DbContext
                 .HasForeignKey(d => d.Usuario2Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Chat_Usuario2");
+        });
+
+        modelBuilder.Entity<CodigosVerificacion>(entity =>
+        {
+            entity.ToTable("CodigosVerificacion");
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(30)
+                .HasColumnName("id");
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("codigo");
+            entity.Property(e => e.Hora)
+                .HasPrecision(0)
+                .HasColumnName("hora");
         });
 
         modelBuilder.Entity<Contactanos>(entity =>
@@ -564,6 +582,9 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.IdTipoMensaje)
                 .HasMaxLength(50)
                 .HasColumnName("idTipoMensaje");
+            entity.Property(e => e.TipoId)
+                .HasMaxLength(50)
+                .HasColumnName("tipoId");
 
             entity.HasOne(d => d.IdPersonaRemitenteNavigation).WithMany(p => p.TipoAccionIdPersonaRemitenteNavigations)
                 .HasForeignKey(d => d.IdPersonaRemitente)

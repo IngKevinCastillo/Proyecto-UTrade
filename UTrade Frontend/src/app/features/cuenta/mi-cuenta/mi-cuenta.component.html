@@ -1,8 +1,8 @@
 <div class="contenedor-perfil">
   <h2 class="mb-4">Mi cuenta</h2>
 
-  <ul class="nav nav-tabs mb-4">
-    <li class="nav-item">
+  <ul class="nav nav-tabs">
+    <li class="mb-1 nav-item">
       <a
         class="nav-link opcion"
         [class.activa]="seccionActual === 'seguridad'"
@@ -149,4 +149,4 @@
 <div *ngIf="seccionActual === 'reputacion'">
   <app-reputacion></app-reputacion>
 </div>
-<app-footer></app-footer>
+

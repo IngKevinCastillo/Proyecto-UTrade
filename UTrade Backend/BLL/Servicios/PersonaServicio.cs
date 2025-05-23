@@ -140,5 +140,46 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public async Task<PersonaDTO> ObtenerPorUsuario(string usuario)
+        {
+            try
+            {
+                var personaEncontrada = await _personaRepositorio.Obtener(x => x.NombreUsuario == usuario);
+                return _mapper.Map<PersonaDTO>(personaEncontrada);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<string> ObtenerIdNuevoUsuario()
+        {
+            try
+            {
+                var personas = await _personaRepositorio.Consultar();
+                var listaIds = personas
+                    .ToList()
+                    .Select(p => p.Id)
+                    .Where(id => !string.IsNullOrEmpty(id) && id.StartsWith("P"))
+                    .Select(id =>
+                    {
+                        var numeroStr = id.Substring(1);
+                        return int.TryParse(numeroStr, out int numero) ? numero : 0;
+                    })
+                    .ToList();
+
+                int maxNumero = listaIds.Any() ? listaIds.Max() : 0;
+                int nuevoNumero = maxNumero + 1;
+
+                return $"P{nuevoNumero.ToString("D3")}";
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }

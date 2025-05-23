@@ -13,6 +13,8 @@ public partial class TipoAccion
 
     public string IdPersonaReportada { get; set; } = null!;
 
+    public string TipoId { get; set; } = null!;
+
     public virtual Persona IdPersonaRemitenteNavigation { get; set; } = null!;
 
     public virtual Persona IdPersonaReportadaNavigation { get; set; } = null!;
