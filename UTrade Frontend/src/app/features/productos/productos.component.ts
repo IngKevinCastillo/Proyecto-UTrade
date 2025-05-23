@@ -1,8 +1,18 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { productosLista, Productos, MiPublicacion, convertirProductoAPublicacion } from '../simulacionProductos';
 import { MatDialog } from '@angular/material/dialog';
 import { VentanaReportesComponent } from './componentes/ventana-reportes/ventana-reportes.component';
 import { VerProductosComponent } from './componentes/ver-productos/ver-productos.component';
+
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Persona } from '../../interfaces/persona';
+import { CategoriaPublicacion } from '../../interfaces/categoria-publicacion';
+import { UsuarioService } from '../../Services/usuario.service';
+import { CategoriaPublicacionService } from '../../Services/categoria-publicacion.service';
+import { PersonaServiceService } from '../../Services/persona.service';
+import { Publicaciones } from '../../interfaces/publicaciones';
+
 
 interface ProductoExtendido extends Productos {
   verMas: boolean;
@@ -14,16 +24,68 @@ interface ProductoExtendido extends Productos {
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent implements OnChanges {
+export class ProductosComponent implements OnChanges, OnInit {
+
+  formularioPublicaciones: FormGroup;
+  listaDePersonas: Persona[];
+  datosPublicaciones: Publicaciones
 
   @Input() Filtro?: string;
   @Input() FiltroLista?: Productos[];
   
   constructor(
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    private _categoriaServicio: CategoriaPublicacionService,
+    private _personaServicio: PersonaServiceService,
+    private listaPersonas: Persona[]
+  ) { 
+    this.listaDePersonas = listaPersonas;
+    this.formularioPublicaciones = this.fb.group({
+      id: ["", Validators.required],
+      titulo: ["", Validators.required],
+      fechaPublicacion: ["", Validators.required],
+      idUsuario: ["", Validators.required],
+      precio: ["", Validators.required],
+      idCategoria: ["", Validators.required],
+      descripcion: ["", Validators.required],
+      ubicacion: [""],
+      idReseña: [""]
+    });
+
+    this._categoriaServicio.lista().subscribe({
+      next: (respuesta) => {
+        if(respuesta.estado) this.productos = respuesta.valor
+      },
+      error:(e) => {}
+    })
+
+    this._personaServicio.listar().subscribe({
+      next: (respuesta) => {
+        if(respuesta.estado) this.listaDePersonas = respuesta.valor
+      },
+      error:(e) => {}
+    })
+
+  }
 
   productos: ProductoExtendido[] = [];
+
+  ngOnInit(): void {
+    if (this.datosPublicaciones != null) {
+      this.formularioPublicaciones.patchValue({
+        id: this.datosPublicaciones.id,
+        titulo: this.datosPublicaciones.titulo,
+        fechaPublicacion: this.datosPublicaciones.fechaPublicacion,
+        idUsuario: this.datosPublicaciones.idUsuario,
+        precio: this.datosPublicaciones.precio,
+        idCategoria: this.datosPublicaciones.idCategoria,
+        descripcion: this.datosPublicaciones.descripcion,
+        ubicacion: this.datosPublicaciones.ubicacion,
+        idReseña: this.datosPublicaciones.idReseña
+      })
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['FiltroLista'] && this.FiltroLista) {
