@@ -72,15 +72,16 @@ export class MisPublicacionesComponent implements OnInit {
   modificarPublicacion(publicacion: MiPublicacion): void {
     this.toastr.info(`Vas a modificar "${publicacion.nombre}"`, 'Modificar publicación');
     const dialogRef = this.dialog.open(ModificarProductosComponent, {
-        disableClose: true,
-        autoFocus: true,
-        closeOnNavigation: false,
-        position: { top: '30px' },
-        width: '90vw',
-        maxWidth: '1200px',
-        data: {
-          tipo: 'CREAR'
-        }
+      disableClose: true,
+      autoFocus: true,
+      closeOnNavigation: false,
+      position: { top: '30px' },
+      width: '90vw',
+      maxWidth: '1000px',
+      data: {
+          tipo: 'VER_DETALLE', 
+          publicacion: publicacion
+      }
       });
     
     

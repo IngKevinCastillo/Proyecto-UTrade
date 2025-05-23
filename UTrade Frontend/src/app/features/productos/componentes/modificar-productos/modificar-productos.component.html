@@ -1,10 +1,88 @@
 <div class="p-4">
-    <div (click)="salir()" class="rounded-circle d-flex justify-content-center align-items-center mb-4" style="
-        width: 50px;
-        height: 50px;
-        background-color: #2c248b;
-        cursor: pointer;
-      ">
-        <mat-icon (click)="salir()" style="font-size: 24px; color: white">close</mat-icon>
+  <div (click)="salir()" class="rounded-circle d-flex justify-content-center align-items-center mb-4" style="
+      width: 50px;
+      height: 50px;
+      background-color: #2c248b;
+      cursor: pointer;
+    ">
+    <mat-icon (click)="salir()" style="font-size: 24px; color: white">close</mat-icon>
+  </div>
+  <app-user-profile [username]="username" [userHandle]="userHandle" [avatarUrl]="userAvatar"
+    class="mb-4"></app-user-profile>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <h6 class="mb-3">Obligatorio</h6>
+        <p class="small text-muted mb-3">
+          Detalla al máximo para que la información sea lo más comprensible posible.
+        </p>
+        <div class="form-group mb-3">
+          <input type="text" class="form-control" placeholder="Título" [ngModel]="title"
+            (ngModelChange)="onTitleChange($event)" />
+        </div>
+        <div class="form-group mb-3">
+          <input type="text" class="form-control" placeholder="Precio" [ngModel]="price"
+            (ngModelChange)="onPriceChange($event)" />
+        </div>
+        <div class="form-group mb-3">
+          <select class="form-select" [ngModel]="category" (ngModelChange)="onCategoryChange($event)">
+            <option value="" disabled selected>Categoría</option>
+            <option value="Pension">Pension</option>
+            <option value="Mueble">Muebles</option>
+            <option value="Ropa">Ropa</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" rows="3" placeholder="Descripción" [ngModel]="description"
+            (ngModelChange)="onDescriptionChange($event)"></textarea>
+        </div>
+      </div>
     </div>
+
+    <div class="col-md-6">
+      <div class="sticky-top" style="top: 20px;">
+        <h4 class="mb-4">VISTA PREVIA</h4>
+        <mat-card class="mb-4">
+          <mat-card-content>
+            <div class="d-flex align-items-center mb-3">
+              <app-user-profile [username]="username" [userHandle]="userHandle" [avatarUrl]="userAvatar">
+              </app-user-profile>
+              <div class="ms-2">
+                <div>{{ previewUsername }}</div>
+                <small class="text-muted">Fecha / Tiempo transcurrido</small>
+              </div>
+              <div class="ms-auto text-muted">
+                <mat-icon>location_on</mat-icon> Ubicación
+              </div>
+            </div>
+            <h5>{{ title || "Título" }}</h5>
+            <h6>{{ price || "PRECIO" }} / {{ category || "CATEGORÍA" }}</h6>
+            <p class="text-muted">{{ description || "Descripción" }}</p>
+            <div class="row mb-3">
+              <div *ngFor="let imgUrl of previewUrls" class="col-6 mb-2">
+                <div class="bg-light rounded" style="height: 100px; overflow: hidden">
+                  <img [src]="imgUrl" class="w-100 h-100 object-fit-cover" />
+                </div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <button mat-icon-button>
+                <mat-icon>thumb_up</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>chat_bubble_outline</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>share</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <div class="d-flex justify-content-end mt-3">
+          <button mat-raised-button color="accent" (click)="editar()">Publicar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
