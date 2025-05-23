@@ -29,11 +29,11 @@ export class motivoReporteService {
     return this.http.put<RespuestaAPI>(`${this.urlApi}Editar`,motivoReporte);
   }
 
-  eliminar(id: number):Observable<RespuestaAPI>{
+  eliminar(id: string):Observable<RespuestaAPI>{
     return this.http.delete<RespuestaAPI>(`${this.urlApi}Eliminar/${id}`);
   }
 
-  buscar(id: number):Observable<RespuestaAPI>{
-    return this.http.delete<RespuestaAPI>(`${this.urlApi}Obtener/${id}`);
+  buscar(id: string):Observable<RespuestaAPI>{
+    return this.http.get<RespuestaAPI>(`${this.urlApi}Buscar/${id}`);
   }
 }

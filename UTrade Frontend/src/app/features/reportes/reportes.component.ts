@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Persona } from '../../interfaces/persona';
 import { Reporte } from '../../interfaces/reporte';
 import { tipoReporte } from '../../interfaces/tipoReporte';
 import { estadoReporte } from '../../interfaces/estadoReporte';
+import { motivoReporte } from '../../interfaces/motivoReporte';
 import { ReporteService } from '../../Services/reporte.service';
 import { tipoReporteService } from '../../Services/tipoReporte.service';
 import { estadoReporteService } from '../../Services/estadoReporte.service';
+import { motivoReporteService } from '../../Services/motivoReporte.service';
+import { PerfilService } from '../../Services/perfil.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,6 +22,8 @@ export class ReportesComponent implements OnInit {
   listaReportesFiltrados: Reporte[] = [];
   listaEstados: estadoReporte[] = [];
   listaTiposReporte: tipoReporte[] = [];
+  listaMotivos: motivoReporte[] = [];
+  persona: Persona | null = null;
   filtroEstado: string = 'todos';
   filtroTipo: string = 'todos';
   mostrarSoloNoLeidos: boolean = false;
@@ -27,6 +33,8 @@ export class ReportesComponent implements OnInit {
     private reporteService: ReporteService,
     private estadoReporteService: estadoReporteService,
     private tipoReporteService: tipoReporteService,
+    private motivoService: motivoReporteService,
+    private perfilService: PerfilService,
     private dialog: MatDialog,
     private toastr: ToastrService
   ) { }
@@ -34,6 +42,7 @@ export class ReportesComponent implements OnInit {
   ngOnInit(): void {
     this.cargarEstados();
     this.cargarTiposReporte();
+    this.cargarMotivos();
     this.cargarReportes();
   }
 
@@ -59,7 +68,6 @@ export class ReportesComponent implements OnInit {
     });
   }
 
-
   cargarEstados(): void {
     console.log('Iniciando carga de estados...');
 
@@ -80,6 +88,22 @@ export class ReportesComponent implements OnInit {
         console.error('Message:', error.message);
         console.error('Error object:', error.error);
         this.toastr.error('Error de conexión al cargar estados de reporte', 'Error');
+      }
+    });
+  }
+
+  cargarMotivos(): void {
+    this.motivoService.lista().subscribe({
+      next: (response) => {
+        if (response && response.estado) {
+          this.listaMotivos = response.valor;
+        } else {
+          this.toastr.error('Error al cargar los motivos de reporte', 'Error');
+        }
+      },
+      error: (error) => {
+        console.error('Error al cargar motivos:', error);
+        this.toastr.error('Error de conexión al cargar motivos', 'Error');
       }
     });
   }
@@ -113,6 +137,22 @@ export class ReportesComponent implements OnInit {
       }
     });
   }
+
+  obtenerNombreEstado(id: string): string {
+    const estado = this.listaEstados.find(e => e.id === id);
+    return estado ? estado.nombre : 'Estado desconocido';
+  }
+
+  obtenerNombreTipo(id: string): string {
+    const tipo = this.listaTiposReporte.find(t => t.id === id);
+    return tipo ? tipo.nombre : 'Tipo desconocido';
+  }
+
+  obtenerNombreMotivo(id: string): string {
+    const motivo = this.listaMotivos.find(m => m.id === id);
+    return motivo ? motivo.nombre : 'Motivo desconocido';
+  }
+
 
   esUsuario(idTipoReporte: string): boolean {
     const tipo = this.listaTiposReporte.find(t => t.id == idTipoReporte);
@@ -244,7 +284,8 @@ export class ReportesComponent implements OnInit {
     }
     if (diffDias === 0) return 'Hoy';
     if (diffDias === 1) return 'Ayer';
-    if (diffDias < 7) return `Hace ${diffDias} días`;
+    if (diffDias === 2) return 'Anteayer';
+    if (diffDias >= 3) return `Hace ${diffDias} días`;
     
     return this.formatearFecha(fecha);
   }

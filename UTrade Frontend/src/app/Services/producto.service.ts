@@ -4,14 +4,14 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { RespuestaAPI } from '../interfaces/respuesta-api';
-import { Persona } from '../interfaces/persona';
+import { Publicaciones } from '../interfaces/publicaciones';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
 
-  private urlApi: string = environment.endpoint + "Persona/"
+  private urlApi: string = environment.endpoint + "Publicaciones/"
 
   constructor(
     private http: HttpClient
@@ -21,11 +21,11 @@ export class ProductoService {
     return this.http.get<RespuestaAPI>(`${this.urlApi}Listar`);
   }
 
-  guardar(request: Persona): Observable<RespuestaAPI>{
+  guardar(request: Publicaciones): Observable<RespuestaAPI>{
     return this.http.post<RespuestaAPI>(`${this.urlApi}Guardar`,request);
   }
 
-  editar(request: Persona): Observable<RespuestaAPI>{
+  editar(request: Publicaciones): Observable<RespuestaAPI>{
     return this.http.put<RespuestaAPI>(`${this.urlApi}Editar`,request);
   }
 
