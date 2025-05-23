@@ -39,9 +39,8 @@
           </div>
         </div>
 
-        <form #registroForm="ngForm" (ngSubmit)="registro()">
+        <form #registroForm="ngForm" (ngSubmit)="registrarCuenta()">
           <div class="form-grid">
-            <!-- Primera fila -->
             <div class="form-grid-item">
               <label for="nombres" class="form-label">
                 <i class="bi bi-person me-2"></i> Nombres
@@ -133,7 +132,21 @@
               </div>
             </div>
 
-            <!-- Segunda fila -->
+            <div class="form-grid-item">
+              <label for="username" class="form-label">
+                <i class="bi bi-person-badge me-2"></i> Nombre de usuario
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                placeholder="Ingresa un nombre de usuario"
+                [(ngModel)]="registroData.nombreUsuario"
+                required
+              />
+            </div>
+
             <div class="form-grid-item">
               <label for="email" class="form-label">
                 <i class="bi bi-envelope me-2"></i> Correo o número telefónico
@@ -236,8 +249,9 @@
 
             <div class="form-grid-item button-container">
               <button
-                type="submit"
+                type="button"
                 class="btn btn-primary w-100 py-2 btn-hover-scale-glow"
+                (click)="registrarCuenta()"
               >
                 Crear cuenta
               </button>

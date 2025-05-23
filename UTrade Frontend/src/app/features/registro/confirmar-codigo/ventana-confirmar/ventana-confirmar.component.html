@@ -1,0 +1,27 @@
+<div class="contenedor-reporte">
+  <div class="encabezado-reporte">
+    <span></span>
+    <button class="boton-cerrar" (click)="salir()">×</button>
+  </div>
+
+  <div class="cuerpo-reporte">
+    <div class="seccion">
+      <label for="codigo">Código de verificación</label>
+      <small style="display: block; margin-bottom: 10px; color: #555">
+        Escriba el código de verificación enviado
+      </small>
+      <input
+        id="codigo"
+        [(ngModel)]="codigoVerificacion"
+        class="selector-razon"
+        placeholder="Código de verificación"
+      />
+    </div>
+
+    <div class="contenedor-enviar">
+      <button class="boton-enviar" (click)="confirmarCodigo()">
+        Confirmar
+      </button>
+    </div>
+  </div>
+</div>

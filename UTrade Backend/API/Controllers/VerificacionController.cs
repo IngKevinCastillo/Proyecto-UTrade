@@ -17,7 +17,7 @@ namespace API.Controllers
             _registroServicio = registroServicio;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("EnviarCorreoVerificacion")]
         public async Task<IActionResult> EnviarCorreoVerificacion([FromBody] EnviarCorreoVerificacionDTO datos)
         {
@@ -35,7 +35,7 @@ namespace API.Controllers
             return Ok(rsp);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GenerarCodigoRegistro")]
         public async Task<IActionResult> GenerarCodigoRegistro([FromBody] DateTime fechaNacimiento)
         {
@@ -53,7 +53,7 @@ namespace API.Controllers
             return Ok(rsp);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("ValidarCodigoRegistro")]
         public async Task<IActionResult> ValidarCodigoRegistro([FromBody] CodigoVerificacionDTO dto)
         {

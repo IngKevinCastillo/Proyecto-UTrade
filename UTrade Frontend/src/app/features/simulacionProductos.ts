@@ -37,6 +37,35 @@ export class Productos {
     this.fotos = fotos;
   }
 }
+export interface MiPublicacion {
+  id: string;
+  nombre: string;
+  tipoServicio: string;
+  precio: number;
+  fechaPublicacion: Date;
+  estado: 'Activo' | 'Baneado' | 'Eliminado' | 'Suspendido' | 'Advertido';
+  imagen: string;
+  descripcion?: string;
+  imagenes?: string[];
+  idUsuario?: string;
+  idCategoria?: string;
+}
+
+export function convertirProductoAPublicacion(producto: Productos): MiPublicacion {
+  return {
+    id: `pub_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    nombre: producto.title || 'Sin título',
+    tipoServicio: producto.category || 'general',
+    precio: producto.precio || 0,
+    fechaPublicacion: producto.fecha ? new Date(producto.fecha.split('/').reverse().join('-')) : new Date(),
+    estado: 'Activo',
+    imagen: producto.fotos && producto.fotos.length > 0 ? producto.fotos[0] : '',
+    descripcion: producto.description,
+    imagenes: producto.fotos,
+    idUsuario: producto.correo,
+    idCategoria: producto.category
+  };
+}
 
 export const productosLista: Productos[] = [
   new Productos(
@@ -50,7 +79,7 @@ export const productosLista: Productos[] = [
     "APARTAESTUDIO",
     "renta",
     "Acogedor apartaestudio ideal para estudiantes o parejas jóvenes. Diseño moderno con ambiente tipo loft.",
-    ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
+    ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg", "icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg", "icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg", "icons/cuarto1.png"]
   ),
   new Productos(
     "Alberto Pérez",
@@ -170,3 +199,5 @@ export const productosLista: Productos[] = [
     ["icons/cuarto1.png", "icons/cuarto2.jpg", "icons/cuarto3.jpg"]
   )
 ];
+
+export const publicacionesLista: MiPublicacion[] = productosLista.map(producto => convertirProductoAPublicacion(producto));

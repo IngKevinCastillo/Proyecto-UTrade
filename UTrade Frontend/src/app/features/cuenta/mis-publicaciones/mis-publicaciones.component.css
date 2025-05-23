@@ -1,0 +1,83 @@
+.estado-activo {
+    background-color: #4caf50 !important;
+    color: white !important;
+}
+
+.estado-baneado {
+    background-color: #f44336 !important;
+    color: white !important;
+}
+
+.estado-eliminado {
+    background-color: #9e9e9e !important;
+    color: white !important;
+}
+
+.estado-suspendido {
+    background-color: #ff9800 !important;
+    color: white !important;
+}
+
+.estado-advertido {
+    background-color: #ffeb3b !important;
+    color: black !important;
+}
+
+mat-card {
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    transition: box-shadow 0.3s ease !important;
+}
+
+mat-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+.action-btn {
+    border-width: 1.5px !important;
+    font-weight: 500 !important;
+    width: 100px !important;
+    min-width: 100px !important;
+}
+
+.btn-ver-detalles {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    border-width: 1.5px !important;
+    padding: 6px 12px !important;
+}
+
+.btn-ver-detalles .mat-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+@media (max-width: 768px) {
+    .col-md-4 .d-flex.flex-column {
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 10px !important;
+    }
+
+    .action-btn {
+        width: auto !important;
+        min-width: 80px !important;
+        font-size: 14px !important;
+    }
+
+    .col-md-4 {
+        margin-top: 15px !important;
+    }
+
+    .position-absolute.top-0.end-0 {
+        position: static !important;
+        margin: 10px 0 !important;
+        text-align: center;
+    }
+
+    .btn-ver-detalles {
+        font-size: 12px !important;
+        padding: 4px 8px !important;
+    }
+}

@@ -43,7 +43,7 @@ namespace API.Controllers
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _personaServicio.ValidarCredenciales(login.Correo,login.Telefono,login.Contraseña);
+                rsp.Valor = await _personaServicio.ValidarCredenciales(login.Correo, login.Telefono, login.Contraseña);
             }
             catch (Exception ex)
             {
@@ -125,5 +125,41 @@ namespace API.Controllers
             return Ok(rsp);
         }
 
+        [HttpGet]
+        [Route("ObtenerPorUsuario/{usuario}")]
+        public async Task<IActionResult> ObtenerPorUsuario(string usuario)
+        {
+            var rsp = new Respuesta<PersonaDTO>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _personaServicio.ObtenerPorUsuario(usuario);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
+        [Route("ObtenerIdNuevoUsuario")]
+        public async Task<IActionResult> ObtenerIdNuevoUsuario()
+        {
+            var rsp = new Respuesta<string>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _personaServicio.ObtenerIdNuevoUsuario();
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+
+        }
     }
 }
