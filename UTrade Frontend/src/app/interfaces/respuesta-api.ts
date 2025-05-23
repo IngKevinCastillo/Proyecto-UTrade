@@ -1,5 +1,5 @@
 export interface RespuestaAPI {
-    status: boolean,
+    estado: boolean,
     msg: string,
-    value: any
+    valor: any
 }
