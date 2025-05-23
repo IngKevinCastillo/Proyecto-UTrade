@@ -1,68 +1,89 @@
 <mat-card class="reportes-container my-3">
   <h3 class="reportes-titulo">Reportes</h3>
 
-  <div class="reportes-botones">
+  <!-- Spinner de carga -->
+  <div *ngIf="cargando" style="display: flex; flex-direction: column; align-items: center; padding: 2rem;">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p style="margin-top: 1rem; color: #666;">Cargando reportes...</p>
+  </div>
+
+  <div class="reportes-botones" *ngIf="!cargando">
     <button mat-stroked-button class="boton-filtro" (click)="mostrarTodos()">Todos</button>
-    <button mat-stroked-button class="boton-filtro" (click)="filtrarPorEstado('pendiente')">Pendientes</button>
-    <button mat-stroked-button class="boton-filtro" (click)="filtrarPorEstado('en revisión')">En Revisión</button>
-    <button mat-stroked-button class="boton-filtro" (click)="filtrarPorEstado('resuelto')">Resueltos</button>
+    <button *ngFor="let estado of listaEstados" mat-stroked-button class="boton-filtro" (click)="filtrarPorEstado(estado.id)">
+      {{ estado.nombre }}
+    </button>
     <button mat-stroked-button class="boton-filtro" (click)="filtrarNoLeidos()">No Leídos</button>
   </div>
 
-  <div class="filtro-tipo">
-    <mat-button-toggle-group [(ngModel)]="filtroTipo" (change)="aplicarFiltros()">
-      <mat-button-toggle value="todos">Todos</mat-button-toggle>
-      <mat-button-toggle value="usuario">Usuarios</mat-button-toggle>
-      <mat-button-toggle value="anuncio">Anuncios</mat-button-toggle>
-    </mat-button-toggle-group>
-  </div>
-
-  <ng-container *ngIf="listaReportesFiltrados.length > 0; else sinReportes">
-    <mat-card *ngFor="let reporte of listaReportesFiltrados" class="reporte-card" [ngClass]="{'no-leido': !reporte.leido}">
-      <mat-card-header>
-        <div mat-card-avatar [ngClass]="'tipo-' + reporte.tipo" class="reporte-avatar">
-          <mat-icon *ngIf="reporte.tipo === 'usuario'">person</mat-icon>
-          <mat-icon *ngIf="reporte.tipo === 'anuncio'">description</mat-icon>
-        </div>
-        <mat-card-title>{{ reporte.titulo }}</mat-card-title>
-        <mat-card-subtitle>{{ reporte.motivo }} - ID: {{ reporte.idAnuncioReportado }}</mat-card-subtitle>
-        <div class="estado-badge" [ngClass]="'estado-' + reporte.estado.replace(' ', '-')">
-          {{ reporte.estado | titlecase }}
-        </div>
-      </mat-card-header>
-      
-      <mat-card-content class="reporte-contenido">
-        <p class="reporte-descripcion">{{ reporte.descripcion }}</p>
-        <div class="reporte-meta">
-          <span class="reporte-fecha">Creado: {{ calcularTiempo(reporte.fechaCreacion) }}</span>
-          <span class="reporte-fecha">Actualizado: {{ calcularTiempo(reporte.fechaActualizacion) }}</span>
-        </div>
-      </mat-card-content>
-      
-      <mat-card-actions align="end">
-        <button mat-button color="primary" (click)="marcarComoLeido(reporte)" *ngIf="!reporte.leido">
-          <mat-icon>visibility</mat-icon> Marcar como leído
-        </button>
-        <button mat-button color="accent" (click)="cambiarEstado(reporte, 'en revisión')" *ngIf="reporte.estado === 'pendiente'">
-          <mat-icon>assignment</mat-icon> Poner en revisión
-        </button>
-        <button mat-button color="primary" (click)="cambiarEstado(reporte, 'resuelto')" *ngIf="reporte.estado === 'en revisión'">
-          <mat-icon>check_circle</mat-icon> Resolver
-        </button>
-        <button mat-button color="warn" (click)="cambiarEstado(reporte, 'rechazado')" *ngIf="reporte.estado !== 'rechazado' && reporte.estado !== 'resuelto'">
-          <mat-icon>cancel</mat-icon> Rechazar
-        </button>
-        <button mat-icon-button color="primary" (click)="verDetalles(reporte)">
-          <mat-icon>visibility</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </ng-container>
-  
-  <ng-template #sinReportes>
-    <div class="sin-reportes">
-      <mat-icon>sentiment_satisfied</mat-icon>
-      <p>No hay reportes que coincidan con los filtros seleccionados</p>
+    <div class="filtro-tipo" *ngIf="!cargando">
+      <mat-button-toggle-group [(ngModel)]="filtroTipo" (change)="aplicarFiltros()">
+        <mat-button-toggle value="todos">Todos</mat-button-toggle>
+        <mat-button-toggle *ngFor="let tipo of listaTiposReporte" [value]="tipo.id">
+          {{ tipo.nombre }}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
-  </ng-template>
+
+  <ng-container *ngIf="!cargando">
+    <ng-container *ngIf="listaReportesFiltrados.length > 0; else sinReportes">
+      <mat-card *ngFor="let reporte of listaReportesFiltrados" class="reporte-card" [ngClass]="{'no-leido': !reporte.leido}">
+      <mat-card-header>
+        <div mat-card-avatar 
+             [ngClass]="esUsuario(reporte.idTipoReporte) ? 'tipo-usuario' : 'tipo-anuncio'" 
+             class="reporte-avatar">
+          <mat-icon *ngIf="esUsuario(reporte.idTipoReporte)">person</mat-icon>
+          <mat-icon *ngIf="!esUsuario(reporte.idTipoReporte)">description</mat-icon>
+        </div>
+          <mat-card-title>Reporte #{{ reporte.idReporte }}</mat-card-title>
+          <mat-card-subtitle>Motivo ID: {{ reporte.idMotivo }} - Reportado: {{ reporte.idReportado }}</mat-card-subtitle>
+        <div class="estado-badge" [ngClass]="obtenerClaseEstado(reporte.idEstado)">
+          Estado ID: {{ reporte.idEstado }}
+        </div>
+        </mat-card-header>
+        
+        <mat-card-content class="reporte-contenido">
+          <p class="reporte-descripcion">{{ reporte.descripcion }}</p>
+          <div class="reporte-meta">
+            <span class="reporte-fecha">Creado: {{ calcularTiempo(reporte.fechaReportada) }}</span>
+            <span class="reporte-fecha">Actualizado: {{ calcularTiempo(reporte.fechaActualizacion) }}</span>
+          </div>
+          <div style="margin-top: 8px; font-size: 12px; color: #666;">
+            <span>Tipo: {{ reporte.idTipoReporte }} | Reportante: {{ reporte.idReportante }}</span>
+          </div>
+        </mat-card-content>
+        
+        <mat-card-actions align="end">
+          <button mat-button color="primary" (click)="marcarComoLeido(reporte)" *ngIf="!reporte.leido">
+            <mat-icon>visibility</mat-icon> Marcar como leído
+          </button>
+          
+          <button mat-button color="accent" (click)="cambiarEstadoPorNombre(reporte, 'En revisión')" 
+                  *ngIf="!estaEnRevisionOPosterior(reporte.idEstado)">
+            <mat-icon>assignment</mat-icon> En Revisión
+          </button>
+          
+          <button mat-button color="primary" (click)="resolver(reporte)" 
+                  *ngIf="!estaResueltaOrRechazado(reporte.idEstado)">
+            <mat-icon>check_circle</mat-icon> Resolver
+          </button>
+          
+          <button mat-button color="warn" (click)="cambiarEstadoPorNombre(reporte, 'Rechazado')" 
+                  *ngIf="!estaRechazado(reporte.idEstado)">
+            <mat-icon>cancel</mat-icon> Rechazar
+          </button>
+          
+          <button mat-icon-button color="primary" (click)="verDetalles(reporte)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </ng-container>
+    
+    <ng-template #sinReportes>
+      <div class="sin-reportes">
+        <mat-icon>sentiment_satisfied</mat-icon>
+        <p>No hay reportes que coincidan con los filtros seleccionados</p>
+      </div>
+    </ng-template>
+  </ng-container>
 </mat-card>

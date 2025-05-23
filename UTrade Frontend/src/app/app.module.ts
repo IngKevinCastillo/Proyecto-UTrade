@@ -20,6 +20,7 @@ import { VerProductosComponent } from './features/productos/componentes/ver-prod
 import { ModificarProductosComponent } from './features/productos/componentes/modificar-productos/modificar-productos.component';
 import { VentanaReportesComponent } from './features/productos/componentes/ventana-reportes/ventana-reportes.component';
 import { ChatComponent } from './features/mensajes/chat/chat.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ConversationListComponent } from './features/mensajes/conversation-list/conversation-list.component';
 import { MessageAreaComponent } from './features/mensajes/message-area/message-area.component';
 import { MessageComponent } from './features/mensajes/message/message.component';
@@ -106,6 +107,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     ToastrModule.forRoot({
       closeButton: true,
       progressBar: true,
