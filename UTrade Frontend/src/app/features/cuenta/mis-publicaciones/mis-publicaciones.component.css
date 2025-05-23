@@ -37,24 +37,45 @@ mat-card:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Estilos para los botones */
-.mat-stroked-button {
+/* Estilos para los botones de acción */
+.action-btn {
     border-width: 1.5px !important;
     font-weight: 500 !important;
-    min-width: 90px !important;
+    width: 100px !important;
+    min-width: 100px !important;
+}
+
+/* Botón de detalles en esquina superior derecha */
+.position-absolute.top-0.end-0 .mat-icon-button {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.position-absolute.top-0.end-0 .mat-icon-button .mat-icon {
+    font-size: 20px !important;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .d-flex.gap-2 {
-        flex-direction: column !important;
-        gap: 8px !important;
+    .col-md-4 .d-flex.flex-column {
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 10px !important;
     }
 
-    .mat-stroked-button {
-        width: 100% !important;
+    .action-btn {
+        width: auto !important;
+        min-width: 80px !important;
+        font-size: 14px !important;
     }
 
     .col-md-4 {
         margin-top: 15px !important;
+    }
+
+    /* Ajustar posición del botón de detalles en móvil */
+    .position-absolute.top-0.end-0 {
+        position: static !important;
+        margin: 10px 0 !important;
+        text-align: center;
     } }

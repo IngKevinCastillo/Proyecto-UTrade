@@ -38,7 +38,7 @@ export class MisPublicacionesComponent implements OnInit {
         precio: 45000,
         fechaPublicacion: new Date('2025-04-16'),
         estado: 'Activo',
-        imagen: 'assets/images/chaqueta.jpg',
+        imagen: 'icons/oceana.png',
         descripcion: 'Chaqueta de jean unisex, disponible en todas las tallas. Calidad garantizada.'
       },
       {
@@ -48,7 +48,7 @@ export class MisPublicacionesComponent implements OnInit {
         precio: 900000,
         fechaPublicacion: new Date('2025-04-15'),
         estado: 'Suspendido',
-        imagen: 'assets/images/sofa.jpg',
+        imagen: 'icons/oceana.png',
         descripcion: 'Sofá cómodo y moderno en tela gris. Perfecto para sala o estudio.'
       },
       {
@@ -58,7 +58,7 @@ export class MisPublicacionesComponent implements OnInit {
         precio: 1200000,
         fechaPublicacion: new Date('2025-04-14'),
         estado: 'Advertido',
-        imagen: 'assets/images/apartamento.jpg',
+        imagen: 'icons/oceana.png',
         descripcion: 'Apartamento completamente amoblado en zona céntrica.'
       }
     ];

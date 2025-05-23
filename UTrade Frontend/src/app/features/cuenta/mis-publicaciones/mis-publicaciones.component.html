@@ -1,6 +1,6 @@
 <!-- mis-publicaciones.component.html -->
-<div class="container-fluid p-4">
-    <mat-card class="mb-3" *ngFor="let publicacion of publicaciones">
+<div class="container-fluid p-4" style="background-color: #fff;">
+    <mat-card class="mb-4" *ngFor="let publicacion of publicaciones">
         <mat-card-content class="p-0">
             <div class="d-flex align-items-start position-relative">
 
@@ -17,10 +17,22 @@
                     </mat-chip>
                 </div>
 
+                <!-- Botón Ver Detalles - Esquina superior derecha -->
+                <div class="position-absolute top-0 end-0 m-3">
+                    <button mat-icon-button 
+                            color="primary" 
+                            matTooltip="Detalles de la publicación"
+                            (click)="verDetalles(publicacion)">
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                </div>
+
                 <!-- Imagen del producto -->
                 <div class="flex-shrink-0 p-3">
-                    <img [src]="publicacion.imagen" [alt]="publicacion.nombre" class="rounded-3"
-                        style="width: 120px; height: 120px; object-fit: cover;">
+                    <img [src]="publicacion.imagen" 
+                         [alt]="publicacion.nombre" 
+                         class="rounded-3"
+                         style="width: 120px; height: 120px; object-fit: cover;">
                 </div>
 
                 <!-- Información del producto -->
@@ -51,24 +63,21 @@
                             </div>
                         </div>
 
-                        <!-- Botones de acción -->
-                        <div class="col-md-4 d-flex flex-column justify-content-between align-items-end h-100">
-                            <div></div> <!-- Spacer -->
-
-                            <div class="d-flex gap-2 mt-3">
-                                <button mat-stroked-button color="primary" class="rounded-pill"
-                                    (click)="modificarPublicacion(publicacion)">
+                        <!-- Botones de acción - Modificar y Borrar -->
+                        <div class="col-md-4 d-flex flex-column justify-content-end align-items-end">
+                            <div class="d-flex flex-column gap-2" style="margin-bottom: 15px;">
+                                <button mat-stroked-button 
+                                        color="primary" 
+                                        class="rounded-pill action-btn"
+                                        (click)="modificarPublicacion(publicacion)">
                                     Modificar
                                 </button>
 
-                                <button mat-stroked-button color="warn" class="rounded-pill"
-                                    (click)="borrarPublicacion(publicacion)">
+                                <button mat-stroked-button 
+                                        color="warn" 
+                                        class="rounded-pill action-btn"
+                                        (click)="borrarPublicacion(publicacion)">
                                     Borrar
-                                </button>
-
-                                <button mat-icon-button color="primary" matTooltip="Ver detalles"
-                                    (click)="verDetalles(publicacion)">
-                                    <mat-icon>chevron_right</mat-icon>
                                 </button>
                             </div>
                         </div>
