@@ -78,6 +78,7 @@ export class ProductosComponent implements OnChanges {
   }
 
   verDetalles(publicacion: MiPublicacion): void {
+    publicacion: publicacion;
     const dialogRef = this.dialog.open(VerProductosComponent, {
       disableClose: true,
       autoFocus: true,
@@ -90,8 +91,12 @@ export class ProductosComponent implements OnChanges {
         publicacion: publicacion
       }
     });
-
+    
     dialogRef.afterClosed().subscribe(result => {
+      const producto = this.productos.find(p => p.publicacion?.id === publicacion.id);
+      if (producto) {
+        producto.verMas = false;
+      }
       console.log(`Dialog result: ${result}`);
     });
   }

@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { ConexionBackendService } from '../../../../Services/conexion-backend.service';
 
 @Component({
   selector: 'app-anuncio-datos',
@@ -6,9 +9,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./anuncio-datos.component.css']
 })
 export class AnuncioDatosComponent {
-  @Input() username: string = 'Juan mrd';
-  @Input() userHandle: string = '@vendogalletas';
-  @Input() userAvatar: string = 'icons/oceana.png';
+  @Input() username: string = '';
+  @Input() userHandle: string = '';
+  @Input() userAvatar: string = 'icons/no-photo.webp';
   
   @Input() title: string = '';
   @Input() price: string = '';
@@ -21,6 +24,43 @@ export class AnuncioDatosComponent {
   @Output() descriptionChange = new EventEmitter<string>();
   @Output() closeClicked = new EventEmitter<void>();
   @Output() addPhotosClicked = new EventEmitter<void>();
+
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private conexionBackend: ConexionBackendService
+  ) {}
+
+  ngOnInit(): void {
+    const usuario = JSON.parse(localStorage.getItem('usuario')!);
+    const id = usuario?.idUsuario;
+
+    if (id) {
+      const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${id}`;
+
+      this.http.get(url).subscribe({
+        next: (res: any) => {
+          if (res?.estado && res?.valor) {
+            const datos = res.valor;
+            this.username = `${datos.nombres} ${datos.apellidos}`;
+            this.userHandle = `@${datos.nombreUsuario}`;
+            if (
+              datos.fotoPerfilBase64 &&
+              datos.fotoPerfilBase64.trim() !== ''
+            ) {
+              this.userAvatar =
+                'data:image/jpeg;base64,' + datos.fotoPerfilBase64;
+            } else {
+              this.userAvatar = 'icons/no-photo.webp';
+            }
+          }
+        },
+        error: (err) => {
+          console.error('Error al obtener datos del usuario:', err);
+        },
+      });
+    }
+  }
   
   onTitleChange(value: string): void {
     this.title = value;
@@ -78,7 +118,7 @@ export class AnuncioDatosComponent {
   }
 
   agregarArchivos(fileList: FileList): void {
-    const nuevosArchivos = Array.from(fileList).slice(0, 10 - this.fotos.length);
+    const nuevosArchivos = Array.from(fileList).slice(0, 4 - this.fotos.length);
     this.fotos = [...this.fotos, ...nuevosArchivos];
     this.fotosChange.emit(this.fotos);
   }
