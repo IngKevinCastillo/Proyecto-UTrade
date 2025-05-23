@@ -7,35 +7,53 @@
     ">
     <mat-icon (click)="salir()" style="font-size: 24px; color: white">close</mat-icon>
   </div>
+
   <app-user-profile [username]="username" [userHandle]="userHandle" [avatarUrl]="userAvatar"
     class="mb-4"></app-user-profile>
 
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <h6 class="mb-3">Obligatorio</h6>
+        <h6 class="mb-3">Modificar Publicación</h6>
         <p class="small text-muted mb-3">
-          Detalla al máximo para que la información sea lo más comprensible posible.
+          Actualiza los datos de tu publicación. Los campos marcados con * son obligatorios.
         </p>
+
         <div class="form-group mb-3">
-          <input type="text" class="form-control" placeholder="Título" [ngModel]="title"
+          <label for="title" class="form-label">Título *</label>
+          <input type="text" id="title" class="form-control" placeholder="Título de la publicación" [ngModel]="title"
             (ngModelChange)="onTitleChange($event)" />
         </div>
+
         <div class="form-group mb-3">
-          <input type="text" class="form-control" placeholder="Precio" [ngModel]="price"
-            (ngModelChange)="onPriceChange($event)" />
+          <label for="price" class="form-label">Precio *</label>
+          <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="number" id="price" class="form-control" placeholder="0" [ngModel]="price"
+              (ngModelChange)="onPriceChange($event)" min="0" step="1000" />
+            <span class="input-group-text">COP</span>
+          </div>
         </div>
+
         <div class="form-group mb-3">
-          <select class="form-select" [ngModel]="category" (ngModelChange)="onCategoryChange($event)">
-            <option value="" disabled selected>Categoría</option>
-            <option value="Pension">Pension</option>
-            <option value="Mueble">Muebles</option>
+          <label for="category" class="form-label">Categoría *</label>
+          <select id="category" class="form-select" [ngModel]="category" (ngModelChange)="onCategoryChange($event)">
+            <option value="" disabled>Selecciona una categoría</option>
+            <option value="Apartamento">Apartamento</option>
+            <option value="Muebles">Muebles</option>
             <option value="Ropa">Ropa</option>
+            <option value="Electrónicos">Electrónicos</option>
+            <option value="Vehículos">Vehículos</option>
+            <option value="Servicios">Servicios</option>
+            <option value="Otros">Otros</option>
           </select>
         </div>
-        <div class="form-group">
-          <textarea class="form-control" rows="3" placeholder="Descripción" [ngModel]="description"
-            (ngModelChange)="onDescriptionChange($event)"></textarea>
+
+        <div class="form-group mb-4">
+          <label for="description" class="form-label">Descripción</label>
+          <textarea id="description" class="form-control" rows="4" placeholder="Describe tu producto o servicio..."
+            [ngModel]="description" (ngModelChange)="onDescriptionChange($event)" maxlength="500"></textarea>
+          <small class="text-muted">{{ description.length }}/500 caracteres</small>
         </div>
       </div>
     </div>
@@ -50,22 +68,44 @@
               </app-user-profile>
               <div class="ms-2">
                 <div>{{ previewUsername }}</div>
-                <small class="text-muted">Fecha / Tiempo transcurrido</small>
+                <small class="text-muted">Actualizado ahora</small>
               </div>
               <div class="ms-auto text-muted">
                 <mat-icon>location_on</mat-icon> Ubicación
               </div>
             </div>
-            <h5>{{ title || "Título" }}</h5>
-            <h6>{{ price || "PRECIO" }} / {{ category || "CATEGORÍA" }}</h6>
-            <p class="text-muted">{{ description || "Descripción" }}</p>
-            <div class="row mb-3">
+
+            <h5 class="fw-bold">{{ title || "Título de la publicación" }}</h5>
+
+            <div class="d-flex align-items-center mb-2">
+              <h6 class="text-primary mb-0 me-2">
+                $ {{ (price | number:'1.0-0') || '0' }} COP
+              </h6>
+              <span class="text-muted"> / {{ category || "CATEGORÍA" }}</span>
+            </div>
+
+            <p class="text-muted">{{ description || "Descripción del producto o servicio..." }}</p>
+
+            <div class="row mb-3" *ngIf="previewUrls.length > 0">
               <div *ngFor="let imgUrl of previewUrls" class="col-6 mb-2">
                 <div class="bg-light rounded" style="height: 100px; overflow: hidden">
                   <img [src]="imgUrl" class="w-100 h-100 object-fit-cover" />
                 </div>
               </div>
             </div>
+
+            <div class="row mb-3" *ngIf="previewUrls.length === 0">
+              <div class="col-12">
+                <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted"
+                  style="height: 150px;">
+                  <div class="text-center">
+                    <mat-icon style="font-size: 48px; height: 48px; width: 48px;">image</mat-icon>
+                    <p class="mb-0 small">Sin imagen</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="d-flex align-items-center">
               <button mat-icon-button>
                 <mat-icon>thumb_up</mat-icon>
@@ -79,8 +119,16 @@
             </div>
           </mat-card-content>
         </mat-card>
-        <div class="d-flex justify-content-end mt-3">
-          <button mat-raised-button color="accent" (click)="editar()">Publicar</button>
+
+        <div class="d-flex justify-content-between mt-3">
+          <button mat-stroked-button (click)="salir()" class="me-2">
+            Cancelar
+          </button>
+          <button mat-raised-button color="primary" (click)="editar()"
+            [disabled]="!title.trim() || !price.trim() || !category.trim()">
+            <mat-icon class="me-1">save</mat-icon>
+            Guardar cambios
+          </button>
         </div>
       </div>
     </div>
