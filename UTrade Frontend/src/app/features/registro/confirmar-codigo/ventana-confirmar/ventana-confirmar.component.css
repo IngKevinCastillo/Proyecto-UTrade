@@ -1,0 +1,129 @@
+.contenedor-reporte {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.encabezado-reporte {
+  background-color: #30248c;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titulo-encabezado {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.boton-cerrar {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.cuerpo-reporte {
+  padding: 20px 30px;
+}
+
+.seccion-titulo h3 {
+  margin: 20px 0 15px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #333;
+}
+
+.seccion-tipo-reporte {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 15px;
+  padding: 5px 0;
+}
+
+.radio-container {
+  display: flex;
+  align-items: center;
+}
+
+.radio-container input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  accent-color: #30248c;
+}
+
+.radio-container label {
+  cursor: pointer;
+}
+
+.combobox-container {
+  margin-bottom: 25px;
+}
+
+.selector-razon {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  background-color: white;
+}
+
+.selector-razon:focus {
+  border-color: #30248c;
+}
+
+.textarea-container {
+  margin-bottom: 25px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #30248c;
+}
+
+.contenedor-enviar {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  padding-bottom: 10px;
+}
+
+.boton-enviar {
+  background-color: #30248c;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 40px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 160px;
+}
+
+.boton-enviar:hover {
+  background-color: #251c70;
+}

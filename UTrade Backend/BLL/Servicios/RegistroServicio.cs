@@ -36,7 +36,7 @@ namespace BLL.Servicios
                         <tr>
                             <td style='padding: 30px 30px 20px 30px; text-align: center; background-color: #4f46e5; border-radius: 12px 12px 0 0;'>
                                 <h1 style='color: #ffffff; font-size: 28px; margin: 0; font-weight: 600;'>Verificación de Cuenta</h1>
-                                <p style='color: #e0e7ff; font-size: 16px; margin: 10px 0 0 0;'>Gracias por unirte a nuestra plataforma</p>
+                                <p style='color: #e0e7ff; font-size: 16px; margin: 10px 0 0 0;'>Gracias por unirte a UTrade</p>
                             </td>
                         </tr>
                     </table>
@@ -56,7 +56,6 @@ namespace BLL.Servicios
                                                     <h2 style='font-family: monospace; letter-spacing: 5px; font-size: 28px; color: #4f46e5; margin: 0; font-weight: 700;'>{datos.CodigoVerficacion}</h2>
                                                 </div>
                                             </div>
-                                            <p style='font-size: 14px; color: #6b7280; margin: 15px 0 0 0;'>Este código expirará en 30 minutos</p>
                                         </td>
                                     </tr>
                                 </table>
@@ -69,12 +68,11 @@ namespace BLL.Servicios
                         </tr>
                     </table>
                     
-                    <!-- Footer -->
                     <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                         <tr>
                             <td style='padding: 20px 30px; text-align: center; background-color: #f8fafc; border-top: 1px solid #e2e8f0; border-radius: 0 0 12px 12px;'>
                                 <p style='font-size: 14px; color: #64748b; margin: 0;'>Este es un correo automático, por favor no respondas a este mensaje.</p>
-                                <p style='font-size: 14px; color: #64748b; margin: 10px 0 0 0;'>© 2024 Tu Empresa. Todos los derechos reservados.</p>
+                                <p style='font-size: 14px; color: #64748b; margin: 10px 0 0 0;'>© 2025 UTrade. Todos los derechos reservados.</p>
                             </td>
                         </tr>
                     </table>
