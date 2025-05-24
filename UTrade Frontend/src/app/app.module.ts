@@ -51,6 +51,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { VerReporteComponent } from './features/reportes/componentes/ver-reporte/ver-reporte.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { MatSelectModule } from '@angular/material/select';
     MiCuentaComponent,
     EditarPerfilComponent,
     MisPublicacionesComponent,
-    ReputacionComponent
+    ReputacionComponent,
+    VerReporteComponent
   ],
   imports: [
     BrowserModule,

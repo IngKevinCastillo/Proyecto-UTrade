@@ -8,7 +8,7 @@ import { Persona } from '../interfaces/persona';
 @Injectable({
   providedIn: 'root'
 })
-export class PersonaServiceService {
+export class PersonaService {
   private urlApi: string = environment.endpoint + "Persona/";
 
   constructor(private http: HttpClient) {}
