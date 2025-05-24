@@ -1,33 +1,18 @@
 <div class="container-fluid p-0 h-100">
   <div class="row h-100">
     <div class="col-md-6 border-end h-100">
-      <app-anuncio-datos
-        [title]="title"
-        [price]="price"
-        [category]="category"
-        [description]="description"
-        (titleChange)="title = $event"
-        (priceChange)="price = $event"
-        (categoryChange)="category = $event"
-        (descriptionChange)="description = $event"
-        (closeClicked)="salir()"
-        (addPhotosClicked)="agregarFotos()"
-        [fotos]="fotos"
-        (fotosChange)="actualizarFotos($event)"
-      ></app-anuncio-datos>
+      <app-anuncio-datos [title]="title" [price]="price" [category]="category" [direccion]="direccion"
+        [description]="description" (titleChange)="title = $event" (priceChange)="price = $event"
+        (categoryChange)="category = $event" (direccionChange)="direccion = $event"
+        (descriptionChange)="description = $event" (validationChange)="onValidationChange($event)"
+        (closeClicked)="salir()" (addPhotosClicked)="agregarFotos()" [fotos]="fotos"
+        (fotosChange)="actualizarFotos($event)"></app-anuncio-datos>
     </div>
 
     <div class="col-md-6 h-100">
-      <app-anuncio-preview
-        [username]="username"
-        [userHandle]="userHandle"
-        [userAvatar]="userAvatar"
-        [title]="title"
-        [price]="price"
-        [category]="category"
-        [description]="description"
-        [fotos]="fotos"
-      ></app-anuncio-preview>
+      <app-anuncio-preview [username]="username" [userHandle]="userHandle" [userAvatar]="userAvatar" [title]="title"
+        [price]="price" [category]="category" [direccion]="direccion" [description]="description" [fotos]="fotos"
+        [esValido]="esValido"></app-anuncio-preview>
     </div>
   </div>
 </div>
