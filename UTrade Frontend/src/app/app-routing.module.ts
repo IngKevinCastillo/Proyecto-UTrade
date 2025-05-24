@@ -13,6 +13,7 @@ import { RegistroComponent } from './features/registro/registro.component';
 import { ReportesComponent } from './features/reportes/reportes.component';
 import { MiCuentaComponent } from './features/cuenta/mi-cuenta/mi-cuenta.component';
 import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-perfil.component';
+import { MapaComponent } from './features/mapa/mapa.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
       { path: 'reportes', component: ReportesComponent},
       { path: 'mi-cuenta', component: MiCuentaComponent },
       { path: 'mi-cuenta/editar-perfil', component: EditarPerfilComponent },
+      {path: 'mapa', component:MapaComponent  }
     ]
   },
 
