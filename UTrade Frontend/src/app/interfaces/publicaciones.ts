@@ -8,4 +8,5 @@ export interface Publicaciones {
     descripcion?: string;
     ubicacion?: string;
     idReseña?: string;
+    idEstado: string
 }

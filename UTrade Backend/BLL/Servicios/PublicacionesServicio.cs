@@ -108,5 +108,27 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public async Task<List<PublicacionesDTO>> ListarPorCategoria(string idCategoria)
+        {
+            try
+            {
+
+                var queryPublicacion = await _publicacionesRepositorio.Consultar();
+                var listaFiltrada = queryPublicacion
+                    .Where(x => x.IdCategoria == idCategoria)
+                    .ToList();
+
+                if (listaFiltrada == null || !listaFiltrada.Any())
+                    throw new TaskCanceledException("No se encontraron publicaciones para la categoría especificada");
+
+                return _mapper.Map<List<PublicacionesDTO>>(listaFiltrada);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }
