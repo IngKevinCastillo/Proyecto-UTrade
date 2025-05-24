@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Persona } from '../../interfaces/persona';
 import { Reporte } from '../../interfaces/reporte';
+import { VerReporteComponent } from './componentes/ver-reporte/ver-reporte.component';
 import { tipoReporte } from '../../interfaces/tipoReporte';
 import { estadoReporte } from '../../interfaces/estadoReporte';
 import { motivoReporte } from '../../interfaces/motivoReporte';
@@ -8,9 +9,9 @@ import { ReporteService } from '../../Services/reporte.service';
 import { tipoReporteService } from '../../Services/tipoReporte.service';
 import { estadoReporteService } from '../../Services/estadoReporte.service';
 import { motivoReporteService } from '../../Services/motivoReporte.service';
-import { PerfilService } from '../../Services/perfil.service';
-import { MatDialog } from '@angular/material/dialog';
+import { PersonaService } from '../../Services/persona.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reportes',
@@ -23,20 +24,23 @@ export class ReportesComponent implements OnInit {
   listaEstados: estadoReporte[] = [];
   listaTiposReporte: tipoReporte[] = [];
   listaMotivos: motivoReporte[] = [];
-  persona: Persona | null = null;
+  listaPersonas: Persona[] = [];
+  personaCache: { [id: string]: Persona } = {};
   filtroEstado: string = 'todos';
   filtroTipo: string = 'todos';
   mostrarSoloNoLeidos: boolean = false;
   cargando: boolean = false;
+  paginaActual: number = 1;
+  reportesPorPagina: number = 5;
 
   constructor(
     private reporteService: ReporteService,
     private estadoReporteService: estadoReporteService,
     private tipoReporteService: tipoReporteService,
     private motivoService: motivoReporteService,
-    private perfilService: PerfilService,
-    private dialog: MatDialog,
-    private toastr: ToastrService
+    private personService: PersonaService,
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -152,6 +156,33 @@ export class ReportesComponent implements OnInit {
     const motivo = this.listaMotivos.find(m => m.id === id);
     return motivo ? motivo.nombre : 'Motivo desconocido';
   }
+
+  obtenerNombrePersona(id: string): string {
+    // Ya está en cache
+    if (this.personaCache[id]) {
+      const persona = this.personaCache[id];
+      return `${persona.nombres} ${persona.apellidos}`;
+    }
+
+    // Aún no está en cache, lo pedimos al backend
+    this.personService.buscar(id).subscribe({
+      next: (response) => {
+        if (response.estado) {
+          const persona = response.valor as Persona;
+          this.personaCache[id] = persona;
+        } else {
+          this.personaCache[id] = { nombres: 'Desconocido', apellidos: '', id: id } as Persona;
+        }
+      },
+      error: () => {
+        this.personaCache[id] = { nombres: 'Desconocido', apellidos: '', id: id } as Persona;
+      }
+    });
+
+    // Mientras tanto, retornamos texto temporal
+    return 'Cargando...';
+  }
+
 
 
   esUsuario(idTipoReporte: string): boolean {
@@ -330,6 +361,24 @@ export class ReportesComponent implements OnInit {
   verDetalles(reporte: Reporte): void {
     this.toastr.info(`Viendo detalles del reporte ${reporte.idReporte}`, 'Información');
     
+    const estado = this.obtenerNombreEstado(reporte.idEstado);
+    const tipo = this.obtenerNombreTipo(reporte.idTipoReporte);
+    const motivo = this.obtenerNombreMotivo(reporte.idMotivo);
+    const reportado = this.obtenerNombrePersona(reporte.idReportado);
+    const reportante = this.obtenerNombrePersona(reporte.idReportante);
+
+    this.dialog.open(VerReporteComponent, {
+      width: '450px',
+      data: {
+        reporte,
+        estado,
+        tipo,
+        motivo,
+        reportado,
+        reportante
+      }
+    });
+
     if (!reporte.leido) {
       this.marcarComoLeido(reporte);
     }
@@ -367,5 +416,20 @@ export class ReportesComponent implements OnInit {
     if (!estado) return false;
     
     return estado.nombre.toLowerCase().includes('rechazado');
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.listaReportesFiltrados.length / this.reportesPorPagina);
+  }
+
+  get reportesPaginados(): Reporte[] {
+    const inicio = (this.paginaActual - 1) * this.reportesPorPagina;
+    return this.listaReportesFiltrados.slice(inicio, inicio + this.reportesPorPagina);
+  }
+
+  cambiarPagina(nuevaPagina: number): void {
+    if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
+      this.paginaActual = nuevaPagina;
+    }
   }
 }

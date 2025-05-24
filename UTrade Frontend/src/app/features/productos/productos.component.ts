@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Persona } from '../../interfaces/persona';
 import { CategoriaPublicacion } from '../../interfaces/categoria-publicacion';
 import { CategoriaPublicacionService } from '../../Services/categoria-publicacion.service';
-import { PersonaServiceService } from '../../Services/persona.service';
+import { PersonaService } from '../../Services/persona.service';
 import { ProductoService } from '../../Services/producto.service';
 import { Publicaciones } from '../../interfaces/publicaciones';
 import { forkJoin } from 'rxjs';
@@ -41,7 +41,7 @@ export class ProductosComponent implements OnChanges, OnInit {
     public dialog: MatDialog,
     private fb: FormBuilder,
     private _categoriaServicio: CategoriaPublicacionService,
-    private _personaServicio: PersonaServiceService,
+    private _personaServicio: PersonaService,
     private _productoServicio: ProductoService
   ) { 
     this.formularioPublicaciones = this.fb.group({
