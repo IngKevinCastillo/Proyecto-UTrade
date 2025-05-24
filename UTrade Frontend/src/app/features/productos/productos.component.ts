@@ -276,7 +276,7 @@ export class ProductosComponent implements OnChanges, OnInit {
     ];
   }
 
-  reportarProducto(): void {
+  reportarProducto(producto: Publicaciones): void {
     const dialogRef = this.dialog.open(VentanaReportesComponent, {
       disableClose: false,
       autoFocus: true,
@@ -286,9 +286,11 @@ export class ProductosComponent implements OnChanges, OnInit {
       maxWidth: '95%',
       data: {
         tipo: 'CREAR',
-        tipoObjeto: 'publicacion'
+        tipoObjeto: 'publicacion',
+        producto,
       }
     });
+
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

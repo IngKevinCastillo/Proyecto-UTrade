@@ -1,20 +1,23 @@
-<h2 mat-dialog-title>Detalles del Reporte #{{ data.reporte.idReporte }}</h2>
+<div class = "ventana-detalle">
+  <div class = "detalle">
+    <h2 mat-dialog-title class = "detalle-titulo">Detalles del Reporte #{{ data.reporte.idReporte }}</h2>
 
-<mat-dialog-content>
-  <p><strong>Motivo:</strong> {{ data.motivo }}</p>
-  <p><strong>Estado:</strong> {{ data.estado }}</p>
-  <p><strong>Tipo:</strong> {{ data.tipo }}</p>
+    <mat-dialog-content>
+      <p><strong>Motivo:</strong> {{ data.motivo }}</p>
+      <p><strong>Estado:</strong> {{ data.estado }}</p>
+      <p><strong>Tipo:</strong> {{ data.tipo }}</p>
 
-  <p><strong>Descripción:</strong></p>
-  <p>{{ data.reporte.descripcion }}</p>
+      <p><strong>Descripción:</strong></p>
+      <p>{{ data.reporte.descripcion }}</p>
 
-  <p><strong>Reportado:</strong> {{ data.reportado }}</p>
-  <p><strong>Reportante:</strong> {{ data.reportante }}</p>
+      <p><strong>Reportado:</strong> {{ data.reportado }}</p>
+      <p><strong>Reportante:</strong> {{ data.reportante }}</p>
 
-  <p><strong>Fecha de Reporte:</strong> {{ data.reporte.fechaReportada | date:'full' }}</p>
-  <p><strong>Última Actualización:</strong> {{ data.reporte.fechaActualizacion | date:'full' }}</p>
-</mat-dialog-content>
-
-<mat-dialog-actions>
-  <button mat-button (click)="cerrar()">Cerrar</button>
-</mat-dialog-actions>
+      <p><strong>Fecha de Reporte:</strong> {{ formatearFecha(data.reporte.fechaReportada) }}</p>
+      <p><strong>Última Actualización:</strong> {{ formatearFecha(data.reporte.fechaActualizacion) }}</p>
+    </mat-dialog-content>
+  </div>
+  <div class = "acciones">
+    <button mat-button color = "primary" (click)="cerrar()">Cerrar</button>
+  </div>
+</div>
