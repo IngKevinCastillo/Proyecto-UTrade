@@ -198,16 +198,16 @@ GO
 INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO001', 'Contenido inapropiado');
 INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO002', 'Spam o publicidad');
 INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO003', 'Acoso o bullying');
-INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO004', 'Informaci�n falsa');
-INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO005', 'Incitaci�n a la violencia');
-INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO006', 'Infracci�n de derechos de autor');
-INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO007', 'Otra raz�n');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO004', 'Información falsa');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO005', 'Incitación a la violencia');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO006', 'Infracción de derechos de autor');
+INSERT INTO [dbo].[MotivosReporte] ([id], [nombre]) VALUES ('MO007', 'Otra razón');
 GO
 
 -- Anexo de los tipos de reporte a la tabla.
 
 INSERT INTO [dbo].[TiposReporte] ([id], [nombre]) VALUES ('TR001', 'Usuario');
-INSERT INTO [dbo].[TiposReporte] ([id], [nombre]) VALUES ('TR002', 'Publicaci�n');
+INSERT INTO [dbo].[TiposReporte] ([id], [nombre]) VALUES ('TR002', 'Publicación');
 GO
 
 -- Anexo de los estados de reporte a la tabla.  
@@ -215,4 +215,5 @@ GO
 INSERT INTO [dbo].[EstadosReporte] ([id], [nombre]) VALUES ('ER001', 'Pendiente');
 INSERT INTO [dbo].[EstadosReporte] ([id], [nombre]) VALUES ('ER002', 'En revisión');
 INSERT INTO [dbo].[EstadosReporte] ([id], [nombre]) VALUES ('ER003', 'Resuelto');
+INSERT INTO [dbo].[EstadosReporte] ([id], [nombre]) VALUES ('ER004', 'Rechazado');
 GO

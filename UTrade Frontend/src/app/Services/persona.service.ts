@@ -9,29 +9,27 @@ import { Persona } from '../interfaces/persona';
   providedIn: 'root'
 })
 export class PersonaServiceService {
-  private urlApi: string = environment.endpoint + "Persona/"
-  
-  constructor(
-    private http: HttpClient
-  ) {}
-  
-  listar(): Observable<RespuestaAPI>{
+  private urlApi: string = environment.endpoint + "Persona/";
+
+  constructor(private http: HttpClient) {}
+
+  listar(): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(`${this.urlApi}Listar`);
   }
-  
-  guardar(request: Persona): Observable<RespuestaAPI>{
+
+  guardar(request: Persona): Observable<RespuestaAPI> {
     return this.http.post<RespuestaAPI>(`${this.urlApi}Guardar`, request);
   }
-  
-  editar(request: Persona): Observable<RespuestaAPI>{
+
+  editar(request: Persona): Observable<RespuestaAPI> {
     return this.http.put<RespuestaAPI>(`${this.urlApi}Editar`, request);
   }
-  
-  eliminar(id: string): Observable<RespuestaAPI>{
+
+  eliminar(id: string): Observable<RespuestaAPI> {
     return this.http.delete<RespuestaAPI>(`${this.urlApi}Eliminar/${id}`);
   }
-  
-  buscar(id: string): Observable<RespuestaAPI>{
+
+  buscar(id: string): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(`${this.urlApi}Obtener/${id}`);
   }
 }

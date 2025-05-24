@@ -113,7 +113,7 @@ import { MatSelectModule } from '@angular/material/select';
       progressBar: true,
       enableHtml: true,
       positionClass: 'toast-bottom-right'
-    })
+    }),
   ],
   exports: [
     MatIconModule,

@@ -9,35 +9,35 @@ import { Publicaciones } from '../interfaces/publicaciones';
   providedIn: 'root'
 })
 export class ProductoService {
-  
-  private urlApi: string = environment.endpoint + "Publicaciones/"
-  
+
+  private urlApi: string = environment.endpoint + "Publicaciones/";
+
   constructor(
     private http: HttpClient
   ) { }
-  
-  lista(): Observable<RespuestaAPI>{
+
+  lista(): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(`${this.urlApi}Listar`);
   }
-  
-  guardar(request: Publicaciones): Observable<RespuestaAPI>{
+
+  guardar(request: Publicaciones): Observable<RespuestaAPI> {
     return this.http.post<RespuestaAPI>(`${this.urlApi}Guardar`, request);
   }
-  
-  editar(request: Publicaciones): Observable<RespuestaAPI>{
+
+  editar(request: Publicaciones): Observable<RespuestaAPI> {
     return this.http.put<RespuestaAPI>(`${this.urlApi}Editar`, request);
   }
-  
-  eliminar(id: string): Observable<RespuestaAPI>{
+
+  eliminar(id: string): Observable<RespuestaAPI> {
     return this.http.delete<RespuestaAPI>(`${this.urlApi}Eliminar/${id}`);
   }
-  
-  buscar(id: string): Observable<RespuestaAPI>{
+
+  buscar(id: string): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(`${this.urlApi}Obtener/${id}`);
   }
 
   // Método adicional para filtrar por categoría
-  listarPorCategoria(idCategoria: string): Observable<RespuestaAPI>{
+  listarPorCategoria(idCategoria: string): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(`${this.urlApi}ListarPorCategoria/${idCategoria}`);
   }
 }
