@@ -14,5 +14,6 @@ namespace BLL.Servicios.Contrato
         Task<bool> Editar(FotosPublicacionesDTO modelo);
         Task<FotosPublicacionesDTO> Buscar(string id);
         Task<bool> Eliminar(string id);
+        Task<List<FotosPublicacionesDTO>> BuscarFotosPublicacion(string id);
     }
 }

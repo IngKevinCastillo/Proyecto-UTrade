@@ -28,5 +28,7 @@ namespace DTO
 
         public string? IdEstado { get; set; }
 
+        public List<FotosPublicacionesDTO> fotosPublicaciones { get; set; }
+
     }
 }
