@@ -15,9 +15,6 @@ import { Publicaciones } from '../../../../interfaces/publicaciones';
 })
 export class HomePageComponent implements OnInit {
   @Input() userAvatar: string = 'icons/no-photo.webp';
-  
-  // Ya no necesitas filtroSeleccionado como array específico
-  // El componente productos se encargará de cargar todos los datos
   mostrarTodosLosProductos: boolean = true;
 
   constructor(
@@ -77,9 +74,7 @@ export class HomePageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      // Si se creó un nuevo producto, podrías recargar la lista
       if (result) {
-        // Esto forzará al componente productos a recargar
         this.mostrarTodosLosProductos = false;
         setTimeout(() => {
           this.mostrarTodosLosProductos = true;
