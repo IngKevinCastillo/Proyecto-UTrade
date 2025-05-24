@@ -51,6 +51,24 @@ namespace API.Controllers
             return Ok(rsp);
         }
 
+        [HttpGet]
+        [Route("ListarPorCategoria/{id}")]
+        public async Task<IActionResult> ListarPorCategoria(string id)
+        {
+            var rsp = new Respuesta<List<PublicacionesDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.ListarPorCategoria(id);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
         [HttpPost]
         [Route("Guardar")]
         public async Task<IActionResult> Guardar([FromBody] PublicacionesDTO publicaciones)
