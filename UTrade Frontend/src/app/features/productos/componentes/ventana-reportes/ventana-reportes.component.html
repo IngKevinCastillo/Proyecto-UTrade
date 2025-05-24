@@ -1,67 +1,51 @@
 <div class="contenedor-reporte">
+  <!-- Encabezado -->
   <div class="encabezado-reporte">
-    <span class="titulo-encabezado">Reportar</span>
-    <button class="boton-cerrar" (click)="salir()">×</button>
+    <div class="titulo-encabezado">Crear reporte</div>
+    <button class="boton-cerrar" (click)="cerrar()">×</button>
   </div>
 
+  <!-- Cuerpo -->
   <div class="cuerpo-reporte">
+    <!-- Sección tipo de reporte -->
     <div class="seccion-titulo">
-      <h3>¿Qué estás reportando?</h3>
+      <h3>¿Qué deseas reportar?</h3>
     </div>
-
     <div class="seccion-tipo-reporte">
-      <div class="radio-container">
-        <input
-          type="radio"
-          id="publicacion"
-          name="tipoReporte"
-          [(ngModel)]="tipoReporte"
-          value="publicacion"
-        />
-        <label for="publicacion">Publicación</label>
-      </div>
-      <div class="radio-container">
-        <input
-          type="radio"
-          id="usuario"
-          name="tipoReporte"
-          [(ngModel)]="tipoReporte"
-          value="usuario"
-        />
-        <label for="usuario">Usuario</label>
+      <div class="radio-container" *ngFor="let tipo of listaTipos">
+        <input type="radio" [id]="tipo.id" name="tipoReporte" [value]="tipo.id" [(ngModel)]="tipoSeleccionadoId">
+        <label [for]="tipo.id">{{ tipo.nombre }}</label>
       </div>
     </div>
 
-    <div class="seccion">
-      <div class="seccion-titulo">
-        <h3>Razón del reporte</h3>
-      </div>
-      <div class="combobox-container">
-        <select [(ngModel)]="razonSeleccionada" class="selector-razon">
-          <option value="" disabled selected>Selecciona una razón</option>
-          <option *ngFor="let razon of razonesReporte" [value]="razon.valor">
-            {{ razon.texto }}
-          </option>
-        </select>
-      </div>
+    <!-- Sección combobox -->
+    <div class="seccion-titulo">
+      <h3>Motivo del reporte</h3>
+    </div>
+    <option value="" disabled selected>Selecciona un motivo</option>
+    <div class="combobox-container">
+      <select class="selector-razon" [(ngModel)]="motivoSeleccionadoId">
+        <option *ngFor="let motivo of listaMotivos" [value]="motivo.id">{{ motivo.nombre }}</option>
+      </select>
     </div>
 
-    <div class="seccion">
-      <div class="seccion-titulo">
-        <h3>Descripción</h3>
-      </div>
-      <div class="textarea-container">
-        <textarea
-          [(ngModel)]="descripcionReporte"
-          placeholder="Escribe más detalles sobre..."
-        ></textarea>
-      </div>
+    <!-- Sección descripción -->
+    <div class="seccion-titulo">
+      <h3>Describe brevemente el problema</h3>
+    </div>
+    <div class="textarea-container">
+      <textarea [(ngModel)]="descripcion" placeholder="Escribe aquí..."></textarea>
     </div>
 
+    <!-- Botón enviar -->
     <div class="contenedor-enviar">
-      <button class="boton-enviar" (click)="enviarReporte()">
-        Enviar reporte
-      </button>
+      <button class="boton-enviar" 
+        [disabled]="!tipoSeleccionadoId || !motivoSeleccionadoId || !descripcion.trim()" 
+        (click)="enviarReporte()">Enviar</button>
+    </div>
+
+    <div *ngIf="tipoSeleccionadoId === ''" class="alerta">
+    ⚠️ Debes seleccionar un tipo de reporte.
     </div>
   </div>
 </div>

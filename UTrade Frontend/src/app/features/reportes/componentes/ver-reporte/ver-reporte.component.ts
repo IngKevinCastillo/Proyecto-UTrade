@@ -20,7 +20,16 @@ export class VerReporteComponent {
     }
   ) { }
 
-  
+  formatearFecha(fecha: Date): string {
+    return new Date(fecha).toLocaleDateString('es-ES', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit'
+    });
+  }
 
   cerrar(): void {
     this.dialogRef.close();

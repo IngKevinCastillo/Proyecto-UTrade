@@ -253,11 +253,16 @@ export class ReportesComponent implements OnInit {
   }
   
   crearReporteEncontrado(reporte: Reporte, nuevoEstadoId: string): Reporte {
+
+    const fechaActual = new Date();
+    const offset = fechaActual.getTimezoneOffset() * 60000; 
+    const fechaLocal = new Date(fechaActual.getTime() - offset);
+
     return {
       ...reporte,
       idEstado: nuevoEstadoId,
       leido: true,
-      fechaActualizacion: new Date(),
+      fechaActualizacion: fechaLocal,
     };
   }
 
@@ -368,7 +373,10 @@ export class ReportesComponent implements OnInit {
     const reportante = this.obtenerNombrePersona(reporte.idReportante);
 
     this.dialog.open(VerReporteComponent, {
-      width: '450px',
+        width: '80vw',
+        maxWidth: '900px',
+        maxHeight: '90vh',
+        panelClass: 'modal-reporte-detalles',
       data: {
         reporte,
         estado,
