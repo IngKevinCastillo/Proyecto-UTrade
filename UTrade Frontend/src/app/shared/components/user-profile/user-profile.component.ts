@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent {
-  @Input() username: string = 'Usuario';
-  @Input() userHandle: string = '@usuario';
-  @Input() avatarUrl: string = 'assets/default-avatar.png';
+  @Input() username: string = '';
+  @Input() userHandle: string = '';
+  @Input() avatarUrl: string = 'icons/no-photo.webp';
 }

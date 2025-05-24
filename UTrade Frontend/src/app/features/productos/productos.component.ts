@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, input, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { VentanaReportesComponent } from './componentes/ventana-reportes/ventana-reportes.component';
 import { VerProductosComponent } from './componentes/ver-productos/ver-productos.component';
@@ -10,15 +10,20 @@ import { PersonaServiceService } from '../../Services/persona.service';
 import { ProductoService } from '../../Services/producto.service';
 import { Publicaciones } from '../../interfaces/publicaciones';
 import { forkJoin } from 'rxjs';
+import { EstadosService } from '../../Services/estados.service';
+import { Estados } from '../../interfaces/estados';
+import { ToastrService } from 'ngx-toastr';
 
 interface ProductoExtendido extends Publicaciones {
   verMas: boolean;
   nombreUsuario?: string;
   avatarUsuario?: string;
   nombreCategoria?: string;
+  estado?: string;
   fechaFormateada?: string;
   tiempoTranscurrido?: string;
   imagenes?: string[];
+  cuota?: string;
 }
 
 @Component({
@@ -31,18 +36,22 @@ export class ProductosComponent implements OnChanges, OnInit {
   formularioPublicaciones: FormGroup;
   listaDePersonas: Persona[] = [];
   listaCategorias: CategoriaPublicacion[] = [];
+  listaEstados: Estados[] = []
   datosPublicaciones: Publicaciones | null = null;
 
   @Input() Filtro?: string;
-  @Input() FiltroIdCategoria?: string; // Nuevo input para ID directo
+  @Input() FiltroIdCategoria?: string; 
   @Input() FiltroLista?: Publicaciones[];
+  @Input() cuota?: string;
   
   constructor(
     public dialog: MatDialog,
     private fb: FormBuilder,
     private _categoriaServicio: CategoriaPublicacionService,
     private _personaServicio: PersonaServiceService,
-    private _productoServicio: ProductoService
+    private _productoServicio: ProductoService,
+    private _estadosServicio: EstadosService,
+    private toastr: ToastrService
   ) { 
     this.formularioPublicaciones = this.fb.group({
       id: ["", Validators.required],
@@ -53,7 +62,8 @@ export class ProductosComponent implements OnChanges, OnInit {
       idCategoria: ["", Validators.required],
       descripcion: ["", Validators.required],
       ubicacion: [""],
-      idReseña: [""]
+      idReseña: [""],
+      idEstado: ["", Validators.required]
     });
   }
 
@@ -72,16 +82,17 @@ export class ProductosComponent implements OnChanges, OnInit {
         idCategoria: this.datosPublicaciones.idCategoria,
         descripcion: this.datosPublicaciones.descripcion,
         ubicacion: this.datosPublicaciones.ubicacion,
-        idReseña: this.datosPublicaciones.idReseña
+        idReseña: this.datosPublicaciones.idReseña,
+        idEstado: this.datosPublicaciones.idEstado
       });
     }
   }
 
   cargarDatosIniciales(): void {
-    // Cargar personas y categorías en paralelo
     forkJoin({
       personas: this._personaServicio.listar(),
-      categorias: this._categoriaServicio.lista()
+      categorias: this._categoriaServicio.lista(),
+      estados: this._estadosServicio.lista()
     }).subscribe({
       next: (respuestas) => {
         if (respuestas.personas.estado) {
@@ -90,12 +101,13 @@ export class ProductosComponent implements OnChanges, OnInit {
         if (respuestas.categorias.estado) {
           this.listaCategorias = respuestas.categorias.valor;
         }
+        if (respuestas.estados.estado) {
+          this.listaEstados = respuestas.estados.valor;
+        }
         
-        // Si no hay filtros específicos, cargar todos los productos
         if (!this.Filtro && !this.FiltroLista && !this.FiltroIdCategoria) {
           this.cargarTodosLosProductos();
         } else if (this.Filtro && this.listaCategorias.length > 0) {
-          // Si hay filtro por nombre y las categorías ya están cargadas, filtrar
           this.filtrarPorNombreCategoria();
         }
       },
@@ -123,20 +135,16 @@ export class ProductosComponent implements OnChanges, OnInit {
       this.procesarProductos(this.FiltroLista);
     }
     else if (changes['FiltroIdCategoria'] && this.FiltroIdCategoria) {
-      // Asegurar que las personas estén cargadas antes de filtrar
       if (this.listaDePersonas.length > 0) {
         this.filtrarPorIdCategoria();
       } else {
-        // Si las personas no están cargadas, cargarlas primero
         this.cargarPersonasYFiltrar();
       }
     }
     else if (changes['Filtro'] && this.Filtro) {
-      // Filtrar por nombre de categoría (requiere que las categorías estén cargadas)
       if (this.listaCategorias.length > 0 && this.listaDePersonas.length > 0) {
         this.filtrarPorNombreCategoria();
       } else {
-        // Si los datos no están cargados, esperar a que se carguen
         console.log('Esperando a que se carguen las categorías y personas...');
       }
     }
@@ -205,6 +213,8 @@ export class ProductosComponent implements OnChanges, OnInit {
     this.productos = productos.map(producto => {
       const persona = this.listaDePersonas.find(p => p.id === producto.idUsuario);
       const categoria = this.listaCategorias.find(c => c.id === producto.idCategoria);
+      const _estado_ = this.listaEstados.find(c => c.id == producto.idEstado);
+      const cuotaProducto = producto.idCategoria === "CAT01" ? ' / MES' : '';
       
       return {
         ...producto,
@@ -212,14 +222,15 @@ export class ProductosComponent implements OnChanges, OnInit {
         nombreUsuario: persona?.nombreUsuario || 'Usuario desconocido',
         avatarUsuario: this.procesarAvatar(persona),
         nombreCategoria: categoria?.nombre || 'Sin categoría',
+        estado: _estado_?.nombre || 'Sin estado',
         fechaFormateada: this.formatearFecha(producto.fechaPublicacion),
         tiempoTranscurrido: this.calcularTiempoTranscurrido(producto.fechaPublicacion),
-        imagenes: this.procesarImagenes(producto.descripcion)
+        imagenes: this.procesarImagenes(producto.descripcion),
+        cuota: cuotaProducto 
       };
     });
   }
 
-  // MÉTODO NUEVO: Procesar avatar similar a tu método cargarAvatarUsuario
   procesarAvatar(persona?: Persona): string {
     if (persona && persona.fotoPerfilBase64 && persona.fotoPerfilBase64.trim() !== '') {
       return 'data:image/jpeg;base64,' + persona.fotoPerfilBase64;
@@ -258,8 +269,6 @@ export class ProductosComponent implements OnChanges, OnInit {
   }
 
   procesarImagenes(descripcion?: string): string[] {
-    // Por ahora retorno imágenes por defecto
-    // Puedes modificar esto según cómo manejes las imágenes en tu backend
     return [
       "icons/cuarto1.png",
       "icons/cuarto2.jpg",
@@ -301,6 +310,22 @@ export class ProductosComponent implements OnChanges, OnInit {
   }
 
   verDetalles(publicacion: ProductoExtendido): void {
+    const publicacionParaModal = {
+      id: publicacion.id,
+      titulo: publicacion.titulo,
+      precio: publicacion.precio,
+      fechaPublicacion: publicacion.fechaPublicacion,
+      estado: publicacion.estado || 'Sin estado',
+      descripcion: publicacion.descripcion,
+      imagenes: publicacion.imagenes || [],
+      idUsuario: publicacion.idUsuario,
+      idCategoria: publicacion.idCategoria,
+      nombreCategoria: publicacion.nombreCategoria,
+      nombreUsuario: publicacion.nombreUsuario,
+      avatarUsuario: publicacion.avatarUsuario,
+      ubicacion: publicacion.ubicacion
+    };
+  
     const dialogRef = this.dialog.open(VerProductosComponent, {
       disableClose: true,
       autoFocus: true,
@@ -310,7 +335,7 @@ export class ProductosComponent implements OnChanges, OnInit {
       maxWidth: '1000px',
       data: {
         tipo: 'VER_DETALLE',
-        publicacion: publicacion
+        publicacion: publicacionParaModal
       }
     });
     

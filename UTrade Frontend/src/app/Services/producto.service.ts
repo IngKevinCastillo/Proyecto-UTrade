@@ -36,7 +36,6 @@ export class ProductoService {
     return this.http.get<RespuestaAPI>(`${this.urlApi}Obtener/${id}`);
   }
 
-  // Método adicional para filtrar por categoría
   listarPorCategoria(idCategoria: string): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(`${this.urlApi}ListarPorCategoria/${idCategoria}`);
   }
