@@ -3,16 +3,20 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface MiPublicacion {
   id: string;
-  nombre: string; 
-  tipoServicio: string;
-  precio: number;
-  fechaPublicacion: Date; 
-  estado: 'Activo' | 'Baneado' | 'Eliminado' | 'Suspendido' | 'Advertido';
-  imagen: string; 
+  titulo: string; 
+  tipoServicio?: string;
+  precio?: number;
+  fechaPublicacion: string; 
+  estado: string; 
+  imagen?: string;
   descripcion?: string;
   imagenes?: string[];
-  idUsuario?: string; 
+  idUsuario?: string;
   idCategoria?: string;
+  nombreCategoria?: string;
+  nombreUsuario?: string; 
+  avatarUsuario?: string; 
+  ubicacion?: string; 
 }
 
 @Component({
@@ -72,5 +76,14 @@ export class VerProductosComponent implements OnInit {
       this.imagenIndex = this.imagenIndex < this.publicacion.imagenes.length - 1 ? this.imagenIndex + 1 : 0;
       this.imagenSeleccionada = this.publicacion.imagenes[this.imagenIndex];
     }
+  }
+
+  formatearFechaCompleta(fecha: string): string {
+    const fechaObj = new Date(fecha);
+    return fechaObj.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
   }
 }
