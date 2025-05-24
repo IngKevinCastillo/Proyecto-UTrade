@@ -46,6 +46,8 @@ namespace IOC
             services.AddScoped<ICodigosVerificacionServicio, CodigosVerificacionServicio>();
             services.AddScoped<IChatServicio, ChatServicio>();
             services.AddScoped<IMensajesServicio, MensajesServicio>();
+            services.AddScoped<IFavoritosServicio, FavoritosServicio>();
+            services.AddScoped<IReseniaServicio, ReseniasServicio>();
         }
     }
 }
