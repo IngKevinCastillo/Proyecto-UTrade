@@ -37,6 +37,9 @@ import { MiCuentaComponent } from './features/cuenta/mi-cuenta/mi-cuenta.compone
 import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-perfil.component';
 import { MisPublicacionesComponent } from './features/cuenta/mis-publicaciones/mis-publicaciones.component';
 import { ReputacionComponent } from './features/cuenta/reputacion/reputacion.component';
+import { VerReporteComponent } from './features/reportes/componentes/ver-reporte/ver-reporte.component';
+import { MapaComponent } from './features/mapa/mapa.component';
+
 import { ToastrModule } from 'ngx-toastr';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -51,7 +54,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MapaComponent } from './features/mapa/mapa.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +89,7 @@ import { MapaComponent } from './features/mapa/mapa.component';
     EditarPerfilComponent,
     MisPublicacionesComponent,
     ReputacionComponent,
+    VerReporteComponent,
     MapaComponent
   ],
   imports: [
