@@ -240,7 +240,9 @@ export class ProductosComponent implements OnChanges, OnInit {
 
   formatearFecha(fecha: string): string {
     const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
+    const offset = fechaObj.getTimezoneOffset() * 60000;
+    const fechaLocal = new Date(fechaObj.getTime() - offset);
+    return fechaLocal.toLocaleDateString('es-ES', {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric'
@@ -250,7 +252,15 @@ export class ProductosComponent implements OnChanges, OnInit {
   calcularTiempoTranscurrido(fecha: string): string {
     const ahora = new Date();
     const fechaPublicacion = new Date(fecha);
-    const diferencia = ahora.getTime() - fechaPublicacion.getTime();
+    
+    // Compensar zona horaria para ambas fechas
+    const offsetAhora = ahora.getTimezoneOffset() * 60000;
+    const offsetFecha = fechaPublicacion.getTimezoneOffset() * 60000;
+    
+    const ahoraLocal = new Date(ahora.getTime() - offsetAhora);
+    const fechaLocal = new Date(fechaPublicacion.getTime() - offsetFecha);
+    
+    const diferencia = ahoraLocal.getTime() - fechaLocal.getTime();
     
     const minutos = Math.floor(diferencia / (1000 * 60));
     const horas = Math.floor(diferencia / (1000 * 60 * 60));
