@@ -69,6 +69,24 @@ namespace API.Controllers
             return Ok(rsp);
         }
 
+        [HttpGet]
+        [Route("FotosPublicaciones/{id}")]
+        public async Task<IActionResult> FotosPublicaciones(string id)
+        {
+            var rsp = new Respuesta<List<FotosPublicacionesDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.FotosPublicaciones(id);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
         [HttpPost]
         [Route("Guardar")]
         public async Task<IActionResult> Guardar([FromBody] PublicacionesDTO publicaciones)

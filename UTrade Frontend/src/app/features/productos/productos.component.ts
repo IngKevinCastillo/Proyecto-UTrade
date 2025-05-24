@@ -145,7 +145,7 @@ export class ProductosComponent implements OnChanges, OnInit {
       if (this.listaCategorias.length > 0 && this.listaDePersonas.length > 0) {
         this.filtrarPorNombreCategoria();
       } else {
-        console.log('Esperando a que se carguen las categorías y personas...');
+        this.toastr.info('Esperando a que se carguen las categorías y personas...', "Info");
       }
     }
   }
@@ -172,7 +172,7 @@ export class ProductosComponent implements OnChanges, OnInit {
         if (respuesta.estado) {
           this.procesarProductos(respuesta.valor);
         } else {
-          console.warn('No se encontraron productos para la categoría:', this.FiltroIdCategoria);
+          this.toastr.error('No se encontraron productos para la categoría', "Info");
           this.productos = [];
         }
       },
@@ -194,7 +194,7 @@ export class ProductosComponent implements OnChanges, OnInit {
           if (respuesta.estado) {
             this.procesarProductos(respuesta.valor);
           } else {
-            console.warn('No se encontraron productos para la categoría:', this.Filtro);
+            this.toastr.error('No se encontraron productos para la categoría', "Info");
             this.productos = [];
           }
         },
@@ -204,7 +204,7 @@ export class ProductosComponent implements OnChanges, OnInit {
         }
       });
     } else {
-      console.warn(`Categoría '${this.Filtro}' no encontrada`);
+      this.toastr.error(`Categoría no encontrada`, "Info");
       this.productos = [];
     }
   }

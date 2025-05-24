@@ -14,12 +14,16 @@ namespace BLL.Servicios
     public class PublicacionesServicio : IPublicacionesServicio
     {
         private readonly IRepositorioGenerico<Publicaciones> _publicacionesRepositorio;
-        private readonly IMapper _mapper;
-        public PublicacionesServicio(IRepositorioGenerico<Publicaciones> publicacionesRepositorio, IMapper mapper)
+        private readonly IMapper _mapper; 
+        private readonly IFotosPublicacionesServicio _fotosPublicacionesServicio;
+
+        public PublicacionesServicio(IRepositorioGenerico<Publicaciones> publicacionesRepositorio,IFotosPublicacionesServicio fotosPublicacionesServicio,IMapper mapper)
         {
             _publicacionesRepositorio = publicacionesRepositorio;
+            _fotosPublicacionesServicio = fotosPublicacionesServicio;
             _mapper = mapper;
         }
+
 
         public async Task<PublicacionesDTO> Buscar(string id)
         {
@@ -87,6 +91,26 @@ namespace BLL.Servicios
                 if (!respuesta)
                     throw new TaskCanceledException("No se pudo eliminar");
                 return respuesta;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<FotosPublicacionesDTO>> FotosPublicaciones(string idPublicacion)
+        {
+            try
+            {
+                //var publicacion = _mapper.Map<PublicacionesDTO>(await _publicacionesRepositorio.Obtener(x => x.Id == idPublicacion));
+                var queryfotos = await _fotosPublicacionesServicio.BuscarFotosPublicacion(idPublicacion);
+
+                if (queryfotos == null || !queryfotos.Any())
+                    throw new TaskCanceledException("No se encontraron fotos para la categoría especificada");
+
+                //publicacion.fotosPublicaciones = queryfotos;
+
+                return _mapper.Map<List<FotosPublicacionesDTO>>(queryfotos);
             }
             catch
             {

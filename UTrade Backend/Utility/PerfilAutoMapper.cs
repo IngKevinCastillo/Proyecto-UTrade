@@ -76,11 +76,13 @@ namespace Utility
             #region Publicaciones
             CreateMap<Publicaciones, PublicacionesDTO>()
                 .ForMember(dest => dest.Precio, opt => opt.MapFrom(src =>
-                    Convert.ToString(src.Precio, cultura)));
+                    Convert.ToString(src.Precio, cultura)))
+                .ForMember(dest => dest.fotosPublicaciones, opt => opt.MapFrom(src => src.FotosPublicaciones));
 
             CreateMap<PublicacionesDTO, Publicaciones>()
                 .ForMember(dest => dest.Precio, opt => opt.MapFrom(src =>
-                    Convert.ToDecimal(src.Precio, cultura)));
+                    Convert.ToDecimal(src.Precio, cultura)))
+                .ForMember(dest => dest.FotosPublicaciones, opt => opt.MapFrom(src => src.fotosPublicaciones));
             #endregion
 
             #region Razones

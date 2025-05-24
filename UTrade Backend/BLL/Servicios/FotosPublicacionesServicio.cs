@@ -36,6 +36,25 @@ namespace BLL.Servicios
             }
         }
 
+        public async Task<List<FotosPublicacionesDTO>> BuscarFotosPublicacion(string id)
+        {
+            try
+            {
+                var queryFotos = await _fotosPublicacionesRepositorio.Consultar();
+                var listaFiltrada = queryFotos
+                    .Where(x => x.IdPublicacion == id)
+                    .ToList();
+
+                if (listaFiltrada == null || !listaFiltrada.Any())
+                    throw new TaskCanceledException("No se encontraron fotos para la publicacion especificada");
+                return _mapper.Map<List<FotosPublicacionesDTO>>(listaFiltrada);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<FotosPublicacionesDTO> Crear(FotosPublicacionesDTO modelo)
         {
             try
