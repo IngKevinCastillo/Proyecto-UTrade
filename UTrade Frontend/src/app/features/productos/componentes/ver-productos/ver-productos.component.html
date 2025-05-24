@@ -15,7 +15,7 @@
         <div class="imagen-principal-container mb-3">
           <div class="imagen-principal-wrapper position-relative">
             <img [src]="imagenSeleccionada || publicacion.imagen || 'assets/placeholder-image.jpg'"
-              [alt]="publicacion.nombre" class="imagen-principal rounded-3">
+              [alt]="publicacion.titulo" class="imagen-principal rounded-3">
             <div *ngIf="publicacion.imagenes && publicacion.imagenes.length > 1" class="imagen-navigation">
               <button mat-icon-button class="nav-btn nav-btn-left" (click)="imagenAnterior()">
                 <mat-icon>chevron_left</mat-icon>
@@ -51,7 +51,7 @@
             </mat-chip>
           </div>
 
-          <h1 class="titulo-producto mb-3">{{ publicacion.nombre }}</h1>
+          <h1 class="titulo-producto mb-3">{{ publicacion.titulo }}</h1>
 
           <div class="precio-container mb-4" *ngIf="publicacion.precio">
             <span class="precio-principal">
@@ -60,12 +60,12 @@
           </div>
 
           <div class="info-detalle">
-            <div class="info-item mb-3" *ngIf="publicacion.idCategoria">
+            <div class="info-item mb-3" *ngIf="publicacion.nombreCategoria">
               <div class="d-flex align-items-center">
                 <mat-icon class="info-icon me-2">category</mat-icon>
                 <div>
                   <span class="info-label">Categoría:</span>
-                  <span class="info-value">{{ publicacion.idCategoria }}</span>
+                  <span class="info-value">{{ publicacion.nombreCategoria }}</span>
                 </div>
               </div>
             </div>
@@ -90,12 +90,22 @@
               </div>
             </div>
 
-            <div class="info-item mb-4" *ngIf="publicacion.idUsuario">
+            <div class="info-item mb-4" *ngIf="publicacion.nombreUsuario">
               <div class="d-flex align-items-center">
                 <mat-icon class="info-icon me-2">person</mat-icon>
                 <div>
                   <span class="info-label">Publicado por:</span>
-                  <span class="info-value">{{ publicacion.idUsuario }}</span>
+                  <span class="info-value">{{ publicacion.nombreUsuario }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-item mb-4" *ngIf="publicacion.ubicacion">
+              <div class="d-flex align-items-center">
+                <mat-icon class="info-icon me-2">location_on</mat-icon>
+                <div>
+                  <span class="info-label">Ubicación:</span>
+                  <span class="info-value">{{ publicacion.ubicacion }}</span>
                 </div>
               </div>
             </div>
