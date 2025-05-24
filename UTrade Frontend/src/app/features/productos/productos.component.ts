@@ -123,31 +123,56 @@ export class ProductosComponent implements OnChanges, OnInit {
       this.procesarProductos(this.FiltroLista);
     }
     else if (changes['FiltroIdCategoria'] && this.FiltroIdCategoria) {
-      // Filtrar directamente por ID de categoría (más eficiente)
-      this._productoServicio.listarPorCategoria(this.FiltroIdCategoria).subscribe({
-        next: (respuesta) => {
-          if (respuesta.estado) {
-            this.procesarProductos(respuesta.valor);
-          } else {
-            console.warn('No se encontraron productos para la categoría:', this.FiltroIdCategoria);
-            this.productos = [];
-          }
-        },
-        error: (error) => {
-          console.error('Error cargando productos por categoría:', error);
-          this.productos = [];
-        }
-      });
+      // Asegurar que las personas estén cargadas antes de filtrar
+      if (this.listaDePersonas.length > 0) {
+        this.filtrarPorIdCategoria();
+      } else {
+        // Si las personas no están cargadas, cargarlas primero
+        this.cargarPersonasYFiltrar();
+      }
     }
     else if (changes['Filtro'] && this.Filtro) {
       // Filtrar por nombre de categoría (requiere que las categorías estén cargadas)
-      if (this.listaCategorias.length > 0) {
+      if (this.listaCategorias.length > 0 && this.listaDePersonas.length > 0) {
         this.filtrarPorNombreCategoria();
       } else {
-        // Si las categorías no están cargadas, esperar a que se carguen
-        console.log('Esperando a que se carguen las categorías...');
+        // Si los datos no están cargados, esperar a que se carguen
+        console.log('Esperando a que se carguen las categorías y personas...');
       }
     }
+  }
+
+  private cargarPersonasYFiltrar(): void {
+    this._personaServicio.listar().subscribe({
+      next: (respuesta) => {
+        if (respuesta.estado) {
+          this.listaDePersonas = respuesta.valor;
+          this.filtrarPorIdCategoria();
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando personas:', error);
+      }
+    });
+  }
+
+  private filtrarPorIdCategoria(): void {
+    if (!this.FiltroIdCategoria) return;
+    
+    this._productoServicio.listarPorCategoria(this.FiltroIdCategoria).subscribe({
+      next: (respuesta) => {
+        if (respuesta.estado) {
+          this.procesarProductos(respuesta.valor);
+        } else {
+          console.warn('No se encontraron productos para la categoría:', this.FiltroIdCategoria);
+          this.productos = [];
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando productos por categoría:', error);
+        this.productos = [];
+      }
+    });
   }
 
   private filtrarPorNombreCategoria(): void {
