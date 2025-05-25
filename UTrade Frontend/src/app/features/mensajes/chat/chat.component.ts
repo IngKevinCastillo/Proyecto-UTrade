@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../../../Services/chat.service';
 import { PerfilService } from '../../../Services/perfil.service';
 import { ToastrService } from 'ngx-toastr';
@@ -24,13 +25,15 @@ export class ChatComponent implements OnInit {
   selectedConversation: Conversation | null = null;
   idUsuarioSesion: string = '';
   messages: any[] = [];
+  private chatIdToOpen: string | null = null;
 
   constructor(
     private chatService: ChatService,
     private profileService: PerfilService,
     private toastr: ToastrService,
     private mensajesService: MensajesService,
-    private signalRService: SignalrService
+    private signalRService: SignalrService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +46,13 @@ export class ChatComponent implements OnInit {
     const usuario = JSON.parse(usuarioStorage);
     this.idUsuarioSesion = usuario.idUsuario;
     this.signalRService.startConnection();
+
+    this.route.queryParams.subscribe((params) => {
+      if (params['chatId']) {
+        this.chatIdToOpen = params['chatId'];
+        console.log('Chat ID a abrir:', this.chatIdToOpen);
+      }
+    });
 
     this.signalRService.addReceiveMessageListener((mensaje) => {
       if (
@@ -61,7 +71,7 @@ export class ChatComponent implements OnInit {
           });
         }
       } else {
-        this.toastr.info(`Nuevo mensaje recibido en otro chat`);
+        this.toastr.info('Nuevo mensaje recibido en otro chat');
       }
 
       const index = this.conversations.findIndex(
@@ -85,66 +95,151 @@ export class ChatComponent implements OnInit {
       }
     });
 
+    this.cargarConversaciones();
+  }
+
+  private cargarConversaciones(): void {
     this.chatService.listarPorUsuario(this.idUsuarioSesion).subscribe({
       next: (res) => {
         if (res.estado && res.valor) {
-          res.valor.forEach((chat: any) => {
-            const idOtroUsuario =
-              chat.usuario1Id === this.idUsuarioSesion
-                ? chat.usuario2Id
-                : chat.usuario1Id;
+          const promesasConversaciones = res.valor.map((chat: any) => {
+            return new Promise<void>((resolve) => {
+              const idOtroUsuario =
+                chat.usuario1Id === this.idUsuarioSesion
+                  ? chat.usuario2Id
+                  : chat.usuario1Id;
 
-            this.profileService.obtenerPerfil(idOtroUsuario).subscribe({
-              next: (perfilRes) => {
-                if (perfilRes.estado && perfilRes.valor) {
-                  const usuarioOtro = perfilRes.valor;
+              this.profileService.obtenerPerfil(idOtroUsuario).subscribe({
+                next: (perfilRes) => {
+                  if (perfilRes.estado && perfilRes.valor) {
+                    const usuarioOtro = perfilRes.valor;
 
-                  this.mensajesService
-                    .obtenerMensajeMasReciente(chat.id)
-                    .subscribe({
-                      next: (mensajeRes) => {
-                        const ultimoMensaje = mensajeRes.estado
-                          ? mensajeRes.valor
-                          : null;
+                    this.mensajesService
+                      .obtenerMensajeMasReciente(chat.id)
+                      .subscribe({
+                        next: (mensajeRes) => {
+                          const ultimoMensaje = mensajeRes.estado
+                            ? mensajeRes.valor
+                            : null;
 
-                        const conversacion: Conversation = {
-                          id: chat.id,
-                          username: `${usuarioOtro.nombres} ${usuarioOtro.apellidos}`,
-                          lastMessage:
-                            ultimoMensaje?.mensaje1 || 'Sin mensajes aún',
-                          time: ultimoMensaje
-                            ? new Date(ultimoMensaje.hora).toLocaleTimeString(
-                                [],
-                                {
-                                  hour: '2-digit',
-                                  minute: '2-digit',
-                                }
-                              )
-                            : '',
-                          avatarUrl: usuarioOtro.fotoPerfil
-                            ? 'data:image/jpeg;base64,' + usuarioOtro.fotoPerfil
-                            : 'icons/no-photo.webp',
-                        };
+                          const conversacion: Conversation = {
+                            id: chat.id,
+                            username: `${usuarioOtro.nombres} ${usuarioOtro.apellidos}`,
+                            lastMessage:
+                              ultimoMensaje?.mensaje1 || 'Sin mensajes aún',
+                            time: ultimoMensaje
+                              ? new Date(ultimoMensaje.hora).toLocaleTimeString(
+                                  [],
+                                  {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                  }
+                                )
+                              : '',
+                            avatarUrl: usuarioOtro.fotoPerfil
+                              ? 'data:image/jpeg;base64,' +
+                                usuarioOtro.fotoPerfil
+                              : 'icons/no-photo.webp',
+                          };
 
-                        this.conversations.push(conversacion);
-                      },
-                      error: () => {
-                        this.toastr.warning(
-                          'No se pudo cargar el último mensaje'
-                        );
-                      },
-                    });
-                }
-              },
-              error: () => {
-                this.toastr.warning('Error al obtener datos de un contacto');
-              },
+                          this.conversations.push(conversacion);
+                          resolve();
+                        },
+                        error: () => {
+                          this.toastr.warning(
+                            'No se pudo cargar el último mensaje'
+                          );
+                          resolve();
+                        },
+                      });
+                  } else {
+                    resolve();
+                  }
+                },
+                error: () => {
+                  this.toastr.warning('Error al obtener datos de un contacto');
+                  resolve();
+                },
+              });
             });
           });
+
+          Promise.all(promesasConversaciones).then(() => {
+            this.abrirChatEspecifico();
+          });
+        } else {
+          this.verificarYCrearNuevaConversacion();
         }
       },
       error: () => {
-        this.toastr.error('No se pudo cargar los chats');
+        this.toastr.error('No has iniciado conversaciones aún');
+        this.verificarYCrearNuevaConversacion();
+      },
+    });
+  }
+
+  private abrirChatEspecifico(): void {
+    if (this.chatIdToOpen) {
+      const conversacionAAbrir = this.conversations.find(
+        (conv) => conv.id === this.chatIdToOpen
+      );
+
+      if (conversacionAAbrir) {
+        this.selectConversation(conversacionAAbrir);
+        this.toastr.success('Chat abierto automáticamente', 'Éxito');
+      } else {
+        this.verificarYCrearNuevaConversacion();
+      }
+
+      this.chatIdToOpen = null;
+    }
+  }
+
+  private verificarYCrearNuevaConversacion(): void {
+    if (this.chatIdToOpen) {
+      this.chatService.buscar(this.chatIdToOpen).subscribe({
+        next: (res) => {
+          if (res.estado && res.valor) {
+            this.crearConversacionDesdeChat(res.valor);
+          } else {
+            this.toastr.warning('Chat no encontrado', 'Advertencia');
+          }
+        },
+        error: () => {
+          this.toastr.error('Error al obtener información del chat', 'Error');
+        },
+      });
+    }
+  }
+
+  private crearConversacionDesdeChat(chat: any): void {
+    const idOtroUsuario =
+      chat.usuario1Id === this.idUsuarioSesion
+        ? chat.usuario2Id
+        : chat.usuario1Id;
+
+    this.profileService.obtenerPerfil(idOtroUsuario).subscribe({
+      next: (perfilRes) => {
+        if (perfilRes.estado && perfilRes.valor) {
+          const usuarioOtro = perfilRes.valor;
+
+          const nuevaConversacion: Conversation = {
+            id: chat.id,
+            username: `${usuarioOtro.nombres} ${usuarioOtro.apellidos}`,
+            lastMessage: 'Sin mensajes aún',
+            time: '',
+            avatarUrl: usuarioOtro.fotoPerfil
+              ? 'data:image/jpeg;base64,' + usuarioOtro.fotoPerfil
+              : 'icons/no-photo.webp',
+          };
+
+          this.conversations.unshift(nuevaConversacion);
+          this.selectConversation(nuevaConversacion);
+          this.toastr.success('Nuevo chat abierto automáticamente', 'Éxito');
+        }
+      },
+      error: () => {
+        this.toastr.error('Error al obtener datos del usuario', 'Error');
       },
     });
   }
