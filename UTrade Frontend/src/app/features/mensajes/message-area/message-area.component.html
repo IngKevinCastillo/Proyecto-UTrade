@@ -15,13 +15,11 @@
     </div>
   </div>
 
-  <!-- Messages -->
-  <div class="messages-list p-3">
+  <div class="messages-list p-3" #messagesContainer>
     <app-message *ngFor="let message of messages" [message]="message">
     </app-message>
   </div>
 
-  <!-- Message Input -->
   <div class="message-input-container p-3 border-top">
     <div class="input-group">
       <input

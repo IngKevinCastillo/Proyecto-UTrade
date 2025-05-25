@@ -28,6 +28,12 @@ namespace Utility
 
             #region Chat
             CreateMap<Chat, ChatDTO>().ReverseMap();
+            CreateMap<CrearChatDTO, Chat>();
+            CreateMap<Chat, ChatDTO>()
+                .ForMember(dest => dest.Usuario1, opt => opt.Ignore())
+                .ForMember(dest => dest.Usuario2, opt => opt.Ignore())
+                .ForMember(dest => dest.Mensajes, opt => opt.Ignore());
+
             #endregion
 
             #region Contactanos
@@ -58,6 +64,10 @@ namespace Utility
 
             #region Mensajes
             CreateMap<Mensajes, MensajesDTO>().ReverseMap();
+            CreateMap<CrearMensajeDTO, Mensajes>()
+                .ForMember(dest => dest.Mensaje1, opt => opt.MapFrom(src => src.Mensaje));
+
+
             #endregion
 
             #region MotivosReporte
@@ -133,6 +143,9 @@ namespace Utility
             #region Estados
             CreateMap<Estados, EstadosDTO>().ReverseMap();
             #endregion
+
+
+
         }
     }
 }

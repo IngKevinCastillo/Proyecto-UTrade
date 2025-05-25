@@ -90,7 +90,7 @@ import { MatSelectModule } from '@angular/material/select';
     MisPublicacionesComponent,
     ReputacionComponent,
     VerReporteComponent,
-    MapaComponent
+    MapaComponent,
   ],
   imports: [
     BrowserModule,
@@ -117,7 +117,7 @@ import { MatSelectModule } from '@angular/material/select';
       closeButton: true,
       progressBar: true,
       enableHtml: true,
-      positionClass: 'toast-bottom-right'
+      positionClass: 'toast-bottom-right',
     }),
   ],
   exports: [
@@ -128,9 +128,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     ToastrModule,
     MatDividerModule,
-    MatToolbarModule
+    MatToolbarModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,17 @@
+.chat-container {
+  height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+.chat-container .row {
+  height: 100%;
+}
+
+.chat-container .col-md-4,
+.chat-container .col-md-8 {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+}

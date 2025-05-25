@@ -37,19 +37,15 @@ namespace BLL.Servicios
             }
         }
 
-        public async Task<MensajesDTO> Crear(MensajesDTO modelo)
+        public async Task<MensajesDTO> Crear(CrearMensajeDTO modelo)
         {
-            try
-            {
-                var mensajeCreado = await _mensajesRepositorio.Crear(_mapper.Map<Mensajes>(modelo));
-                if (mensajeCreado.Id == null)
-                    throw new Exception("No se pudo crear");
-                return _mapper.Map<MensajesDTO>(mensajeCreado);
-            }
-            catch
-            {
-                throw;
-            }
+            var mensaje = _mapper.Map<Mensajes>(modelo);
+            mensaje.Hora = DateTime.Now;
+            mensaje.Id = await GenerarId();
+            var mensajeCreado = await _mensajesRepositorio.Crear(mensaje);
+            if (mensajeCreado == null)
+                throw new TaskCanceledException("No se pudo crear el Mensaje");
+            return _mapper.Map<MensajesDTO>(mensajeCreado);
         }
 
         public async Task<bool> Eliminar(string id)
@@ -69,6 +65,28 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public async Task<string> GenerarId()
+        {
+            var mensajes = await _mensajesRepositorio.Consultar();
+
+            var numerosExistentes = mensajes
+                .Where(m => m.Id != null && m.Id.StartsWith("MSJ"))
+                .AsEnumerable()
+                .Select(m => {
+                    var parteNumero = m.Id.Substring(3);
+                    if (int.TryParse(parteNumero, out int numero))
+                        return numero;
+                    return 0;
+                });
+
+            int maxNumero = numerosExistentes.Any() ? numerosExistentes.Max() : 0;
+            int nuevoNumero = maxNumero + 1;
+            string nuevoId = $"MSJ{nuevoNumero.ToString("D6")}";
+
+            return nuevoId;
+        }
+
 
         public async Task<List<MensajesDTO>> Listar()
         {
@@ -99,5 +117,22 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public async Task<MensajesDTO> ObtenerMensajeMasReciente(string idChat)
+        {
+            try
+            {
+                var mensajes = await _mensajesRepositorio.Consultar(x => x.ChatId == idChat);
+                if (mensajes == null || !mensajes.Any())
+                    throw new TaskCanceledException("No se encontraron mensajes para el chat especificado");
+                var mensajeMasReciente = mensajes.OrderByDescending(x => x.Hora).FirstOrDefault();
+                return _mapper.Map<MensajesDTO>(mensajeMasReciente);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }

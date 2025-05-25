@@ -51,7 +51,7 @@ namespace API.Controllers
         }
         [HttpPost]
         [Route("Guardar")]
-        public async Task<IActionResult> Guardar([FromBody] ChatDTO chat)
+        public async Task<IActionResult> Guardar([FromBody] CrearChatDTO chat)
         {
             var rsp = new Respuesta<ChatDTO>();
             try
@@ -75,6 +75,24 @@ namespace API.Controllers
             {
                 rsp.estado = true;
                 rsp.Valor = await _chatServicio.Eliminar(id);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
+        [Route("ListarPorIdPersona/{idUsuario}")]
+        public async Task<IActionResult> ListarPorIdPersona(string idUsuario)
+        {
+            var rsp = new Respuesta<List<ChatDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _chatServicio.ListarPorIdPersona(idUsuario);
             }
             catch (Exception ex)
             {

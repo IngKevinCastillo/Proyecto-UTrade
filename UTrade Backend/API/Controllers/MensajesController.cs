@@ -1,8 +1,10 @@
-﻿using API.Utilidad;
+﻿using API.Hubs;  // ← asegura que tengas el namespace correcto
+using API.Utilidad;
 using BLL.Servicios.Contrato;
 using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace API.Controllers
 {
@@ -10,10 +12,13 @@ namespace API.Controllers
     [ApiController]
     public class MensajesController : ControllerBase
     {
-        private readonly IMensajesServicio _mensajesServicio; 
-        public MensajesController(IMensajesServicio mensajesServicio)
+        private readonly IMensajesServicio _mensajesServicio;
+        private readonly IHubContext<MensajesHub> _hubContext;
+
+        public MensajesController(IMensajesServicio mensajesServicio, IHubContext<MensajesHub> hubContext)
         {
             _mensajesServicio = mensajesServicio;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -36,13 +41,17 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("Guardar")]
-        public async Task<IActionResult> Guardar([FromBody] MensajesDTO mensajes)
+        public async Task<IActionResult> Guardar([FromBody] CrearMensajeDTO mensajesDTO)
         {
             var rsp = new Respuesta<MensajesDTO>();
             try
             {
+                var mensajeCreado = await _mensajesServicio.Crear(mensajesDTO);
+
+                await _hubContext.Clients.Group(mensajeCreado.ChatId).SendAsync("RecibirMensaje", mensajeCreado);
+
                 rsp.estado = true;
-                rsp.Valor = await _mensajesServicio.Crear(mensajes);
+                rsp.Valor = mensajeCreado;
             }
             catch (Exception ex)
             {
@@ -97,6 +106,24 @@ namespace API.Controllers
             {
                 rsp.estado = true;
                 rsp.Valor = await _mensajesServicio.ListarPorIdChat(idChat);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
+        [Route("ObtenerMensajeMasReciente/{idChat}")]
+        public async Task<IActionResult> ObtenerMensajeMasReciente(string idChat)
+        {
+            var rsp = new Respuesta<MensajesDTO>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _mensajesServicio.ObtenerMensajeMasReciente(idChat);
             }
             catch (Exception ex)
             {

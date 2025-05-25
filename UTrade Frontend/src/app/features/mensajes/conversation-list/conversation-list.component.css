@@ -8,6 +8,7 @@
 .header {
   background-color: #30248c;
   color: white;
+  flex-shrink: 0;
 }
 
 .conversations-list {
