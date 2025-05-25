@@ -46,7 +46,9 @@ namespace BLL.Servicios
         {
             try
             {
-                var publicacionCreada = await _publicacionesRepositorio.Crear(_mapper.Map<Publicaciones>(modelo));
+                var modeloActualizado = modelo;
+                modeloActualizado.FechaPublicacion = DateTime.Now;
+                var publicacionCreada = await _publicacionesRepositorio.Crear(_mapper.Map<Publicaciones>(modeloActualizado));
                 if (publicacionCreada.Id == null)
                     throw new Exception("No se pudo crear");
                 return _mapper.Map<PublicacionesDTO>(publicacionCreada);

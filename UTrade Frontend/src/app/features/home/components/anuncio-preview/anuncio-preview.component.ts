@@ -80,10 +80,15 @@ export class AnuncioPreviewComponent implements OnInit {
 
   establecerFechaActual(): void {
     const fecha = new Date();
-    const dia = fecha.getDate().toString().padStart(2, '0');
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    
     const año = fecha.getFullYear();
-    this.fechaActual = `${dia}/${mes}/${año}`;
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const horas = fecha.getHours().toString().padStart(2, '0');
+    const minutos = fecha.getMinutes().toString().padStart(2, '0');
+    const segundos = fecha.getSeconds().toString().padStart(2, '0');
+    
+    this.fechaActual = `${año}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
   }
 
   actualizarTiempoTranscurrido(tiempo: string): void {
