@@ -193,7 +193,7 @@ export class AnuncioPreviewComponent implements OnInit {
       return;
     }
 
-    console.log(`Guardando ${this.fotosRestantes.length} fotos adicionales...`);
+    // console.log(`Guardando ${this.fotosRestantes.length} fotos adicionales...`);
 
     for (let i = 0; i < this.fotosRestantes.length; i++) {
       try {
@@ -209,7 +209,6 @@ export class AnuncioPreviewComponent implements OnInit {
         };
 
         await this._fotosPublicacionServicio.guardar(fotoPublicacion).toPromise();
-        console.log(`Foto ${i + 1} guardada exitosamente con ID: ${nuevoIdFoto}`);
 
       } catch (error) {
         console.error(`Error al guardar la foto ${i + 1}:`, error);
@@ -217,7 +216,7 @@ export class AnuncioPreviewComponent implements OnInit {
       }
     }
 
-    console.log('Todas las fotos adicionales han sido procesadas');
+    this.toastr.success('Todas las fotos adicionales han sido procesadas', 'Completado');
   }
 
   async publicar(): Promise<void> {
@@ -228,21 +227,6 @@ export class AnuncioPreviewComponent implements OnInit {
 
     try {
       const publicacionData = await this.cargarDatos();
-
-      this.toastr.info(`
-        <b>ID:</b> ${publicacionData.id} <br>
-        <b>IdUsuario:</b> ${publicacionData.idUsuario} <br>
-        <b>Título:</b> ${publicacionData.titulo} <br>
-        <b>Precio:</b> ${publicacionData.precio} <br>
-        <b>Fecha:</b> ${publicacionData.fechaPublicacion} <br>
-        <b>Categoría:</b> ${publicacionData.idCategoria} <br>
-        <b>Descripción:</b> ${publicacionData.descripcion} <br>
-        <b>Dirección:</b> ${publicacionData.direccion} <br>
-        <b>Ubicación:</b> ${publicacionData.ubicacion} <br>
-        <b>Estado:</b> ${publicacionData.idEstado} <br>
-        <b>Fotos en publicación:</b> ${publicacionData.fotosPublicaciones?.length} <br>
-        <b>Fotos adicionales por guardar:</b> ${this.fotosRestantes.length}
-        `, 'Información', { enableHtml: true })
       
       this._publicacionServicio.guardar(publicacionData).subscribe({
         next: async (response) => {
@@ -250,9 +234,8 @@ export class AnuncioPreviewComponent implements OnInit {
             this.toastr.success('Anuncio <b>publicado</b> con éxito', 'Éxito');
             
             if (this.fotosRestantes.length > 0) {
-              this.toastr.info('Guardando fotos adicionales...', 'Procesando');
               await this.guardarFotosRestantes();
-              this.toastr.success(`Se guardaron ${this.fotosRestantes.length} fotos adicionales`, 'Completado');
+              // this.toastr.success(`Se guardaron ${this.fotosRestantes.length} fotos adicionales`, 'Completado');
             }
             
             this.dialogRef.close(true);

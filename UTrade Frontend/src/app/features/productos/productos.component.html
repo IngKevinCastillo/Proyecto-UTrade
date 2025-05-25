@@ -31,19 +31,31 @@
                     <small class="fw-semibold">{{ producto.ubicacion }}</small>
                 </div>
                 <div class="w-100">
-                    <div class="d-flex" style="gap: 8px;">
-                        <div style="flex: 1;">
-                            <img *ngIf="getPreviewUrls(producto.imagenes || [], producto.verMas).length > 0"
-                                [src]="getPreviewUrls(producto.imagenes || [], producto.verMas)[0]" class="rounded"
-                                style="width: 100%; height: 180px; object-fit: cover;" />
+                    <div class="images-container" [ngClass]="{
+                           'single-image': getPreviewUrls(producto.imagenes || [], producto.verMas).length === 1,
+                           'two-images': getPreviewUrls(producto.imagenes || [], producto.verMas).length === 2,
+                           'three-images': getPreviewUrls(producto.imagenes || [], producto.verMas).length >= 3
+                         }">
+
+                        <div class="image-item main-image"
+                            *ngIf="getPreviewUrls(producto.imagenes || [], producto.verMas).length > 0">
+                            <img [src]="getPreviewUrls(producto.imagenes || [], producto.verMas)[0]"
+                                class="rounded image-responsive" />
                         </div>
-                        <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
-                            <img *ngIf="getPreviewUrls(producto.imagenes || [], producto.verMas).length > 1"
-                                [src]="getPreviewUrls(producto.imagenes || [], producto.verMas)[1]" class="rounded"
-                                style="width: 100%; height: 85px; object-fit: cover;" />
-                            <img *ngIf="getPreviewUrls(producto.imagenes || [], producto.verMas).length > 2"
-                                [src]="getPreviewUrls(producto.imagenes || [], producto.verMas)[2]" class="rounded"
-                                style="width: 100%; height: 85px; object-fit: cover;" />
+
+                        <div class="secondary-images"
+                            *ngIf="getPreviewUrls(producto.imagenes || [], producto.verMas).length > 1">
+
+                            <div class="image-item secondary-image">
+                                <img [src]="getPreviewUrls(producto.imagenes || [], producto.verMas)[1]"
+                                    class="rounded image-responsive" />
+                            </div>
+
+                            <div class="image-item secondary-image"
+                                *ngIf="getPreviewUrls(producto.imagenes || [], producto.verMas).length > 2">
+                                <img [src]="getPreviewUrls(producto.imagenes || [], producto.verMas)[2]"
+                                    class="rounded image-responsive" />
+                            </div>
                         </div>
                     </div>
                 </div>
