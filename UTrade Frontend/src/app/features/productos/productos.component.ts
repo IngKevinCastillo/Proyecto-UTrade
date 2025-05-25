@@ -13,6 +13,8 @@ import { forkJoin } from 'rxjs';
 import { EstadosService } from '../../Services/estados.service';
 import { Estados } from '../../interfaces/estados';
 import { ToastrService } from 'ngx-toastr';
+import { FotosPublicacionesService } from '../../Services/fotos-publicaciones.service';
+import { FotosPublicacion } from '../../interfaces/fotos-publicacion';
 
 interface ProductoExtendido extends Publicaciones {
   verMas: boolean;
@@ -51,7 +53,8 @@ export class ProductosComponent implements OnChanges, OnInit {
     private _personaServicio: PersonaService,
     private _productoServicio: ProductoService,
     private _estadosServicio: EstadosService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _fotosPublicacionesServicio: FotosPublicacionesService
   ) { 
     this.formularioPublicaciones = this.fb.group({
       id: ["", Validators.required],
@@ -216,7 +219,7 @@ export class ProductosComponent implements OnChanges, OnInit {
       const _estado_ = this.listaEstados.find(c => c.id == producto.idEstado);
       const cuotaProducto = producto.idCategoria === "CAT01" ? ' / MES' : '';
       
-      return {
+      const productoExtendido: ProductoExtendido = {
         ...producto,
         verMas: false,
         nombreUsuario: persona?.nombreUsuario || 'Usuario desconocido',
@@ -225,9 +228,17 @@ export class ProductosComponent implements OnChanges, OnInit {
         estado: _estado_?.nombre || 'Sin estado',
         fechaFormateada: this.formatearFecha(producto.fechaPublicacion),
         tiempoTranscurrido: this.calcularTiempoTranscurrido(producto.fechaPublicacion),
-        imagenes: this.procesarImagenes(producto.descripcion),
+        imagenes: [
+          "icons/Image-not-found.png",
+          "icons/Image-not-found.png",
+          "icons/Image-not-found.png",
+          "icons/Image-not-found.png"
+        ], 
         cuota: cuotaProducto 
       };
+      this.cargarImagenesProducto(producto.id, productoExtendido);
+      
+      return productoExtendido;
     });
   }
 
@@ -253,7 +264,6 @@ export class ProductosComponent implements OnChanges, OnInit {
     const ahora = new Date();
     const fechaPublicacion = new Date(fecha);
     
-    // Compensar zona horaria para ambas fechas
     const offsetAhora = ahora.getTimezoneOffset() * 60000;
     const offsetFecha = fechaPublicacion.getTimezoneOffset() * 60000;
     
@@ -278,12 +288,39 @@ export class ProductosComponent implements OnChanges, OnInit {
     }
   }
 
-  procesarImagenes(descripcion?: string): string[] {
-    return [
-      "icons/cuarto1.png",
-      "icons/cuarto2.jpg",
-      "icons/cuarto3.jpg"
-    ];
+  cargarImagenesProducto(idProducto: string | undefined, producto: ProductoExtendido): void {
+    if (idProducto != null) {
+      this._fotosPublicacionesServicio.buscarFotosPublicacion(idProducto).subscribe({
+        next: (res: any) => {
+          if (res?.estado && res?.valor) {
+            const datos = res.valor;
+            if (Array.isArray(datos) && datos.length > 0) {
+              producto.imagenes = datos.map((foto: FotosPublicacion) => 
+                foto.fotoBase64 && foto.fotoBase64.trim() !== ''
+                  ? 'data:image/jpeg;base64,' + foto.fotoBase64
+                  : 'icons/no-photo.webp'
+              );
+            } else {
+              producto.imagenes = [
+                "icons/Image-not-found.png",
+                "icons/Image-not-found.png",
+                "icons/Image-not-found.png",
+                "icons/Image-not-found.png"
+              ];
+            }
+          }
+        },
+        error: (error) => {
+          console.error('Error cargando imágenes del producto:', error);
+          producto.imagenes = [
+            "icons/Image-not-found.png",
+            "icons/Image-not-found.png",
+            "icons/Image-not-found.png",
+            "icons/Image-not-found.png"
+          ];
+        }
+      });
+    }
   }
 
   reportarProducto(producto: Publicaciones): void {
@@ -316,8 +353,10 @@ export class ProductosComponent implements OnChanges, OnInit {
     this.verDetalles(producto);
   }
 
-  getPreviewUrls(fotos: string[], verMas: boolean): string[] {
-    if (!fotos || fotos.length === 0) return [];
+  getPreviewUrls(fotos: string[] | undefined, verMas: boolean): string[] {
+    if (!fotos || fotos.length === 0) {
+      return ["icons/Image-not-found.png"]; 
+    }
     return verMas ? fotos : fotos.slice(0, 3);
   }
 
