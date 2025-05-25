@@ -79,7 +79,7 @@ export class MisPublicacionesComponent implements OnInit {
           this.listaEstados = respuestas.estados.valor;
         }
         
-        this.cargarTodasLasPublicaciones(); 
+        this.cargarPublicacionesDelUsuario(); 
       },
       error: (error: any) => {
         console.error('Error cargando datos iniciales:', error);
@@ -89,8 +89,16 @@ export class MisPublicacionesComponent implements OnInit {
     });
   }
 
-  cargarTodasLasPublicaciones(): void {
-    this._productoServicio.lista().subscribe({
+  cargarPublicacionesDelUsuario(): void {
+    const usuarioActualId = this.obtenerUsuarioActualId();
+    
+    if (!usuarioActualId) {
+      this.toastr.error('No se pudo identificar el usuario actual', 'Error');
+      this.cargando = false;
+      return;
+    }
+
+    this._productoServicio.listarPorUsuario(usuarioActualId).subscribe({
       next: (respuesta: any) => {
         if (respuesta.estado) {
           this.procesarPublicaciones(respuesta.valor);
@@ -100,11 +108,25 @@ export class MisPublicacionesComponent implements OnInit {
         this.cargando = false;
       },
       error: (error: any) => {
-        console.error('Error cargando publicaciones:', error);
+        console.error('Error cargando publicaciones del usuario:', error);
         this.toastr.error('Error al cargar las publicaciones', 'Error');
         this.cargando = false;
       }
     });
+  }
+
+  private obtenerUsuarioActualId(): string {
+    const usuario = JSON.parse(localStorage.getItem('usuario')!);
+    if (usuario) {
+      try {
+        return usuario?.idUsuario;
+      } catch (error) {
+        console.error('Error parseando usuario del localStorage:', error);
+      }
+    }
+    
+    console.warn('No se pudo obtener el ID del usuario actual');
+    return '';
   }
 
   procesarPublicaciones(publicaciones: Publicaciones[]): void {
@@ -236,7 +258,6 @@ export class MisPublicacionesComponent implements OnInit {
       console.log('Dialog result:', result);
       
       if (result && result.accion === 'MODIFICAR' && result.publicacionModificada) {
-        // Recargar las publicaciones para obtener los datos actualizados
         this.cargarDatosIniciales();
         this.toastr.success(
           `La publicación "${result.publicacionModificada.titulo}" ha sido actualizada correctamente`, 
@@ -258,37 +279,27 @@ export class MisPublicacionesComponent implements OnInit {
       cancelButtonColor: '#3085d6'
     }).then(result => {
       if (result.isConfirmed) {
-        // Aquí deberías llamar al servicio para eliminar la publicación del backend
-        // Como no tienes el método eliminar en ProductoService, por ahora elimino de la lista local
-        // Descomenta la siguiente línea cuando tengas el método eliminar en tu servicio:
-        // this._productoServicio.eliminar(publicacion.id).subscribe({
-        
-        // Simulación de eliminación exitosa - REEMPLAZA CON LA LLAMIDA REAL AL SERVICIO
-        this.publicaciones = this.publicaciones.filter(p => p.id !== publicacion.id);
-        this.toastr.success(
-          `La publicación "${publicacion.titulo}" ha sido eliminada correctamente`, 
-          'Publicación eliminada'
-        );
-        
-        /* Descomenta esto cuando tengas el método eliminar:
-        this._productoServicio.eliminar(publicacion.id).subscribe({
-          next: (respuesta: any) => {
-            if (respuesta.estado) {
-              this.publicaciones = this.publicaciones.filter(p => p.id !== publicacion.id);
-              this.toastr.success(
-                `La publicación "${publicacion.titulo}" ha sido eliminada correctamente`, 
-                'Publicación eliminada'
-              );
-            } else {
-              this.toastr.error('No se pudo eliminar la publicación', 'Error');
+        if (publicacion.id) {
+          this._productoServicio.eliminar(publicacion.id).subscribe({
+            next: (respuesta: any) => {
+              if (respuesta.estado) {
+                this.publicaciones = this.publicaciones.filter(p => p.id !== publicacion.id);
+                this.toastr.success(
+                  `La publicación "${publicacion.titulo}" ha sido eliminada correctamente`, 
+                  'Publicación eliminada'
+                );
+              } else {
+                this.toastr.error('No se pudo eliminar la publicación', 'Error');
+              }
+            },
+            error: (error: any) => {
+              console.error('Error eliminando publicación:', error);
+              this.toastr.error('Error al eliminar la publicación', 'Error');
             }
-          },
-          error: (error: any) => {
-            console.error('Error eliminando publicación:', error);
-            this.toastr.error('Error al eliminar la publicación', 'Error');
-          }
-        });
-        */
+          });
+        } else {
+          this.toastr.error('No se puede eliminar la publicación: ID no válido', 'Error');
+        }
       }
     });
   }

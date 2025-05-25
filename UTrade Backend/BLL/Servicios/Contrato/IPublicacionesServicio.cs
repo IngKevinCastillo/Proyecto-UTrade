@@ -17,5 +17,6 @@ namespace BLL.Servicios.Contrato
         Task<List<PublicacionesDTO>> ListarPorCategoria(string idCategoria);
         Task<List<FotosPublicacionesDTO>> FotosPublicaciones(string idPublicacion);
         Task<string> ObtenerIdNuevaPublicacion();
+        Task<List<PublicacionesDTO>> ListarPorUsuario(string id);
     }
 }
