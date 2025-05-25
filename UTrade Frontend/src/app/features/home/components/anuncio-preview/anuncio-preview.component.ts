@@ -95,8 +95,8 @@ export class AnuncioPreviewComponent implements OnInit {
   }
 
   get previewUrls(): string[] {
-    if (this.fotos.length === 0) return [];
-    return [URL.createObjectURL(this.fotos[0])]; 
+    return (this.fotos.slice(0, 4))
+      .map(file => URL.createObjectURL(file));
   }
 
   get previewUsername(): string {

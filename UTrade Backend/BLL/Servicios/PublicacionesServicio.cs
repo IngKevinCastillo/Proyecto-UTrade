@@ -16,11 +16,13 @@ namespace BLL.Servicios
         private readonly IRepositorioGenerico<Publicaciones> _publicacionesRepositorio;
         private readonly IMapper _mapper;
         private readonly IFotosPublicacionesServicio _fotosPublicacionesServicio;
+        private readonly IRepositorioGenerico<FotosPublicaciones> _fotosPublicaciones;
 
-        public PublicacionesServicio(IRepositorioGenerico<Publicaciones> publicacionesRepositorio, IFotosPublicacionesServicio fotosPublicacionesServicio, IMapper mapper)
+        public PublicacionesServicio(IRepositorioGenerico<Publicaciones> publicacionesRepositorio, IFotosPublicacionesServicio fotosPublicacionesServicio, IMapper mapper, IRepositorioGenerico<FotosPublicaciones> fotosPublicaciones)
         {
             _publicacionesRepositorio = publicacionesRepositorio;
             _fotosPublicacionesServicio = fotosPublicacionesServicio;
+            _fotosPublicaciones = fotosPublicaciones;
             _mapper = mapper;
         }
 
@@ -86,6 +88,13 @@ namespace BLL.Servicios
             try
             {
                 var publicacionEncontrada = await _publicacionesRepositorio.Obtener(x => x.Id == id);
+                var fotosPublicacionEliminar = await _fotosPublicaciones.Consultar(x => x.IdPublicacion == id);
+                var listaFotos = fotosPublicacionEliminar.ToList();
+                foreach (var item in listaFotos)
+                {
+                    await _fotosPublicacionesServicio.Eliminar(item.Id);
+                }
+
                 if (publicacionEncontrada == null)
                     throw new TaskCanceledException("La publicacion no existe");
                 bool respuesta = await _publicacionesRepositorio.Eliminar(publicacionEncontrada);
