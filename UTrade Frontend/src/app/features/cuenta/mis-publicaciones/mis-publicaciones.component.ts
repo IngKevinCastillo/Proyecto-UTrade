@@ -3,20 +3,34 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { VerProductosComponent } from '../../productos/componentes/ver-productos/ver-productos.component';
 import { ModificarProductosComponent } from '../../productos/componentes/modificar-productos/modificar-productos.component';
+import { ProductoService } from '../../../Services/producto.service'; 
+import { PersonaService } from '../../../Services/persona.service'; 
+import { CategoriaPublicacionService } from '../../../Services/categoria-publicacion.service'; 
+import { EstadosService } from '../../../Services/estados.service'; 
+import { FotosPublicacionesService } from '../../../Services/fotos-publicaciones.service'; 
+import { Publicaciones } from '../../../interfaces/publicaciones'; 
+import { Persona } from '../../../interfaces/persona';
+import { CategoriaPublicacion } from '../../../interfaces/categoria-publicacion'; 
+import { Estados } from '../../../interfaces/estados'; 
+import { FotosPublicacion } from '../../../interfaces/fotos-publicacion'; 
+import { RespuestaAPI } from '../../../interfaces/respuesta-api'; 
+import { forkJoin } from 'rxjs';
 import Swal from 'sweetalert2';
 
-export interface MiPublicacion {
-  id: string;
-  nombre: string;
-  tipoServicio: string;
-  precio: number;
-  fechaPublicacion: Date;
-  estado: 'Activo' | 'Baneado' | 'Eliminado' | 'Suspendido' | 'Advertido';
-  imagen: string;
-  descripcion?: string;
-  imagenes?: string[]; 
-  idUsuario?: string;
-  idCategoria?: string;
+interface MiPublicacionExtendida extends Publicaciones {
+  nombreUsuario?: string;
+  avatarUsuario?: string;
+  nombreCategoria?: string;
+  estadoNombre?: string;
+  fechaFormateada?: string;
+  tiempoTranscurrido?: string;
+  imagenes?: string[];
+  cuota?: string;
+  imagen?: string; 
+  nombre?: string;
+  tipoServicio?: string;
+  estado?: string; 
+  fechaPublicacionDate?: Date; 
 }
 
 @Component({
@@ -26,56 +40,182 @@ export interface MiPublicacion {
 })
 export class MisPublicacionesComponent implements OnInit {
 
-  publicaciones: MiPublicacion[] = [];
+  publicaciones: MiPublicacionExtendida[] = [];
+  listaDePersonas: Persona[] = [];
+  listaCategorias: CategoriaPublicacion[] = [];
+  listaEstados: Estados[] = [];
+  cargando: boolean = true;
 
   constructor(
     public dialog: MatDialog,
-    private toastr: ToastrService
-  ){ }
+    private toastr: ToastrService,
+    private _productoServicio: ProductoService,
+    private _personaServicio: PersonaService,
+    private _categoriaServicio: CategoriaPublicacionService,
+    private _estadosServicio: EstadosService,
+    private _fotosPublicacionesServicio: FotosPublicacionesService
+  ) { }
 
   ngOnInit(): void {
-    this.cargarMisPublicaciones();
+    this.cargarDatosIniciales();
   }
 
-  cargarMisPublicaciones(): void {
-    this.publicaciones = [
-      {
-        id: '1',
-        nombre: 'Chaqueta de Jean',
-        tipoServicio: 'Ropa',
-        precio: 45000,
-        fechaPublicacion: new Date('2025-04-16'),
-        estado: 'Activo',
-        imagen: 'icons/oceana.png',
-        imagenes: ['icons/oceana.png', 'icons/cuarto1.png', 'icons/cuarto2.jpg'], 
-        descripcion: 'Chaqueta de jean unisex, disponible en todas las tallas. Calidad garantizada.'
+  cargarDatosIniciales(): void {
+    this.cargando = true;
+    
+    forkJoin({
+      personas: this._personaServicio.listar(),
+      categorias: this._categoriaServicio.lista(),
+      estados: this._estadosServicio.lista()
+    }).subscribe({
+      next: (respuestas: any) => {
+        if (respuestas.personas.estado) {
+          this.listaDePersonas = respuestas.personas.valor;
+        }
+        if (respuestas.categorias.estado) {
+          this.listaCategorias = respuestas.categorias.valor;
+        }
+        if (respuestas.estados.estado) {
+          this.listaEstados = respuestas.estados.valor;
+        }
+        
+        this.cargarTodasLasPublicaciones(); 
       },
-      {
-        id: '2',
-        nombre: 'Sofá en L de 3 puestos',
-        tipoServicio: 'Muebles',
-        precio: 900000,
-        fechaPublicacion: new Date('2025-04-15'),
-        estado: 'Suspendido',
-        imagen: 'icons/oceana.png',
-        imagenes: ['icons/oceana.png'], 
-        descripcion: 'Sofá cómodo y moderno en tela gris. Perfecto para sala o estudio.'
-      },
-      {
-        id: '3',
-        nombre: 'Apartamento en el Centro',
-        tipoServicio: 'Apartamento',
-        precio: 1200000,
-        fechaPublicacion: new Date('2025-04-14'),
-        estado: 'Advertido',
-        imagen: 'icons/oceana.png',
-        imagenes: ['icons/oceana.png', 'icons/cuarto1.png', 'icons/cuarto2.jpg'], 
-        descripcion: 'Apartamento completamente amoblado en zona céntrica.'
+      error: (error: any) => {
+        console.error('Error cargando datos iniciales:', error);
+        this.toastr.error('Error al cargar los datos iniciales', 'Error');
+        this.cargando = false;
       }
-    ];
+    });
   }
 
-  modificarPublicacion(publicacion: MiPublicacion): void {
+  cargarTodasLasPublicaciones(): void {
+    this._productoServicio.lista().subscribe({
+      next: (respuesta: any) => {
+        if (respuesta.estado) {
+          this.procesarPublicaciones(respuesta.valor);
+        } else {
+          this.toastr.error('No se pudieron cargar las publicaciones', 'Error');
+        }
+        this.cargando = false;
+      },
+      error: (error: any) => {
+        console.error('Error cargando publicaciones:', error);
+        this.toastr.error('Error al cargar las publicaciones', 'Error');
+        this.cargando = false;
+      }
+    });
+  }
+
+  procesarPublicaciones(publicaciones: Publicaciones[]): void {
+    this.publicaciones = publicaciones.map(publicacion => {
+      const persona = this.listaDePersonas.find(p => p.id === publicacion.idUsuario);
+      const categoria = this.listaCategorias.find(c => c.id === publicacion.idCategoria);
+      const estado = this.listaEstados.find(e => e.id === publicacion.idEstado);
+      const cuotaProducto = publicacion.idCategoria === "CAT01" ? ' / MES' : '';
+      
+      const publicacionExtendida: MiPublicacionExtendida = {
+        ...publicacion,
+        nombreUsuario: persona?.nombreUsuario || 'Usuario desconocido',
+        avatarUsuario: this.procesarAvatar(persona),
+        nombreCategoria: categoria?.nombre || 'Sin categoría',
+        estadoNombre: estado?.nombre || 'Sin estado',
+        fechaFormateada: this.formatearFecha(publicacion.fechaPublicacion),
+        tiempoTranscurrido: this.calcularTiempoTranscurrido(publicacion.fechaPublicacion),
+        imagenes: ["icons/Image-not-found.png"],
+        cuota: cuotaProducto,
+        imagen: "icons/Image-not-found.png", 
+        nombre: publicacion.titulo,
+        tipoServicio: categoria?.nombre || 'Sin categoría',
+        estado: estado?.nombre || 'Sin estado',
+        fechaPublicacionDate: new Date(publicacion.fechaPublicacion)
+      };
+
+      this.cargarImagenesPublicacion(publicacion.id, publicacionExtendida);
+      
+      return publicacionExtendida;
+    });
+  }
+
+  procesarAvatar(persona?: Persona): string {
+    if (persona && persona.fotoPerfilBase64 && persona.fotoPerfilBase64.trim() !== '') {
+      return 'data:image/jpeg;base64,' + persona.fotoPerfilBase64;
+    }
+    return 'icons/no-photo.webp';
+  }
+
+  formatearFecha(fecha: string): string {
+    const fechaObj = new Date(fecha);
+    const offset = fechaObj.getTimezoneOffset() * 60000;
+    const fechaLocal = new Date(fechaObj.getTime() - offset);
+    return fechaLocal.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  }
+
+  calcularTiempoTranscurrido(fecha: string): string {
+    const ahora = new Date();
+    const fechaPublicacion = new Date(fecha);
+    const diferencia = ahora.getTime() - fechaPublicacion.getTime();
+    
+    if (diferencia < 0) {
+      return 'Ahora';
+    }
+    
+    const minutos = Math.floor(diferencia / (1000 * 60));
+    const horas = Math.floor(diferencia / (1000 * 60 * 60));
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    const meses = Math.floor(dias / 30);
+    const años = Math.floor(dias / 365);
+    
+    if (años >= 1) {
+      return años === 1 ? '1 año' : `${años} años`;
+    } else if (meses >= 1) {
+      return meses === 1 ? '1 mes' : `${meses} meses`;
+    } else if (dias >= 1) {
+      return dias === 1 ? '1d' : `${dias}d`;
+    } else if (horas >= 1) {
+      return horas === 1 ? '1h' : `${horas}h`;
+    } else if (minutos >= 1) {
+      return minutos === 1 ? '1m' : `${minutos}m`;
+    } else {
+      return 'Ahora';
+    }
+  }
+
+  cargarImagenesPublicacion(idPublicacion: string | undefined, publicacion: MiPublicacionExtendida): void {
+    if (idPublicacion != null) {
+      this._fotosPublicacionesServicio.buscarFotosPublicacion(idPublicacion).subscribe({
+        next: (res: any) => {
+          if (res?.estado && res?.valor) {
+            const datos = res.valor;
+            if (Array.isArray(datos) && datos.length > 0) {
+              const imagenesBase64 = datos.map((foto: FotosPublicacion) => 
+                foto.fotoBase64 && foto.fotoBase64.trim() !== ''
+                  ? 'data:image/jpeg;base64,' + foto.fotoBase64
+                  : 'icons/no-photo.webp'
+              );
+              
+              publicacion.imagenes = imagenesBase64;
+              publicacion.imagen = imagenesBase64[0]; 
+            } else {
+              publicacion.imagenes = ["icons/Image-not-found.png"];
+              publicacion.imagen = "icons/Image-not-found.png";
+            }
+          }
+        },
+        error: (error: any) => {
+          console.error('Error cargando imágenes de la publicación:', error);
+          publicacion.imagenes = ["icons/Image-not-found.png"];
+          publicacion.imagen = "icons/Image-not-found.png";
+        }
+      });
+    }
+  }
+
+  modificarPublicacion(publicacion: MiPublicacionExtendida): void {
     console.log('Modificando publicación:', publicacion);
     
     const dialogRef = this.dialog.open(ModificarProductosComponent, {
@@ -96,25 +236,17 @@ export class MisPublicacionesComponent implements OnInit {
       console.log('Dialog result:', result);
       
       if (result && result.accion === 'MODIFICAR' && result.publicacionModificada) {
-        // Actualizar la publicación en la lista
-        const index = this.publicaciones.findIndex(p => p.id === result.publicacionModificada.id);
-        
-        if (index !== -1) {
-          this.publicaciones[index] = { ...result.publicacionModificada };
-          this.toastr.success(
-            `La publicación "${result.publicacionModificada.nombre}" ha sido actualizada correctamente`, 
-            'Publicación modificada'
-          );
-          
-          console.log('Publicación actualizada:', this.publicaciones[index]);
-        } else {
-          this.toastr.error('Error al actualizar la publicación', 'Error');
-        }
+        // Recargar las publicaciones para obtener los datos actualizados
+        this.cargarDatosIniciales();
+        this.toastr.success(
+          `La publicación "${result.publicacionModificada.titulo}" ha sido actualizada correctamente`, 
+          'Publicación modificada'
+        );
       }
     });
   }
 
-  borrarPublicacion(publicacion: MiPublicacion): void {
+  borrarPublicacion(publicacion: MiPublicacionExtendida): void {
     Swal.fire({
       title: '¿Estás seguro?',
       text: `¿Deseas borrar "${publicacion.nombre}"? Esta acción no se puede deshacer.`,
@@ -126,19 +258,59 @@ export class MisPublicacionesComponent implements OnInit {
       cancelButtonColor: '#3085d6'
     }).then(result => {
       if (result.isConfirmed) {
-        this.publicaciones = this.publicaciones.filter(p => p.id !== publicacion.id);
+        // Aquí deberías llamar al servicio para eliminar la publicación del backend
+        // Como no tienes el método eliminar en ProductoService, por ahora elimino de la lista local
+        // Descomenta la siguiente línea cuando tengas el método eliminar en tu servicio:
+        // this._productoServicio.eliminar(publicacion.id).subscribe({
         
+        // Simulación de eliminación exitosa - REEMPLAZA CON LA LLAMIDA REAL AL SERVICIO
+        this.publicaciones = this.publicaciones.filter(p => p.id !== publicacion.id);
         this.toastr.success(
-          `La publicación "${publicacion.nombre}" ha sido eliminada correctamente`, 
+          `La publicación "${publicacion.titulo}" ha sido eliminada correctamente`, 
           'Publicación eliminada'
         );
         
-        console.log('Publicación eliminada:', publicacion.id);
+        /* Descomenta esto cuando tengas el método eliminar:
+        this._productoServicio.eliminar(publicacion.id).subscribe({
+          next: (respuesta: any) => {
+            if (respuesta.estado) {
+              this.publicaciones = this.publicaciones.filter(p => p.id !== publicacion.id);
+              this.toastr.success(
+                `La publicación "${publicacion.titulo}" ha sido eliminada correctamente`, 
+                'Publicación eliminada'
+              );
+            } else {
+              this.toastr.error('No se pudo eliminar la publicación', 'Error');
+            }
+          },
+          error: (error: any) => {
+            console.error('Error eliminando publicación:', error);
+            this.toastr.error('Error al eliminar la publicación', 'Error');
+          }
+        });
+        */
       }
     });
   }
 
-  verDetalles(publicacion: MiPublicacion): void {
+  verDetalles(publicacion: MiPublicacionExtendida): void {
+    const publicacionParaModal = {
+      id: publicacion.id,
+      titulo: publicacion.titulo,
+      precio: publicacion.precio,
+      fechaPublicacion: publicacion.fechaPublicacion,
+      fechaPublicacionDate: publicacion.fechaPublicacionDate,
+      estado: publicacion.estadoNombre || 'Sin estado',
+      descripcion: publicacion.descripcion,
+      imagenes: publicacion.imagenes || [],
+      idUsuario: publicacion.idUsuario,
+      idCategoria: publicacion.idCategoria,
+      nombreCategoria: publicacion.nombreCategoria,
+      nombreUsuario: publicacion.nombreUsuario,
+      avatarUsuario: publicacion.avatarUsuario,
+      ubicacion: publicacion.ubicacion
+    };
+
     const dialogRef = this.dialog.open(VerProductosComponent, {
       disableClose: true,
       autoFocus: true,
@@ -148,7 +320,7 @@ export class MisPublicacionesComponent implements OnInit {
       maxWidth: '1000px',
       data: {
         tipo: 'VER_DETALLE',
-        publicacion: publicacion
+        publicacion: publicacionParaModal
       }
     });
 
@@ -166,9 +338,5 @@ export class MisPublicacionesComponent implements OnInit {
       case 'Advertido': return 'accent';
       default: return 'primary';
     }
-  }
-
-  private actualizarLista(): void {
-    this.cargarMisPublicaciones();
   }
 }
