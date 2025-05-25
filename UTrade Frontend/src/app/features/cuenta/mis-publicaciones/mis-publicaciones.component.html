@@ -1,77 +1,83 @@
-<!-- mis-publicaciones.component.html -->
 <div class="container-fluid p-4" style="background-color: #fff;">
     <h2 class="mb-4">Mis Publicaciones</h2>
+
+    <div *ngIf="cargando" class="text-center py-5">
+        <mat-spinner></mat-spinner>
+        <p class="text-muted mt-3">Cargando publicaciones...</p>
+    </div>
 
     <mat-card class="mb-4" *ngFor="let publicacion of publicaciones">
         <mat-card-content class="p-0">
             <div class="d-flex align-items-start position-relative">
 
-                <!-- Estado Badge -->
                 <div class="position-absolute top-0 start-0 m-3">
                     <mat-chip [ngClass]="{
-                'estado-activo': publicacion.estado === 'Activo',
-                'estado-baneado': publicacion.estado === 'Baneado',
-                'estado-eliminado': publicacion.estado === 'Eliminado',
-                'estado-suspendido': publicacion.estado === 'Suspendido',
-                'estado-advertido': publicacion.estado === 'Advertido'
-              }">
+                        'estado-activo': publicacion.estado === 'Activo',
+                        'estado-baneado': publicacion.estado === 'Baneado',
+                        'estado-eliminado': publicacion.estado === 'Eliminado',
+                        'estado-suspendido': publicacion.estado === 'Suspendido',
+                        'estado-advertido': publicacion.estado === 'Advertido'
+                    }">
                         {{ publicacion.estado }}
                     </mat-chip>
                 </div>
-
-                <!-- Botón Ver Detalles - Esquina superior derecha -->
                 <div class="position-absolute top-0 end-0 m-3">
                     <button mat-button class="btn-ver-detalles" matTooltip="Detalles de la publicación"
                         (click)="verDetalles(publicacion)">
                         Ver detalles
                         <mat-icon class="icono-ver-detalles">chevron_right</mat-icon>
                     </button>
-                </div>  
+                </div>
 
-                <!-- Imagen del producto -->
                 <div class="flex-shrink-0 p-3">
                     <img [src]="publicacion.imagen" [alt]="publicacion.nombre" class="rounded-3"
                         style="width: 120px; height: 120px; object-fit: cover;">
                 </div>
 
-                <!-- Información del producto -->
                 <div class="flex-grow-1 p-3">
                     <div class="row h-100">
                         <div class="col-md-8">
-                            <!-- Título y descripción -->
                             <h5 class="fw-bold text-dark mb-2" style="margin-top: 20px;">
                                 {{ publicacion.nombre }}
                             </h5>
 
-                            <!-- Tipo de servicio -->
                             <div class="d-flex align-items-center mb-2">
                                 <mat-icon class="me-1 text-muted" style="font-size: 18px;">category</mat-icon>
                                 <span class="text-muted">{{ publicacion.tipoServicio }}</span>
                             </div>
 
-                            <!-- Precio -->
                             <div class="mb-2">
                                 <span class="fw-bold text-primary fs-5">
-                                    $ {{ publicacion.precio | number:'1.0-0' }} COP
+                                    $ {{ publicacion.precio | number:'1.0-0' }} COP{{ publicacion.cuota }}
                                 </span>
                             </div>
 
-                            <!-- Fecha de publicación -->
+                            <div class="mb-2 text-muted" *ngIf="publicacion.descripcion">
+                                <small>{{ publicacion.descripcion | slice:0:100 }}{{ publicacion.descripcion &&
+                                    publicacion.descripcion.length > 100 ? '...' : '' }}</small>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-2" *ngIf="publicacion.ubicacion">
+                                <mat-icon class="me-1 text-muted" style="font-size: 16px;">location_on</mat-icon>
+                                <small class="text-muted">{{ publicacion.ubicacion }}</small>
+                            </div>
+
                             <div class="text-muted small">
-                                Publicado el: {{ publicacion.fechaPublicacion | date:'dd MMM, yyyy' }}
+                                Publicado el: {{ publicacion.fechaFormateada }} - {{ publicacion.tiempoTranscurrido }}
                             </div>
                         </div>
 
-                        <!-- Botones de acción - Modificar y Borrar -->
                         <div class="col-md-4 d-flex flex-column justify-content-end align-items-end">
                             <div class="d-flex flex-column gap-2" style="margin-bottom: 15px;">
                                 <button mat-stroked-button color="primary" class="rounded-pill action-btn"
                                     (click)="modificarPublicacion(publicacion)">
+                                    <mat-icon class="me-1" style="font-size: 18px;">edit</mat-icon>
                                     Modificar
                                 </button>
 
                                 <button mat-stroked-button color="warn" class="rounded-pill action-btn"
                                     (click)="borrarPublicacion(publicacion)">
+                                    <mat-icon class="me-1" style="font-size: 18px;">delete</mat-icon>
                                     Borrar
                                 </button>
                             </div>
@@ -82,8 +88,7 @@
         </mat-card-content>
     </mat-card>
 
-    <!-- Mensaje cuando no hay publicaciones -->
-    <div *ngIf="publicaciones.length === 0" class="text-center py-5">
+    <div *ngIf="!cargando && publicaciones.length === 0" class="text-center py-5">
         <mat-icon class="text-muted mb-3" style="font-size: 48px; height: 48px; width: 48px;">
             inventory_2
         </mat-icon>

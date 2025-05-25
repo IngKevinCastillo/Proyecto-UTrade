@@ -15,6 +15,8 @@ import { Estados } from '../../interfaces/estados';
 import { ToastrService } from 'ngx-toastr';
 import { FotosPublicacionesService } from '../../Services/fotos-publicaciones.service';
 import { FotosPublicacion } from '../../interfaces/fotos-publicacion';
+import { ConexionBackendService } from '../../Services/conexion-backend.service';
+import { HttpClient } from '@angular/common/http';
 
 interface ProductoExtendido extends Publicaciones {
   verMas: boolean;
@@ -54,7 +56,9 @@ export class ProductosComponent implements OnChanges, OnInit {
     private _productoServicio: ProductoService,
     private _estadosServicio: EstadosService,
     private toastr: ToastrService,
-    private _fotosPublicacionesServicio: FotosPublicacionesService
+    private _fotosPublicacionesServicio: FotosPublicacionesService,
+    private conexionBackend: ConexionBackendService,
+    private http: HttpClient,
   ) { 
     this.formularioPublicaciones = this.fb.group({
       id: ["", Validators.required],
@@ -71,6 +75,26 @@ export class ProductosComponent implements OnChanges, OnInit {
   }
 
   productos: ProductoExtendido[] = [];
+
+  solicitar(producto: ProductoExtendido): void {
+    const usuario = JSON.parse(localStorage.getItem('usuario')!);
+    const id: string = usuario?.idUsuario;
+    const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${id}`;
+    this.http.get(url).subscribe({
+      next: (res: any) => {
+        if (res?.estado && res?.valor) {
+          const datos = res.valor;
+          const usuarioF = datos.nombreUsuario || 'Usuario desconocido';
+          this.toastr.info(`Lo siento ${usuarioF} esto esta en desarrollo `, "Info");
+        }
+      },
+      error: (error) => {
+        console.error('Error obteniendo usuario:', error);
+        this.toastr.error('Error obteniendo usuario', "Error");
+      }
+    });
+  }
+  
 
   ngOnInit(): void {
     this.cargarDatosIniciales();

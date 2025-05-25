@@ -68,6 +68,13 @@
                         (click)="toggleVerMas(producto)">
                         {{ producto.verMas ? 'Ver menos' : 'Ver más' }}
                     </button>
+
+                    <button mat-stroked-button color="primary"
+                        class="rounded-pill px-4 py-1 fw-semibold d-flex align-items-center justify-content-center"
+                        (click)="solicitar(producto)">
+                        <mat-icon>sms</mat-icon>
+                        <span>Solicitar</span>
+                    </button>                      
                 </div>
             </div>
         </div>

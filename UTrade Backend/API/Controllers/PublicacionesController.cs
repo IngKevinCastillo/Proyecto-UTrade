@@ -70,6 +70,24 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("ListarPorUsuario/{id}")]
+        public async Task<IActionResult> ListarPorUsuario(string id)
+        {
+            var rsp = new Respuesta<List<PublicacionesDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.ListarPorUsuario(id);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
         [Route("FotosPublicaciones/{id}")]
         public async Task<IActionResult> FotosPublicaciones(string id)
         {
