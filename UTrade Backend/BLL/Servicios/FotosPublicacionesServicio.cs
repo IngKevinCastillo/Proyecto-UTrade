@@ -59,6 +59,11 @@ namespace BLL.Servicios
         {
             try
             {
+                if (!string.IsNullOrEmpty(modelo.FotoBase64) && modelo.Foto == null)
+                {
+                    modelo.Foto = Convert.FromBase64String(modelo.FotoBase64);
+                }
+
                 var fotosPublicacionesCreada = await _fotosPublicacionesRepositorio.Crear(_mapper.Map<FotosPublicaciones>(modelo));
                 if (fotosPublicacionesCreada.Id == null)
                     throw new Exception("No se pudo crear");
@@ -74,11 +79,18 @@ namespace BLL.Servicios
         {
             try
             {
-                var fotosPublicacionesModelo = _mapper.Map<FotosPublicaciones>(modelo);
                 var fotosPublicacionesEncontrada = await _fotosPublicacionesRepositorio.Obtener(x => x.Id == modelo.Id);
                 if (fotosPublicacionesEncontrada == null)
                     throw new TaskCanceledException("La foto de la publicacion no existe");
-                fotosPublicacionesEncontrada.Foto = fotosPublicacionesModelo.Foto;
+                if (!string.IsNullOrEmpty(modelo.FotoBase64))
+                {
+                    fotosPublicacionesEncontrada.Foto = Convert.FromBase64String(modelo.FotoBase64);
+                }
+                else if (modelo.Foto != null)
+                {
+                    fotosPublicacionesEncontrada.Foto = modelo.Foto;
+                }
+
                 bool respuesta = await _fotosPublicacionesRepositorio.Editar(fotosPublicacionesEncontrada);
                 if (!respuesta)
                     throw new TaskCanceledException("No se pudo editar");
@@ -96,7 +108,7 @@ namespace BLL.Servicios
             {
                 var fotosPublicacionesEncontrada = await _fotosPublicacionesRepositorio.Obtener(x => x.Id == id);
                 if (fotosPublicacionesEncontrada == null)
-                    throw new TaskCanceledException("La categoria publicacion no existe");
+                    throw new TaskCanceledException("La foto de la publicacion no existe");
                 bool respuesta = await _fotosPublicacionesRepositorio.Eliminar(fotosPublicacionesEncontrada);
                 if (!respuesta)
                     throw new TaskCanceledException("No se pudo eliminar");
@@ -116,6 +128,33 @@ namespace BLL.Servicios
                 var listaFotosPublicaciones = queryFotosPublicaciones.ToList();
 
                 return _mapper.Map<List<FotosPublicacionesDTO>>(listaFotosPublicaciones);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<string> ObtenerIdNuevaFotoPublicacion()
+        {
+            try
+            {
+                var fotosPublicaciones = await _fotosPublicacionesRepositorio.Consultar();
+                var listaIds = fotosPublicaciones
+                    .ToList()
+                    .Select(f => f.Id)
+                    .Where(id => !string.IsNullOrEmpty(id) && id.StartsWith("FP"))
+                    .Select(id =>
+                    {
+                        var numeroStr = id.Substring(2);
+                        return int.TryParse(numeroStr, out int numero) ? numero : 0;
+                    })
+                    .ToList();
+
+                int maxNumero = listaIds.Any() ? listaIds.Max() : 0;
+                int nuevoNumero = maxNumero + 1;
+
+                return $"FP{nuevoNumero.ToString("D2")}";
             }
             catch
             {

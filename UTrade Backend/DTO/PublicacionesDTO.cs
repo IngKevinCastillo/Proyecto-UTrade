@@ -14,7 +14,7 @@ namespace DTO
 
         public DateTime FechaPublicacion { get; set; }
 
-        public string IdUsuario { get; set; }
+        public string IdUsuario { get; set; } 
 
         public decimal? Precio { get; set; }
 
@@ -27,6 +27,8 @@ namespace DTO
         public string? IdReseña { get; set; }
 
         public string? IdEstado { get; set; }
+
+        public string? Direccion { get; set; }
 
         public List<FotosPublicacionesDTO> fotosPublicaciones { get; set; }
 

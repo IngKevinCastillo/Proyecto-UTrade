@@ -12,18 +12,22 @@ export class AnuncioDatosComponent {
   @Input() username: string = '';
   @Input() userHandle: string = '';
   @Input() userAvatar: string = 'icons/no-photo.webp';
-  
+    
   @Input() title: string = '';
   @Input() price: string = '';
+  @Input() direccion: string = '';
   @Input() category: string = '';
   @Input() description: string = '';
-  
+    
   @Output() titleChange = new EventEmitter<string>();
   @Output() priceChange = new EventEmitter<string>();
   @Output() categoryChange = new EventEmitter<string>();
+  @Output() direccionChange = new EventEmitter<string>();
   @Output() descriptionChange = new EventEmitter<string>();
   @Output() closeClicked = new EventEmitter<void>();
   @Output() addPhotosClicked = new EventEmitter<void>();
+
+  @Output() validationChange = new EventEmitter<boolean>();
 
   constructor(
     private router: Router,
@@ -61,27 +65,46 @@ export class AnuncioDatosComponent {
       });
     }
   }
-  
+
+  private validarCampos(): void {
+    const esValido = this.title.trim() !== '' && 
+                     this.price.trim() !== '' && 
+                     this.direccion.trim() !== '' && 
+                     this.category !== '' && 
+                     this.fotos.length > 0;
+    
+    this.validationChange.emit(esValido);
+  }
+
   onTitleChange(value: string): void {
     this.title = value;
     this.titleChange.emit(value);
+    this.validarCampos();
   }
-  
+
   onPriceChange(value: string): void {
     this.price = value;
     this.priceChange.emit(value);
+    this.validarCampos();
   }
-  
+
+  onDireccionChange(value: string): void {
+    this.direccion = value;
+    this.direccionChange.emit(value);
+    this.validarCampos();
+  }
+
   onCategoryChange(value: string): void {
     this.category = value;
     this.categoryChange.emit(value);
+    this.validarCampos();
   }
-  
+
   onDescriptionChange(value: string): void {
     this.description = value;
     this.descriptionChange.emit(value);
   }
-  
+
   salir(): void {
     this.closeClicked.emit();
   }
@@ -95,7 +118,7 @@ export class AnuncioDatosComponent {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.agregarArchivos(input.files);
-      input.value = ''; 
+      input.value = '';
     }
   }
 
@@ -121,9 +144,19 @@ export class AnuncioDatosComponent {
     const nuevosArchivos = Array.from(fileList).slice(0, 4 - this.fotos.length);
     this.fotos = [...this.fotos, ...nuevosArchivos];
     this.fotosChange.emit(this.fotos);
+    this.validarCampos();
+  }
+
+  eliminarFoto(index: number): void {
+    this.fotos.splice(index, 1);
+    this.fotosChange.emit(this.fotos);
+    this.validarCampos();
+  }
+
+  getImageUrl(file: File): string {
+    return URL.createObjectURL(file);
   }
 
   @Input() fotos: File[] = [];
   @Output() fotosChange = new EventEmitter<File[]>();
-
 }

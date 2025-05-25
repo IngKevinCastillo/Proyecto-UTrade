@@ -7,7 +7,7 @@
         <app-user-profile [username]="username" [userHandle]="userHandle" [avatarUrl]="userAvatar"></app-user-profile>
         <div class="ms-2">
           <div>{{ previewUsername }}</div>
-          <small class="text-muted">Fecha / Tiempo transcurrido</small>
+          <small class="text-muted">{{ fechaActual }} / {{ tiempoTranscurrido }}</small>
         </div>
         <div class="ms-auto text-muted">
           <mat-icon>location_on</mat-icon> Ubicación
@@ -16,6 +16,7 @@
 
       <h5>{{ title || "Título" }}</h5>
       <h6>{{ price || "PRECIO" }} / {{ category || "CATEGORÍA" }}</h6>
+      <h6>{{direccion || "DIRECCION"}}</h6>
       <p class="text-muted">{{ description || "Descripción" }}</p>
 
       <div class="row mb-3">
@@ -41,6 +42,16 @@
   </mat-card>
 
   <div class="d-flex justify-content-end mt-3">
-    <button mat-raised-button color="accent" (click)="publicar()">Publicar</button>
+    <button mat-raised-button color="accent" [disabled]="!puedePublicar" (click)="publicar()"
+      [title]="!puedePublicar ? 'Completa todos los campos requeridos y agrega al menos 1 foto' : 'Publicar anuncio'">
+      Publicar
+    </button>
+  </div>
+
+  <div *ngIf="!puedePublicar" class="mt-2">
+    <small class="text-danger">
+      <mat-icon style="font-size: 16px; vertical-align: middle;">info</mat-icon>
+      Completa todos los campos requeridos (*) y agrega al menos 1 foto para publicar
+    </small>
   </div>
 </div>

@@ -140,5 +140,23 @@ namespace API.Controllers
             }
             return Ok(rsp);
         }
+
+        [HttpGet]
+        [Route("ObtenerIdNuevaPublicacion")]
+        public async Task<IActionResult> ObtenerIdNuevaPublicacion()
+        {
+            var rsp = new Respuesta<string>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.ObtenerIdNuevaPublicacion();
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
     }
 }

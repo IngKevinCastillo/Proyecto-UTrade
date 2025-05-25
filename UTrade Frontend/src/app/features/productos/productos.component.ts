@@ -13,6 +13,8 @@ import { forkJoin } from 'rxjs';
 import { EstadosService } from '../../Services/estados.service';
 import { Estados } from '../../interfaces/estados';
 import { ToastrService } from 'ngx-toastr';
+import { FotosPublicacionesService } from '../../Services/fotos-publicaciones.service';
+import { FotosPublicacion } from '../../interfaces/fotos-publicacion';
 
 interface ProductoExtendido extends Publicaciones {
   verMas: boolean;
@@ -51,7 +53,8 @@ export class ProductosComponent implements OnChanges, OnInit {
     private _personaServicio: PersonaService,
     private _productoServicio: ProductoService,
     private _estadosServicio: EstadosService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _fotosPublicacionesServicio: FotosPublicacionesService
   ) { 
     this.formularioPublicaciones = this.fb.group({
       id: ["", Validators.required],
@@ -216,7 +219,7 @@ export class ProductosComponent implements OnChanges, OnInit {
       const _estado_ = this.listaEstados.find(c => c.id == producto.idEstado);
       const cuotaProducto = producto.idCategoria === "CAT01" ? ' / MES' : '';
       
-      return {
+      const productoExtendido: ProductoExtendido = {
         ...producto,
         verMas: false,
         nombreUsuario: persona?.nombreUsuario || 'Usuario desconocido',
@@ -225,9 +228,14 @@ export class ProductosComponent implements OnChanges, OnInit {
         estado: _estado_?.nombre || 'Sin estado',
         fechaFormateada: this.formatearFecha(producto.fechaPublicacion),
         tiempoTranscurrido: this.calcularTiempoTranscurrido(producto.fechaPublicacion),
-        imagenes: this.procesarImagenes(producto.descripcion),
+        imagenes: [
+          "icons/Image-not-found.png"
+        ], 
         cuota: cuotaProducto 
       };
+      this.cargarImagenesProducto(producto.id, productoExtendido);
+      
+      return productoExtendido;
     });
   }
 
@@ -252,38 +260,59 @@ export class ProductosComponent implements OnChanges, OnInit {
   calcularTiempoTranscurrido(fecha: string): string {
     const ahora = new Date();
     const fechaPublicacion = new Date(fecha);
-    
-    // Compensar zona horaria para ambas fechas
-    const offsetAhora = ahora.getTimezoneOffset() * 60000;
-    const offsetFecha = fechaPublicacion.getTimezoneOffset() * 60000;
-    
-    const ahoraLocal = new Date(ahora.getTime() - offsetAhora);
-    const fechaLocal = new Date(fechaPublicacion.getTime() - offsetFecha);
-    
-    const diferencia = ahoraLocal.getTime() - fechaLocal.getTime();
+    const diferencia = ahora.getTime() - fechaPublicacion.getTime();
+    if (diferencia < 0) {
+      return 'Ahora';
+    }
     
     const minutos = Math.floor(diferencia / (1000 * 60));
     const horas = Math.floor(diferencia / (1000 * 60 * 60));
     const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    const meses = Math.floor(dias / 30); 
+    const años = Math.floor(dias / 365); 
     
-    if (minutos < 60) {
-      return `${minutos}m`;
-    } else if (horas < 24) {
-      return `${horas}h`;
-    } else if (dias < 7) {
-      return `${dias}d`;
+    if (años >= 1) {
+      return años === 1 ? '1 año' : `${años} años`;
+    } else if (meses >= 1) {
+      return meses === 1 ? '1 mes' : `${meses} meses`;
+    } else if (dias >= 1) {
+      return dias === 1 ? '1d' : `${dias}d`;
+    } else if (horas >= 1) {
+      return horas === 1 ? '1h' : `${horas}h`;
+    } else if (minutos >= 1) {
+      return minutos === 1 ? '1m' : `${minutos}m`;
     } else {
-      const semanas = Math.floor(dias / 7);
-      return `${semanas}sem`;
+      return 'Ahora';
     }
   }
 
-  procesarImagenes(descripcion?: string): string[] {
-    return [
-      "icons/cuarto1.png",
-      "icons/cuarto2.jpg",
-      "icons/cuarto3.jpg"
-    ];
+  cargarImagenesProducto(idProducto: string | undefined, producto: ProductoExtendido): void {
+    if (idProducto != null) {
+      this._fotosPublicacionesServicio.buscarFotosPublicacion(idProducto).subscribe({
+        next: (res: any) => {
+          if (res?.estado && res?.valor) {
+            const datos = res.valor;
+            if (Array.isArray(datos) && datos.length > 0) {
+              producto.imagenes = datos.map((foto: FotosPublicacion) => 
+                foto.fotoBase64 && foto.fotoBase64.trim() !== ''
+                  ? 'data:image/jpeg;base64,' + foto.fotoBase64
+                  : 'icons/no-photo.webp'
+              );
+            } else {
+              producto.imagenes = [
+                "icons/Image-not-found.png"
+              ];
+            }
+          }
+        },
+        error: (error) => {
+          console.error('Error cargando imágenes del producto:', error);
+          producto.imagenes = [
+            "icons/Image-not-found.png"
+          ];
+        }
+      });
+    }
   }
 
   reportarProducto(producto: Publicaciones): void {
@@ -316,8 +345,10 @@ export class ProductosComponent implements OnChanges, OnInit {
     this.verDetalles(producto);
   }
 
-  getPreviewUrls(fotos: string[], verMas: boolean): string[] {
-    if (!fotos || fotos.length === 0) return [];
+  getPreviewUrls(fotos: string[] | undefined, verMas: boolean): string[] {
+    if (!fotos || fotos.length === 0) {
+      return ["icons/Image-not-found.png"]; 
+    }
     return verMas ? fotos : fotos.slice(0, 3);
   }
 

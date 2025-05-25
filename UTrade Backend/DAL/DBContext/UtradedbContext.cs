@@ -229,10 +229,7 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
-            entity.Property(e => e.Foto)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("foto");
+            entity.Property(e => e.Foto).HasColumnName("foto");
             entity.Property(e => e.IdPublicacion)
                 .HasMaxLength(50)
                 .HasColumnName("idPublicacion");
@@ -401,6 +398,10 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.Descripcion)
                 .HasColumnType("text")
                 .HasColumnName("descripcion");
+            entity.Property(e => e.Direccion)
+                .HasMaxLength(100)
+                .IsFixedLength()
+                .HasColumnName("direccion");
             entity.Property(e => e.FechaPublicacion)
                 .HasColumnType("datetime")
                 .HasColumnName("fechaPublicacion");

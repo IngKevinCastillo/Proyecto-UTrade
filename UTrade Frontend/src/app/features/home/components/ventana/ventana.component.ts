@@ -14,9 +14,11 @@ export class VentanaComponent implements OnInit {
   title: string = '';
   price: string = '';
   category: string = '';
+  direccion: string = '';
   description: string = '';
 
-  fotos: File[] = []; 
+  fotos: File[] = [];
+  esValido: boolean = false; 
 
   constructor(
     public dialogRef: MatDialogRef<VentanaComponent>,
@@ -31,8 +33,13 @@ export class VentanaComponent implements OnInit {
       if (this.data.title) this.title = this.data.title;
       if (this.data.price) this.price = this.data.price;
       if (this.data.category) this.category = this.data.category;
+      if (this.data.direccion) this.direccion = this.data.direccion;
       if (this.data.description) this.description = this.data.description;
     }
+  }
+
+  onValidationChange(esValido: boolean): void {
+    this.esValido = esValido;
   }
 
   salir(): void {
