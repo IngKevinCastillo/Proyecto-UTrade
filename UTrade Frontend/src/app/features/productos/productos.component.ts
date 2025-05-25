@@ -260,28 +260,29 @@ export class ProductosComponent implements OnChanges, OnInit {
   calcularTiempoTranscurrido(fecha: string): string {
     const ahora = new Date();
     const fechaPublicacion = new Date(fecha);
-    
-    const offsetAhora = ahora.getTimezoneOffset() * 60000;
-    const offsetFecha = fechaPublicacion.getTimezoneOffset() * 60000;
-    
-    const ahoraLocal = new Date(ahora.getTime() - offsetAhora);
-    const fechaLocal = new Date(fechaPublicacion.getTime() - offsetFecha);
-    
-    const diferencia = ahoraLocal.getTime() - fechaLocal.getTime();
+    const diferencia = ahora.getTime() - fechaPublicacion.getTime();
+    if (diferencia < 0) {
+      return 'Ahora';
+    }
     
     const minutos = Math.floor(diferencia / (1000 * 60));
     const horas = Math.floor(diferencia / (1000 * 60 * 60));
     const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    const meses = Math.floor(dias / 30); 
+    const años = Math.floor(dias / 365); 
     
-    if (minutos < 60) {
-      return `${minutos}m`;
-    } else if (horas < 24) {
-      return `${horas}h`;
-    } else if (dias < 7) {
-      return `${dias}d`;
+    if (años >= 1) {
+      return años === 1 ? '1 año' : `${años} años`;
+    } else if (meses >= 1) {
+      return meses === 1 ? '1 mes' : `${meses} meses`;
+    } else if (dias >= 1) {
+      return dias === 1 ? '1d' : `${dias}d`;
+    } else if (horas >= 1) {
+      return horas === 1 ? '1h' : `${horas}h`;
+    } else if (minutos >= 1) {
+      return minutos === 1 ? '1m' : `${minutos}m`;
     } else {
-      const semanas = Math.floor(dias / 7);
-      return `${semanas}sem`;
+      return 'Ahora';
     }
   }
 

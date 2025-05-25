@@ -6,7 +6,7 @@ import { VentanaComponent } from '../ventana/ventana.component';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ConexionBackendService } from '../../../../Services/conexion-backend.service';
-import { ProductoService } from '../../../../Services/producto.service'; // Cambiado el nombre del servicio
+import { ProductoService } from '../../../../Services/producto.service';
 import { Publicaciones } from '../../../../interfaces/publicaciones';
 import { FotosPublicacion } from '../../../../interfaces/fotos-publicacion';
 import { FotosPublicacionesService } from '../../../../Services/fotos-publicaciones.service';
@@ -32,6 +32,8 @@ export class AnuncioPreviewComponent implements OnInit {
 
   fechaActual: string = '';
   tiempoTranscurrido: string = 'Ahora';
+
+  private fotosRestantes: File[] = [];
 
   constructor(
     private toastr: ToastrService,
@@ -78,10 +80,15 @@ export class AnuncioPreviewComponent implements OnInit {
 
   establecerFechaActual(): void {
     const fecha = new Date();
-    const dia = fecha.getDate().toString().padStart(2, '0');
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    
     const año = fecha.getFullYear();
-    this.fechaActual = `${dia}/${mes}/${año}`;
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const horas = fecha.getHours().toString().padStart(2, '0');
+    const minutos = fecha.getMinutes().toString().padStart(2, '0');
+    const segundos = fecha.getSeconds().toString().padStart(2, '0');
+    
+    this.fechaActual = `${año}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
   }
 
   actualizarTiempoTranscurrido(tiempo: string): void {
@@ -143,10 +150,11 @@ export class AnuncioPreviewComponent implements OnInit {
       }
       return '';
     } catch (error) {
-      console.error('Error al obtener nuevo ID de publicación:', error);
+      console.error('Error al obtener nuevo ID de foto:', error);
       return '';
     }
   }
+
   async cargarDatos(): Promise<Publicaciones> {
     const usuario = JSON.parse(localStorage.getItem('usuario')!);
     const id = usuario?.idUsuario;
@@ -154,9 +162,11 @@ export class AnuncioPreviewComponent implements OnInit {
     this.idNuevo = await this.obtenerIdNuevoPublicacion();
     const categoriaId = this.category === 'Rentas' ? 'CAT01' : this.category === 'Compras' ? 'CAT02' : '';
 
+    this.fotosRestantes = this.fotos.slice(1);
 
-    for (const foto of this.fotos) {
-      const fotoBase64 = await this.convertirFotoABase64(foto);
+    if (this.fotos.length > 0) {
+      const primeraFoto = this.fotos[0];
+      const fotoBase64 = await this.convertirFotoABase64(primeraFoto);
       fotosBase64.push({
         id: await this.obtenerIdNuevofoto(), 
         foto: fotoBase64,
@@ -168,7 +178,7 @@ export class AnuncioPreviewComponent implements OnInit {
     const fechaActualISO = new Date().toISOString();
     
     const publicacion: Publicaciones = {
-      id:  this.idNuevo, 
+      id: this.idNuevo, 
       titulo: this.title,
       fechaPublicacion: fechaActualISO,
       idUsuario: usuario?.idUsuario || '',
@@ -183,6 +193,37 @@ export class AnuncioPreviewComponent implements OnInit {
     return publicacion;
   }
 
+  private async guardarFotosRestantes(): Promise<void> {
+    if (this.fotosRestantes.length === 0) {
+      return;
+    }
+
+    // console.log(`Guardando ${this.fotosRestantes.length} fotos adicionales...`);
+
+    for (let i = 0; i < this.fotosRestantes.length; i++) {
+      try {
+        const foto = this.fotosRestantes[i];
+        const fotoBase64 = await this.convertirFotoABase64(foto);
+        const nuevoIdFoto = await this.obtenerIdNuevofoto();
+
+        const fotoPublicacion: FotosPublicacion = {
+          id: nuevoIdFoto,
+          foto: fotoBase64,
+          fotoBase64: fotoBase64,
+          idPublicacion: this.idNuevo
+        };
+
+        await this._fotosPublicacionServicio.guardar(fotoPublicacion).toPromise();
+
+      } catch (error) {
+        console.error(`Error al guardar la foto ${i + 1}:`, error);
+        this.toastr.warning(`Error al guardar una de las fotos adicionales`, 'Advertencia');
+      }
+    }
+
+    this.toastr.success('Todas las fotos adicionales han sido procesadas', 'Completado');
+  }
+
   async publicar(): Promise<void> {
     if (!this.puedePublicar) {
       this.toastr.error('Por favor completa todos los campos requeridos y agrega al menos 1 foto', 'Error');
@@ -191,29 +232,21 @@ export class AnuncioPreviewComponent implements OnInit {
 
     try {
       const publicacionData = await this.cargarDatos();
-
-      this.toastr.info(`
-        <b>ID:</b> ${publicacionData.id} <br>
-        <b>IdUsuario:</b> ${publicacionData.idUsuario} <br>
-        <b>Título:</b> ${publicacionData.titulo} <br>
-        <b>Precio:</b> ${publicacionData.precio} <br>
-        <b>Fecha:</b> ${publicacionData.fechaPublicacion} <br>
-        <b>Categoría:</b> ${publicacionData.idCategoria} <br>
-        <b>Descripción:</b> ${publicacionData.descripcion} <br>
-        <b>Dirección:</b> ${publicacionData.direccion} <br>
-        <b>Ubicación:</b> ${publicacionData.ubicacion} <br>
-        <b>Estado:</b> ${publicacionData.idEstado} <br>
-        <b>Fotos:</b> ${publicacionData.fotosPublicaciones?.length}
-        `, 'Información', { enableHtml: true })
       
       this._publicacionServicio.guardar(publicacionData).subscribe({
-        next: (response) => {
+        next: async (response) => {
           if (response.estado) {
             this.toastr.success('Anuncio <b>publicado</b> con éxito', 'Éxito');
+            
+            if (this.fotosRestantes.length > 0) {
+              await this.guardarFotosRestantes();
+              // this.toastr.success(`Se guardaron ${this.fotosRestantes.length} fotos adicionales`, 'Completado');
+            }
+            
             this.dialogRef.close(true);
           } else {
             console.log(response.msg);
-            this.toastr.error(response.msg || 'Error al publicar el anuncio'+ response.msg, 'Error');
+            this.toastr.error(response.msg || 'Error al publicar el anuncio' + response.msg, 'Error');
           }
         },
         error: (error) => {
