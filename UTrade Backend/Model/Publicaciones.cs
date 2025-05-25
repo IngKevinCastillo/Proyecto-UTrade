@@ -25,6 +25,8 @@ public partial class Publicaciones
 
     public string? IdEstado { get; set; }
 
+    public string? Direccion { get; set; }
+
     public virtual ICollection<Favoritos> Favoritos { get; set; } = new List<Favoritos>();
 
     public virtual ICollection<FotosPublicaciones> FotosPublicaciones { get; set; } = new List<FotosPublicaciones>();

@@ -14,10 +14,10 @@ namespace BLL.Servicios
     public class PublicacionesServicio : IPublicacionesServicio
     {
         private readonly IRepositorioGenerico<Publicaciones> _publicacionesRepositorio;
-        private readonly IMapper _mapper; 
+        private readonly IMapper _mapper;
         private readonly IFotosPublicacionesServicio _fotosPublicacionesServicio;
 
-        public PublicacionesServicio(IRepositorioGenerico<Publicaciones> publicacionesRepositorio,IFotosPublicacionesServicio fotosPublicacionesServicio,IMapper mapper)
+        public PublicacionesServicio(IRepositorioGenerico<Publicaciones> publicacionesRepositorio, IFotosPublicacionesServicio fotosPublicacionesServicio, IMapper mapper)
         {
             _publicacionesRepositorio = publicacionesRepositorio;
             _fotosPublicacionesServicio = fotosPublicacionesServicio;
@@ -69,6 +69,7 @@ namespace BLL.Servicios
                 publicacionEncontrada.IdCategoria = publicacionModelo.IdCategoria;
                 publicacionEncontrada.Descripcion = publicacionModelo.Descripcion;
                 publicacionEncontrada.Ubicacion = publicacionModelo.Ubicacion;
+                publicacionEncontrada.Direccion = publicacionModelo?.Direccion;
                 bool respuesta = await _publicacionesRepositorio.Editar(publicacionEncontrada);
                 if (!respuesta)
                     throw new TaskCanceledException("No se pudo editar");
@@ -154,5 +155,31 @@ namespace BLL.Servicios
             }
         }
 
+        public async Task<string> ObtenerIdNuevaPublicacion()
+        {
+            try
+            {
+                var publicaciones = await _publicacionesRepositorio.Consultar();
+                var listaIds = publicaciones
+                    .ToList()
+                    .Select(p => p.Id)
+                    .Where(id => !string.IsNullOrEmpty(id) && id.StartsWith("PUB"))
+                    .Select(id =>
+                    {
+                        var numeroStr = id.Substring(3);
+                        return int.TryParse(numeroStr, out int numero) ? numero : 0;
+                    })
+                    .ToList();
+
+                int maxNumero = listaIds.Any() ? listaIds.Max() : 0;
+                int nuevoNumero = maxNumero + 1;
+
+                return $"PUB{nuevoNumero.ToString("D2")}"; 
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

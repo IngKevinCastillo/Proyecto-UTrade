@@ -43,7 +43,17 @@ namespace Utility
             #endregion
 
             #region FotosPublicaciones
-            CreateMap<FotosPublicaciones, FotosPublicacionesDTO>().ReverseMap();
+            // De entidad a DTO
+            CreateMap<FotosPublicaciones, FotosPublicacionesDTO>()
+                .ForMember(dest => dest.FotoBase64, opt => opt.MapFrom(src =>
+                    src.Foto != null ? Convert.ToBase64String(src.Foto) : null
+                ));
+
+            // De DTO a entidad
+            CreateMap<FotosPublicacionesDTO, FotosPublicaciones>()
+                .ForMember(dest => dest.Foto, opt => opt.MapFrom(src =>
+                    !string.IsNullOrEmpty(src.FotoBase64) ? Convert.FromBase64String(src.FotoBase64) : src.Foto
+                ));
             #endregion
 
             #region Mensajes

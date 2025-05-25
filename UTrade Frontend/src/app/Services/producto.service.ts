@@ -39,4 +39,8 @@ export class ProductoService {
   listarPorCategoria(idCategoria: string): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(`${this.urlApi}ListarPorCategoria/${idCategoria}`);
   }
+
+  ObtenerIdNuevaPublicacion(): Observable<RespuestaAPI>{
+    return this.http.get<RespuestaAPI>(`${this.urlApi}ObtenerIdNuevaPublicacion`);
+  }
 }

@@ -10,7 +10,9 @@ namespace DTO
     {
         public string Id { get; set; }
 
-        public string Foto { get; set; }
+        public byte[] Foto { get; set; }
+
+        public string? FotoBase64 { get; set; }
 
         public string IdPublicacion { get; set; }
     }

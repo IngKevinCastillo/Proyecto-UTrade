@@ -39,4 +39,8 @@ export class FotosPublicacionesService {
   buscarFotosPublicacion(id: string): Observable<RespuestaAPI>{
     return this.http.get<RespuestaAPI>(`${this.urlApi}BuscarFotosPublicacion/${id}`);
   }
+
+  ObtenerIdNuevaFotoPublicacion(): Observable<RespuestaAPI>{
+    return this.http.get<RespuestaAPI>(`${this.urlApi}ObtenerIdNuevaFotoPublicacion`);
+  }
 }

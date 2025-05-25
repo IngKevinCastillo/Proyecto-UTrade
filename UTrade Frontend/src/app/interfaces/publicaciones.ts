@@ -1,9 +1,9 @@
-import { FotosPublicacion } from "./fotos-publicacion"; 
+import { FotosPublicacion } from "./fotos-publicacion";
 
 export interface Publicaciones {
   id: string;
   titulo: string;
-  fechaPublicacion: string; 
+  fechaPublicacion: string;
   idUsuario: string;
   precio?: number;
   idCategoria?: string;
@@ -11,5 +11,6 @@ export interface Publicaciones {
   ubicacion?: string;
   idReseña?: string;
   idEstado: string;
-  fotosPublicaciones?: FotosPublicacion[]; 
+  direccion: string,
+  fotosPublicaciones?: FotosPublicacion[];
 }

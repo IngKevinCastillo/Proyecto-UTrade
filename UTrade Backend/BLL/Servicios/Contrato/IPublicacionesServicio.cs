@@ -16,5 +16,6 @@ namespace BLL.Servicios.Contrato
         Task<bool> Eliminar(string id);
         Task<List<PublicacionesDTO>> ListarPorCategoria(string idCategoria);
         Task<List<FotosPublicacionesDTO>> FotosPublicaciones(string idPublicacion);
+        Task<string> ObtenerIdNuevaPublicacion();
     }
 }

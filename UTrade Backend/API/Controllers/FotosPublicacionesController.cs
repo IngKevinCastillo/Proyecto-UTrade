@@ -1,9 +1,8 @@
-﻿using API.Utilidad;
-using BLL.Servicios;
-using BLL.Servicios.Contrato;
+﻿using BLL.Servicios.Contrato;
 using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using API.Utilidad;
 
 namespace API.Controllers
 {
@@ -62,6 +61,24 @@ namespace API.Controllers
             {
                 rsp.estado = true;
                 rsp.Valor = await _fotosPublicacionesServicio.BuscarFotosPublicacion(id);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
+        [Route("ObtenerIdNuevaFotoPublicacion")]
+        public async Task<IActionResult> ObtenerIdNuevaFotoPublicacion()
+        {
+            var rsp = new Respuesta<string>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _fotosPublicacionesServicio.ObtenerIdNuevaFotoPublicacion();
             }
             catch (Exception ex)
             {
