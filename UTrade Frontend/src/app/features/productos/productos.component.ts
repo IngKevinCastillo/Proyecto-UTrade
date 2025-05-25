@@ -229,9 +229,6 @@ export class ProductosComponent implements OnChanges, OnInit {
         fechaFormateada: this.formatearFecha(producto.fechaPublicacion),
         tiempoTranscurrido: this.calcularTiempoTranscurrido(producto.fechaPublicacion),
         imagenes: [
-          "icons/Image-not-found.png",
-          "icons/Image-not-found.png",
-          "icons/Image-not-found.png",
           "icons/Image-not-found.png"
         ], 
         cuota: cuotaProducto 
@@ -302,9 +299,6 @@ export class ProductosComponent implements OnChanges, OnInit {
               );
             } else {
               producto.imagenes = [
-                "icons/Image-not-found.png",
-                "icons/Image-not-found.png",
-                "icons/Image-not-found.png",
                 "icons/Image-not-found.png"
               ];
             }
@@ -313,9 +307,6 @@ export class ProductosComponent implements OnChanges, OnInit {
         error: (error) => {
           console.error('Error cargando imágenes del producto:', error);
           producto.imagenes = [
-            "icons/Image-not-found.png",
-            "icons/Image-not-found.png",
-            "icons/Image-not-found.png",
             "icons/Image-not-found.png"
           ];
         }
