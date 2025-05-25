@@ -42,7 +42,7 @@ namespace BLL.Servicios
             try
             {
                 var chat = _mapper.Map<Chat>(modelo);
-                chat.Id = "CH00001";
+                chat.Id = await GenerarId();
                 chat.FechaCreacion = DateTime.Now;
 
                 var chatCreado = await _chatRepositorio.Crear(chat);
@@ -106,5 +106,49 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public async Task<string> GenerarId()
+        {
+            var chats = await _chatRepositorio.Consultar();
+
+            var numerosExistentes = chats
+                .Where(c => c.Id != null && c.Id.StartsWith("CH"))
+                .AsEnumerable()
+                .Select(c =>
+                {
+                    var parteNumero = c.Id.Substring(2);
+                    return int.TryParse(parteNumero, out int numero) ? numero : 0;
+                });
+
+            int maxNumero = numerosExistentes.Any() ? numerosExistentes.Max() : 0;
+
+            int nuevoNumero = maxNumero + 1;
+
+            string nuevoId = $"CH{nuevoNumero.ToString("D5")}";
+
+            return nuevoId;
+        }
+
+        public async Task<string?> VerificarExistenciaChat(string idUsuario1, string idUsuario2)
+        {
+            try
+            {
+                if (idUsuario1 == idUsuario2)
+                    return null;
+                var chats = await _chatRepositorio.Consultar(x =>
+                    (x.Usuario1Id == idUsuario1 && x.Usuario2Id == idUsuario2) ||
+                    (x.Usuario1Id == idUsuario2 && x.Usuario2Id == idUsuario1));
+
+                var chatExistente = chats.FirstOrDefault();
+
+                return chatExistente?.Id;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
     }
 }

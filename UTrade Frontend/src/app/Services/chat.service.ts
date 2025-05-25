@@ -39,4 +39,13 @@ export class ChatService {
       `${this.conexionBackend.baseUrl}/Chat/ListarPorIdPersona/${id}`
     );
   }
+
+  verificarExistenciaChat(
+    idUsuario1: string,
+    idUsuario2: string
+  ): Observable<any> {
+    return this.http.get(
+      `${this.conexionBackend.baseUrl}/Chat/VerificarExistenciaChat/${idUsuario1}/${idUsuario2}`
+    );
+  }
 }

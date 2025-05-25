@@ -101,5 +101,23 @@ namespace API.Controllers
             }
             return Ok(rsp);
         }
+
+        [HttpGet]
+        [Route("VerificarExistenciaChat/{idUsuario1}/{idUsuario2}")]
+        public async Task<IActionResult> VerificarExistenciaChat(string idUsuario1, string idUsuario2)
+        {
+            var rsp = new Respuesta<string>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _chatServicio.VerificarExistenciaChat(idUsuario1, idUsuario2) ?? string.Empty;
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
     }
 }
