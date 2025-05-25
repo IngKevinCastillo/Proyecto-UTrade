@@ -10,8 +10,9 @@ namespace BLL.Servicios.Contrato
     public interface IChatServicio
     {
         Task<List<ChatDTO>> Listar();
-        Task<ChatDTO> Crear(ChatDTO modelo);
+        Task<ChatDTO> Crear(CrearChatDTO modelo);
         Task<ChatDTO> Buscar(string id);
         Task<bool> Eliminar(string id);
+        Task<List<ChatDTO>> ListarPorIdPersona(string idUsuario);
     }
 }

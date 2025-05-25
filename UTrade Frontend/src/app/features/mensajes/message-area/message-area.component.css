@@ -6,6 +6,7 @@
 
 .chat-header {
   background-color: white;
+  flex-shrink: 0;
 }
 
 .messages-list {
@@ -16,4 +17,10 @@
 
 .message-input-container {
   background-color: white;
+  flex-shrink: 0;
+}
+
+.emoji-picker-wrapper {
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }

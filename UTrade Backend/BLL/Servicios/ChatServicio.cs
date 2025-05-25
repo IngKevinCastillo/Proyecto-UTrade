@@ -37,13 +37,19 @@ namespace BLL.Servicios
             }
         }
 
-        public async Task<ChatDTO> Crear(ChatDTO modelo)
+        public async Task<ChatDTO> Crear(CrearChatDTO modelo)
         {
             try
             {
-                var chatCreado = await _chatRepositorio.Crear(_mapper.Map<Chat>(modelo));
+                var chat = _mapper.Map<Chat>(modelo);
+                chat.Id = "CH00001";
+                chat.FechaCreacion = DateTime.Now;
+
+                var chatCreado = await _chatRepositorio.Crear(chat);
+
                 if (chatCreado.Id == null)
                     throw new Exception("No se pudo crear");
+
                 return _mapper.Map<ChatDTO>(chatCreado);
             }
             catch
@@ -51,6 +57,7 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
 
         public async Task<bool> Eliminar(string id)
         {
@@ -75,6 +82,21 @@ namespace BLL.Servicios
             try
             {
                 var queryChat = await _chatRepositorio.Consultar();
+                if (queryChat == null)
+                    throw new TaskCanceledException("No hay chats");
+                return _mapper.Map<List<ChatDTO>>(queryChat.ToList());
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<ChatDTO>> ListarPorIdPersona(string idUsuario)
+        {
+            try
+            {
+                var queryChat = await _chatRepositorio.Consultar(x => x.Usuario1Id == idUsuario || x.Usuario2Id == idUsuario);
                 if (queryChat == null)
                     throw new TaskCanceledException("No hay chats");
                 return _mapper.Map<List<ChatDTO>>(queryChat.ToList());
