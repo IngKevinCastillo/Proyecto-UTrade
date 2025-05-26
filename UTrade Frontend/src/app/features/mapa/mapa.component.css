@@ -1,0 +1,49 @@
+.google-map {
+  height: 500px;
+  width: 100%;
+  background-color: #f8f9fa;
+  border-radius: 0 0 0.375rem 0.375rem;
+}
+
+.map-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.card {
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.card-header {
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .google-map {
+    height: 400px;
+  }
+
+  .card-body {
+    padding: 0 !important;
+  }
+
+  .p-3 {
+    padding: 1rem !important;
+  }
+}

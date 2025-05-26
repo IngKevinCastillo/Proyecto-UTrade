@@ -53,7 +53,7 @@ export class ResenasComponent {
       id: 3,
       nombreUsuario: 'Ana Martínez',
       fotoPerfilUrl:
-        'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face',
+        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
       puntuacion: 5,
       comentario:
         'Increíble calidad y rapidez en la entrega. El servicio al cliente es excepcional y el producto exactamente como se describe. Definitivamente volveré a comprar aquí.',
