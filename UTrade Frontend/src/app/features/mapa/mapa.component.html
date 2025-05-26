@@ -1,3 +1,57 @@
-<div class="container-fluid my-3">
-    <p>mapa works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="card-title mb-0">
+            <i class="fas fa-map-marker-alt me-2"></i>
+            Mapa Interactivo
+          </h4>
+        </div>
+
+        <div class="card-body p-0">
+          <div class="p-3 bg-light border-bottom">
+            <div class="row g-2">
+              <div class="col-md-6">
+                <button
+                  class="btn btn-success btn-sm w-100"
+                  (click)="getCurrentLocation()"
+                >
+                  <i class="fas fa-location-arrow me-1"></i> Mi Ubicación
+                </button>
+              </div>
+              <div class="col-md-6">
+                <button
+                  class="btn btn-outline-primary btn-sm w-100"
+                  (click)="centerMap(19.4326, -99.1332)"
+                >
+                  <i class="fas fa-home me-1"></i> Ubicación por Defecto
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="position-relative">
+            <div id="map" class="google-map"></div>
+
+            <div
+              class="map-loading d-flex align-items-center justify-content-center"
+              [class.d-none]="!loading"
+            >
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando mapa...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer text-muted">
+          <small>
+            <i class="fas fa-info-circle me-1"></i>
+            Haz clic en los marcadores para ver más información
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

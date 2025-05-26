@@ -7,13 +7,16 @@
                         alt="Avatar" />
                     <div>
                         <div class="fw-bold">{{ producto.nombreUsuario }}</div>
-                        <small class="text-muted">{{ producto.fechaFormateada }} || {{ producto.tiempoTranscurrido
-                            }}</small>
+                        <small class="text-muted">
+                            {{ producto.fechaFormateada }} || {{ producto.tiempoTranscurrido }}
+                        </small>
                     </div>
                 </div>
 
                 <h4 class="fw-bold">{{ producto.titulo }}</h4>
-                <h5 class="fw-bold text-primary">$ {{ producto.precio }} COP{{ producto.cuota }}</h5>
+                <h5 class="fw-bold text-primary">
+                    $ {{ producto.precio }} COP{{ producto.cuota }}
+                </h5>
 
                 <p class="text-muted">
                     {{ producto.descripcion }}
@@ -21,7 +24,9 @@
 
                 <div class="d-flex align-items-center mt-2">
                     <button mat-icon-button><mat-icon>favorite_border</mat-icon></button>
-                    <button mat-icon-button><mat-icon>message</mat-icon></button>
+                    <button mat-icon-button (click)="navegarAResenas()">
+                        <mat-icon>message</mat-icon>
+                    </button>
                     <button mat-icon-button><mat-icon>share</mat-icon></button>
                 </div>
             </div>
@@ -32,11 +37,10 @@
                 </div>
                 <div class="w-100">
                     <div class="images-container" [ngClass]="{
-                           'single-image': getPreviewUrls(producto.imagenes || [], producto.verMas).length === 1,
-                           'two-images': getPreviewUrls(producto.imagenes || [], producto.verMas).length === 2,
-                           'three-images': getPreviewUrls(producto.imagenes || [], producto.verMas).length >= 3
-                         }">
-
+                'single-image': getPreviewUrls(producto.imagenes || [], producto.verMas).length === 1,
+                'two-images': getPreviewUrls(producto.imagenes || [], producto.verMas).length === 2,
+                'three-images': getPreviewUrls(producto.imagenes || [], producto.verMas).length >= 3
+              }">
                         <div class="image-item main-image"
                             *ngIf="getPreviewUrls(producto.imagenes || [], producto.verMas).length > 0">
                             <img [src]="getPreviewUrls(producto.imagenes || [], producto.verMas)[0]"
@@ -45,7 +49,6 @@
 
                         <div class="secondary-images"
                             *ngIf="getPreviewUrls(producto.imagenes || [], producto.verMas).length > 1">
-
                             <div class="image-item secondary-image">
                                 <img [src]="getPreviewUrls(producto.imagenes || [], producto.verMas)[1]"
                                     class="rounded image-responsive" />
@@ -68,8 +71,16 @@
                         (click)="toggleVerMas(producto)">
                         {{ producto.verMas ? 'Ver menos' : 'Ver más' }}
                     </button>
+
+                    <button mat-stroked-button color="primary"
+                        class="rounded-pill px-4 py-1 fw-semibold d-flex align-items-center justify-content-center"
+                        (click)="solicitar(producto)">
+                        <mat-icon>sms</mat-icon>
+                        <span>Solicitar</span>
+                    </button>
                 </div>
             </div>
         </div>
     </mat-card-content>
 </mat-card>
+  

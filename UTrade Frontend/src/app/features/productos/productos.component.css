@@ -1,69 +1,69 @@
 .iconReport {
-    font-size: 24px;
-    color: #2c248b;
+  font-size: 24px;
+  color: #2c248b;
 }
 
 .images-container {
-    display: flex;
-    gap: 8px;
-    height: 180px;
+  display: flex;
+  gap: 8px;
+  height: 180px;
 }
 
 .image-responsive {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .single-image {
-    justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .single-image .main-image {
-    flex: 0 0 60%;
-    max-width: 60%;
+  flex: 0 0 60%;
+  max-width: 60%;
 }
 
 .two-images .main-image {
-    flex: 1;
+  flex: 1;
 }
 
 .two-images .secondary-images {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .two-images .secondary-image {
-    height: 100%;
+  height: 100%;
 }
 
 .three-images .main-image {
-    flex: 1;
+  flex: 1;
 }
 
 .three-images .secondary-images {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .three-images .secondary-image {
-    height: calc(50% - 4px);
+  height: calc(50% - 4px);
 }
 
 .image-item {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
-    .images-container {
-        height: 150px;
-    }
+  .images-container {
+    height: 150px;
+  }
 
-    .single-image .main-image {
-        flex: 0 0 80%;
-        max-width: 80%;
-    }
+  .single-image .main-image {
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
 }

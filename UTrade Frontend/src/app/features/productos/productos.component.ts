@@ -1,4 +1,10 @@
-import { Component, input, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { VentanaReportesComponent } from './componentes/ventana-reportes/ventana-reportes.component';
 import { VerProductosComponent } from './componentes/ver-productos/ver-productos.component';
@@ -15,8 +21,8 @@ import { Estados } from '../../interfaces/estados';
 import { ToastrService } from 'ngx-toastr';
 import { FotosPublicacionesService } from '../../Services/fotos-publicaciones.service';
 import { FotosPublicacion } from '../../interfaces/fotos-publicacion';
-import { ConexionBackendService } from '../../Services/conexion-backend.service';
-import { HttpClient } from '@angular/common/http';
+import { ChatService } from '../../Services/chat.service';
+import { Router } from '@angular/router';
 
 interface ProductoExtendido extends Publicaciones {
   verMas: boolean;
@@ -33,21 +39,20 @@ interface ProductoExtendido extends Publicaciones {
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css']
+  styleUrls: ['./productos.component.css'],
 })
 export class ProductosComponent implements OnChanges, OnInit {
-
   formularioPublicaciones: FormGroup;
   listaDePersonas: Persona[] = [];
   listaCategorias: CategoriaPublicacion[] = [];
-  listaEstados: Estados[] = []
+  listaEstados: Estados[] = [];
   datosPublicaciones: Publicaciones | null = null;
 
   @Input() Filtro?: string;
-  @Input() FiltroIdCategoria?: string; 
+  @Input() FiltroIdCategoria?: string;
   @Input() FiltroLista?: Publicaciones[];
   @Input() cuota?: string;
-  
+
   constructor(
     public dialog: MatDialog,
     private fb: FormBuilder,
@@ -57,48 +62,102 @@ export class ProductosComponent implements OnChanges, OnInit {
     private _estadosServicio: EstadosService,
     private toastr: ToastrService,
     private _fotosPublicacionesServicio: FotosPublicacionesService,
-    private conexionBackend: ConexionBackendService,
-    private http: HttpClient,
-  ) { 
+    private _chatService: ChatService,
+    private router: Router
+  ) {
     this.formularioPublicaciones = this.fb.group({
-      id: ["", Validators.required],
-      titulo: ["", Validators.required],
-      fechaPublicacion: ["", Validators.required],
-      idUsuario: ["", Validators.required],
-      precio: ["", Validators.required],
-      idCategoria: ["", Validators.required],
-      descripcion: ["", Validators.required],
-      ubicacion: [""],
-      idReseña: [""],
-      idEstado: ["", Validators.required]
+      id: ['', Validators.required],
+      titulo: ['', Validators.required],
+      fechaPublicacion: ['', Validators.required],
+      idUsuario: ['', Validators.required],
+      precio: ['', Validators.required],
+      idCategoria: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      ubicacion: [''],
+      idReseña: [''],
+      idEstado: ['', Validators.required],
     });
   }
 
   productos: ProductoExtendido[] = [];
 
   solicitar(producto: ProductoExtendido): void {
-    const usuario = JSON.parse(localStorage.getItem('usuario')!);
-    const id: string = usuario?.idUsuario;
-    const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${id}`;
-    this.http.get(url).subscribe({
-      next: (res: any) => {
-        if (res?.estado && res?.valor) {
-          const datos = res.valor;
-          const usuarioF = datos.nombreUsuario || 'Usuario desconocido';
-          this.toastr.info(`Lo siento ${usuarioF} esto esta en desarrollo `, "Info");
+    const usuarioStorage = localStorage.getItem('usuario');
+    if (!usuarioStorage) {
+      this.toastr.error('Sesión no encontrada', 'Error');
+      return;
+    }
+
+    const usuario = JSON.parse(usuarioStorage);
+    const idUsuarioSesion = usuario.idUsuario;
+    const idUsuarioProducto = producto.idUsuario;
+
+    if (idUsuarioSesion === idUsuarioProducto) {
+      this.toastr.warning(
+        'No puedes iniciar un chat contigo mismo',
+        'Advertencia'
+      );
+      return;
+    }
+
+    this._chatService
+      .verificarExistenciaChat(idUsuarioSesion, idUsuarioProducto)
+      .subscribe({
+        next: (res) => {
+          if (res.estado) {
+            if (res.valor && res.valor.trim() !== '') {
+              this.navegarAlChat(res.valor);
+            } else {
+              this.crearNuevoChat(idUsuarioSesion, idUsuarioProducto);
+            }
+          } else {
+            this.toastr.error(
+              'Error al verificar la existencia del chat',
+              'Error'
+            );
+          }
+        },
+        error: (error) => {
+          console.error('Error verificando chat:', error);
+          this.toastr.error('Error al verificar el chat', 'Error');
+        },
+      });
+  }
+
+  private crearNuevoChat(idUsuario1: string, idUsuario2: string): void {
+    const nuevoChat = {
+      usuario1Id: idUsuario1,
+      usuario2Id: idUsuario2,
+    };
+
+    this._chatService.guardar(nuevoChat).subscribe({
+      next: (res) => {
+        if (res.estado && res.valor) {
+          this.toastr.success('Chat creado exitosamente', 'Éxito');
+          const chatId = res.valor.id || res.valor;
+          this.navegarAlChat(chatId);
+        } else {
+          this.toastr.error('Error al crear el chat', 'Error');
         }
       },
       error: (error) => {
-        console.error('Error obteniendo usuario:', error);
-        this.toastr.error('Error obteniendo usuario', "Error");
-      }
+        console.error('Error creando chat:', error);
+        this.toastr.error('Error al crear el chat', 'Error');
+      },
     });
   }
-  
+
+  private navegarAlChat(chatId: string): void {
+    this.router.navigate(['/chat'], { queryParams: { chatId: chatId } });
+  }
+
+  public navegarAResenas(): void {
+    this.router.navigate(['/resenas']);
+  }
 
   ngOnInit(): void {
     this.cargarDatosIniciales();
-    
+
     if (this.datosPublicaciones != null) {
       this.formularioPublicaciones.patchValue({
         id: this.datosPublicaciones.id,
@@ -110,7 +169,7 @@ export class ProductosComponent implements OnChanges, OnInit {
         descripcion: this.datosPublicaciones.descripcion,
         ubicacion: this.datosPublicaciones.ubicacion,
         idReseña: this.datosPublicaciones.idReseña,
-        idEstado: this.datosPublicaciones.idEstado
+        idEstado: this.datosPublicaciones.idEstado,
       });
     }
   }
@@ -119,7 +178,7 @@ export class ProductosComponent implements OnChanges, OnInit {
     forkJoin({
       personas: this._personaServicio.listar(),
       categorias: this._categoriaServicio.lista(),
-      estados: this._estadosServicio.lista()
+      estados: this._estadosServicio.lista(),
     }).subscribe({
       next: (respuestas) => {
         if (respuestas.personas.estado) {
@@ -131,7 +190,7 @@ export class ProductosComponent implements OnChanges, OnInit {
         if (respuestas.estados.estado) {
           this.listaEstados = respuestas.estados.valor;
         }
-        
+
         if (!this.Filtro && !this.FiltroLista && !this.FiltroIdCategoria) {
           this.cargarTodosLosProductos();
         } else if (this.Filtro && this.listaCategorias.length > 0) {
@@ -140,7 +199,7 @@ export class ProductosComponent implements OnChanges, OnInit {
       },
       error: (error) => {
         console.error('Error cargando datos iniciales:', error);
-      }
+      },
     });
   }
 
@@ -153,26 +212,27 @@ export class ProductosComponent implements OnChanges, OnInit {
       },
       error: (error) => {
         console.error('Error cargando productos:', error);
-      }
+      },
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['FiltroLista'] && this.FiltroLista) {
       this.procesarProductos(this.FiltroLista);
-    }
-    else if (changes['FiltroIdCategoria'] && this.FiltroIdCategoria) {
+    } else if (changes['FiltroIdCategoria'] && this.FiltroIdCategoria) {
       if (this.listaDePersonas.length > 0) {
         this.filtrarPorIdCategoria();
       } else {
         this.cargarPersonasYFiltrar();
       }
-    }
-    else if (changes['Filtro'] && this.Filtro) {
+    } else if (changes['Filtro'] && this.Filtro) {
       if (this.listaCategorias.length > 0 && this.listaDePersonas.length > 0) {
         this.filtrarPorNombreCategoria();
       } else {
-        this.toastr.info('Esperando a que se carguen las categorías y personas...', "Info");
+        this.toastr.info(
+          'Esperando a que se carguen las categorías y personas...',
+          'Info'
+        );
       }
     }
   }
@@ -187,62 +247,74 @@ export class ProductosComponent implements OnChanges, OnInit {
       },
       error: (error) => {
         console.error('Error cargando personas:', error);
-      }
+      },
     });
   }
 
   private filtrarPorIdCategoria(): void {
     if (!this.FiltroIdCategoria) return;
-    
-    this._productoServicio.listarPorCategoria(this.FiltroIdCategoria).subscribe({
-      next: (respuesta) => {
-        if (respuesta.estado) {
-          this.procesarProductos(respuesta.valor);
-        } else {
-          this.toastr.error('No se encontraron productos para la categoría', "Info");
-          this.productos = [];
-        }
-      },
-      error: (error) => {
-        console.error('Error cargando productos por categoría:', error);
-        this.productos = [];
-      }
-    });
-  }
 
-  private filtrarPorNombreCategoria(): void {
-    const categoria = this.listaCategorias.find(c => 
-      c.nombre.toLowerCase() === this.Filtro?.toLowerCase()
-    );
-    
-    if (categoria) {
-      this._productoServicio.listarPorCategoria(categoria.id).subscribe({
+    this._productoServicio
+      .listarPorCategoria(this.FiltroIdCategoria)
+      .subscribe({
         next: (respuesta) => {
           if (respuesta.estado) {
             this.procesarProductos(respuesta.valor);
           } else {
-            this.toastr.error('No se encontraron productos para la categoría', "Info");
+            this.toastr.error(
+              'No se encontraron productos para la categoría',
+              'Info'
+            );
             this.productos = [];
           }
         },
         error: (error) => {
           console.error('Error cargando productos por categoría:', error);
           this.productos = [];
-        }
+        },
+      });
+  }
+
+  private filtrarPorNombreCategoria(): void {
+    const categoria = this.listaCategorias.find(
+      (c) => c.nombre.toLowerCase() === this.Filtro?.toLowerCase()
+    );
+
+    if (categoria) {
+      this._productoServicio.listarPorCategoria(categoria.id).subscribe({
+        next: (respuesta) => {
+          if (respuesta.estado) {
+            this.procesarProductos(respuesta.valor);
+          } else {
+            this.toastr.error(
+              'No se encontraron productos para la categoría',
+              'Info'
+            );
+            this.productos = [];
+          }
+        },
+        error: (error) => {
+          console.error('Error cargando productos por categoría:', error);
+          this.productos = [];
+        },
       });
     } else {
-      this.toastr.error(`Categoría no encontrada`, "Info");
+      this.toastr.error(`Categoría no encontrada`, 'Info');
       this.productos = [];
     }
   }
 
   procesarProductos(productos: Publicaciones[]): void {
-    this.productos = productos.map(producto => {
-      const persona = this.listaDePersonas.find(p => p.id === producto.idUsuario);
-      const categoria = this.listaCategorias.find(c => c.id === producto.idCategoria);
-      const _estado_ = this.listaEstados.find(c => c.id == producto.idEstado);
-      const cuotaProducto = producto.idCategoria === "CAT01" ? ' / MES' : '';
-      
+    this.productos = productos.map((producto) => {
+      const persona = this.listaDePersonas.find(
+        (p) => p.id === producto.idUsuario
+      );
+      const categoria = this.listaCategorias.find(
+        (c) => c.id === producto.idCategoria
+      );
+      const _estado_ = this.listaEstados.find((c) => c.id == producto.idEstado);
+      const cuotaProducto = producto.idCategoria === 'CAT01' ? ' / MES' : '';
+
       const productoExtendido: ProductoExtendido = {
         ...producto,
         verMas: false,
@@ -251,20 +323,24 @@ export class ProductosComponent implements OnChanges, OnInit {
         nombreCategoria: categoria?.nombre || 'Sin categoría',
         estado: _estado_?.nombre || 'Sin estado',
         fechaFormateada: this.formatearFecha(producto.fechaPublicacion),
-        tiempoTranscurrido: this.calcularTiempoTranscurrido(producto.fechaPublicacion),
-        imagenes: [
-          "icons/Image-not-found.png"
-        ], 
-        cuota: cuotaProducto 
+        tiempoTranscurrido: this.calcularTiempoTranscurrido(
+          producto.fechaPublicacion
+        ),
+        imagenes: ['icons/Image-not-found.png'],
+        cuota: cuotaProducto,
       };
       this.cargarImagenesProducto(producto.id, productoExtendido);
-      
+
       return productoExtendido;
     });
   }
 
   procesarAvatar(persona?: Persona): string {
-    if (persona && persona.fotoPerfilBase64 && persona.fotoPerfilBase64.trim() !== '') {
+    if (
+      persona &&
+      persona.fotoPerfilBase64 &&
+      persona.fotoPerfilBase64.trim() !== ''
+    ) {
       return 'data:image/jpeg;base64,' + persona.fotoPerfilBase64;
     }
     return 'icons/no-photo.webp';
@@ -277,7 +353,7 @@ export class ProductosComponent implements OnChanges, OnInit {
     return fechaLocal.toLocaleDateString('es-ES', {
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric'
+      year: 'numeric',
     });
   }
 
@@ -288,13 +364,13 @@ export class ProductosComponent implements OnChanges, OnInit {
     if (diferencia < 0) {
       return 'Ahora';
     }
-    
+
     const minutos = Math.floor(diferencia / (1000 * 60));
     const horas = Math.floor(diferencia / (1000 * 60 * 60));
     const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-    const meses = Math.floor(dias / 30); 
-    const años = Math.floor(dias / 365); 
-    
+    const meses = Math.floor(dias / 30);
+    const años = Math.floor(dias / 365);
+
     if (años >= 1) {
       return años === 1 ? '1 año' : `${años} años`;
     } else if (meses >= 1) {
@@ -310,32 +386,33 @@ export class ProductosComponent implements OnChanges, OnInit {
     }
   }
 
-  cargarImagenesProducto(idProducto: string | undefined, producto: ProductoExtendido): void {
+  cargarImagenesProducto(
+    idProducto: string | undefined,
+    producto: ProductoExtendido
+  ): void {
     if (idProducto != null) {
-      this._fotosPublicacionesServicio.buscarFotosPublicacion(idProducto).subscribe({
-        next: (res: any) => {
-          if (res?.estado && res?.valor) {
-            const datos = res.valor;
-            if (Array.isArray(datos) && datos.length > 0) {
-              producto.imagenes = datos.map((foto: FotosPublicacion) => 
-                foto.fotoBase64 && foto.fotoBase64.trim() !== ''
-                  ? 'data:image/jpeg;base64,' + foto.fotoBase64
-                  : 'icons/no-photo.webp'
-              );
-            } else {
-              producto.imagenes = [
-                "icons/Image-not-found.png"
-              ];
+      this._fotosPublicacionesServicio
+        .buscarFotosPublicacion(idProducto)
+        .subscribe({
+          next: (res: any) => {
+            if (res?.estado && res?.valor) {
+              const datos = res.valor;
+              if (Array.isArray(datos) && datos.length > 0) {
+                producto.imagenes = datos.map((foto: FotosPublicacion) =>
+                  foto.fotoBase64 && foto.fotoBase64.trim() !== ''
+                    ? 'data:image/jpeg;base64,' + foto.fotoBase64
+                    : 'icons/no-photo.webp'
+                );
+              } else {
+                producto.imagenes = ['icons/Image-not-found.png'];
+              }
             }
-          }
-        },
-        error: (error) => {
-          console.error('Error cargando imágenes del producto:', error);
-          producto.imagenes = [
-            "icons/Image-not-found.png"
-          ];
-        }
-      });
+          },
+          error: (error) => {
+            console.error('Error cargando imágenes del producto:', error);
+            producto.imagenes = ['icons/Image-not-found.png'];
+          },
+        });
     }
   }
 
@@ -351,11 +428,10 @@ export class ProductosComponent implements OnChanges, OnInit {
         tipo: 'CREAR',
         tipoObjeto: 'publicacion',
         producto,
-      }
+      },
     });
 
-
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Reporte enviado:', result);
       } else {
@@ -371,7 +447,7 @@ export class ProductosComponent implements OnChanges, OnInit {
 
   getPreviewUrls(fotos: string[] | undefined, verMas: boolean): string[] {
     if (!fotos || fotos.length === 0) {
-      return ["icons/Image-not-found.png"]; 
+      return ['icons/Image-not-found.png'];
     }
     return verMas ? fotos : fotos.slice(0, 3);
   }
@@ -390,9 +466,9 @@ export class ProductosComponent implements OnChanges, OnInit {
       nombreCategoria: publicacion.nombreCategoria,
       nombreUsuario: publicacion.nombreUsuario,
       avatarUsuario: publicacion.avatarUsuario,
-      ubicacion: publicacion.ubicacion
+      ubicacion: publicacion.ubicacion,
     };
-  
+
     const dialogRef = this.dialog.open(VerProductosComponent, {
       disableClose: true,
       autoFocus: true,
@@ -402,12 +478,12 @@ export class ProductosComponent implements OnChanges, OnInit {
       maxWidth: '1000px',
       data: {
         tipo: 'VER_DETALLE',
-        publicacion: publicacionParaModal
-      }
+        publicacion: publicacionParaModal,
+      },
     });
-    
-    dialogRef.afterClosed().subscribe(result => {
-      const producto = this.productos.find(p => p.id === publicacion.id);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      const producto = this.productos.find((p) => p.id === publicacion.id);
       if (producto) {
         producto.verMas = false;
       }

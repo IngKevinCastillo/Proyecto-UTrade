@@ -1,0 +1,255 @@
+<div class="contenedor-resenas">
+  <div *ngIf="showSuccessMessage" class="alert-success-custom">
+    <div class="success-content">
+      <i class="fas fa-check-circle"></i>
+      <span>¡Tu reseña ha sido publicada exitosamente!</span>
+    </div>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="estadisticas-generales">
+        <div class="promedio-container">
+          <div class="promedio-numero">
+            {{ obtenerPromedioCalificaciones() }}
+          </div>
+          <div class="promedio-estrellas">
+            <span *ngFor="let i of [1, 2, 3, 4, 5]" class="estrella-promedio">
+              <span
+                *ngIf="i <= obtenerPromedioCalificaciones()"
+                class="estrella-llena"
+                >★</span
+              >
+              <span
+                *ngIf="i > obtenerPromedioCalificaciones()"
+                class="estrella-vacia"
+                >☆</span
+              >
+            </span>
+          </div>
+          <div class="total-resenas">
+            Basado en {{ listaResenas.length }} reseñas
+          </div>
+        </div>
+
+        <div class="barras-estadisticas">
+          <div *ngFor="let i of [5, 4, 3, 2, 1]" class="barra-stat">
+            <span class="numero-estrella">{{ i }}</span>
+            <i class="fas fa-star"></i>
+            <div class="barra-progreso">
+              <div
+                class="barra-fill"
+                [style.width.%]="
+                  (obtenerEstadisticasCalificaciones()[i] /
+                    listaResenas.length) *
+                  100
+                "
+              ></div>
+            </div>
+            <span class="cantidad-stat">{{
+              obtenerEstadisticasCalificaciones()[i]
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="formulario-nueva-resena card mb-5">
+        <div class="card-body">
+          <div class="titulo-formulario-container">
+            <h3 class="titulo-formulario">✨ Comparte tu Experiencia</h3>
+            <p class="subtitulo-formulario">
+              Tu opinión es muy valiosa para nosotros y otros usuarios
+            </p>
+          </div>
+
+          <form (ngSubmit)="enviarResena()" #resenaForm="ngForm">
+            <div class="formulario-grid-simple">
+              <div class="campo-puntuacion">
+                <label class="form-label">
+                  <i class="fas fa-star"></i>
+                  Tu Calificación
+                </label>
+                <div class="estrellas-container">
+                  <div class="estrellas-interactivas">
+                    <span
+                      *ngFor="let i of [1, 2, 3, 4, 5]"
+                      class="estrella-interactiva"
+                      [class.selected]="i <= nuevaResena.puntuacion"
+                      [class.hover]="i <= obtenerPuntuacionMostrar()"
+                      (click)="seleccionarPuntuacion(i)"
+                      (mouseenter)="establecerHoverEstrella(i)"
+                      (mouseleave)="limpiarHoverEstrella()"
+                    >
+                      ★
+                    </span>
+                  </div>
+                  <div
+                    class="calificacion-texto"
+                    *ngIf="obtenerPuntuacionMostrar() > 0"
+                  >
+                    <span class="puntuacion-numero"
+                      >({{ obtenerPuntuacionMostrar() }}/5)</span
+                    >
+                    <span class="puntuacion-descripcion">{{
+                      obtenerTextoCalificacion(obtenerPuntuacionMostrar())
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="campo-comentario">
+              <label for="comentario" class="form-label">
+                <i class="fas fa-comment-alt"></i>
+                Tu Comentario
+              </label>
+              <textarea
+                class="form-control"
+                id="comentario"
+                [(ngModel)]="nuevaResena.comentario"
+                name="comentario"
+                rows="4"
+                placeholder="Cuéntanos sobre tu experiencia... ¿Qué te gustó más? ¿Algo que podríamos mejorar?"
+                required
+                #comentarioInput="ngModel"
+                maxlength="500"
+              ></textarea>
+              <div class="contador-caracteres">
+                {{ nuevaResena.comentario.length }}/500 caracteres
+              </div>
+              <div
+                *ngIf="comentarioInput.invalid && comentarioInput.touched"
+                class="error-message"
+              >
+                <i class="fas fa-exclamation-circle"></i>
+                Por favor comparte tu comentario
+              </div>
+            </div>
+
+            <div class="botones-container">
+              <button
+                type="button"
+                class="btn btn-limpiar"
+                (click)="limpiarFormulario()"
+                [disabled]="isSubmitting"
+              >
+                <i class="fas fa-undo"></i>
+                Limpiar
+              </button>
+
+              <button
+                type="submit"
+                class="btn-enviar-resena"
+                [disabled]="!validarFormulario() || isSubmitting"
+                [class.loading]="isSubmitting"
+              >
+                <div class="btn-content">
+                  <i *ngIf="!isSubmitting" class="fas fa-paper-plane"></i>
+                  <div *ngIf="isSubmitting" class="spinner"></div>
+                  <span>{{
+                    isSubmitting ? "Publicando..." : "Publicar Reseña"
+                  }}</span>
+                </div>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h2 class="titulo-seccion">
+        <i class="fas fa-comments"></i>
+        Lo que dicen nuestros clientes
+      </h2>
+    </div>
+  </div>
+
+  <div class="row resenas-grid">
+    <div
+      class="col-lg-6 col-md-6 col-sm-12 mb-4"
+      *ngFor="let resena of listaResenas; trackBy: trackByResenasId"
+    >
+      <div
+        class="tarjeta-resena card h-100"
+        [class.destacada]="resena.puntuacion === 5"
+      >
+        <div class="card-body">
+          <div class="encabezado-usuario">
+            <div class="usuario-info">
+              <div class="foto-container">
+                <img
+                  [src]="resena.fotoPerfilUrl"
+                  [alt]="resena.nombreUsuario"
+                  class="foto-perfil"
+                />
+                <div *ngIf="resena.verified" class="verificado-badge">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+              <div class="info-usuario">
+                <h5 class="nombre-usuario">
+                  {{ resena.nombreUsuario }}
+                  <span *ngIf="resena.verified" class="verificado-texto"
+                    >Cliente Verificado</span
+                  >
+                </h5>
+                <div class="fecha-info">
+                  <small class="fecha-resena">{{
+                    obtenerTiempoTranscurrido(resena.fechaResena)
+                  }}</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="puntuacion-container">
+              <div class="puntuacion-estrellas">
+                <span *ngFor="let i of [1, 2, 3, 4, 5]" class="estrella">
+                  <span *ngIf="i <= resena.puntuacion" class="estrella-llena"
+                    >★</span
+                  >
+                  <span *ngIf="i > resena.puntuacion" class="estrella-vacia"
+                    >☆</span
+                  >
+                </span>
+              </div>
+              <span class="numero-puntuacion">{{ resena.puntuacion }}/5</span>
+            </div>
+          </div>
+
+          <div class="comentario-contenido">
+            <p class="comentario-texto">{{ resena.comentario }}</p>
+          </div>
+
+          <div class="acciones-resena">
+            <button
+              class="btn-like"
+              (click)="darLike(resena)"
+              *ngIf="resena.likes !== undefined"
+            >
+              <i class="far fa-heart"></i>
+              <span>{{ resena.likes }}</span>
+            </button>
+            <div class="etiquetas" *ngIf="resena.puntuacion >= 4">
+              <span class="etiqueta recomendado">Recomendado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="listaResenas.length === 0" class="sin-resenas">
+    <div class="sin-resenas-content">
+      <i class="fas fa-comment-slash"></i>
+      <h3>Aún no hay reseñas</h3>
+      <p>¡Sé el primero en compartir tu experiencia!</p>
+    </div>
+  </div>
+</div>
