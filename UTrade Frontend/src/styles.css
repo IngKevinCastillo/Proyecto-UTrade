@@ -3,6 +3,27 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-principal: #667eea;
+  --color-principal-hover: #764ba2;
+  --color-principal-claro: #a8e6cf;
+  --color-secundario: #f093fb;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-texto-principal: #1f2937;
+  --color-texto-secundario: #6b7280;
+  --color-fondo: #f8fafc;
+  --color-fondo-card: #ffffff;
+  --color-estrella-llena: #fbbf24;
+  --color-estrella-vacia: #d1d5db;
+  --sombra-suave: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --sombra-media: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  --sombra-intensa: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+  --border-radius: 20px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 html,
 body {
   height: 100%;

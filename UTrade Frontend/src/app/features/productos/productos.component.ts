@@ -151,6 +151,10 @@ export class ProductosComponent implements OnChanges, OnInit {
     this.router.navigate(['/chat'], { queryParams: { chatId: chatId } });
   }
 
+  public navegarAResenas(): void {
+    this.router.navigate(['/resenas']);
+  }
+
   ngOnInit(): void {
     this.cargarDatosIniciales();
 

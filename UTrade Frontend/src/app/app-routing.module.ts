@@ -14,7 +14,7 @@ import { ReportesComponent } from './features/reportes/reportes.component';
 import { MiCuentaComponent } from './features/cuenta/mi-cuenta/mi-cuenta.component';
 import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-perfil.component';
 import { MapaComponent } from './features/mapa/mapa.component';
-
+import { ResenasComponent } from './features/productos/componentes/resenas/resenas/resenas.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -25,27 +25,29 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: 'home', component: HomePageComponent },      
+      { path: 'home', component: HomePageComponent },
       { path: 'compras', component: ComprasPageComponent },
       { path: 'rentas', component: RentasPageComponent },
       { path: 'chat', component: ChatComponent },
       { path: 'soporte', component: VentanaSoporteComponent },
-      { path: 'notificaciones', component: NotificacionesComponent}, 
-      { path: 'reportes', component: ReportesComponent},
+      { path: 'notificaciones', component: NotificacionesComponent },
+      { path: 'reportes', component: ReportesComponent },
       { path: 'mi-cuenta', component: MiCuentaComponent },
       { path: 'mi-cuenta/editar-perfil', component: EditarPerfilComponent },
-      {path: 'mapa', component:MapaComponent  }
-    ]
+      { path: 'mapa', component: MapaComponent },
+      { path: 'resenas', component: ResenasComponent },
+    ],
   },
 
-  { path: '**', component: NoMatchComponent }
+  { path: '**', component: NoMatchComponent },
 ];
 
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    scrollPositionRestoration: 'top'
-  })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'top',
+    }),
+  ],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
