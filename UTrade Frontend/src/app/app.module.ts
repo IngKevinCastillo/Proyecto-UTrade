@@ -54,6 +54,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { ResenasComponent } from './features/productos/componentes/resenas/resenas/resenas.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReputacionComponent,
     VerReporteComponent,
     MapaComponent,
+    ResenasComponent,
   ],
   imports: [
     BrowserModule,
