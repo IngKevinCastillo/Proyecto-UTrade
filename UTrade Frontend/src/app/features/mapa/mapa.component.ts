@@ -40,7 +40,7 @@ export class MapaComponent implements OnInit, AfterViewInit {
 
   initializeMap(): void {
     const mapOptions = {
-      center: { lat: 19.4326, lng: -99.1332 },
+      center: { lat: 10.450467, lng: -73.260848 },
       zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       styles: [
@@ -62,13 +62,12 @@ export class MapaComponent implements OnInit, AfterViewInit {
 
     google.maps.event.addListenerOnce(this.map, 'tilesloaded', () => {
       console.log('Mapa cargado completamente');
-      setTimeout(() => {
-        this.loading = false;
-      }, 300);
+      this.loading = false;
     });
 
     const marker = new google.maps.Marker({
-      position: { lat: 19.4326, lng: -99.1332 },
+      position: { lat: 10.450467, lng: -73.260848 },
+
       map: this.map,
       title: 'Ubicación por defecto',
     });
