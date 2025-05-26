@@ -1,12 +1,18 @@
 <div class="detalle-container">
   <div class="p-4">
-    <div (click)="salir()" class="rounded-circle d-flex justify-content-center align-items-center mb-4" style="
+    <div
+      (click)="salir()"
+      class="rounded-circle d-flex justify-content-center align-items-center mb-4"
+      style="
         width: 50px;
         height: 50px;
         background-color: #2c248b;
         cursor: pointer;
-      ">
-      <mat-icon (click)="salir()" style="font-size: 24px; color: white">close</mat-icon>
+      "
+    >
+      <mat-icon (click)="salir()" style="font-size: 24px; color: white"
+        >close</mat-icon
+      >
     </div>
   </div>
   <div class="container-fluid px-4 pb-4" *ngIf="publicacion">
@@ -14,24 +20,53 @@
       <div class="col-lg-6 col-md-6 mb-4">
         <div class="imagen-principal-container mb-3">
           <div class="imagen-principal-wrapper position-relative">
-            <img [src]="imagenSeleccionada || publicacion.imagen || 'assets/placeholder-image.jpg'"
-              [alt]="publicacion.titulo" class="imagen-principal rounded-3">
-            <div *ngIf="publicacion.imagenes && publicacion.imagenes.length > 1" class="imagen-navigation">
-              <button mat-icon-button class="nav-btn nav-btn-left" (click)="imagenAnterior()">
+            <img
+              [src]="
+                imagenSeleccionada ||
+                publicacion.imagen ||
+                'assets/placeholder-image.jpg'
+              "
+              [alt]="publicacion.titulo"
+              class="imagen-principal rounded-3"
+            />
+            <div
+              *ngIf="publicacion.imagenes && publicacion.imagenes.length > 1"
+              class="imagen-navigation"
+            >
+              <button
+                mat-icon-button
+                class="nav-btn nav-btn-left"
+                (click)="imagenAnterior()"
+              >
                 <mat-icon>chevron_left</mat-icon>
               </button>
 
-              <button mat-icon-button class="nav-btn nav-btn-right" (click)="imagenSiguiente()">
+              <button
+                mat-icon-button
+                class="nav-btn nav-btn-right"
+                (click)="imagenSiguiente()"
+              >
                 <mat-icon>chevron_right</mat-icon>
               </button>
             </div>
           </div>
         </div>
-        <div *ngIf="publicacion.imagenes && publicacion.imagenes.length > 1" class="miniaturas-container">
+        <div
+          *ngIf="publicacion.imagenes && publicacion.imagenes.length > 1"
+          class="miniaturas-container"
+        >
           <div class="miniaturas-scroll">
-            <div *ngFor="let imagen of publicacion.imagenes; let i = index" class="miniatura-wrapper"
-              [class.miniatura-activa]="i === imagenIndex" (click)="seleccionarImagen(imagen, i)">
-              <img [src]="imagen" [alt]="'Imagen ' + (i + 1)" class="miniatura">
+            <div
+              *ngFor="let imagen of publicacion.imagenes; let i = index"
+              class="miniatura-wrapper"
+              [class.miniatura-activa]="i === imagenIndex"
+              (click)="seleccionarImagen(imagen, i)"
+            >
+              <img
+                [src]="imagen"
+                [alt]="'Imagen ' + (i + 1)"
+                class="miniatura"
+              />
             </div>
           </div>
         </div>
@@ -40,13 +75,15 @@
       <div class="col-lg-6 col-md-6">
         <div class="info-container">
           <div class="mb-3" *ngIf="publicacion.estado">
-            <mat-chip [ngClass]="{
-              'estado-activo': publicacion.estado === 'Activo',
-              'estado-baneado': publicacion.estado === 'Baneado',
-              'estado-eliminado': publicacion.estado === 'Eliminado',
-              'estado-suspendido': publicacion.estado === 'Suspendido',
-              'estado-advertido': publicacion.estado === 'Advertido'
-            }">
+            <mat-chip
+              [ngClass]="{
+                'estado-activo': publicacion.estado === 'Activo',
+                'estado-baneado': publicacion.estado === 'Baneado',
+                'estado-eliminado': publicacion.estado === 'Eliminado',
+                'estado-suspendido': publicacion.estado === 'Suspendido',
+                'estado-advertido': publicacion.estado === 'Advertido'
+              }"
+            >
               {{ publicacion.estado }}
             </mat-chip>
           </div>
@@ -55,7 +92,7 @@
 
           <div class="precio-container mb-4" *ngIf="publicacion.precio">
             <span class="precio-principal">
-              $ {{ publicacion.precio | number:'1.0-0' }} COP
+              $ {{ publicacion.precio | number : "1.0-0" }} COP
             </span>
           </div>
 
@@ -65,7 +102,9 @@
                 <mat-icon class="info-icon me-2">category</mat-icon>
                 <div>
                   <span class="info-label">Categoría:</span>
-                  <span class="info-value">{{ publicacion.nombreCategoria }}</span>
+                  <span class="info-value">{{
+                    publicacion.nombreCategoria
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -85,7 +124,9 @@
                 <mat-icon class="info-icon me-2">schedule</mat-icon>
                 <div>
                   <span class="info-label">Fecha de publicación:</span>
-                  <span class="info-value">{{ publicacion.fechaPublicacion | date:'dd MMM, yyyy' }}</span>
+                  <span class="info-value">{{
+                    publicacion.fechaPublicacion | date : "dd MMM, yyyy"
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -95,7 +136,9 @@
                 <mat-icon class="info-icon me-2">person</mat-icon>
                 <div>
                   <span class="info-label">Publicado por:</span>
-                  <span class="info-value">{{ publicacion.nombreUsuario }}</span>
+                  <span class="info-value">{{
+                    publicacion.nombreUsuario
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -120,10 +163,16 @@
 
           <div class="acciones-container mt-4">
             <div class="d-flex gap-3 flex-wrap">
-              <button mat-raised-button color="primary" class="action-btn">
+              <button
+                mat-raised-button
+                color="primary"
+                class="action-btn"
+                (click)="contactar()"
+              >
                 <mat-icon class="me-2">message</mat-icon>
                 Contactar
               </button>
+
               <button mat-stroked-button color="primary" class="action-btn">
                 <mat-icon class="me-2">share</mat-icon>
                 Compartir
@@ -139,9 +188,16 @@
     </div>
   </div>
 
-  <div *ngIf="!publicacion" class="d-flex justify-content-center align-items-center" style="min-height: 400px;">
+  <div
+    *ngIf="!publicacion"
+    class="d-flex justify-content-center align-items-center"
+    style="min-height: 400px"
+  >
     <div class="text-center">
-      <mat-icon class="text-muted mb-3" style="font-size: 48px; height: 48px; width: 48px;">
+      <mat-icon
+        class="text-muted mb-3"
+        style="font-size: 48px; height: 48px; width: 48px"
+      >
         error_outline
       </mat-icon>
       <h5 class="text-muted">No se pudieron cargar los detalles</h5>
