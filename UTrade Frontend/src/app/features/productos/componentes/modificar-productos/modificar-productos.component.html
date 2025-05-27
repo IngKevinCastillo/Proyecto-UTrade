@@ -37,16 +37,34 @@
 
         <div class="form-group mb-3">
           <label for="category" class="form-label">Categoría *</label>
-          <select id="category" class="form-select" [ngModel]="category" (ngModelChange)="onCategoryChange($event)">
-            <option value="" disabled>Selecciona una categoría</option>
-            <option value="Apartamento">Apartamento</option>
-            <option value="Muebles">Muebles</option>
-            <option value="Ropa">Ropa</option>
-            <option value="Electrónicos">Electrónicos</option>
-            <option value="Vehículos">Vehículos</option>
-            <option value="Servicios">Servicios</option>
-            <option value="Otros">Otros</option>
+          <select id="category" class="form-select" [ngModel]="category" (ngModelChange)="onCategoryChange($event)"
+            [disabled]="loadingCategories">
+            <option value="" disabled>
+              {{ loadingCategories ? 'Cargando categorías...' : 'Selecciona una categoría' }}
+            </option>
+            <option *ngFor="let cat of categories" [value]="cat.nombre">
+              {{ cat.nombre }}
+            </option>
           </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="estado" class="form-label">Estado *</label>
+          <select id="estado" class="form-select" [ngModel]="estado" (ngModelChange)="onEstadoChange($event)"
+            [disabled]="loadingEstado">
+            <option value="" disabled>
+              {{ loadingEstado ? 'Cargando categorías...' : 'Selecciona una categoría' }}
+            </option>
+            <option *ngFor="let est of estados" [value]="est.id">
+              {{ est.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="estado" class="form-label">Estado *</label>
+          <input type="text" id="estado" class="form-control" [placeholder]="" [ngModel]="estado"
+            (ngModelChange)="onEstadoChange($event)" />
         </div>
 
         <div class="form-group mb-4">
@@ -71,7 +89,7 @@
                 <small class="text-muted">Actualizado ahora</small>
               </div>
               <div class="ms-auto text-muted">
-                <mat-icon>location_on</mat-icon> Ubicación
+                <mat-icon>location_on</mat-icon> {{ direccion || 'Ubicación' }}
               </div>
             </div>
 
@@ -125,7 +143,7 @@
             Cancelar
           </button>
           <button mat-raised-button color="primary" (click)="editar()"
-            [disabled]="!title.trim() || !price.trim() || !category.trim()">
+            [disabled]="!title.trim() || !price.trim() || !category.trim() || !direccion.trim()">
             <mat-icon class="me-1">save</mat-icon>
             Guardar cambios
           </button>

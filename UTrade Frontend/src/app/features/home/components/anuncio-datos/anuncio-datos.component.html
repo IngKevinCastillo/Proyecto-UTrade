@@ -70,10 +70,13 @@
 
     <div class="form-group mb-3">
       <select class="form-select" [class.is-invalid]="category === ''" [ngModel]="category"
-        (ngModelChange)="onCategoryChange($event)">
-        <option value="" disabled selected>Categoría *</option>
-        <option value="Rentas">Rentas</option>
-        <option value="Compras">Compras</option>
+        (ngModelChange)="onCategoryChange($event)" [disabled]="loadingCategories">
+        <option value="" disabled selected>
+          {{ loadingCategories ? 'Cargando categorías...' : 'Categoría *' }}
+        </option>
+        <option *ngFor="let cat of categories" [value]="cat.nombre">
+          {{ cat.nombre }}
+        </option>
       </select>
       <div *ngIf="category === ''" class="invalid-feedback">
         Debes seleccionar una categoría
