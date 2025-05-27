@@ -51,6 +51,10 @@ export class ProductoService {
     );
   }
 
+  listarActivos(): Observable<RespuestaAPI> {
+    return this.http.get<RespuestaAPI>(`${this.urlApi}ListarActivos`);
+  }
+
   listarSoloConLatitudAltitud(): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(
       `${this.urlApi}ListarSoloConLongitudLatitud`
