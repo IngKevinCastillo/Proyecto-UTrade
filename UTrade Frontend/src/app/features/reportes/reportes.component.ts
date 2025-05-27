@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Persona } from '../../interfaces/persona';
+import { Publicaciones } from '../../interfaces/publicaciones';
 import { Reporte } from '../../interfaces/reporte';
 import { VerReporteComponent } from './componentes/ver-reporte/ver-reporte.component';
+import { ResueltoComponent } from './componentes/resuelto/resuelto.component';
 import { tipoReporte } from '../../interfaces/tipoReporte';
 import { estadoReporte } from '../../interfaces/estadoReporte';
 import { motivoReporte } from '../../interfaces/motivoReporte';
@@ -10,7 +12,9 @@ import { tipoReporteService } from '../../Services/tipoReporte.service';
 import { estadoReporteService } from '../../Services/estadoReporte.service';
 import { motivoReporteService } from '../../Services/motivoReporte.service';
 import { PersonaService } from '../../Services/persona.service';
+import { ProductoService } from '../../Services/producto.service';
 import { ToastrService } from 'ngx-toastr';
+import { ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -26,6 +30,7 @@ export class ReportesComponent implements OnInit {
   listaMotivos: motivoReporte[] = [];
   listaPersonas: Persona[] = [];
   personaCache: { [id: string]: Persona } = {};
+  productoCache: { [id: string]: Publicaciones } = {};
   filtroEstado: string = 'todos';
   filtroTipo: string = 'todos';
   mostrarSoloNoLeidos: boolean = false;
@@ -39,8 +44,10 @@ export class ReportesComponent implements OnInit {
     private tipoReporteService: tipoReporteService,
     private motivoService: motivoReporteService,
     private personService: PersonaService,
+    private ProductoService: ProductoService,
     private toastr: ToastrService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -51,15 +58,12 @@ export class ReportesComponent implements OnInit {
   }
 
   cargarTiposReporte(): void {
-    console.log('Iniciando carga de tipos de reporte...');
 
     this.tipoReporteService.lista().subscribe({
       next: (response: any) => {
-        console.log('Respuesta tipos de reporte:', response);
         
         if (response && response.estado) {
           this.listaTiposReporte = response.valor;
-          console.log('Tipos de reporte cargados:', this.listaTiposReporte.length);
         } else {
           console.warn('Error al cargar tipos de reporte');
           this.toastr.error('Error al cargar los tipos de reporte', 'Error');
@@ -73,14 +77,10 @@ export class ReportesComponent implements OnInit {
   }
 
   cargarEstados(): void {
-    console.log('Iniciando carga de estados...');
-
     this.estadoReporteService.lista().subscribe({
       next: (response) => {
         if (response && response.estado === true) {
-          console.log('✅ IF: Estados cargados exitosamente');
           this.listaEstados = response.valor;
-          console.log('✅ Lista de estados:', this.listaEstados.length);
         } else {
           console.warn('❌ ELSE: Estado no exitoso - Revisar contenido');
           this.toastr.error('Error al cargar los estados de reporte', 'Error');
@@ -114,19 +114,12 @@ export class ReportesComponent implements OnInit {
 
   cargarReportes(): void {
     this.cargando = true;
-    console.log('Iniciando carga de reportes...');
-    
     this.reporteService.listar().subscribe({
       next: (response) => {
-        console.log('Respuesta del servicio:', response);
-        
         if (response && response.estado) {
-          console.log('Datos recibidos:', response.valor);
           this.listaReportes = response.valor;
           this.listaReportesFiltrados = [...this.listaReportes];
-          console.log('Reportes cargados exitosamente:', this.listaReportes.length);
         } else {
-          console.log('La respuesta no fue exitosa:', response);
           this.toastr.error('Error al cargar los reportes', 'Error');
         }
         this.cargando = false;
@@ -183,7 +176,27 @@ export class ReportesComponent implements OnInit {
     return 'Cargando...';
   }
 
-
+  obtenerNombrePublicacion(id: string): string {
+      if (this.productoCache[id]) {
+        return this.productoCache[id].titulo;
+      }
+      this.ProductoService.buscar(id).subscribe({
+        next: (res) => {
+          if (res.estado) {
+            this.productoCache[id] = res.valor as Publicaciones;
+          } else {
+            this.productoCache[id] = { titulo: 'Publicación desconocida', id } as Publicaciones;
+          }
+          this.cdRef.markForCheck();
+        },
+        error: () => {
+          this.productoCache[id] = { titulo: 'Publicación desconocida', id } as Publicaciones;
+          this.cdRef.markForCheck();
+        }
+      });
+      return 'Cargando...';
+    }
+  
 
   esUsuario(idTipoReporte: string): boolean {
     const tipo = this.listaTiposReporte.find(t => t.id == idTipoReporte);
@@ -306,8 +319,16 @@ export class ReportesComponent implements OnInit {
   }
 
   calcularTiempo(fecha: Date): string {
+    // Asegurar que sea un objeto Date válido
+    const fechaObj = fecha instanceof Date ? fecha : new Date(fecha);
+    
+    // Validar que la fecha sea válida
+    if (isNaN(fechaObj.getTime())) {
+      return 'Fecha inválida';
+    }
+
     const ahora = new Date();
-    const diffMs = ahora.getTime() - new Date(fecha).getTime();
+    const diffMs = ahora.getTime() - fechaObj.getTime();
     const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
     const diffHoras = Math.floor(diffMs / (1000 * 60 * 60));
     const diffMinutos = Math.floor(diffMs / (1000 * 60));
@@ -323,17 +344,40 @@ export class ReportesComponent implements OnInit {
     if (diffDias === 2) return 'Anteayer';
     if (diffDias >= 3) return `Hace ${diffDias} días`;
     
-    return this.formatearFecha(fecha);
+    return this.formatearFecha(fechaObj);
   }
 
   private formatearFecha(fecha: Date): string {
-    const fechaObj = new Date(fecha);
+    const fechaObj = fecha instanceof Date ? fecha : new Date(fecha);
+    
+    if (isNaN(fechaObj.getTime())) {
+      return 'Fecha inválida';
+    }
+    
     return `${fechaObj.getDate()}/${fechaObj.getMonth() + 1}/${fechaObj.getFullYear()}`;
   }
 
-  resolver(reporte: Reporte): void {
-    // Aquí puedes agregar la funcionalidad extra que mencionaste
+resolver(reporte: Reporte): void {
+
+  this.toastr.info(`Iniciando resolución del reporte ${reporte.idReporte}`, 'Información');
+
+  this.dialog.open(ResueltoComponent, {
+    width: '90vw', // Aumenta el ancho
+    maxWidth: '1200px', // Aumenta el máximo
+    minWidth: '800px', // Establece un mínimo
+    height: '85vh',
+    maxHeight: '90vh',
+    panelClass: 'modal-reporte-resolver',
+    disableClose: false,
+    hasBackdrop: true,
+    autoFocus: false, // Evita problemas de foco
+    data: { reporte }
+  });
+
+  if (!reporte.leido) {
+    this.marcarComoLeido(reporte);
   }
+}
 
   marcarComoLeido(reporte: Reporte): void {
     const reporteEncontrado = {
@@ -369,7 +413,7 @@ export class ReportesComponent implements OnInit {
     const estado = this.obtenerNombreEstado(reporte.idEstado);
     const tipo = this.obtenerNombreTipo(reporte.idTipoReporte);
     const motivo = this.obtenerNombreMotivo(reporte.idMotivo);
-    const reportado = this.obtenerNombrePersona(reporte.idReportado);
+    const reportado = this.esUsuario(reporte.idTipoReporte) ? this.obtenerNombrePersona(reporte.idReportado) : this.obtenerNombrePublicacion(reporte.idReportado);
     const reportante = this.obtenerNombrePersona(reporte.idReportante);
 
     this.dialog.open(VerReporteComponent, {

@@ -1,0 +1,93 @@
+<div class="contenedor-resuelto">
+  <button class="btn-cerrar" (click)="cerrar()">×</button>
+
+  <div class="panel-izquierdo">
+    <ng-container *ngIf="esUsuario && persona; else esPublicacion">
+      <h2><mat-icon>person</mat-icon> Datos del Usuario</h2>
+      
+      <!-- Manejo mejorado de la imagen de perfil -->
+      <div class="contenedor-foto">
+        <img 
+          *ngIf="obtenerImagenPerfil(); else sinFoto" 
+          [src]="obtenerImagenPerfil()" 
+          alt="Foto de perfil" 
+          class="foto-perfil"
+          (error)="onImageError($event)"
+        />
+        <ng-template #sinFoto>
+          <div class="foto-placeholder">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+        </ng-template>
+      </div>
+
+      <p><mat-icon class="info-icon">tag</mat-icon><strong>ID:</strong> {{ persona.id }}</p>
+      <p><mat-icon class="info-icon">badge</mat-icon><strong>Nombre:</strong> {{ persona.nombres }} {{ persona.apellidos }}</p>
+      <p><mat-icon class="info-icon">alternate_email</mat-icon><strong>Nombre de usuario:</strong> {{ persona.nombreUsuario }}</p>
+      <p><mat-icon class="info-icon">email</mat-icon><strong>Correo:</strong> {{ persona.correo }}</p>
+      <p><mat-icon class="info-icon">wc</mat-icon><strong>Género:</strong> {{ persona.genero }}</p>
+      <p><mat-icon class="info-icon">cake</mat-icon><strong>Fecha de nacimiento:</strong> {{ formatearFecha(persona.fechaNacimiento) }}</p>
+    </ng-container>
+
+    <ng-template #esPublicacion>
+      <ng-container *ngIf="producto">
+        <h2><mat-icon>shopping_bag</mat-icon> Datos de la Publicación</h2>
+        
+        <!-- Galería de fotos de la publicación - MEJORADA -->
+        <div class="galeria-contenedor" *ngIf="tieneFotosValidas()">
+          <h3><mat-icon>photo_library</mat-icon> Imágenes de la Publicación</h3>
+          <div class="galeria-fotos" [ngClass]="obtenerClaseGaleria()">
+            <div 
+              class="foto-publicacion-item" 
+              *ngFor="let foto of producto.fotosPublicaciones; let i = index"
+            >
+              <div class="foto-publicacion-container">
+                <img 
+                  *ngIf="obtenerImagenPublicacion(foto)" 
+                  [src]="obtenerImagenPublicacion(foto)" 
+                  alt="Imagen {{i + 1}} de la publicación" 
+                  class="foto-publicacion"
+                  (error)="onImageError($event)"
+                  loading="lazy"
+                />
+                <div class="foto-publicacion-placeholder" *ngIf="!obtenerImagenPublicacion(foto)">
+                  <mat-icon>broken_image</mat-icon>
+                  <span>Sin imagen</span>
+                </div>
+                <div class="foto-numero">{{i + 1}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensaje cuando no hay fotos -->
+        <div class="sin-fotos" *ngIf="!tieneFotosValidas()">
+          <mat-icon>image_not_supported</mat-icon>
+          <p>Esta publicación no tiene imágenes disponibles</p>
+        </div>
+
+        <!-- Información de la publicación -->
+        <div class="info-publicacion">
+          <p><mat-icon class="info-icon">tag</mat-icon><strong>ID:</strong> {{ producto.id }}</p>
+          <p><mat-icon class="info-icon">title</mat-icon><strong>Título:</strong> {{ producto.titulo }}</p>
+          <p><mat-icon class="info-icon">description</mat-icon><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+          <p><mat-icon class="info-icon">attach_money</mat-icon><strong>Precio:</strong> ${{ producto.precio | number:'1.0-0' }}</p>
+          <p><mat-icon class="info-icon">schedule</mat-icon><strong>Fecha:</strong> {{ formatearFecha(producto.fechaPublicacion) }}</p>
+          <p><mat-icon class="info-icon">person_outline</mat-icon><strong>Usuario dueño (id):</strong> {{ producto.idUsuario }}</p>
+          <p><mat-icon class="info-icon">category</mat-icon><strong>Categoría:</strong> {{ producto.idCategoria }}</p>
+          <p><mat-icon class="info-icon">info</mat-icon><strong>Estado:</strong> {{ producto.idEstado }}</p>
+          <p><mat-icon class="info-icon">location_on</mat-icon><strong>Dirección:</strong> {{ producto.direccion }}</p>
+        </div>
+      </ng-container>
+    </ng-template>
+  </div>
+
+  <div class="panel-derecho">
+    <h2><mat-icon>settings</mat-icon> Panel de Resolución</h2>
+    <p>Espacio reservado para acciones como cambiar estado, añadir observaciones, etc.</p>
+    <button disabled class="btn-resolver">
+      <mat-icon>check_circle</mat-icon>
+      Resolver
+    </button>
+  </div>
+</div>
