@@ -145,6 +145,28 @@ namespace BLL.Servicios
             }
         }
 
+        public async Task<List<PublicacionesDTO>> ListarSoloConLongitudLatitud()
+        {
+            try
+            {
+                var queryPublicacion = await _publicacionesRepositorio.Consultar();
+                var listaPublicaciones = queryPublicacion.ToList();
+                if (listaPublicaciones == null || !listaPublicaciones.Any())
+                    throw new TaskCanceledException("No se encontraron publicaciones");
+
+                var publicacionesConLongitudLatitud = listaPublicaciones
+                    .Where(p => p.Latitud != null && p.Altitud != null)
+                    .ToList();
+
+                return _mapper.Map<List<PublicacionesDTO>>(publicacionesConLongitudLatitud);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
         public async Task<List<PublicacionesDTO>> ListarPorCategoria(string idCategoria)
         {
             try

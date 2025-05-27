@@ -31,6 +31,8 @@ namespace DTO
         public string? Direccion { get; set; }
 
         public List<FotosPublicacionesDTO> fotosPublicaciones { get; set; }
+        public decimal Altitud { get; set; }
+        public decimal Latitud { get; set; }
 
     }
 }

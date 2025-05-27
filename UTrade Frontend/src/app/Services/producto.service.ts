@@ -6,15 +6,12 @@ import { RespuestaAPI } from '../interfaces/respuesta-api';
 import { Publicaciones } from '../interfaces/publicaciones';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductoService {
+  private urlApi: string = environment.endpoint + 'Publicaciones/';
 
-  private urlApi: string = environment.endpoint + "Publicaciones/";
-
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   lista(): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(`${this.urlApi}Listar`);
@@ -37,14 +34,26 @@ export class ProductoService {
   }
 
   listarPorCategoria(idCategoria: string): Observable<RespuestaAPI> {
-    return this.http.get<RespuestaAPI>(`${this.urlApi}ListarPorCategoria/${idCategoria}`);
+    return this.http.get<RespuestaAPI>(
+      `${this.urlApi}ListarPorCategoria/${idCategoria}`
+    );
   }
 
-  ObtenerIdNuevaPublicacion(): Observable<RespuestaAPI>{
-    return this.http.get<RespuestaAPI>(`${this.urlApi}ObtenerIdNuevaPublicacion`);
+  ObtenerIdNuevaPublicacion(): Observable<RespuestaAPI> {
+    return this.http.get<RespuestaAPI>(
+      `${this.urlApi}ObtenerIdNuevaPublicacion`
+    );
   }
 
   listarPorUsuario(idUsuario: string): Observable<RespuestaAPI> {
-    return this.http.get<RespuestaAPI>(`${this.urlApi}ListarPorUsuario/${idUsuario}`);
+    return this.http.get<RespuestaAPI>(
+      `${this.urlApi}ListarPorUsuario/${idUsuario}`
+    );
+  }
+
+  listarSoloConLatitudAltitud(): Observable<RespuestaAPI> {
+    return this.http.get<RespuestaAPI>(
+      `${this.urlApi}ListarSoloConLongitudLatitud`
+    );
   }
 }

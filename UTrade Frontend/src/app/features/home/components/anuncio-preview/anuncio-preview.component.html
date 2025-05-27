@@ -4,10 +4,16 @@
   <mat-card class="mb-4">
     <mat-card-content>
       <div class="d-flex align-items-center mb-3">
-        <app-user-profile [username]="username" [userHandle]="userHandle" [avatarUrl]="userAvatar"></app-user-profile>
+        <app-user-profile
+          [username]="username"
+          [userHandle]="userHandle"
+          [avatarUrl]="userAvatar"
+        ></app-user-profile>
         <div class="ms-2">
           <div>{{ previewUsername }}</div>
-          <small class="text-muted">{{ fechaActual }} / {{ tiempoTranscurrido }}</small>
+          <small class="text-muted"
+            >{{ fechaActual }} / {{ tiempoTranscurrido }}</small
+          >
         </div>
         <div class="ms-auto text-muted">
           <mat-icon>location_on</mat-icon> Ubicación
@@ -16,7 +22,7 @@
 
       <h5>{{ title || "Título" }}</h5>
       <h6>{{ price || "PRECIO" }} / {{ category || "CATEGORÍA" }}</h6>
-      <h6>{{direccion || "DIRECCION"}}</h6>
+      <h6>{{ direccion || "DIRECCION" }}</h6>
       <p class="text-muted">{{ description || "Descripción" }}</p>
 
       <div class="row mb-3">
@@ -41,17 +47,88 @@
     </mat-card-content>
   </mat-card>
 
+  <div class="mb-4">
+    <h6 class="mb-3">Ubicación</h6>
+
+    <div class="form-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Coordenadas"
+        [ngModel]="coordenadas"
+        readonly
+      />
+    </div>
+
+    <div class="mb-3">
+      <p class="mb-2 small">
+        Selecciona la ubicación en el mapa <span class="text-danger">*</span>
+      </p>
+      <div class="map-container">
+        <div id="map" class="google-map" [class.loading]="loading">
+          <div *ngIf="loading" class="map-loading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando mapa...</span>
+            </div>
+          </div>
+        </div>
+        <div class="map-controls mt-2">
+          <div class="row g-2">
+            <div class="col-12">
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-sm w-100 mb-2"
+                (click)="getCurrentLocation()"
+              >
+                <mat-icon style="font-size: 16px">my_location</mat-icon>
+                Mi ubicación
+              </button>
+            </div>
+            <div class="col-12">
+              <select
+                class="form-select form-select-sm"
+                [(ngModel)]="selectedUniversidad"
+                (change)="onUniversidadChange()"
+              >
+                <option value="">🏛️ Seleccionar Universidad</option>
+                <option
+                  *ngFor="let universidad of universidades"
+                  [value]="universidad.nombre"
+                >
+                  {{ universidad.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!ubicacionSeleccionada" class="text-danger mt-1">
+        <small>Debes seleccionar una ubicación en el mapa</small>
+      </div>
+    </div>
+  </div>
+
   <div class="d-flex justify-content-end mt-3">
-    <button mat-raised-button color="accent" [disabled]="!puedePublicar" (click)="publicar()"
-      [title]="!puedePublicar ? 'Completa todos los campos requeridos y agrega al menos 1 foto' : 'Publicar anuncio'">
+    <button
+      mat-raised-button
+      color="accent"
+      [disabled]="!puedePublicar"
+      (click)="publicar()"
+      [title]="
+        !puedePublicar
+          ? 'Completa todos los campos requeridos y agrega al menos 1 foto'
+          : 'Publicar anuncio'
+      "
+    >
       Publicar
     </button>
   </div>
 
   <div *ngIf="!puedePublicar" class="mt-2">
     <small class="text-danger">
-      <mat-icon style="font-size: 16px; vertical-align: middle;">info</mat-icon>
-      Completa todos los campos requeridos (*) y agrega al menos 1 foto para publicar
+      <mat-icon style="font-size: 16px; vertical-align: middle">info</mat-icon>
+      Completa todos los campos requeridos (*) y agrega al menos 1 foto para
+      publicar
     </small>
   </div>
 </div>
