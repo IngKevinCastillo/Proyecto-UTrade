@@ -72,7 +72,6 @@ namespace BLL.Servicios
                 publicacionEncontrada.Precio = publicacionModelo.Precio;
                 publicacionEncontrada.IdCategoria = publicacionModelo.IdCategoria;
                 publicacionEncontrada.Descripcion = publicacionModelo.Descripcion;
-                publicacionEncontrada.Ubicacion = publicacionModelo.Ubicacion;
                 publicacionEncontrada.Direccion = publicacionModelo?.Direccion;
                 publicacionEncontrada.IdEstado = publicacionModelo.IdEstado;
                 bool respuesta = await _publicacionesRepositorio.Editar(publicacionEncontrada);

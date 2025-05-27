@@ -14,25 +14,22 @@ namespace DTO
 
         public DateTime FechaPublicacion { get; set; }
 
-        public string IdUsuario { get; set; } 
+        public string IdUsuario { get; set; }
 
         public decimal? Precio { get; set; }
 
         public string? IdCategoria { get; set; }
 
-        public string? Descripcion { get; set; }
-
-        public string? Ubicacion { get; set; }
-
-        public string? IdReseña { get; set; }
+        public string Descripcion { get; set; }
 
         public string? IdEstado { get; set; }
 
         public string? Direccion { get; set; }
 
+        public decimal? Altitud { get; set; }
+
+        public decimal? Latitud { get; set; }
         public List<FotosPublicacionesDTO> fotosPublicaciones { get; set; }
-        public decimal Altitud { get; set; }
-        public decimal Latitud { get; set; }
 
     }
 }

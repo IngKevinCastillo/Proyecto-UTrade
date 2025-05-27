@@ -24,6 +24,4 @@ public partial class Reseña
     public virtual Publicaciones IdPublicacionNavigation { get; set; } = null!;
 
     public virtual ICollection<Likes> Likes { get; set; } = new List<Likes>();
-
-    public virtual ICollection<Publicaciones> Publicaciones { get; set; } = new List<Publicaciones>();
 }
