@@ -10,6 +10,7 @@ namespace BLL.Servicios.Contrato
     public interface IPublicacionesServicio
     {
         Task<List<PublicacionesDTO>> Listar();
+        Task<List<PublicacionesDTO>>ListarSoloConLongitudLatitud();
         Task<PublicacionesDTO> Crear(PublicacionesDTO modelo);
         Task<bool> Editar(PublicacionesDTO modelo);
         Task<PublicacionesDTO> Buscar(string id);

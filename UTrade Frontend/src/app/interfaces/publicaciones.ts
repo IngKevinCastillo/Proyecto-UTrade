@@ -1,4 +1,4 @@
-import { FotosPublicacion } from "./fotos-publicacion";
+import { FotosPublicacion } from './fotos-publicacion';
 
 export interface Publicaciones {
   id: string;
@@ -11,6 +11,8 @@ export interface Publicaciones {
   ubicacion?: string;
   idReseña?: string;
   idEstado: string;
-  direccion: string,
+  direccion: string;
   fotosPublicaciones?: FotosPublicacion[];
+  latitud?: number;
+  altitud?: number;
 }
