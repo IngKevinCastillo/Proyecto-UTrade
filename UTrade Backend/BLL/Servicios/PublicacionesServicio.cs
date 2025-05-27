@@ -235,5 +235,26 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public async Task<List<PublicacionesDTO>> listarActivos()
+        {
+            try
+            {
+
+                var queryPublicacion = await _publicacionesRepositorio.Consultar();
+                var listaFiltrada = queryPublicacion
+                    .Where(x => x.IdEstado == "EST01")
+                    .ToList();
+
+                if (listaFiltrada == null || !listaFiltrada.Any())
+                    throw new TaskCanceledException("No se encontraron publicaciones para el usuario especificada");
+
+                return _mapper.Map<List<PublicacionesDTO>>(listaFiltrada);
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
