@@ -534,12 +534,7 @@ public partial class UtradedbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Reportes_Motivo");
 
-            entity.HasOne(d => d.IdReportadoNavigation).WithMany(p => p.ReporteIdReportadoNavigations)
-                .HasForeignKey(d => d.IdReportado)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Reportes_Reportado");
-
-            entity.HasOne(d => d.IdReportanteNavigation).WithMany(p => p.ReporteIdReportanteNavigations)
+            entity.HasOne(d => d.IdReportanteNavigation).WithMany(p => p.Reportes)
                 .HasForeignKey(d => d.IdReportante)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Reportes_Reportante");

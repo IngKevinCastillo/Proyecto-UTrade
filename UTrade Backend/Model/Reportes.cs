@@ -29,8 +29,6 @@ public partial class Reportes
 
     public virtual MotivosReporte IdMotivoNavigation { get; set; } = null!;
 
-    public virtual Persona IdReportadoNavigation { get; set; } = null!;
-
     public virtual Persona IdReportanteNavigation { get; set; } = null!;
 
     public virtual TiposReporte IdTipoReporteNavigation { get; set; } = null!;
