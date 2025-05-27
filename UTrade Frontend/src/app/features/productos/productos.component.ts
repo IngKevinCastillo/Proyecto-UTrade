@@ -167,8 +167,6 @@ export class ProductosComponent implements OnChanges, OnInit {
         precio: this.datosPublicaciones.precio,
         idCategoria: this.datosPublicaciones.idCategoria,
         descripcion: this.datosPublicaciones.descripcion,
-        ubicacion: this.datosPublicaciones.ubicacion,
-        idReseña: this.datosPublicaciones.idReseña,
         idEstado: this.datosPublicaciones.idEstado,
       });
     }
@@ -204,7 +202,7 @@ export class ProductosComponent implements OnChanges, OnInit {
   }
 
   cargarTodosLosProductos(): void {
-    this._productoServicio.lista().subscribe({
+    this._productoServicio.listarActivos().subscribe({
       next: (respuesta) => {
         if (respuesta.estado) {
           this.procesarProductos(respuesta.valor);
@@ -274,7 +272,7 @@ export class ProductosComponent implements OnChanges, OnInit {
         },
       });
   }
-
+  
   private filtrarPorNombreCategoria(): void {
     const categoria = this.listaCategorias.find(
       (c) => c.nombre.toLowerCase() === this.Filtro?.toLowerCase()
@@ -466,7 +464,8 @@ export class ProductosComponent implements OnChanges, OnInit {
       nombreCategoria: publicacion.nombreCategoria,
       nombreUsuario: publicacion.nombreUsuario,
       avatarUsuario: publicacion.avatarUsuario,
-      ubicacion: publicacion.ubicacion,
+      latitud: publicacion.latitud,
+      altitud: publicacion.altitud
     };
 
     const dialogRef = this.dialog.open(VerProductosComponent, {
@@ -475,7 +474,7 @@ export class ProductosComponent implements OnChanges, OnInit {
       closeOnNavigation: false,
       position: { top: '30px' },
       width: '90vw',
-      maxWidth: '1000px',
+      maxWidth: '95%',
       data: {
         tipo: 'VER_DETALLE',
         publicacion: publicacionParaModal,

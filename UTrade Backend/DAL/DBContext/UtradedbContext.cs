@@ -439,9 +439,6 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.IdEstado)
                 .HasMaxLength(50)
                 .HasColumnName("idEstado");
-            entity.Property(e => e.IdReseña)
-                .HasMaxLength(50)
-                .HasColumnName("idReseña");
             entity.Property(e => e.IdUsuario)
                 .HasMaxLength(50)
                 .HasColumnName("idUsuario");
@@ -455,10 +452,6 @@ public partial class UtradedbContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("titulo");
-            entity.Property(e => e.Ubicacion)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("ubicacion");
 
             entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Publicaciones)
                 .HasForeignKey(d => d.IdCategoria)
@@ -467,10 +460,6 @@ public partial class UtradedbContext : DbContext
             entity.HasOne(d => d.IdEstadoNavigation).WithMany(p => p.Publicaciones)
                 .HasForeignKey(d => d.IdEstado)
                 .HasConstraintName("FK_Publicaciones_Estados");
-
-            entity.HasOne(d => d.IdReseñaNavigation).WithMany(p => p.Publicaciones)
-                .HasForeignKey(d => d.IdReseña)
-                .HasConstraintName("FK_Publicaciones_Reseña");
 
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Publicaciones)
                 .HasForeignKey(d => d.IdUsuario)
@@ -534,12 +523,7 @@ public partial class UtradedbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Reportes_Motivo");
 
-            entity.HasOne(d => d.IdReportadoNavigation).WithMany(p => p.ReporteIdReportadoNavigations)
-                .HasForeignKey(d => d.IdReportado)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Reportes_Reportado");
-
-            entity.HasOne(d => d.IdReportanteNavigation).WithMany(p => p.ReporteIdReportanteNavigations)
+            entity.HasOne(d => d.IdReportanteNavigation).WithMany(p => p.Reportes)
                 .HasForeignKey(d => d.IdReportante)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Reportes_Reportante");

@@ -34,6 +34,24 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("ListarActivos")]
+        public async Task<IActionResult> listarActivos()
+        {
+            var rsp = new Respuesta<List<PublicacionesDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.listarActivos();
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
         [Route("ListarSoloConLongitudLatitud")]
         public async Task<IActionResult> ListarSoloConLongitudLatitud()
         {

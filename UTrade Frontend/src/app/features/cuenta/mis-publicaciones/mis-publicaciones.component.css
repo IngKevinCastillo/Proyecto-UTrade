@@ -81,3 +81,9 @@ mat-card:hover {
         padding: 4px 8px !important;
     }
 }
+
+.dialog-container {
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 16px;
+}

@@ -318,8 +318,7 @@ export class MisPublicacionesComponent implements OnInit {
       idCategoria: publicacion.idCategoria,
       nombreCategoria: publicacion.nombreCategoria,
       nombreUsuario: publicacion.nombreUsuario,
-      avatarUsuario: publicacion.avatarUsuario,
-      ubicacion: publicacion.ubicacion
+      avatarUsuario: publicacion.avatarUsuario
     };
 
     const dialogRef = this.dialog.open(VerProductosComponent, {
@@ -328,7 +327,8 @@ export class MisPublicacionesComponent implements OnInit {
       closeOnNavigation: false,
       position: { top: '30px' },
       width: '90vw',
-      maxWidth: '1000px',
+      maxWidth: '1200px',
+      maxHeight: '90vh',
       data: {
         tipo: 'VER_DETALLE',
         publicacion: publicacionParaModal

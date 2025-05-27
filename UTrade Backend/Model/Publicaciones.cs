@@ -19,10 +19,6 @@ public partial class Publicaciones
 
     public string Descripcion { get; set; } = null!;
 
-    public string? Ubicacion { get; set; }
-
-    public string? IdReseña { get; set; }
-
     public string? IdEstado { get; set; }
 
     public string? Direccion { get; set; }
@@ -38,8 +34,6 @@ public partial class Publicaciones
     public virtual CategoriaPublicacion? IdCategoriaNavigation { get; set; }
 
     public virtual Estados? IdEstadoNavigation { get; set; }
-
-    public virtual Reseña? IdReseñaNavigation { get; set; }
 
     public virtual Persona IdUsuarioNavigation { get; set; } = null!;
 
