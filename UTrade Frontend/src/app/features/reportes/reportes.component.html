@@ -35,7 +35,7 @@
           <mat-icon *ngIf="!esUsuario(reporte.idTipoReporte)">description</mat-icon>
         </div>
           <mat-card-title>Reporte #{{ reporte.idReporte }}</mat-card-title>
-          <mat-card-subtitle>Motivo: {{ obtenerNombreMotivo(reporte.idMotivo) }} - Reportado: {{ obtenerNombrePersona(reporte.idReportado) }}</mat-card-subtitle>
+          <mat-card-subtitle>Motivo: {{ obtenerNombreMotivo(reporte.idMotivo) }} - Reportado: {{ esUsuario(reporte.idTipoReporte) ? obtenerNombrePersona(reporte.idReportado) : obtenerNombrePublicacion(reporte.idReportado) }}</mat-card-subtitle>
         <div class="estado-badge" [ngClass]="obtenerClaseEstado(reporte.idEstado)">
           Estado: {{ obtenerNombreEstado(reporte.idEstado) }}
         </div>

@@ -38,6 +38,7 @@ import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-pe
 import { MisPublicacionesComponent } from './features/cuenta/mis-publicaciones/mis-publicaciones.component';
 import { ReputacionComponent } from './features/cuenta/reputacion/reputacion.component';
 import { VerReporteComponent } from './features/reportes/componentes/ver-reporte/ver-reporte.component';
+import { ResueltoComponent } from './features/reportes/componentes/resuelto/resuelto.component'; 
 import { MapaComponent } from './features/mapa/mapa.component';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -92,6 +93,7 @@ import { ResenasComponent } from './features/productos/componentes/resenas/resen
     ReputacionComponent,
     VerReporteComponent,
     MapaComponent,
+    ResueltoComponent,
     ResenasComponent,
   ],
   imports: [
