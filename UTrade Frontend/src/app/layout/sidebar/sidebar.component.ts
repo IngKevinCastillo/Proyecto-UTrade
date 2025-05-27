@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnInit {
   activeBtn: string = 'home';
@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error al obtener el rol:', err);
-        }
+        },
       });
     }
 
@@ -55,8 +55,8 @@ export class SidebarComponent implements OnInit {
       this.activeBtn = 'home';
     } else if (url.includes('/chat')) {
       this.activeBtn = 'chat';
-    } else if (url.includes('/map')) {
-      this.activeBtn = 'map';
+    } else if (url.includes('/mapa')) {
+      this.activeBtn = 'mapa';
     } else if (url.includes('/soporte')) {
       this.activeBtn = 'soporte';
     } else if (url.includes('/reportes')) {
