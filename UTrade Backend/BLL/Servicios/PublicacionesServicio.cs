@@ -73,7 +73,7 @@ namespace BLL.Servicios
                 publicacionEncontrada.IdCategoria = publicacionModelo.IdCategoria;
                 publicacionEncontrada.Descripcion = publicacionModelo.Descripcion;
                 publicacionEncontrada.Direccion = publicacionModelo?.Direccion;
-                publicacionEncontrada.IdEstado = publicacionModelo.IdEstado;
+                publicacionEncontrada.IdEstado = publicacionModelo?.IdEstado;
                 bool respuesta = await _publicacionesRepositorio.Editar(publicacionEncontrada);
                 if (!respuesta)
                     throw new TaskCanceledException("No se pudo editar");

@@ -29,7 +29,7 @@ namespace DTO
         public decimal? Altitud { get; set; }
 
         public decimal? Latitud { get; set; }
-        public List<FotosPublicacionesDTO> fotosPublicaciones { get; set; }
+        public List<FotosPublicacionesDTO>? fotosPublicaciones { get; set; }
 
     }
 }
