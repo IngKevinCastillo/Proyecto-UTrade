@@ -17,7 +17,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("Guardar")]
+        [Route("HttpPost")]
         public async Task<IActionResult> Guardar([FromBody] ContactanosDTO contacto)
         {
             var rsp = new Respuesta<ContactanosDTO>();

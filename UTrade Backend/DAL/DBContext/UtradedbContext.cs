@@ -34,6 +34,8 @@ public partial class UtradedbContext : DbContext
 
     public virtual DbSet<FotosPublicaciones> FotosPublicaciones { get; set; }
 
+    public virtual DbSet<Likes> Likes { get; set; }
+
     public virtual DbSet<Mensajes> Mensajes { get; set; }
 
     public virtual DbSet<MensajeAccion> MensajeAccions { get; set; }
@@ -240,6 +242,29 @@ public partial class UtradedbContext : DbContext
                 .HasConstraintName("FK_FotosPublicaciones_Publicacion");
         });
 
+        modelBuilder.Entity<Likes>(entity =>
+        {
+            entity.Property(e => e.Id)
+                .HasMaxLength(50)
+                .HasColumnName("id");
+            entity.Property(e => e.IdPersona)
+                .HasMaxLength(50)
+                .HasColumnName("idPersona");
+            entity.Property(e => e.IdReseña)
+                .HasMaxLength(50)
+                .HasColumnName("idReseña");
+
+            entity.HasOne(d => d.IdPersonaNavigation).WithMany(p => p.Likes)
+                .HasForeignKey(d => d.IdPersona)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Likes_Persona");
+
+            entity.HasOne(d => d.IdReseñaNavigation).WithMany(p => p.Likes)
+                .HasForeignKey(d => d.IdReseña)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Likes_Reseña");
+        });
+
         modelBuilder.Entity<Mensajes>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Mensajes__3213E83FE1CBE6D9");
@@ -395,6 +420,9 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
+            entity.Property(e => e.Altitud)
+                .HasColumnType("decimal(20, 10)")
+                .HasColumnName("altitud");
             entity.Property(e => e.Descripcion)
                 .HasColumnType("text")
                 .HasColumnName("descripcion");
@@ -417,6 +445,9 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.IdUsuario)
                 .HasMaxLength(50)
                 .HasColumnName("idUsuario");
+            entity.Property(e => e.Latitud)
+                .HasColumnType("decimal(20, 10)")
+                .HasColumnName("latitud");
             entity.Property(e => e.Precio)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("precio");
@@ -532,12 +563,16 @@ public partial class UtradedbContext : DbContext
             entity.Property(e => e.Comentario)
                 .HasColumnType("text")
                 .HasColumnName("comentario");
+            entity.Property(e => e.Fecha)
+                .HasColumnType("datetime")
+                .HasColumnName("fecha");
             entity.Property(e => e.IdPersona)
                 .HasMaxLength(50)
                 .HasColumnName("idPersona");
             entity.Property(e => e.IdPublicacion)
                 .HasMaxLength(50)
                 .HasColumnName("idPublicacion");
+            entity.Property(e => e.Verificado).HasColumnName("verificado");
 
             entity.HasOne(d => d.IdPersonaNavigation).WithMany(p => p.Reseñas)
                 .HasForeignKey(d => d.IdPersona)

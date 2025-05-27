@@ -62,6 +62,10 @@ namespace Utility
                 ));
             #endregion
 
+            #region Likes
+            CreateMap<Likes, LikesDTO>().ReverseMap();
+            #endregion
+
             #region Mensajes
             CreateMap<Mensajes, MensajesDTO>().ReverseMap();
             CreateMap<CrearMensajeDTO, Mensajes>()

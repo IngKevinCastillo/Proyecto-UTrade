@@ -41,6 +41,8 @@ public partial class Persona
 
     public virtual Rol IdRolNavigation { get; set; } = null!;
 
+    public virtual ICollection<Likes> Likes { get; set; } = new List<Likes>();
+
     public virtual ICollection<Mensajes> Mensajes { get; set; } = new List<Mensajes>();
 
     public virtual ICollection<Notificaciones> Notificaciones { get; set; } = new List<Notificaciones>();
