@@ -17,7 +17,7 @@ public partial class Publicaciones
 
     public string? IdCategoria { get; set; }
 
-    public string? Descripcion { get; set; }
+    public string Descripcion { get; set; } = null!;
 
     public string? Ubicacion { get; set; }
 
@@ -26,6 +26,10 @@ public partial class Publicaciones
     public string? IdEstado { get; set; }
 
     public string? Direccion { get; set; }
+
+    public decimal? Altitud { get; set; }
+
+    public decimal? Latitud { get; set; }
 
     public virtual ICollection<Favoritos> Favoritos { get; set; } = new List<Favoritos>();
 

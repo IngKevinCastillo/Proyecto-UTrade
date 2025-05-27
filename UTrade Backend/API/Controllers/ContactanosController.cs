@@ -16,7 +16,7 @@ namespace API.Controllers
             _contactanosServicio = contactanosServicio;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Guardar")]
         public async Task<IActionResult> Guardar([FromBody] ContactanosDTO contacto)
         {

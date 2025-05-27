@@ -17,6 +17,10 @@ namespace DTO
         public string IdPublicacion { get; set; }
 
         public string IdPersona { get; set; }
+        public DateTime Fecha { get; set; }
+
+        public bool Verificado { get; set; }
+        public virtual ICollection<LikesDTO> Likes { get; set; }
 
         public virtual ICollection<PublicacionesDTO> Publicaciones { get; set; }
     }
