@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConexionBackendService } from '../../../../Services/conexion-backend.service';
+import { CategoriaPublicacionService } from '../../../../Services/categoria-publicacion.service'; // Ajusta la ruta según tu estructura
+import { CategoriaPublicacion } from '../../../../interfaces/categoria-publicacion'; 
 
 @Component({
   selector: 'app-anuncio-datos',
@@ -18,24 +20,34 @@ export class AnuncioDatosComponent {
   @Input() direccion: string = '';
   @Input() category: string = '';
   @Input() description: string = '';
+  @Input() fotos: File[] = [];
     
   @Output() titleChange = new EventEmitter<string>();
   @Output() priceChange = new EventEmitter<string>();
   @Output() categoryChange = new EventEmitter<string>();
   @Output() direccionChange = new EventEmitter<string>();
   @Output() descriptionChange = new EventEmitter<string>();
+  @Output() fotosChange = new EventEmitter<File[]>();
   @Output() closeClicked = new EventEmitter<void>();
   @Output() addPhotosClicked = new EventEmitter<void>();
-
   @Output() validationChange = new EventEmitter<boolean>();
+
+  categories: CategoriaPublicacion[] = [];
+  loadingCategories: boolean = false;
 
   constructor(
     private router: Router,
     private http: HttpClient,
-    private conexionBackend: ConexionBackendService
+    private conexionBackend: ConexionBackendService,
+    private categoriaService: CategoriaPublicacionService // Inyecta el servicio
   ) {}
 
   ngOnInit(): void {
+    this.loadUserData();
+    this.loadCategories(); 
+  }
+
+  private loadUserData(): void {
     const usuario = JSON.parse(localStorage.getItem('usuario')!);
     const id = usuario?.idUsuario;
 
@@ -64,6 +76,33 @@ export class AnuncioDatosComponent {
         },
       });
     }
+  }
+
+  private loadCategories(): void {
+    this.loadingCategories = true;
+    this.categoriaService.lista().subscribe({
+      next: (response) => {
+        if (response.estado && response.valor) {
+          this.categories = response.valor;
+        } else {
+          console.error('Error en la respuesta del servidor:', response.msg);
+          this.setDefaultCategories();
+        }
+        this.loadingCategories = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar categorías:', error);
+        this.setDefaultCategories();
+        this.loadingCategories = false;
+      }
+    });
+  }
+
+  private setDefaultCategories(): void {
+    this.categories = [
+      { id: 'CAT01', nombre: 'Rentas' },
+      { id: 'CAT02', nombre: 'Compras' }
+    ];
   }
 
   private validarCampos(): void {
@@ -156,7 +195,4 @@ export class AnuncioDatosComponent {
   getImageUrl(file: File): string {
     return URL.createObjectURL(file);
   }
-
-  @Input() fotos: File[] = [];
-  @Output() fotosChange = new EventEmitter<File[]>();
 }

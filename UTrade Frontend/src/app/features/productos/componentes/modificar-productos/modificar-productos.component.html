@@ -38,17 +38,34 @@
         <div class="form-group mb-3">
           <label for="category" class="form-label">Categoría *</label>
           <select id="category" class="form-select" [ngModel]="category" (ngModelChange)="onCategoryChange($event)">
-            <option value="" disabled>Selecciona una categoría</option>
-            <option value="Apartamento">Apartamento</option>
-            <option value="Muebles">Muebles</option>
-            <option value="Ropa">Ropa</option>
-            <option value="Electrónicos">Electrónicos</option>
-            <option value="Vehículos">Vehículos</option>
-            <option value="Servicios">Servicios</option>
-            <option value="Otros">Otros</option>
+            <option *ngFor="let cat of categories" [value]="cat.nombre">
+              {{ cat.nombre }}
+            </option>
           </select>
         </div>
 
+        <div class="form-group mb-3">
+          <label for="direccion" class="form-label">Dirección *</label>
+          <input type="text" id="direccion" class="form-control" placeholder="Dirección de la publicación"
+            [ngModel]="direccion" (ngModelChange)="onDireccionChange($event)" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="estado" class="form-label">Estado *</label>
+          <select id="estado" class="form-select" [ngModel]="estadoSeleccionado" (ngModelChange)="onEstadoChange($event)"
+            [disabled]="loadingEstado">
+            <option value="" disabled>
+              {{ loadingEstado ? 'Cargando estados...' : 'Selecciona un estado' }}
+            </option>
+            <option *ngFor="let est of estados" [value]="est.nombre">
+              {{ est.nombre }}
+            </option>
+          </select>
+        
+          <div *ngIf="loadingEstado" class="loading-spinner">
+            Cargando...
+          </div>  
+        </div>
         <div class="form-group mb-4">
           <label for="description" class="form-label">Descripción</label>
           <textarea id="description" class="form-control" rows="4" placeholder="Describe tu producto o servicio..."
@@ -61,71 +78,118 @@
     <div class="col-md-6">
       <div class="sticky-top" style="top: 20px;">
         <h4 class="mb-4">VISTA PREVIA</h4>
-        <mat-card class="mb-4">
-          <mat-card-content>
-            <div class="d-flex align-items-center mb-3">
-              <app-user-profile [username]="username" [userHandle]="userHandle" [avatarUrl]="userAvatar">
-              </app-user-profile>
-              <div class="ms-2">
-                <div>{{ previewUsername }}</div>
-                <small class="text-muted">Actualizado ahora</small>
-              </div>
-              <div class="ms-auto text-muted">
-                <mat-icon>location_on</mat-icon> Ubicación
-              </div>
-            </div>
-
-            <h5 class="fw-bold">{{ title || "Título de la publicación" }}</h5>
-
-            <div class="d-flex align-items-center mb-2">
-              <h6 class="text-primary mb-0 me-2">
-                $ {{ (price | number:'1.0-0') || '0' }} COP
-              </h6>
-              <span class="text-muted"> / {{ category || "CATEGORÍA" }}</span>
-            </div>
-
-            <p class="text-muted">{{ description || "Descripción del producto o servicio..." }}</p>
-
-            <div class="row mb-3" *ngIf="previewUrls.length > 0">
-              <div *ngFor="let imgUrl of previewUrls" class="col-6 mb-2">
-                <div class="bg-light rounded" style="height: 100px; overflow: hidden">
-                  <img [src]="imgUrl" class="w-100 h-100 object-fit-cover" />
+          <mat-card class="mb-4">
+            <mat-card-content>
+              <div class="d-flex align-items-center mb-3">
+                <app-user-profile [username]="username" [userHandle]="userHandle" [avatarUrl]="userAvatar">
+                </app-user-profile>
+                <div class="ms-2">
+                  <div>{{ previewUsername }}</div>
+                  <small class="text-muted">Actualizado ahora</small>
+                </div>
+                <div class="ms-auto text-muted">
+                  <mat-icon>location_on</mat-icon> {{ direccion || 'Ubicación' }}
                 </div>
               </div>
-            </div>
 
-            <div class="row mb-3" *ngIf="previewUrls.length === 0">
-              <div class="col-12">
-                <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted"
-                  style="height: 150px;">
-                  <div class="text-center">
-                    <mat-icon style="font-size: 48px; height: 48px; width: 48px;">image</mat-icon>
-                    <p class="mb-0 small">Sin imagen</p>
+              <h5 class="fw-bold">{{ title || "Título de la publicación" }}</h5>
+
+              <div class="d-flex align-items-center mb-2">
+                <h6 class="text-primary mb-0 me-2">
+                  $ {{ (price | number:'1.0-0') || '0' }} COP
+                </h6>
+                <span class="text-muted"> / {{ category || "CATEGORÍA" }}</span>
+              </div>
+
+              <p class="text-muted">{{ description || "Descripción del producto o servicio..." }}</p>
+
+              <div class="row mb-3" *ngIf="previewUrls.length > 0">
+                <div *ngFor="let imgUrl of previewUrls" class="col-6 mb-2">
+                  <div class="bg-light rounded" style="height: 100px; overflow: hidden">
+                    <img [src]="imgUrl" class="w-100 h-100 object-fit-cover" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3" *ngIf="previewUrls.length === 0">
+                <div class="col-12">
+                  <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted"
+                    style="height: 150px;">
+                    <div class="text-center">
+                      <mat-icon style="font-size: 48px; height: 48px; width: 48px;">image</mat-icon>
+                      <p class="mb-0 small">Sin imagen</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center">
+                <button mat-icon-button>
+                  <mat-icon>thumb_up</mat-icon>
+                </button>
+                <button mat-icon-button>
+                  <mat-icon>chat_bubble_outline</mat-icon>
+                </button>
+                <button mat-icon-button>
+                  <mat-icon>share</mat-icon>
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+        <div>
+
+        <!-- <div class="mb-4">
+          <h6 class="mb-3">Ubicación</h6>
+          
+          <div class="form-group mb-3">
+            <input type="text" class="form-control" placeholder="Coordenadas" [ngModel]="coordenadas" readonly />
+          </div>
+          
+          <div class="mb-3">
+            <p class="mb-2 small">
+              Selecciona la ubicación en el mapa <span class="text-danger">*</span>
+            </p>
+            <div class="map-container">
+              <div id="map" class="google-map" [class.loading]="loading">
+                <div *ngIf="loading" class="map-loading">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando mapa...</span>
+                  </div>
+                </div>
+              </div>
+              <div class="map-controls mt-2">
+                <div class="row g-2">
+                  <div class="col-12">
+                    <button type="button" class="btn btn-outline-primary btn-sm w-100 mb-2" (click)="getCurrentLocation()">
+                      <mat-icon style="font-size: 16px">my_location</mat-icon>
+                      Mi ubicación
+                    </button>
+                  </div>
+                  <div class="col-12">
+                    <select class="form-select form-select-sm" [(ngModel)]="selectedUniversidad" (change)="onUniversidadChange()">
+                      <option value="">🏛️ Seleccionar Universidad</option>
+                      <option *ngFor="let universidad of universidades" [value]="universidad.nombre">
+                        {{ universidad.nombre }}
+                      </option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="d-flex align-items-center">
-              <button mat-icon-button>
-                <mat-icon>thumb_up</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>chat_bubble_outline</mat-icon>
-              </button>
-              <button mat-icon-button>
-                <mat-icon>share</mat-icon>
-              </button>
+            <div *ngIf="!ubicacionSeleccionada" class="text-danger mt-1">
+              <small>Debes seleccionar una ubicación en el mapa</small>
             </div>
-          </mat-card-content>
-        </mat-card>
+          </div>
+          </div>
+        </div> -->
 
         <div class="d-flex justify-content-between mt-3">
           <button mat-stroked-button (click)="salir()" class="me-2">
             Cancelar
           </button>
           <button mat-raised-button color="primary" (click)="editar()"
-            [disabled]="!title.trim() || !price.trim() || !category.trim()">
+            [disabled]="!title.trim() || !price.trim() || !category.trim() || !direccion.trim()">
             <mat-icon class="me-1">save</mat-icon>
             Guardar cambios
           </button>
