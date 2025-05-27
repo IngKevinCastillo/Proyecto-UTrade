@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../../../Services/chat.service';
 import { PerfilService } from '../../../Services/perfil.service';
 import { ToastrService } from 'ngx-toastr';
 import { MensajesService } from '../../../Services/mensajes.service';
 import { SignalrService } from '../../../Services/signalr.service';
+import { Subscription } from 'rxjs';
 
 export interface Conversation {
   id: string;
@@ -20,12 +21,14 @@ export interface Conversation {
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   conversations: Conversation[] = [];
   selectedConversation: Conversation | null = null;
   idUsuarioSesion: string = '';
   messages: any[] = [];
   private chatIdToOpen: string | null = null;
+  private signalRConnected = false;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private chatService: ChatService,
@@ -45,16 +48,48 @@ export class ChatComponent implements OnInit {
 
     const usuario = JSON.parse(usuarioStorage);
     this.idUsuarioSesion = usuario.idUsuario;
-    this.signalRService.startConnection();
 
-    this.route.queryParams.subscribe((params) => {
+    const routeSubscription = this.route.queryParams.subscribe((params) => {
       if (params['chatId']) {
         this.chatIdToOpen = params['chatId'];
         console.log('Chat ID a abrir:', this.chatIdToOpen);
       }
     });
+    this.subscriptions.push(routeSubscription);
 
+    this.initializeSignalR();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+
+    if (this.selectedConversation) {
+      this.signalRService
+        .salirDelChat(this.selectedConversation.id)
+        .catch((err) => console.error('Error al salir del chat:', err));
+    }
+  }
+
+  private async initializeSignalR(): Promise<void> {
+    try {
+      await this.signalRService.startConnection();
+      this.signalRConnected = true;
+      console.log('SignalR conectado exitosamente');
+
+      this.setupMessageListener();
+
+      this.cargarConversaciones();
+    } catch (error) {
+      console.error('Error al conectar SignalR:', error);
+      this.toastr.error('Error de conexión en tiempo real', 'Error');
+      this.cargarConversaciones();
+    }
+  }
+
+  private setupMessageListener(): void {
     this.signalRService.addReceiveMessageListener((mensaje) => {
+      console.log('Mensaje recibido:', mensaje);
+
       if (
         this.selectedConversation &&
         mensaje.chatId === this.selectedConversation.id
@@ -74,28 +109,28 @@ export class ChatComponent implements OnInit {
         this.toastr.info('Nuevo mensaje recibido en otro chat');
       }
 
-      const index = this.conversations.findIndex(
-        (c) => c.id === mensaje.chatId
-      );
-
-      if (index !== -1) {
-        const conversacionActualizada: Conversation = {
-          ...this.conversations[index],
-          lastMessage: mensaje.mensaje1,
-          time: new Date(mensaje.hora).toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          }),
-        };
-
-        this.conversations = [
-          conversacionActualizada,
-          ...this.conversations.filter((_, i) => i !== index),
-        ];
-      }
+      this.updateConversationList(mensaje);
     });
+  }
 
-    this.cargarConversaciones();
+  private updateConversationList(mensaje: any): void {
+    const index = this.conversations.findIndex((c) => c.id === mensaje.chatId);
+
+    if (index !== -1) {
+      const conversacionActualizada: Conversation = {
+        ...this.conversations[index],
+        lastMessage: mensaje.mensaje1,
+        time: new Date(mensaje.hora).toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      };
+
+      this.conversations = [
+        conversacionActualizada,
+        ...this.conversations.filter((_, i) => i !== index),
+      ];
+    }
   }
 
   private cargarConversaciones(): void {
@@ -165,7 +200,9 @@ export class ChatComponent implements OnInit {
           });
 
           Promise.all(promesasConversaciones).then(() => {
-            this.abrirChatEspecifico();
+            setTimeout(() => {
+              this.abrirChatEspecifico();
+            }, 500);
           });
         } else {
           this.verificarYCrearNuevaConversacion();
@@ -234,8 +271,10 @@ export class ChatComponent implements OnInit {
           };
 
           this.conversations.unshift(nuevaConversacion);
-          this.selectConversation(nuevaConversacion);
-          this.toastr.success('Nuevo chat abierto automáticamente', 'Éxito');
+          setTimeout(() => {
+            this.selectConversation(nuevaConversacion);
+            this.toastr.success('Nuevo chat abierto automáticamente', 'Éxito');
+          }, 500);
         }
       },
       error: () => {
@@ -244,19 +283,35 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  selectConversation(conversation: Conversation) {
+  async selectConversation(conversation: Conversation) {
     if (this.selectedConversation) {
-      this.signalRService
-        .salirDelChat(this.selectedConversation.id)
-        .catch((err) => console.error('Error al salir del chat:', err));
+      try {
+        await this.signalRService.salirDelChat(this.selectedConversation.id);
+        console.log('Salió del chat anterior:', this.selectedConversation.id);
+      } catch (err) {
+        console.error('Error al salir del chat:', err);
+      }
     }
 
     this.selectedConversation = conversation;
     this.messages = [];
 
-    this.signalRService
-      .unirseAlChat(conversation.id)
-      .catch((err) => console.error('Error al unirse al chat:', err));
+    if (this.signalRConnected) {
+      try {
+        await this.signalRService.unirseAlChat(conversation.id);
+        console.log('Se unió al chat:', conversation.id);
+      } catch (err) {
+        console.error('Error al unirse al chat:', err);
+        this.toastr.warning('Error al conectar al chat en tiempo real');
+      }
+    } else {
+      console.warn('SignalR no está conectado, reintentando...');
+      this.initializeSignalR().then(() => {
+        if (this.signalRConnected) {
+          this.signalRService.unirseAlChat(conversation.id);
+        }
+      });
+    }
 
     this.mensajesService.listarPorChat(conversation.id).subscribe({
       next: (res) => {
