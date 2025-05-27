@@ -74,6 +74,7 @@ namespace BLL.Servicios
                 publicacionEncontrada.Descripcion = publicacionModelo.Descripcion;
                 publicacionEncontrada.Ubicacion = publicacionModelo.Ubicacion;
                 publicacionEncontrada.Direccion = publicacionModelo?.Direccion;
+                publicacionEncontrada.IdEstado = publicacionModelo.IdEstado;
                 bool respuesta = await _publicacionesRepositorio.Editar(publicacionEncontrada);
                 if (!respuesta)
                     throw new TaskCanceledException("No se pudo editar");
@@ -174,7 +175,7 @@ namespace BLL.Servicios
 
                 var queryPublicacion = await _publicacionesRepositorio.Consultar();
                 var listaFiltrada = queryPublicacion
-                    .Where(x => x.IdCategoria == idCategoria)
+                    .Where(x => x.IdCategoria == idCategoria && x.IdEstado == "EST01")
                     .ToList();
 
                 if (listaFiltrada == null || !listaFiltrada.Any())

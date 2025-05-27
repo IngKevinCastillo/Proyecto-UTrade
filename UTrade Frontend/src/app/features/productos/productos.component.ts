@@ -204,7 +204,7 @@ export class ProductosComponent implements OnChanges, OnInit {
   }
 
   cargarTodosLosProductos(): void {
-    this._productoServicio.lista().subscribe({
+    this._productoServicio.listarActivos().subscribe({
       next: (respuesta) => {
         if (respuesta.estado) {
           this.procesarProductos(respuesta.valor);
@@ -274,7 +274,7 @@ export class ProductosComponent implements OnChanges, OnInit {
         },
       });
   }
-
+  
   private filtrarPorNombreCategoria(): void {
     const categoria = this.listaCategorias.find(
       (c) => c.nombre.toLowerCase() === this.Filtro?.toLowerCase()
