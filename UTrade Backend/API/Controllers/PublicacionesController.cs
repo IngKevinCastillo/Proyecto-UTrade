@@ -34,6 +34,24 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("ListarSoloConLongitudLatitud")]
+        public async Task<IActionResult> ListarSoloConLongitudLatitud()
+        {
+            var rsp = new Respuesta<List<PublicacionesDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.ListarSoloConLongitudLatitud();
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
         [Route("Buscar/{id}")]
         public async Task<IActionResult> Buscar(string id)
         {
