@@ -1,10 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { Reporte } from '../../../../interfaces/reporte';
 import { PersonaService } from '../../../../Services/persona.service';
 import { ProductoService } from '../../../../Services/producto.service';
 import { Persona } from '../../../../interfaces/persona';
+import { EstadosService } from '../../../../Services/estados.service';
+import { CategoriaPublicacionService } from '../../../../Services/categoria-publicacion.service'; 
 import { Publicaciones } from '../../../../interfaces/publicaciones';
+import { Estados } from '../../../../interfaces/estados';
 import { FotosPublicacion } from '../../../../interfaces/fotos-publicacion';
 import { FotosPublicacionesService } from '../../../../Services/fotos-publicaciones.service';
 import { tipoReporteService } from '../../../../Services/tipoReporte.service';
@@ -18,7 +22,12 @@ import { RespuestaAPI } from '../../../../interfaces/respuesta-api';
 export class ResueltoComponent implements OnInit {
   persona: Persona | null = null;
   producto: Publicaciones | null = null;
+  nombre: string = '';
+  nombreEstado: string = '';
+  categoria: string = '';
   esUsuario: boolean = false;
+  listaEstados: any[] = [];
+  estadoSeleccionado: any = null;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { reporte: Reporte },
@@ -26,10 +35,18 @@ export class ResueltoComponent implements OnInit {
     private personaService: PersonaService,
     private productoService: ProductoService,
     private tipoService: tipoReporteService,
-    private fotosService: FotosPublicacionesService
+    private fotosPublicacionService: FotosPublicacionesService,
+    private estadosService: EstadosService,
+    private categoriaPublicacionService: CategoriaPublicacionService  
+    
   ) {}
 
   ngOnInit(): void {
+    this.buscarSegunTipoReporte();
+    this.cargarListaEstados();
+  }
+
+  buscarSegunTipoReporte(): void {
     this.tipoService.buscar(this.data.reporte.idTipoReporte).subscribe(res => {
       if (res.estado && res.valor.nombre.toLowerCase().includes('usuario')) {
         this.cargarUsuario(res);
@@ -43,6 +60,7 @@ export class ResueltoComponent implements OnInit {
     this.esUsuario = true;
     this.personaService.buscar(this.data.reporte.idReportado).subscribe(res => {
       if (res.estado) this.persona = res.valor;
+      this.buscarEstado(this.persona?.idEstado|| '');
     });
   }
 
@@ -50,6 +68,10 @@ export class ResueltoComponent implements OnInit {
     this.esUsuario = false;
     this.productoService.buscar(this.data.reporte.idReportado).subscribe(res => {
       if (res.estado) this.producto = res.valor;
+      this.cargarFotosPublicacion(this.producto?.id || ''); 
+      this.buscarEstado(this.producto?.idEstado || ''); 
+      this.buscarCategoria(this.producto?.idCategoria || '');
+      this.buscarNombre(this.producto?.idUsuario || '');
     });
   }
 
@@ -131,42 +153,94 @@ export class ResueltoComponent implements OnInit {
     return null;
   }
 
+  cargarFotosPublicacion(idPublicacion: string): void {
+    this.fotosPublicacionService.buscarFotosPublicacion(idPublicacion).subscribe({
+      next: (res) => {
+        if (res.estado && this.producto) {
+
+          this.producto.fotosPublicaciones = res.valor;
+          const tieneFotos = this.tieneFotosValidas();
+        } else {
+          if (this.producto) {
+            this.producto.fotosPublicaciones = [];
+          }
+        }
+      },
+      error: (error) => {
+        if (this.producto) {
+          this.producto.fotosPublicaciones = [];
+        }
+      }
+    });
+  }
+
   obtenerImagenPublicacion(foto: FotosPublicacion): string | null {
     if (!foto) {
-      console.log('No hay objeto foto');
       return null;
     }
 
-    console.log('Procesando foto:', foto);
-
-    // Verificar fotoBase64 primero (más probable que sea la correcta)
-    if (foto.fotoBase64 && foto.fotoBase64.trim()) {
-      if (foto.fotoBase64.startsWith('data:image')) {
-        console.log('Usando fotoBase64 con data:image');
-        return foto.fotoBase64;
-      }
-      console.log('Usando fotoBase64 añadiendo prefijo');
-      return `data:image/jpeg;base64,${foto.fotoBase64}`;
-    }
-
-    // Si no hay fotoBase64, intentar con foto
-    if (foto.foto && foto.foto.trim()) {
-      if (foto.foto.startsWith('http')) {
-        console.log('Usando foto como URL');
-        return foto.foto;
-      }
-      // Si parece ser base64 (muy largo)
-      if (foto.foto.length > 100) {
-        console.log('Usando foto como base64');
-        return `data:image/jpeg;base64,${foto.foto}`;
+    // 1. Verificar fotoBase64 primero (más común en aplicaciones)
+    if (foto.fotoBase64 && foto.fotoBase64.trim() !== '') {
+      try {
+        // Si ya tiene el prefijo data:image
+        if (foto.fotoBase64.startsWith('data:image')) {
+          return foto.fotoBase64;
+        }
+        
+        // Si es base64 puro, agregar prefijo
+        if (this.esBase64Valido(foto.fotoBase64)) {
+          return `data:image/jpeg;base64,${foto.fotoBase64}`;
+        }
+      } catch (error) {
+        console.warn('⚠️ Error procesando fotoBase64:', error);
       }
     }
 
-    console.log('No se pudo obtener imagen para:', foto);
+    // 2. Verificar campo foto como fallback
+    if (foto.foto && foto.foto.trim() !== '') {
+      try {
+        // Si es una URL completa
+        if (foto.foto.startsWith('http://') || foto.foto.startsWith('https://')) {
+          return foto.foto;
+        }
+        
+        // Si ya tiene prefijo data:image
+        if (foto.foto.startsWith('data:image')) {
+          return foto.foto;
+        }
+        
+        // Si parece ser base64 (longitud considerable y caracteres válidos)
+        if (this.esBase64Valido(foto.foto) && foto.foto.length > 100) {
+          return `data:image/jpeg;base64,${foto.foto}`;
+        }
+      } catch (error) {
+        console.warn('⚠️ Error procesando foto:', error);
+      }
+    }
     return null;
   }
 
-  // Método para obtener la clase CSS según el número de fotos
+  private esBase64Valido(str: string): boolean {
+    if (!str || str.length === 0) {
+      return false;
+    }
+    
+    try {
+      // Remover espacios en blanco
+      const cleanStr = str.trim();
+      
+      // Verificar que solo contenga caracteres base64 válidos
+      const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
+      
+      // Verificar longitud (debe ser múltiplo de 4 después de padding)
+      const validLength = cleanStr.length % 4 === 0;
+      
+      return base64Regex.test(cleanStr) && validLength && cleanStr.length > 0;
+    } catch {
+      return false;
+    }
+  }
+
   obtenerClaseGaleria(): string {
     if (!this.producto?.fotosPublicaciones) return '';
     
@@ -174,13 +248,149 @@ export class ResueltoComponent implements OnInit {
     return `galeria-${numFotos}-fotos`;
   }
 
-  // Método para verificar si hay fotos válidas
   tieneFotosValidas(): boolean {
-    if (!this.producto?.fotosPublicaciones) return false;
+    if (!this.producto?.fotosPublicaciones || this.producto.fotosPublicaciones.length === 0) {
+      return false;
+    }
+    const fotosValidas = this.producto.fotosPublicaciones.filter((foto, index) => {
+      const esValida = this.obtenerImagenPublicacion(foto) !== null;
+      return esValida;
+    });
     
-    return this.producto.fotosPublicaciones.some(foto => 
-      this.obtenerImagenPublicacion(foto) !== null
-    );
+    const resultado = fotosValidas.length > 0;   
+    return resultado;
+  }
+
+  buscarEstado(id: string): void {   
+    this.estadosService.buscar(id).subscribe({
+      next: (res) => {       
+        if (res.estado) {
+          this.nombreEstado = res.valor.nombre;
+        } else {
+          this.nombreEstado = 'Estado no encontrado';
+        }
+      },
+      error: (error) => {
+        this.nombreEstado = 'Error al cargar estado';
+      }
+    });
+  }
+
+  buscarCategoria(id: string): void {   
+    this.categoriaPublicacionService.buscar(id).subscribe({
+      next: (res) => {       
+        if (res.estado) {
+          this.categoria = res.valor.nombre;
+        } else {
+          this.categoria = 'Categoría no encontrada';
+        }
+      },
+      error: (error) => {
+        this.categoria = 'Error al cargar categoría';
+      }
+    });
+  }
+
+  buscarNombre(id: string): void {   
+    this.personaService.buscar(id).subscribe({
+      next: (res) => {       
+        if (res.estado) {
+          this.nombre = res.valor.nombres;
+        } else {
+          console.warn('Nombre no encontrado para ID:', id);
+          this.nombre = 'Nombre no encontrado';
+        }
+      },
+      error: (error) => {
+        this.nombre = 'Error al cargar nombre';
+      }
+    });
+  }
+
+  cargarListaEstados(): void {
+    this.estadosService.lista().subscribe({
+      next: (res) => {
+        if (res.estado) {
+          this.listaEstados = res.valor;
+        } else {
+          console.error('Error al cargar lista de estados:', res.msg);
+          this.listaEstados = [];
+        }
+      },
+      error: (error) => {
+        console.error('Error en el servicio de estados:', error);
+        this.listaEstados = [];
+      }
+    });
+  }
+
+  onEstadoSeleccionado(event: MatSelectChange): void {
+    this.estadoSeleccionado = event.value;
+  }
+
+  resolverReporte(): void {
+    if (!this.estadoSeleccionado) {
+      console.warn('No se ha seleccionado un estado');
+      return;
+    }
+
+    if (this.esUsuario) {
+      this.actualizarEstadoUsuario();
+    } else if (!this.esUsuario) {
+      this.actualizarEstadoPublicacion();
+    }
+  }
+
+  private actualizarEstadoUsuario(): void {
+    if (!this.persona || !this.estadoSeleccionado) return;
+
+    const personaActualizada: Persona = {
+      ...this.persona,
+      idEstado: this.estadoSeleccionado.id
+    };
+
+    this.personaService.editar(personaActualizada).subscribe({
+      next: (response) => {
+        if (response && response.estado) {
+          console.log('Usuario actualizado exitosamente');
+          this.dialogRef.close({ 
+            tipoEntidad: personaActualizada.id,
+            reporte: this.data.reporte 
+          });
+        } else {
+          console.error('Error al actualizar usuario:', response.msg);
+        }
+      },
+      error: (error) => {
+        console.error('Error al actualizar usuario:', error);
+      }
+    });
+  }
+
+  private actualizarEstadoPublicacion(): void {
+    if (!this.producto || !this.estadoSeleccionado) return;
+
+    const publicacionActualizada: Publicaciones = {
+      ...this.producto,
+      idEstado: this.estadoSeleccionado.id
+    };
+
+    this.productoService.editar(publicacionActualizada).subscribe({
+      next: (response) => {
+        if (response && response.estado) {
+          console.log('Publicación actualizada exitosamente');
+          this.dialogRef.close({ 
+            tipoEntidad: publicacionActualizada.id,
+            reporte: this.data.reporte 
+          });
+        } else {
+          console.error('Error al actualizar publicación:', response.msg);
+        }
+      },
+      error: (error) => {
+        console.error('Error al actualizar publicación:', error);
+      }
+    });
   }
 
   cerrar(): void {

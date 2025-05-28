@@ -68,7 +68,7 @@
           </button>
           
           <button mat-button color="warn" (click)="cambiarEstadoPorNombre(reporte, 'Rechazado')" 
-                  *ngIf="!estaRechazado(reporte.idEstado)">
+                  *ngIf="!estaResueltaOrRechazado(reporte.idEstado)">
             <mat-icon>cancel</mat-icon> Rechazar
           </button>
           

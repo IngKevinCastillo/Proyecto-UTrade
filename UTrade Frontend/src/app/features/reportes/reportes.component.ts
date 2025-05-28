@@ -151,13 +151,11 @@ export class ReportesComponent implements OnInit {
   }
 
   obtenerNombrePersona(id: string): string {
-    // Ya está en cache
     if (this.personaCache[id]) {
       const persona = this.personaCache[id];
       return `${persona.nombres} ${persona.apellidos}`;
     }
 
-    // Aún no está en cache, lo pedimos al backend
     this.personService.buscar(id).subscribe({
       next: (response) => {
         if (response.estado) {
@@ -172,7 +170,6 @@ export class ReportesComponent implements OnInit {
       }
     });
 
-    // Mientras tanto, retornamos texto temporal
     return 'Cargando...';
   }
 
@@ -204,7 +201,6 @@ export class ReportesComponent implements OnInit {
   }
 
   validarEncontrados(estado: estadoReporte): boolean {
-      console.error(`Estado no encontrado en la lista de estados`);
       this.toastr.error(`No se pudo encontrar el estado`, 'Error');
       return false;
   }
@@ -244,6 +240,13 @@ export class ReportesComponent implements OnInit {
     this.listaReportesFiltrados = reportesFiltrados;
   }
 
+  definirEstacionHoraria(): Date {
+    const fechaActual = new Date();
+    const offset = fechaActual.getTimezoneOffset() * 60000; 
+    const fechaLocal = new Date(fechaActual.getTime() - offset);
+    return fechaLocal;
+  }
+
   buscarEstadoPorNombre(nombreEstado: string): estadoReporte | null {
     return this.listaEstados.find(estado => 
       estado.nombre === nombreEstado
@@ -252,7 +255,6 @@ export class ReportesComponent implements OnInit {
   
   validarCambioEstado(reporte: Reporte, estadoEncontrado: estadoReporte, nombreEstado: string): boolean {
     if (!estadoEncontrado) {
-      console.error(`Estado "${nombreEstado}" no encontrado en la lista de estados`);
       this.toastr.error(`No se pudo encontrar el estado: ${nombreEstado}`, 'Error');
       return false;
     }
@@ -267,9 +269,7 @@ export class ReportesComponent implements OnInit {
   
   crearReporteEncontrado(reporte: Reporte, nuevoEstadoId: string): Reporte {
 
-    const fechaActual = new Date();
-    const offset = fechaActual.getTimezoneOffset() * 60000; 
-    const fechaLocal = new Date(fechaActual.getTime() - offset);
+    const fechaLocal = this.definirEstacionHoraria();
 
     return {
       ...reporte,
@@ -303,10 +303,10 @@ export class ReportesComponent implements OnInit {
         this.toastr.error(`Error de conexión al cambiar estado a ${nombreEstado}`, 'Error');
       }
     });
-
   }
 
   cambiarEstadoPorNombre(reporte: Reporte, nombreEstado: string): void {
+
     const estadoEncontrado = this.buscarEstadoPorNombre(nombreEstado);
     
     if (!this.validarCambioEstado(reporte, estadoEncontrado!, nombreEstado)) {
@@ -357,54 +357,37 @@ export class ReportesComponent implements OnInit {
     return `${fechaObj.getDate()}/${fechaObj.getMonth() + 1}/${fechaObj.getFullYear()}`;
   }
 
-resolver(reporte: Reporte): void {
+  resolver(reporte: Reporte): void {
 
-  this.toastr.info(`Iniciando resolución del reporte ${reporte.idReporte}`, 'Información');
+    this.toastr.info(`Iniciando resolución del reporte ${reporte.idReporte}`, 'Información');
 
-  this.dialog.open(ResueltoComponent, {
-    width: '90vw', // Aumenta el ancho
-    maxWidth: '1200px', // Aumenta el máximo
-    minWidth: '800px', // Establece un mínimo
-    height: '85vh',
-    maxHeight: '90vh',
-    panelClass: 'modal-reporte-resolver',
-    disableClose: false,
-    hasBackdrop: true,
-    autoFocus: false, // Evita problemas de foco
-    data: { reporte }
-  });
+    const dialogRef = this.dialog.open(ResueltoComponent, {
+      width: '90vw', 
+      maxWidth: '1200px', 
+      minWidth: '800px', 
+      height: '85vh',
+      maxHeight: '90vh',
+      panelClass: 'modal-reporte-resolver',
+      disableClose: false,
+      hasBackdrop: true,
+      autoFocus: false, 
+      data: { reporte }
+    });
 
-  if (!reporte.leido) {
-    this.marcarComoLeido(reporte);
-  }
-}
-
-  marcarComoLeido(reporte: Reporte): void {
-    const reporteEncontrado = {
-      ...reporte,
-      leido: true,
-      fechaActualizacion: new Date()
-    };
-
-    this.reporteService.actualizar(reporteEncontrado).subscribe({
-      next: (response) => {
-        if (response.estado) {
-          const index = this.listaReportes.findIndex(r => r.idReporte === reporte.idReporte);
-          if (index !== -1) {
-            this.listaReportes[index].leido = true;
-            this.listaReportes[index].fechaActualizacion = new Date();
-          }
-          this.toastr.success('Reporte marcado como leído', 'Éxito');
-          this.aplicarFiltros();
-        } else {
-          this.toastr.error('Error al marcar el reporte como leído', 'Error');
-        }
-      },
-      error: (error) => {
-        console.error('Error al actualizar reporte:', error);
-        this.toastr.error('Error de conexión al actualizar el reporte', 'Error');
+    if (!reporte.leido) {
+      this.marcarComoLeido(reporte);
+    }
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cambiarEstadoPorNombre(result.reporte, 'Resuelto');
+        this.toastr.success(
+          `${this.esUsuario(result.tipoEntidad) ? 'usuario': 'publicacion'} actualizada con estado: ${result.estadoAplicado.nombre}`, 
+          'Reporte Resuelto'
+        );
       }
     });
+
   }
 
   verDetalles(reporte: Reporte): void {
@@ -434,6 +417,37 @@ resolver(reporte: Reporte): void {
     if (!reporte.leido) {
       this.marcarComoLeido(reporte);
     }
+  }
+
+  marcarComoLeido(reporte: Reporte): void {
+
+    const fechaLocal = this.definirEstacionHoraria();
+
+    const reporteEncontrado = {
+      ...reporte,
+      leido: true,
+      fechaActualizacion: fechaLocal
+    };
+
+    this.reporteService.actualizar(reporteEncontrado).subscribe({
+      next: (response) => {
+        if (response.estado) {
+          const index = this.listaReportes.findIndex(r => r.idReporte === reporte.idReporte);
+          if (index !== -1) {
+            this.listaReportes[index].leido = true;
+            this.listaReportes[index].fechaActualizacion = new Date();
+          }
+          this.toastr.success('Reporte marcado como leído', 'Éxito');
+          this.aplicarFiltros();
+        } else {
+          this.toastr.error('Error al marcar el reporte como leído', 'Error');
+        }
+      },
+      error: (error) => {
+        console.error('Error al actualizar reporte:', error);
+        this.toastr.error('Error de conexión al actualizar el reporte', 'Error');
+      }
+    });
   }
 
     obtenerClaseEstado(idEstado: string): string {

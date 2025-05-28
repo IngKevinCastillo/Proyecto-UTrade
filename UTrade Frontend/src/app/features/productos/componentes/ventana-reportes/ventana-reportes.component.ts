@@ -127,14 +127,14 @@ export class VentanaReportesComponent implements OnInit {
   }
 
 
-private generarIdReporte(ultimaId: string): string {
-  if (!ultimaId) return 'RE001';
-  
-  const numero = parseInt(ultimaId.replace('RE', '')) + 1;
-  
-  if (numero < 1000) {
-    return `RE${numero.toString().padStart(3, '0')}`;
+  private generarIdReporte(ultimaId: string): string {
+    if (!ultimaId) return 'RE001';
+    
+    const numero = parseInt(ultimaId.replace('RE', '')) + 1;
+    
+    if (numero < 1000) {
+      return `RE${numero.toString().padStart(3, '0')}`;
+    }
+    return `RE${numero}`;
   }
-  return `RE${numero}`;
-}
 }

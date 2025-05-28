@@ -343,6 +343,272 @@
   }
 }
 
+/* === ESTILOS PARA PANEL DE RESOLUCIÓN === */
+
+.formulario-resolucion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.formulario-resolucion h3 {
+  margin: 0 0 15px 0;
+  color: #2c248b;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.formulario-resolucion h3 mat-icon {
+  color: #2c248b !important;
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0;
+}
+
+/* Campo de selección de estado */
+.campo-estado {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Estilos para Material Form Field */
+::ng-deep .campo-estado .mat-form-field-outline {
+  color: #2c248b !important;
+}
+
+::ng-deep .campo-estado .mat-form-field-outline-thick {
+  color: #2c248b !important;
+  opacity: 1 !important;
+}
+
+::ng-deep .campo-estado .mat-form-field-label {
+  color: #2c248b !important;
+}
+
+::ng-deep .campo-estado.mat-focused .mat-form-field-label {
+  color: #2c248b !important;
+}
+
+::ng-deep .campo-estado .mat-select-value {
+  color: #333 !important;
+  font-weight: 500;
+}
+
+::ng-deep .campo-estado .mat-select-arrow {
+  color: #2c248b !important;
+}
+
+::ng-deep .campo-estado .mat-form-field-suffix mat-icon {
+  color: #2c248b !important;
+}
+
+/* Mensaje de advertencia */
+.mensaje-advertencia {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-left: 4px solid #f39c12;
+  border-radius: 8px;
+  color: #856404;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.mensaje-advertencia mat-icon {
+  color: #f39c12 !important;
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0;
+}
+
+.mensaje-advertencia span {
+  line-height: 1.4;
+}
+
+/* Botón resolver - Ajustes para mantener consistencia */
+.btn-resolver {
+  background-color: #2c248b;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(44, 36, 139, 0.2);
+  min-height: 48px;
+  width: 100%;
+  max-width: 280px;
+  align-self: center;
+  margin-top: 10px;
+}
+
+.btn-resolver mat-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.btn-resolver:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+.btn-resolver:hover:not(:disabled) {
+  background-color: #1e1a5f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(44, 36, 139, 0.3);
+}
+
+.btn-resolver:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(44, 36, 139, 0.2);
+}
+
+/* Estilos para las opciones del select (cuando se despliega) */
+::ng-deep .mat-select-panel {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(44, 36, 139, 0.15) !important;
+  border: 1px solid #2c248b !important;
+}
+
+::ng-deep .mat-option {
+  font-weight: 500 !important;
+  padding: 12px 16px !important;
+  line-height: 1.4 !important;
+}
+
+::ng-deep .mat-option:hover {
+  background-color: rgba(44, 36, 139, 0.08) !important;
+}
+
+::ng-deep .mat-option.mat-selected {
+  background-color: rgba(44, 36, 139, 0.12) !important;
+  color: #2c248b !important;
+}
+
+/* Separador visual para el formulario */
+.formulario-resolucion::before {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #2c248b, transparent);
+  border-radius: 1px;
+  margin-bottom: 10px;
+}
+
+/* === ESTILOS RESPONSIVOS PARA PANEL DE RESOLUCIÓN === */
+
+@media (max-width: 768px) {
+  .formulario-resolucion {
+    gap: 15px;
+    padding: 15px 0;
+  }
+
+  .formulario-resolucion h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
+  .btn-resolver {
+    padding: 12px 24px;
+    font-size: 15px;
+    max-width: 100%;
+    min-height: 44px;
+  }
+
+  .mensaje-advertencia {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formulario-resolucion {
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .formulario-resolucion h3 {
+    font-size: 1rem;
+    gap: 6px;
+  }
+
+  .formulario-resolucion h3 mat-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .btn-resolver {
+    padding: 11px 20px;
+    font-size: 14px;
+    gap: 8px;
+    min-height: 42px;
+  }
+
+  .btn-resolver mat-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .mensaje-advertencia {
+    padding: 8px 12px;
+    font-size: 12px;
+    gap: 8px;
+  }
+
+  .mensaje-advertencia mat-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* === ESTILOS ADICIONALES PARA MEJOR INTEGRACIÓN === */
+
+/* Asegurar que el panel derecho mantenga su estructura */
+.panel-derecho .formulario-resolucion {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Espaciado consistente con el resto del diseño */
+.panel-derecho > *:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+/* Hover effect para todo el formulario */
+.formulario-resolucion:hover {
+  background-color: rgba(44, 36, 139, 0.02);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
 /* Estilos responsivos para pantallas pequeñas */
 @media (max-width: 768px) {
   .contenedor-resuelto {
@@ -402,4 +668,5 @@
   .galeria-4-fotos {
     grid-template-columns: 1fr;
   }
+  
 }
