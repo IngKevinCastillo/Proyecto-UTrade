@@ -189,7 +189,8 @@
             Cancelar
           </button>
           <button mat-raised-button color="primary" (click)="editar()"
-            [disabled]="!title.trim() || !price.trim() || !category.trim() || !direccion.trim()">
+          [disabled]="!title.trim() || isInvalidPrice() || !category.trim() || !direccion.trim()"
+          >
             <mat-icon class="me-1">save</mat-icon>
             Guardar cambios
           </button>
