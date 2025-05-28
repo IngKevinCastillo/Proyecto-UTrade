@@ -73,9 +73,9 @@
           <p><mat-icon class="info-icon">description</mat-icon><strong>Descripción:</strong> {{ producto.descripcion }}</p>
           <p><mat-icon class="info-icon">attach_money</mat-icon><strong>Precio:</strong> ${{ producto.precio | number:'1.0-0' }}</p>
           <p><mat-icon class="info-icon">schedule</mat-icon><strong>Fecha:</strong> {{ formatearFecha(producto.fechaPublicacion) }}</p>
-          <p><mat-icon class="info-icon">person_outline</mat-icon><strong>Usuario dueño (id):</strong> {{ producto.idUsuario }}</p>
-          <p><mat-icon class="info-icon">category</mat-icon><strong>Categoría:</strong> {{ producto.idCategoria }}</p>
-          <p><mat-icon class="info-icon">info</mat-icon><strong>Estado:</strong> {{ producto.idEstado }}</p>
+          <p><mat-icon class="info-icon">person_outline</mat-icon><strong>Usuario propietario:</strong> {{ nombre }}</p>
+          <p><mat-icon class="info-icon">category</mat-icon><strong>Categoría:</strong> {{ categoria }}</p>
+          <p><mat-icon class="info-icon">info</mat-icon><strong>Estado:</strong> {{ nombreEstado }}</p>
           <p><mat-icon class="info-icon">location_on</mat-icon><strong>Dirección:</strong> {{ producto.direccion }}</p>
         </div>
       </ng-container>

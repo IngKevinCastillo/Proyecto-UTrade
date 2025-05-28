@@ -380,10 +380,15 @@ resolver(reporte: Reporte): void {
 }
 
   marcarComoLeido(reporte: Reporte): void {
+
+    const fechaActual = new Date();
+    const offset = fechaActual.getTimezoneOffset() * 60000; 
+    const fechaLocal = new Date(fechaActual.getTime() - offset);
+
     const reporteEncontrado = {
       ...reporte,
       leido: true,
-      fechaActualizacion: new Date()
+      fechaActualizacion: fechaLocal
     };
 
     this.reporteService.actualizar(reporteEncontrado).subscribe({
