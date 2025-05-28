@@ -4,8 +4,7 @@
   <div class="panel-izquierdo">
     <ng-container *ngIf="esUsuario && persona; else esPublicacion">
       <h2><mat-icon>person</mat-icon> Datos del Usuario</h2>
-      
-      <!-- Manejo mejorado de la imagen de perfil -->
+
       <div class="contenedor-foto">
         <img 
           *ngIf="obtenerImagenPerfil(); else sinFoto" 
@@ -27,13 +26,14 @@
       <p><mat-icon class="info-icon">email</mat-icon><strong>Correo:</strong> {{ persona.correo }}</p>
       <p><mat-icon class="info-icon">wc</mat-icon><strong>Género:</strong> {{ persona.genero }}</p>
       <p><mat-icon class="info-icon">cake</mat-icon><strong>Fecha de nacimiento:</strong> {{ formatearFecha(persona.fechaNacimiento) }}</p>
+      <p><mat-icon class="info-icon">phone</mat-icon><strong>Teléfono:</strong> {{ persona.telefono || 'No disponible' }}</p>
+      <p><mat-icon class="info-icon">info</mat-icon><strong>Estado de la cuenta:</strong> {{ nombreEstado }}</p>
     </ng-container>
 
     <ng-template #esPublicacion>
       <ng-container *ngIf="producto">
         <h2><mat-icon>shopping_bag</mat-icon> Datos de la Publicación</h2>
-        
-        <!-- Galería de fotos de la publicación - MEJORADA -->
+
         <div class="galeria-contenedor" *ngIf="tieneFotosValidas()">
           <h3><mat-icon>photo_library</mat-icon> Imágenes de la Publicación</h3>
           <div class="galeria-fotos" [ngClass]="obtenerClaseGaleria()">
@@ -60,13 +60,11 @@
           </div>
         </div>
 
-        <!-- Mensaje cuando no hay fotos -->
         <div class="sin-fotos" *ngIf="!tieneFotosValidas()">
           <mat-icon>image_not_supported</mat-icon>
           <p>Esta publicación no tiene imágenes disponibles</p>
         </div>
 
-        <!-- Información de la publicación -->
         <div class="info-publicacion">
           <p><mat-icon class="info-icon">tag</mat-icon><strong>ID:</strong> {{ producto.id }}</p>
           <p><mat-icon class="info-icon">title</mat-icon><strong>Título:</strong> {{ producto.titulo }}</p>
@@ -84,10 +82,33 @@
 
   <div class="panel-derecho">
     <h2><mat-icon>settings</mat-icon> Panel de Resolución</h2>
-    <p>Espacio reservado para acciones como cambiar estado, añadir observaciones, etc.</p>
-    <button disabled class="btn-resolver">
-      <mat-icon>check_circle</mat-icon>
-      Resolver
-    </button>
+    
+    <div class="formulario-resolucion">
+      <h3><mat-icon>assignment</mat-icon> Seleccionar tipo de acción a tomar</h3>
+      
+      <mat-form-field appearance="outline" class="campo-estado">
+        <mat-label>Estado a aplicar</mat-label>
+        <mat-select [(value)]="estadoSeleccionado" (selectionChange)="onEstadoSeleccionado($event)">
+          <mat-option *ngFor="let estado of listaEstados" [value]="estado">
+            {{ estado.nombre }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>arrow_drop_down</mat-icon>
+      </mat-form-field>
+
+      <div class="mensaje-advertencia" *ngIf="!estadoSeleccionado">
+        <mat-icon>warning</mat-icon>
+        <span>Debe seleccionar una acción antes de resolver el reporte</span>
+      </div>
+
+      <button 
+        class="btn-resolver" 
+        [disabled]="!estadoSeleccionado"
+        (click)="resolverReporte()"
+      >
+        <mat-icon>check_circle</mat-icon>
+        Resolver Reporte
+      </button>
+    </div>
   </div>
 </div>
