@@ -352,23 +352,27 @@ export class ModificarProductosComponent implements OnInit {
     return this.imagenesExistentes.length > 0 || this.fotos.length > 0;
   }
 
+  isInvalidPrice(): Boolean {
+    return this.price === null || this.price === undefined || Number.isNaN(Number(this.price));
+  }
+
   editar(): void {
-    if (!this.title.trim()) {
+    if (!this.title?.trim()) {
       this.toastr.error('El título es obligatorio', 'Error');
       return;
     }
 
-    if (!this.price.trim() || isNaN(Number(this.price))) {
+    if (this.price === null || this.price === undefined || isNaN(Number(this.price))) {
       this.toastr.error('El precio debe ser un número válido', 'Error');
       return;
     }
 
-    if (!this.category.trim()) {
+    if (!this.category?.trim()) {
       this.toastr.error('La categoría es obligatoria', 'Error');
       return;
     }
 
-    if (!this.direccion.trim()) {
+    if (!this.direccion?.trim()) {
       this.toastr.error('La dirección es obligatoria', 'Error');
       return;
     }
@@ -383,10 +387,10 @@ export class ModificarProductosComponent implements OnInit {
 
     const publicacionModificada: Publicaciones = {
       id: this.publicacionOriginal.id, 
-      titulo: this.title.trim(),
+      titulo: this.title?.trim() || '',
       precio: Number(this.price),
-      descripcion: this.description.trim(),
-      direccion: this.direccion.trim(),
+      descripcion: this.description?.trim() || '',
+      direccion: this.direccion?.trim() || '',
       idCategoria: idCategoria,
       idEstado: idEstado,
       fechaPublicacion: this.publicacionOriginal.fechaPublicacion,
