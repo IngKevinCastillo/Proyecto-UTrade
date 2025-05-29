@@ -76,7 +76,6 @@ namespace BLL.Servicios
             return nuevoId;
         }
 
-        // CAMBIO: Usar IdReseña en lugar de IdResenia
         public async Task<LikesDTO> VerificarLike(string idResenia, string idPersona)
         {
             try
@@ -90,7 +89,6 @@ namespace BLL.Servicios
             }
         }
 
-        // CAMBIO: Usar IdReseña en lugar de IdResenia
         public async Task<int> ContarLikes(string idResenia)
         {
             try
