@@ -22,6 +22,6 @@ namespace DTO
 
         public bool Verificado { get; set; }
 
-        public virtual ICollection<LikesDTO> Likes { get; set; }
+        public virtual ICollection<LikesDTO>? Likes { get; set; }
     }
 }

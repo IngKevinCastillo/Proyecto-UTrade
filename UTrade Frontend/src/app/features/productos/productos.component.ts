@@ -151,8 +151,13 @@ export class ProductosComponent implements OnChanges, OnInit {
     this.router.navigate(['/chat'], { queryParams: { chatId: chatId } });
   }
 
-  public navegarAResenas(): void {
-    this.router.navigate(['/resenas']);
+  navegarAResenas(idPublicacion: string, idPropietario?: string): void {
+    this.router.navigate(['/resenas'], {
+      queryParams: {
+        idPublicacion: idPublicacion,
+        idPropietario: idPropietario,
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -272,7 +277,7 @@ export class ProductosComponent implements OnChanges, OnInit {
         },
       });
   }
-  
+
   private filtrarPorNombreCategoria(): void {
     const categoria = this.listaCategorias.find(
       (c) => c.nombre.toLowerCase() === this.Filtro?.toLowerCase()
@@ -465,7 +470,7 @@ export class ProductosComponent implements OnChanges, OnInit {
       nombreUsuario: publicacion.nombreUsuario,
       avatarUsuario: publicacion.avatarUsuario,
       latitud: publicacion.latitud,
-      altitud: publicacion.altitud
+      altitud: publicacion.altitud,
     };
 
     const dialogRef = this.dialog.open(VerProductosComponent, {

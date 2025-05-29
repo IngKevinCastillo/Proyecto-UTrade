@@ -6,14 +6,13 @@ using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Servicios
 {
     public class ReseniasServicio : IReseniaServicio
     {
-
         private readonly IRepositorioGenerico<Reseña> _reseniaRepositorio;
         private readonly IMapper _mapper;
 
@@ -30,6 +29,7 @@ namespace BLL.Servicios
                 var reseniaEncontrada = await _reseniaRepositorio.Obtener(x => x.Id == id);
                 if (reseniaEncontrada == null)
                     throw new TaskCanceledException("La Reseña no existe");
+
                 return _mapper.Map<ReseñaDTO>(reseniaEncontrada);
             }
             catch
@@ -42,9 +42,11 @@ namespace BLL.Servicios
         {
             try
             {
+                modelo.Fecha = DateTime.Now;
                 var reseniaCreada = await _reseniaRepositorio.Crear(_mapper.Map<Reseña>(modelo));
                 if (reseniaCreada.Id == null)
                     throw new Exception("No se pudo crear");
+
                 return _mapper.Map<ReseñaDTO>(reseniaCreada);
             }
             catch
@@ -57,11 +59,14 @@ namespace BLL.Servicios
         {
             try
             {
-                var reseniaModelo = _mapper.Map<Reseña>(modelo);
-                var reseniaEncontrada = await _reseniaRepositorio.Obtener(x => x.Id == modelo.Id);
-                if (reseniaEncontrada == null)
+                var reseniaExistente = await _reseniaRepositorio.Obtener(x => x.Id == modelo.Id);
+                if (reseniaExistente == null)
                     throw new TaskCanceledException("La Reseña no existe");
-                return await _reseniaRepositorio.Editar(reseniaModelo);
+
+                reseniaExistente.Comentario = modelo.Comentario;
+                reseniaExistente.Verificado = modelo.Verificado;
+
+                return await _reseniaRepositorio.Editar(reseniaExistente);
             }
             catch
             {
@@ -76,6 +81,7 @@ namespace BLL.Servicios
                 var reseniaEncontrada = await _reseniaRepositorio.Obtener(x => x.Id == id);
                 if (reseniaEncontrada == null)
                     throw new TaskCanceledException("La Reseña no existe");
+
                 return await _reseniaRepositorio.Eliminar(reseniaEncontrada);
             }
             catch
@@ -89,9 +95,11 @@ namespace BLL.Servicios
             try
             {
                 var listaResenias = await _reseniaRepositorio.Consultar();
-                if (listaResenias == null)
+                var listaMaterializada = listaResenias.ToList();
+                if (listaMaterializada == null || !listaMaterializada.Any())
                     throw new TaskCanceledException("No hay Reseñas");
-                return _mapper.Map<List<ReseñaDTO>>(listaResenias);
+
+                return _mapper.Map<List<ReseñaDTO>>(listaMaterializada);
             }
             catch
             {
@@ -104,9 +112,12 @@ namespace BLL.Servicios
             try
             {
                 var listaResenias = await _reseniaRepositorio.Consultar(x => x.Calificacion == calificacion);
-                if (listaResenias == null)
+                var listaMaterializada = listaResenias.ToList();
+
+                if (listaMaterializada == null || !listaMaterializada.Any())
                     throw new TaskCanceledException("No hay Reseñas");
-                return _mapper.Map<List<ReseñaDTO>>(listaResenias);
+
+                return _mapper.Map<List<ReseñaDTO>>(listaMaterializada);
             }
             catch
             {
@@ -119,9 +130,12 @@ namespace BLL.Servicios
             try
             {
                 var listaResenias = await _reseniaRepositorio.Consultar(x => x.IdPersona == idPersona);
-                if (listaResenias == null)
+                var listaMaterializada = listaResenias.ToList();
+
+                if (listaMaterializada == null || !listaMaterializada.Any())
                     throw new TaskCanceledException("No hay Reseñas");
-                return _mapper.Map<List<ReseñaDTO>>(listaResenias);
+
+                return _mapper.Map<List<ReseñaDTO>>(listaMaterializada);
             }
             catch
             {
@@ -134,9 +148,12 @@ namespace BLL.Servicios
             try
             {
                 var listaResenias = await _reseniaRepositorio.Consultar(x => x.IdPublicacion == idPublicacion);
-                if (listaResenias == null)
+                var listaMaterializada = listaResenias.ToList();
+
+                if (listaMaterializada == null || !listaMaterializada.Any())
                     throw new TaskCanceledException("No hay Reseñas");
-                return _mapper.Map<List<ReseñaDTO>>(listaResenias);
+
+                return _mapper.Map<List<ReseñaDTO>>(listaMaterializada);
             }
             catch
             {
