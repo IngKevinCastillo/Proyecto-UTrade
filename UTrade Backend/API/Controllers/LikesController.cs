@@ -52,5 +52,59 @@ namespace API.Controllers
             }
             return Ok(rsp);
         }
+
+        [HttpGet]
+        [Route("VerificarLike/{idResenia}/{idPersona}")]
+        public async Task<IActionResult> VerificarLike(string idResenia, string idPersona)
+        {
+            var rsp = new Respuesta<LikesDTO>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _likesServicio.VerificarLike(idResenia, idPersona);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
+        [Route("ContarLikes/{idResenia}")]
+        public async Task<IActionResult> ContarLikes(string idResenia)
+        {
+            var rsp = new Respuesta<int>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _likesServicio.ContarLikes(idResenia);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpDelete]
+        [Route("EliminarPorResenia/{idResenia}/{idPersona}")]
+        public async Task<IActionResult> EliminarPorResenia(string idResenia, string idPersona)
+        {
+            var rsp = new Respuesta<bool>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _likesServicio.EliminarPorResenia(idResenia, idPersona);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
     }
 }

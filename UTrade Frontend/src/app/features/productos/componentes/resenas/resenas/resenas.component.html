@@ -1,255 +1,420 @@
-<div class="contenedor-resenas">
-  <div *ngIf="showSuccessMessage" class="alert-success-custom">
-    <div class="success-content">
-      <i class="fas fa-check-circle"></i>
-      <span>¡Tu reseña ha sido publicada exitosamente!</span>
-    </div>
-  </div>
+<div
+  class="container-fluid min-vh-100"
+  style="
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+  "
+>
+  <div
+    class="position-absolute top-0 start-0 w-100 h-100"
+    style="
+      background: radial-gradient(
+          circle at 20% 80%,
+          rgba(120, 119, 198, 0.3) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(255, 135, 171, 0.3) 0%,
+          transparent 50%
+        );
+      pointer-events: none;
+      z-index: 0;
+    "
+  ></div>
 
-  <div class="row mb-5">
-    <div class="col-12">
-      <div class="estadisticas-generales">
-        <div class="promedio-container">
-          <div class="promedio-numero">
-            {{ obtenerPromedioCalificaciones() }}
-          </div>
-          <div class="promedio-estrellas">
-            <span *ngFor="let i of [1, 2, 3, 4, 5]" class="estrella-promedio">
-              <span
-                *ngIf="i <= obtenerPromedioCalificaciones()"
-                class="estrella-llena"
-                >★</span
-              >
-              <span
-                *ngIf="i > obtenerPromedioCalificaciones()"
-                class="estrella-vacia"
-                >☆</span
-              >
-            </span>
-          </div>
-          <div class="total-resenas">
-            Basado en {{ listaResenas.length }} reseñas
-          </div>
-        </div>
-
-        <div class="barras-estadisticas">
-          <div *ngFor="let i of [5, 4, 3, 2, 1]" class="barra-stat">
-            <span class="numero-estrella">{{ i }}</span>
-            <i class="fas fa-star"></i>
-            <div class="barra-progreso">
-              <div
-                class="barra-fill"
-                [style.width.%]="
-                  (obtenerEstadisticasCalificaciones()[i] /
-                    listaResenas.length) *
-                  100
-                "
-              ></div>
-            </div>
-            <span class="cantidad-stat">{{
-              obtenerEstadisticasCalificaciones()[i]
-            }}</span>
-          </div>
-        </div>
+  <div class="position-relative" style="z-index: 1">
+    <div
+      *ngIf="showSuccessMessage"
+      class="position-fixed top-0 end-0 m-3 alert alert-success border-0 rounded-4 shadow-lg"
+      style="
+        z-index: 1050;
+        animation: slideInRight 0.5s ease-out,
+          fadeOut 0.5s ease-in 2.5s forwards;
+      "
+    >
+      <div class="d-flex align-items-center">
+        <i class="fas fa-check-circle me-2"></i>
+        <span class="fw-semibold"
+          >¡Tu reseña ha sido publicada exitosamente!</span
+        >
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-12">
-      <div class="formulario-nueva-resena card mb-5">
-        <div class="card-body">
-          <div class="titulo-formulario-container">
-            <h3 class="titulo-formulario">✨ Comparte tu Experiencia</h3>
-            <p class="subtitulo-formulario">
-              Tu opinión es muy valiosa para nosotros y otros usuarios
-            </p>
-          </div>
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-white" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-white mt-3">Cargando reseñas...</p>
+    </div>
 
-          <form (ngSubmit)="enviarResena()" #resenaForm="ngForm">
-            <div class="formulario-grid-simple">
-              <div class="campo-puntuacion">
-                <label class="form-label">
-                  <i class="fas fa-star"></i>
-                  Tu Calificación
-                </label>
-                <div class="estrellas-container">
-                  <div class="estrellas-interactivas">
-                    <span
-                      *ngFor="let i of [1, 2, 3, 4, 5]"
-                      class="estrella-interactiva"
-                      [class.selected]="i <= nuevaResena.puntuacion"
-                      [class.hover]="i <= obtenerPuntuacionMostrar()"
-                      (click)="seleccionarPuntuacion(i)"
-                      (mouseenter)="establecerHoverEstrella(i)"
-                      (mouseleave)="limpiarHoverEstrella()"
-                    >
-                      ★
+    <div class="py-4 px-2" *ngIf="!isLoading">
+      <div class="row mb-5">
+        <div class="col-12">
+          <div
+            class="card border-0 rounded-4 shadow-lg bg-white bg-opacity-95"
+            style="backdrop-filter: blur(20px)"
+          >
+            <div class="card-body p-4 p-lg-5">
+              <div class="row align-items-center">
+                <div class="col-lg-4 col-md-12 text-center mb-4 mb-lg-0">
+                  <div
+                    class="display-1 fw-bold text-primary mb-2"
+                    style="text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)"
+                  >
+                    {{ obtenerPromedioCalificaciones() }}
+                  </div>
+                  <div class="mb-2">
+                    <span *ngFor="let i of [1, 2, 3, 4, 5]" class="fs-4 mx-1">
+                      <span
+                        *ngIf="i <= obtenerPromedioCalificaciones()"
+                        class="text-warning"
+                        >★</span
+                      >
+                      <span
+                        *ngIf="i > obtenerPromedioCalificaciones()"
+                        class="text-muted"
+                        >☆</span
+                      >
                     </span>
                   </div>
-                  <div
-                    class="calificacion-texto"
-                    *ngIf="obtenerPuntuacionMostrar() > 0"
-                  >
-                    <span class="puntuacion-numero"
-                      >({{ obtenerPuntuacionMostrar() }}/5)</span
+                  <div class="text-muted fw-semibold">
+                    Basado en {{ listaResenas.length }} reseñas
+                  </div>
+                </div>
+
+                <div class="col-lg-8 col-md-12">
+                  <div class="d-flex flex-column gap-3">
+                    <div
+                      *ngFor="let i of [5, 4, 3, 2, 1]"
+                      class="d-flex align-items-center gap-3"
                     >
-                    <span class="puntuacion-descripcion">{{
-                      obtenerTextoCalificacion(obtenerPuntuacionMostrar())
-                    }}</span>
+                      <span class="fw-bold text-primary">{{ i }}</span>
+                      <i class="fas fa-star text-warning"></i>
+                      <div class="progress flex-grow-1" style="height: 8px">
+                        <div
+                          class="progress-bar bg-warning"
+                          [style.width.%]="
+                            listaResenas.length > 0
+                              ? (obtenerEstadisticasCalificaciones()[i] /
+                                  listaResenas.length) *
+                                100
+                              : 0
+                          "
+                        ></div>
+                      </div>
+                      <span
+                        class="text-muted fw-semibold"
+                        style="min-width: 30px"
+                      >
+                        {{ obtenerEstadisticasCalificaciones()[i] }}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="campo-comentario">
-              <label for="comentario" class="form-label">
-                <i class="fas fa-comment-alt"></i>
-                Tu Comentario
-              </label>
-              <textarea
-                class="form-control"
-                id="comentario"
-                [(ngModel)]="nuevaResena.comentario"
-                name="comentario"
-                rows="4"
-                placeholder="Cuéntanos sobre tu experiencia... ¿Qué te gustó más? ¿Algo que podríamos mejorar?"
-                required
-                #comentarioInput="ngModel"
-                maxlength="500"
-              ></textarea>
-              <div class="contador-caracteres">
-                {{ nuevaResena.comentario.length }}/500 caracteres
+      <div class="row mb-5">
+        <div class="col-12">
+          <div
+            class="card border-0 rounded-4 shadow-lg bg-white bg-opacity-95 position-relative overflow-hidden"
+            style="backdrop-filter: blur(20px)"
+          >
+            <div
+              class="position-absolute top-0 start-0 w-100"
+              style="
+                height: 4px;
+                background: linear-gradient(90deg, #667eea, #f093fb);
+              "
+            ></div>
+
+            <div class="card-body p-4 p-lg-5">
+              <div class="text-center mb-4">
+                <h3 class="display-6 fw-bold text-primary mb-2">
+                  ✨ Comparte tu Experiencia
+                </h3>
+                <p class="lead text-muted mb-0">
+                  Tu opinión es muy valiosa para nosotros y otros usuarios
+                </p>
               </div>
+
+              <form (ngSubmit)="enviarResena()" #resenaForm="ngForm">
+                <div class="mb-4">
+                  <label
+                    class="form-label d-flex align-items-center gap-2 text-primary fw-bold fs-5"
+                  >
+                    <i class="fas fa-star"></i>
+                    Tu Calificación
+                  </label>
+                  <div class="d-flex flex-column align-items-center gap-3">
+                    <div
+                      class="d-flex gap-2 p-4 bg-light bg-opacity-50 rounded-4 border-2 border-transparent"
+                    >
+                      <span
+                        *ngFor="let i of [1, 2, 3, 4, 5]"
+                        class="estrella-interactiva display-4 user-select-none cursor-pointer text-muted"
+                        [class.text-warning]="i <= nuevaResena.calificacion"
+                        [class.hover-star]="i <= obtenerPuntuacionMostrar()"
+                        (click)="seleccionarPuntuacion(i)"
+                        (mouseenter)="establecerHoverEstrella(i)"
+                        (mouseleave)="limpiarHoverEstrella()"
+                      >
+                        ★
+                      </span>
+                    </div>
+                    <div
+                      *ngIf="obtenerPuntuacionMostrar() > 0"
+                      class="d-flex align-items-center gap-3 px-4 py-2 bg-primary bg-opacity-10 rounded-pill"
+                    >
+                      <span class="fw-bold text-primary"
+                        >({{ obtenerPuntuacionMostrar() }}/5)</span
+                      >
+                      <span class="text-muted fw-semibold text-uppercase small">
+                        {{
+                          obtenerTextoCalificacion(obtenerPuntuacionMostrar())
+                        }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    for="comentario"
+                    class="form-label d-flex align-items-center gap-2 text-primary fw-bold fs-5"
+                  >
+                    <i class="fas fa-comment-alt"></i>
+                    Tu Comentario
+                  </label>
+                  <textarea
+                    class="form-control form-control-lg border-2 rounded-4 shadow-sm"
+                    id="comentario"
+                    [(ngModel)]="nuevaResena.comentario"
+                    name="comentario"
+                    rows="4"
+                    placeholder="Cuéntanos sobre tu experiencia... ¿Qué te gustó más? ¿Algo que podríamos mejorar?"
+                    required
+                    #comentarioInput="ngModel"
+                    maxlength="500"
+                  >
+                  </textarea>
+                  <div class="d-flex justify-content-between mt-2">
+                    <div
+                      *ngIf="comentarioInput.invalid && comentarioInput.touched"
+                      class="text-danger d-flex align-items-center gap-2 fw-semibold"
+                    >
+                      <i class="fas fa-exclamation-circle"></i>
+                      Por favor comparte tu comentario
+                    </div>
+                    <div class="text-muted small fw-medium ms-auto">
+                      {{ nuevaResena.comentario.length }}/500 caracteres
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="d-flex flex-column flex-md-row gap-3 justify-content-center"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary btn-lg rounded-pill px-4 d-flex align-items-center justify-content-center gap-2"
+                    (click)="limpiarFormulario()"
+                    [disabled]="isSubmitting"
+                  >
+                    <i class="fas fa-undo"></i>
+                    Limpiar
+                  </button>
+
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-lg rounded-pill px-5 d-flex align-items-center justify-content-center gap-2 position-relative overflow-hidden"
+                    [disabled]="!validarFormulario() || isSubmitting"
+                    style="
+                      background: linear-gradient(
+                        135deg,
+                        #667eea 0%,
+                        #764ba2 100%
+                      );
+                      border: none;
+                    "
+                  >
+                    <i *ngIf="!isSubmitting" class="fas fa-paper-plane"></i>
+                    <div
+                      *ngIf="isSubmitting"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                    ></div>
+                    <span>{{
+                      isSubmitting ? "Publicando..." : "Publicar Reseña"
+                    }}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-12">
+          <h2
+            class="display-5 fw-bold text-white text-center d-flex align-items-center justify-content-center gap-3"
+            style="text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2)"
+          >
+            <i class="fas fa-comments"></i>
+            Lo que dicen nuestros clientes
+          </h2>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div
+          class="col-lg-6 col-md-6 col-12"
+          *ngFor="let resena of listaResenas; trackBy: trackByResenasId"
+        >
+          <div
+            class="card h-100 border-0 rounded-4 shadow-lg bg-white bg-opacity-95 position-relative overflow-hidden hover-card"
+            [class.border-warning]="resena.calificacion === 5"
+            style="backdrop-filter: blur(20px); transition: all 0.3s ease"
+          >
+            <div
+              class="position-absolute top-0 start-0 w-100"
+              [style.height]="resena.calificacion === 5 ? '6px' : '4px'"
+              [style.background]="
+                resena.calificacion === 5
+                  ? 'linear-gradient(90deg, #fbbf24, #f59e0b)'
+                  : 'linear-gradient(90deg, #667eea, #f093fb)'
+              "
+            ></div>
+
+            <div class="card-body p-4">
               <div
-                *ngIf="comentarioInput.invalid && comentarioInput.touched"
-                class="error-message"
+                class="d-flex justify-content-between align-items-start mb-3 pb-3 border-bottom border-primary border-opacity-25"
               >
-                <i class="fas fa-exclamation-circle"></i>
-                Por favor comparte tu comentario
-              </div>
-            </div>
-
-            <div class="botones-container">
-              <button
-                type="button"
-                class="btn btn-limpiar"
-                (click)="limpiarFormulario()"
-                [disabled]="isSubmitting"
-              >
-                <i class="fas fa-undo"></i>
-                Limpiar
-              </button>
-
-              <button
-                type="submit"
-                class="btn-enviar-resena"
-                [disabled]="!validarFormulario() || isSubmitting"
-                [class.loading]="isSubmitting"
-              >
-                <div class="btn-content">
-                  <i *ngIf="!isSubmitting" class="fas fa-paper-plane"></i>
-                  <div *ngIf="isSubmitting" class="spinner"></div>
-                  <span>{{
-                    isSubmitting ? "Publicando..." : "Publicar Reseña"
-                  }}</span>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="position-relative">
+                    <img
+                      [src]="resena.fotoPerfilUrl"
+                      [alt]="resena.nombreUsuario"
+                      class="rounded-circle border border-3 border-primary shadow-sm hover-scale"
+                      style="
+                        width: 60px;
+                        height: 60px;
+                        object-fit: cover;
+                        transition: transform 0.3s ease;
+                      "
+                    />
+                    <div
+                      *ngIf="resena.verificado"
+                      class="position-absolute bottom-0 end-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center border-2 border-white"
+                      style="width: 20px; height: 20px; font-size: 0.7rem"
+                    >
+                      <i class="fas fa-check"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <h5 class="fw-bold text-primary mb-1">
+                      {{ resena.nombreUsuario }}
+                      <span
+                        *ngIf="resena.verificado"
+                        class="d-block small text-success fw-semibold"
+                      >
+                        Cliente Verificado
+                      </span>
+                    </h5>
+                    <small class="text-muted fw-medium">
+                      {{ obtenerTiempoTranscurrido(resena.fechaResena!) }}
+                    </small>
+                  </div>
                 </div>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-12">
-      <h2 class="titulo-seccion">
-        <i class="fas fa-comments"></i>
-        Lo que dicen nuestros clientes
-      </h2>
-    </div>
-  </div>
+                <div class="text-end">
+                  <div class="d-flex gap-1 mb-1">
+                    <span *ngFor="let i of [1, 2, 3, 4, 5]" class="fs-5">
+                      <span
+                        *ngIf="i <= resena.calificacion"
+                        class="text-warning"
+                        >★</span
+                      >
+                      <span *ngIf="i > resena.calificacion" class="text-muted"
+                        >☆</span
+                      >
+                    </span>
+                  </div>
+                  <small class="text-primary fw-bold"
+                    >{{ resena.calificacion }}/5</small
+                  >
+                </div>
+              </div>
 
-  <div class="row resenas-grid">
-    <div
-      class="col-lg-6 col-md-6 col-sm-12 mb-4"
-      *ngFor="let resena of listaResenas; trackBy: trackByResenasId"
-    >
-      <div
-        class="tarjeta-resena card h-100"
-        [class.destacada]="resena.puntuacion === 5"
-      >
-        <div class="card-body">
-          <div class="encabezado-usuario">
-            <div class="usuario-info">
-              <div class="foto-container">
-                <img
-                  [src]="resena.fotoPerfilUrl"
-                  [alt]="resena.nombreUsuario"
-                  class="foto-perfil"
-                />
-                <div *ngIf="resena.verified" class="verificado-badge">
+              <div class="mb-3">
+                <p class="mb-0 lh-lg">{{ resena.comentario }}</p>
+              </div>
+
+              <div
+                class="d-flex justify-content-between align-items-center pt-3 border-top border-primary border-opacity-25"
+              >
+                <button
+                  class="btn btn-sm rounded-pill d-flex align-items-center gap-2"
+                  [class.btn-danger]="resena.usuarioLeDioLike"
+                  [class.btn-outline-secondary]="!resena.usuarioLeDioLike"
+                  (click)="darLike(resena)"
+                >
+                  <i
+                    [class.fas]="resena.usuarioLeDioLike"
+                    [class.far]="!resena.usuarioLeDioLike"
+                    class="fa-heart"
+                  >
+                  </i>
+                  <span>{{ resena.cantidadLikes || 0 }}</span>
+                </button>
+
+                <button
+                  *ngIf="puedeVerificarResena(resena)"
+                  class="btn btn-sm btn-success rounded-pill d-flex align-items-center gap-2"
+                  (click)="verificarResena(resena)"
+                >
                   <i class="fas fa-check"></i>
+                  Verificar
+                </button>
+
+                <div
+                  *ngIf="
+                    resena.calificacion >= 4 && !puedeVerificarResena(resena)
+                  "
+                >
+                  <span
+                    class="badge bg-success rounded-pill px-3 py-2 text-uppercase fw-semibold"
+                  >
+                    Recomendado
+                  </span>
                 </div>
               </div>
-              <div class="info-usuario">
-                <h5 class="nombre-usuario">
-                  {{ resena.nombreUsuario }}
-                  <span *ngIf="resena.verified" class="verificado-texto"
-                    >Cliente Verificado</span
-                  >
-                </h5>
-                <div class="fecha-info">
-                  <small class="fecha-resena">{{
-                    obtenerTiempoTranscurrido(resena.fechaResena)
-                  }}</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="puntuacion-container">
-              <div class="puntuacion-estrellas">
-                <span *ngFor="let i of [1, 2, 3, 4, 5]" class="estrella">
-                  <span *ngIf="i <= resena.puntuacion" class="estrella-llena"
-                    >★</span
-                  >
-                  <span *ngIf="i > resena.puntuacion" class="estrella-vacia"
-                    >☆</span
-                  >
-                </span>
-              </div>
-              <span class="numero-puntuacion">{{ resena.puntuacion }}/5</span>
-            </div>
-          </div>
-
-          <div class="comentario-contenido">
-            <p class="comentario-texto">{{ resena.comentario }}</p>
-          </div>
-
-          <div class="acciones-resena">
-            <button
-              class="btn-like"
-              (click)="darLike(resena)"
-              *ngIf="resena.likes !== undefined"
-            >
-              <i class="far fa-heart"></i>
-              <span>{{ resena.likes }}</span>
-            </button>
-            <div class="etiquetas" *ngIf="resena.puntuacion >= 4">
-              <span class="etiqueta recomendado">Recomendado</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div *ngIf="listaResenas.length === 0" class="sin-resenas">
-    <div class="sin-resenas-content">
-      <i class="fas fa-comment-slash"></i>
-      <h3>Aún no hay reseñas</h3>
-      <p>¡Sé el primero en compartir tu experiencia!</p>
+      <div *ngIf="listaResenas.length === 0" class="row">
+        <div class="col-12">
+          <div class="text-center py-5">
+            <div
+              class="card border-0 rounded-4 shadow-lg bg-white bg-opacity-90 d-inline-block p-5"
+              style="backdrop-filter: blur(20px)"
+            >
+              <i class="fas fa-comment-slash display-1 text-muted mb-3"></i>
+              <h3 class="fw-bold text-primary mb-2">Aún no hay reseñas</h3>
+              <p class="text-muted fs-5 mb-0">
+                ¡Sé el primero en compartir tu experiencia!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

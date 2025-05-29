@@ -11,5 +11,9 @@ namespace BLL.Servicios.Contrato
     {
         Task<LikesDTO> Crear(LikesDTO modelo);
         Task<bool> Eliminar(string id);
+        Task<string> GenerarId();
+        Task<LikesDTO> VerificarLike(string idResenia, string idPersona);
+        Task<int> ContarLikes(string idResenia);
+        Task<bool> EliminarPorResenia(string idResenia, string idPersona);
     }
 }

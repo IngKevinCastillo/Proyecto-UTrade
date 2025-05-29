@@ -151,11 +151,12 @@ namespace BLL.Servicios
             {
                 var queryPublicacion = await _publicacionesRepositorio.Consultar();
                 var listaPublicaciones = queryPublicacion.ToList();
+
                 if (listaPublicaciones == null || !listaPublicaciones.Any())
                     throw new TaskCanceledException("No se encontraron publicaciones");
 
                 var publicacionesConLongitudLatitud = listaPublicaciones
-                    .Where(p => p.Latitud != null && p.Altitud != null)
+                    .Where(p => p.Latitud != null && p.Altitud != null && p.IdEstado == "EST01")
                     .ToList();
 
                 return _mapper.Map<List<PublicacionesDTO>>(publicacionesConLongitudLatitud);

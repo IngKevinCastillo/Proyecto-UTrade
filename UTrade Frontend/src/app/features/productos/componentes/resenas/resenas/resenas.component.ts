@@ -1,21 +1,24 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ViewEncapsulation,
+  type OnInit,
+  type OnDestroy,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
-interface Resena {
-  id: number;
-  nombreUsuario: string;
-  fotoPerfilUrl: string;
-  puntuacion: number;
-  comentario: string;
-  fechaResena: Date;
-  likes?: number;
-  verified?: boolean;
-}
+import { ResenasManagerService } from '../../../../../Services/resenas-manager.service';
+import { UsuarioManagerService } from '../../../../../Services/usuario-manager.service';
+import { ResenasUtils } from '../../../../../utils/resenas.utils';
 
-interface NuevaResena {
-  nombreUsuario: string;
-  comentario: string;
-  puntuacion: number;
-}
+import {
+  Resena,
+  NuevaResena,
+  ResenaData,
+} from '../../../../../interfaces/resena';
+import { Usuario } from '../../../../../interfaces/usuario';
 
 @Component({
   selector: 'app-resenas',
@@ -23,120 +26,149 @@ interface NuevaResena {
   styleUrls: ['./resenas.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ResenasComponent {
-  listaResenas: Resena[] = [
-    {
-      id: 1,
-      nombreUsuario: 'María González',
-      fotoPerfilUrl:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
-      puntuacion: 5,
-      comentario:
-        'Excelente servicio, muy recomendado. La atención al cliente fue excepcional y el producto superó mis expectativas. Sin duda volveré a confiar en esta empresa.',
-      fechaResena: new Date('2024-03-15'),
-      likes: 24,
-      verified: true,
-    },
-    {
-      id: 2,
-      nombreUsuario: 'Carlos Rodríguez',
-      fotoPerfilUrl:
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
-      puntuacion: 4,
-      comentario:
-        'Muy buena experiencia en general. El producto llegó en perfectas condiciones y el empaque es de primera calidad. Solo algunas mejoras menores podrían hacer la diferencia.',
-      fechaResena: new Date('2024-03-10'),
-      likes: 18,
-      verified: true,
-    },
-    {
-      id: 3,
-      nombreUsuario: 'Ana Martínez',
-      fotoPerfilUrl:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
-      puntuacion: 5,
-      comentario:
-        'Increíble calidad y rapidez en la entrega. El servicio al cliente es excepcional y el producto exactamente como se describe. Definitivamente volveré a comprar aquí.',
-      fechaResena: new Date('2024-03-08'),
-      likes: 31,
-      verified: true,
-    },
-    {
-      id: 4,
-      nombreUsuario: 'Luis Fernández',
-      fotoPerfilUrl:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
-      puntuacion: 3,
-      comentario:
-        'Producto correcto y funcional, aunque el tiempo de entrega fue más largo de lo esperado. El empaque podría mejorar pero el contenido está bien. En general satisfecho con la compra.',
-      fechaResena: new Date('2024-03-05'),
-      likes: 12,
-      verified: false,
-    },
-    {
-      id: 5,
-      nombreUsuario: 'Carmen López',
-      fotoPerfilUrl:
-        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face',
-      puntuacion: 5,
-      comentario:
-        '¡Perfecto en todos los aspectos! Todo llegó en excelentes condiciones, el servicio postventa es fantástico y la calidad supera las expectativas. Experiencia 10/10.',
-      fechaResena: new Date('2024-03-01'),
-      likes: 45,
-      verified: true,
-    },
-    {
-      id: 6,
-      nombreUsuario: 'Roberto Silva',
-      fotoPerfilUrl:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face',
-      puntuacion: 4,
-      comentario:
-        'Buena relación calidad-precio. El producto cumple con lo prometido y el servicio es confiable. Recomendado para quienes buscan calidad sin complicaciones.',
-      fechaResena: new Date('2024-02-28'),
-      likes: 22,
-      verified: true,
-    },
-  ];
+export class ResenasComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
+  idPublicacion = '';
+  idPropietarioPublicacion = '';
+  listaResenas: Resena[] = [];
+  usuarioActual: Usuario | null = null;
 
   nuevaResena: NuevaResena = {
-    nombreUsuario: '',
     comentario: '',
-    puntuacion: 0,
+    calificacion: 0,
   };
 
-  puntuacionHover: number = 0;
-  isSubmitting: boolean = false;
-  showSuccessMessage: boolean = false;
+  puntuacionHover = 0;
+  isSubmitting = false;
+  showSuccessMessage = false;
+  isLoading = true;
 
-  constructor() {}
+  constructor(
+    private resenasManager: ResenasManagerService,
+    private usuarioManager: UsuarioManagerService,
+    private route: ActivatedRoute,
+    private toastr: ToastrService
+  ) {}
 
-  obtenerArrayEstrellas(puntuacion: number): boolean[] {
-    return Array.from({ length: 5 }, (_, indice) => indice < puntuacion);
+  ngOnInit(): void {
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((queryParams) => {
+        this.idPublicacion = queryParams['idPublicacion'];
+        this.idPropietarioPublicacion = queryParams['idPropietario'];
+
+        if (this.idPublicacion) {
+          this.cargarUsuarioActual();
+          this.cargarResenas();
+        } else {
+          this.isLoading = false;
+        }
+      });
   }
 
-  formatearFecha(fecha: Date): string {
-    return fecha.toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  obtenerTiempoTranscurrido(fecha: Date): string {
-    const ahora = new Date();
-    const diferencia = ahora.getTime() - fecha.getTime();
-    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+  cargarUsuarioActual(): void {
+    this.usuarioActual = this.usuarioManager.obtenerUsuarioActual();
+  }
 
-    if (dias === 0) return 'Hoy';
-    if (dias === 1) return 'Ayer';
-    if (dias < 7) return `Hace ${dias} días`;
-    if (dias < 30) return `Hace ${Math.floor(dias / 7)} semanas`;
-    return this.formatearFecha(fecha);
+  async cargarResenas(): Promise<void> {
+    this.isLoading = true;
+
+    try {
+      this.resenasManager
+        .cargarResenasCompletas(this.idPublicacion, this.usuarioActual)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(async (resenas) => {
+          if (resenas.length > 0) {
+            this.listaResenas =
+              await this.resenasManager.enriquecerResenasConDatosUsuarios(
+                resenas
+              );
+
+            if (this.usuarioActual?.idUsuario) {
+              this.listaResenas =
+                await this.resenasManager.cargarInformacionLikes(
+                  this.listaResenas,
+                  this.usuarioActual.idUsuario
+                );
+            }
+          } else {
+            this.listaResenas = [];
+          }
+          this.isLoading = false;
+        });
+    } catch (error) {
+      this.listaResenas = [];
+      this.isLoading = false;
+    }
+  }
+
+  darLike(resena: Resena): void {
+    if (!this.usuarioActual?.idUsuario) return;
+
+    this.resenasManager
+      .toggleLike(resena, this.usuarioActual.idUsuario)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+  }
+
+  verificarResena(resena: Resena): void {
+    this.resenasManager
+      .verificarResena(resena)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+  }
+
+  async enviarResena(): Promise<void> {
+    if (this.esPropietarioPublicacion()) {
+      this.toastr.error(
+        'No puedes dejar una reseña en tu propia publicación.',
+        'Error',
+        {
+          timeOut: 3000,
+          positionClass: 'toast-top-center',
+          closeButton: true,
+          progressBar: true,
+          progressAnimation: 'decreasing',
+        }
+      );
+      return;
+    }
+
+    if (!this.validarFormulario()) return;
+
+    this.isSubmitting = true;
+
+    const resenaData: ResenaData = {
+      id: '',
+      calificacion: this.nuevaResena.calificacion,
+      comentario: this.nuevaResena.comentario,
+      idPublicacion: this.idPublicacion,
+      idPersona: this.usuarioActual?.idUsuario || '',
+      verificado: false,
+    };
+
+    this.resenasManager
+      .crearResena(resenaData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((exito) => {
+        if (exito) {
+          this.limpiarFormulario();
+          this.cargarResenas();
+          this.showSuccessMessage = true;
+          setTimeout(() => (this.showSuccessMessage = false), 3000);
+        }
+        this.isSubmitting = false;
+      });
   }
 
   seleccionarPuntuacion(puntuacion: number): void {
-    this.nuevaResena.puntuacion = puntuacion;
+    this.nuevaResena.calificacion = puntuacion;
   }
 
   establecerHoverEstrella(puntuacion: number): void {
@@ -148,83 +180,51 @@ export class ResenasComponent {
   }
 
   obtenerPuntuacionMostrar(): number {
-    return this.puntuacionHover || this.nuevaResena.puntuacion;
-  }
-
-  obtenerTextoCalificacion(puntuacion: number): string {
-    const textos = ['', 'Muy malo', 'Malo', 'Regular', 'Bueno', 'Excelente'];
-    return textos[puntuacion] || '';
-  }
-
-  async enviarResena(): Promise<void> {
-    if (!this.validarFormulario()) return;
-
-    this.isSubmitting = true;
-
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    const nuevaResenaCompleta: Resena = {
-      id: this.listaResenas.length + 1,
-      nombreUsuario: this.nuevaResena.nombreUsuario,
-      fotoPerfilUrl:
-        'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face',
-      puntuacion: this.nuevaResena.puntuacion,
-      comentario: this.nuevaResena.comentario,
-      fechaResena: new Date(),
-      likes: 0,
-      verified: false,
-    };
-
-    this.listaResenas.unshift(nuevaResenaCompleta);
-    this.limpiarFormulario();
-    this.isSubmitting = false;
-    this.showSuccessMessage = true;
-
-    setTimeout(() => {
-      this.showSuccessMessage = false;
-    }, 3000);
+    return this.puntuacionHover || this.nuevaResena.calificacion;
   }
 
   validarFormulario(): boolean {
-    return (
-      this.nuevaResena.comentario.trim() !== '' &&
-      this.nuevaResena.puntuacion > 0
+    return ResenasUtils.validarFormularioResena(
+      this.nuevaResena.comentario,
+      this.nuevaResena.calificacion
     );
   }
 
   limpiarFormulario(): void {
-    this.nuevaResena = {
-      nombreUsuario: '',
-      comentario: '',
-      puntuacion: 0,
-    };
+    this.nuevaResena = { comentario: '', calificacion: 0 };
     this.puntuacionHover = 0;
   }
 
-  obtenerPromedioCalificaciones(): number {
-    if (this.listaResenas.length === 0) return 0;
-    const suma = this.listaResenas.reduce(
-      (acc, resena) => acc + resena.puntuacion,
-      0
+  puedeCrearResena(): boolean {
+    return this.usuarioManager.puedeCrearResena(this.usuarioActual);
+  }
+
+  esPropietarioPublicacion(): boolean {
+    return this.usuarioManager.esPropietarioPublicacion(
+      this.usuarioActual?.idUsuario,
+      this.idPropietarioPublicacion
     );
-    return parseFloat((suma / this.listaResenas.length).toFixed(1));
   }
 
-  obtenerEstadisticasCalificaciones(): { [key: number]: number } {
-    const estadisticas = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-    this.listaResenas.forEach((resena) => {
-      estadisticas[resena.puntuacion as 1 | 2 | 3 | 4 | 5]++;
-    });
-    return estadisticas;
+  puedeVerificarResena(resena: Resena): boolean {
+    return this.usuarioManager.puedeVerificarResena(
+      this.usuarioActual,
+      this.idPropietarioPublicacion,
+      resena.verificado
+    );
   }
 
-  darLike(resena: Resena): void {
-    if (resena.likes !== undefined) {
-      resena.likes++;
-    }
+  obtenerArrayEstrellas = ResenasUtils.obtenerArrayEstrellas;
+  formatearFecha = ResenasUtils.formatearFecha;
+  obtenerTiempoTranscurrido = ResenasUtils.obtenerTiempoTranscurrido;
+  obtenerTextoCalificacion = ResenasUtils.obtenerTextoCalificacion;
+  trackByResenasId = ResenasUtils.trackByResenasId;
+
+  obtenerPromedioCalificaciones(): number {
+    return ResenasUtils.obtenerPromedioCalificaciones(this.listaResenas);
   }
 
-  trackByResenasId(index: number, resena: any): any {
-    return resena.id || index;
+  obtenerEstadisticasCalificaciones() {
+    return ResenasUtils.obtenerEstadisticasCalificaciones(this.listaResenas);
   }
 }
