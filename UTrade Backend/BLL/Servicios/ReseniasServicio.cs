@@ -43,6 +43,7 @@ namespace BLL.Servicios
             try
             {
                 modelo.Fecha = DateTime.Now;
+                modelo.Id = await GenerarId();
                 var reseniaCreada = await _reseniaRepositorio.Crear(_mapper.Map<Reseña>(modelo));
                 if (reseniaCreada.Id == null)
                     throw new Exception("No se pudo crear");
@@ -159,6 +160,27 @@ namespace BLL.Servicios
             {
                 throw;
             }
+        }
+
+        public async Task<string> GenerarId()
+        {
+            var mensajes = await _reseniaRepositorio.Consultar();
+
+            var numerosExistentes = mensajes
+                .Where(m => m.Id != null && m.Id.StartsWith("RE"))
+                .AsEnumerable()
+                .Select(m => {
+                    var parteNumero = m.Id.Substring(2);
+                    if (int.TryParse(parteNumero, out int numero))
+                        return numero;
+                    return 0;
+                });
+
+            int maxNumero = numerosExistentes.Any() ? numerosExistentes.Max() : 0;
+            int nuevoNumero = maxNumero + 1;
+            string nuevoId = $"RE{nuevoNumero.ToString("D4")}";
+
+            return nuevoId;
         }
     }
 }
