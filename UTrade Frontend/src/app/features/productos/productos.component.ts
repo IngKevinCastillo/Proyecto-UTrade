@@ -47,6 +47,7 @@ export class ProductosComponent implements OnChanges, OnInit {
   listaCategorias: CategoriaPublicacion[] = [];
   listaEstados: Estados[] = [];
   datosPublicaciones: Publicaciones | null = null;
+  productos: ProductoExtendido[] = [];
 
   @Input() Filtro?: string;
   @Input() FiltroIdCategoria?: string;
@@ -79,8 +80,196 @@ export class ProductosComponent implements OnChanges, OnInit {
     });
   }
 
-  productos: ProductoExtendido[] = [];
+  ngOnInit(): void {
+    this.cargarDatosIniciales();
 
+    if (this.datosPublicaciones != null) {
+      this.formularioPublicaciones.patchValue({
+        id: this.datosPublicaciones.id,
+        titulo: this.datosPublicaciones.titulo,
+        fechaPublicacion: this.datosPublicaciones.fechaPublicacion,
+        idUsuario: this.datosPublicaciones.idUsuario,
+        precio: this.datosPublicaciones.precio,
+        idCategoria: this.datosPublicaciones.idCategoria,
+        descripcion: this.datosPublicaciones.descripcion,
+        idEstado: this.datosPublicaciones.idEstado,
+      });
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      this.listaDePersonas.length === 0 ||
+      this.listaCategorias.length === 0
+    ) {
+      return;
+    }
+
+    if (changes['FiltroLista']) {
+      if (this.FiltroLista && this.FiltroLista.length >= 0) {
+        this.procesarProductos(this.FiltroLista);
+      }
+      return;
+    }
+
+    if (changes['FiltroIdCategoria'] && this.FiltroIdCategoria) {
+      this.filtrarPorIdCategoria();
+    } else if (changes['Filtro'] && this.Filtro) {
+      this.filtrarPorNombreCategoria();
+    }
+  }
+
+  cargarDatosIniciales(): void {
+    forkJoin({
+      personas: this._personaServicio.listar(),
+      categorias: this._categoriaServicio.lista(),
+      estados: this._estadosServicio.lista(),
+    }).subscribe({
+      next: (respuestas) => {
+        if (respuestas.personas.estado) {
+          this.listaDePersonas = respuestas.personas.valor;
+        }
+        if (respuestas.categorias.estado) {
+          this.listaCategorias = respuestas.categorias.valor;
+        }
+        if (respuestas.estados.estado) {
+          this.listaEstados = respuestas.estados.valor;
+        }
+
+        this.determinarDatosACargar();
+      },
+      error: (error) => {
+        console.error('Error cargando datos iniciales:', error);
+      },
+    });
+  }
+
+  private determinarDatosACargar(): void {
+    if (this.FiltroLista && this.FiltroLista.length >= 0) {
+      this.procesarProductos(this.FiltroLista);
+    } else if (this.FiltroIdCategoria) {
+      this.filtrarPorIdCategoria();
+    } else if (this.Filtro) {
+      this.filtrarPorNombreCategoria();
+    } else {
+      this.cargarTodosLosProductos();
+    }
+  }
+
+  cargarTodosLosProductos(): void {
+    this._productoServicio.listarActivos().subscribe({
+      next: (respuesta) => {
+        if (respuesta.estado && Array.isArray(respuesta.valor)) {
+          this.procesarProductos(respuesta.valor);
+        } else {
+          this.productos = [];
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando productos:', error);
+        this.productos = [];
+      },
+    });
+  }
+
+  private filtrarPorIdCategoria(): void {
+    if (!this.FiltroIdCategoria) {
+      this.cargarTodosLosProductos();
+      return;
+    }
+
+    this._productoServicio
+      .listarPorCategoria(this.FiltroIdCategoria)
+      .subscribe({
+        next: (respuesta) => {
+          if (respuesta.estado && Array.isArray(respuesta.valor)) {
+            this.procesarProductos(respuesta.valor);
+          } else {
+            this.productos = [];
+            this.toastr.info(
+              'No se encontraron productos para la categoría',
+              'Filtro'
+            );
+          }
+        },
+        error: (error) => {
+          console.error('Error cargando productos por categoría:', error);
+          this.productos = [];
+        },
+      });
+  }
+
+  private filtrarPorNombreCategoria(): void {
+    if (!this.Filtro || this.listaCategorias.length === 0) {
+      this.cargarTodosLosProductos();
+      return;
+    }
+
+    const categoria = this.listaCategorias.find(
+      (c) => c.nombre.toLowerCase() === this.Filtro?.toLowerCase()
+    );
+
+    if (categoria) {
+      this._productoServicio.listarPorCategoria(categoria.id).subscribe({
+        next: (respuesta) => {
+          if (respuesta.estado && Array.isArray(respuesta.valor)) {
+            this.procesarProductos(respuesta.valor);
+          } else {
+            this.productos = [];
+            this.toastr.info(
+              'No se encontraron productos para la categoría',
+              'Filtro'
+            );
+          }
+        },
+        error: (error) => {
+          console.error('Error cargando productos por categoría:', error);
+          this.productos = [];
+        },
+      });
+    } else {
+      this.productos = [];
+      this.toastr.error(`Categoría "${this.Filtro}" no encontrada`, 'Error');
+    }
+  }
+
+  procesarProductos(productos: Publicaciones[]): void {
+    if (!productos || productos.length === 0) {
+      this.productos = [];
+      return;
+    }
+
+    this.productos = productos.map((producto) => {
+      const persona = this.listaDePersonas.find(
+        (p) => p.id === producto.idUsuario
+      );
+      const categoria = this.listaCategorias.find(
+        (c) => c.id === producto.idCategoria
+      );
+      const _estado_ = this.listaEstados.find((c) => c.id == producto.idEstado);
+      const cuotaProducto = producto.idCategoria === 'CAT01' ? ' / MES' : '';
+
+      const productoExtendido: ProductoExtendido = {
+        ...producto,
+        verMas: false,
+        nombreUsuario: persona?.nombreUsuario || 'Usuario desconocido',
+        avatarUsuario: this.procesarAvatar(persona),
+        nombreCategoria: categoria?.nombre || 'Sin categoría',
+        estado: _estado_?.nombre || 'Sin estado',
+        fechaFormateada: this.formatearFecha(producto.fechaPublicacion),
+        tiempoTranscurrido: this.calcularTiempoTranscurrido(
+          producto.fechaPublicacion
+        ),
+        imagenes: ['icons/Image-not-found.png'],
+        cuota: cuotaProducto,
+      };
+      this.cargarImagenesProducto(producto.id, productoExtendido);
+
+      return productoExtendido;
+    });
+  }
+
+  // ... (resto de métodos permanecen igual)
   solicitar(producto: ProductoExtendido): void {
     const usuarioStorage = localStorage.getItem('usuario');
     if (!usuarioStorage) {
@@ -157,184 +346,6 @@ export class ProductosComponent implements OnChanges, OnInit {
         idPublicacion: idPublicacion,
         idPropietario: idPropietario,
       },
-    });
-  }
-
-  ngOnInit(): void {
-    this.cargarDatosIniciales();
-
-    if (this.datosPublicaciones != null) {
-      this.formularioPublicaciones.patchValue({
-        id: this.datosPublicaciones.id,
-        titulo: this.datosPublicaciones.titulo,
-        fechaPublicacion: this.datosPublicaciones.fechaPublicacion,
-        idUsuario: this.datosPublicaciones.idUsuario,
-        precio: this.datosPublicaciones.precio,
-        idCategoria: this.datosPublicaciones.idCategoria,
-        descripcion: this.datosPublicaciones.descripcion,
-        idEstado: this.datosPublicaciones.idEstado,
-      });
-    }
-  }
-
-  cargarDatosIniciales(): void {
-    forkJoin({
-      personas: this._personaServicio.listar(),
-      categorias: this._categoriaServicio.lista(),
-      estados: this._estadosServicio.lista(),
-    }).subscribe({
-      next: (respuestas) => {
-        if (respuestas.personas.estado) {
-          this.listaDePersonas = respuestas.personas.valor;
-        }
-        if (respuestas.categorias.estado) {
-          this.listaCategorias = respuestas.categorias.valor;
-        }
-        if (respuestas.estados.estado) {
-          this.listaEstados = respuestas.estados.valor;
-        }
-
-        if (!this.Filtro && !this.FiltroLista && !this.FiltroIdCategoria) {
-          this.cargarTodosLosProductos();
-        } else if (this.Filtro && this.listaCategorias.length > 0) {
-          this.filtrarPorNombreCategoria();
-        }
-      },
-      error: (error) => {
-        console.error('Error cargando datos iniciales:', error);
-      },
-    });
-  }
-
-  cargarTodosLosProductos(): void {
-    this._productoServicio.listarActivos().subscribe({
-      next: (respuesta) => {
-        if (respuesta.estado) {
-          this.procesarProductos(respuesta.valor);
-        }
-      },
-      error: (error) => {
-        console.error('Error cargando productos:', error);
-      },
-    });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['FiltroLista'] && this.FiltroLista) {
-      this.procesarProductos(this.FiltroLista);
-    } else if (changes['FiltroIdCategoria'] && this.FiltroIdCategoria) {
-      if (this.listaDePersonas.length > 0) {
-        this.filtrarPorIdCategoria();
-      } else {
-        this.cargarPersonasYFiltrar();
-      }
-    } else if (changes['Filtro'] && this.Filtro) {
-      if (this.listaCategorias.length > 0 && this.listaDePersonas.length > 0) {
-        this.filtrarPorNombreCategoria();
-      } else {
-        this.toastr.info(
-          'Esperando a que se carguen las categorías y personas...',
-          'Info'
-        );
-      }
-    }
-  }
-
-  private cargarPersonasYFiltrar(): void {
-    this._personaServicio.listar().subscribe({
-      next: (respuesta) => {
-        if (respuesta.estado) {
-          this.listaDePersonas = respuesta.valor;
-          this.filtrarPorIdCategoria();
-        }
-      },
-      error: (error) => {
-        console.error('Error cargando personas:', error);
-      },
-    });
-  }
-
-  private filtrarPorIdCategoria(): void {
-    if (!this.FiltroIdCategoria) return;
-
-    this._productoServicio
-      .listarPorCategoria(this.FiltroIdCategoria)
-      .subscribe({
-        next: (respuesta) => {
-          if (respuesta.estado) {
-            this.procesarProductos(respuesta.valor);
-          } else {
-            this.toastr.error(
-              'No se encontraron productos para la categoría',
-              'Info'
-            );
-            this.productos = [];
-          }
-        },
-        error: (error) => {
-          console.error('Error cargando productos por categoría:', error);
-          this.productos = [];
-        },
-      });
-  }
-
-  private filtrarPorNombreCategoria(): void {
-    const categoria = this.listaCategorias.find(
-      (c) => c.nombre.toLowerCase() === this.Filtro?.toLowerCase()
-    );
-
-    if (categoria) {
-      this._productoServicio.listarPorCategoria(categoria.id).subscribe({
-        next: (respuesta) => {
-          if (respuesta.estado) {
-            this.procesarProductos(respuesta.valor);
-          } else {
-            this.toastr.error(
-              'No se encontraron productos para la categoría',
-              'Info'
-            );
-            this.productos = [];
-          }
-        },
-        error: (error) => {
-          console.error('Error cargando productos por categoría:', error);
-          this.productos = [];
-        },
-      });
-    } else {
-      this.toastr.error(`Categoría no encontrada`, 'Info');
-      this.productos = [];
-    }
-  }
-
-  procesarProductos(productos: Publicaciones[]): void {
-    this.productos = productos.map((producto) => {
-      const persona = this.listaDePersonas.find(
-        (p) => p.id === producto.idUsuario
-      );
-      const categoria = this.listaCategorias.find(
-        (c) => c.id === producto.idCategoria
-      );
-      const _estado_ = this.listaEstados.find((c) => c.id == producto.idEstado);
-      const cuotaProducto = producto.idCategoria === 'CAT01' ? ' / MES' : '';
-
-      const productoExtendido: ProductoExtendido = {
-        ...producto,
-        verMas: false,
-        nombreUsuario: persona?.nombreUsuario || 'Usuario desconocido',
-        avatarUsuario: this.procesarAvatar(persona),
-        nombreCategoria: categoria?.nombre || 'Sin categoría',
-        estado: _estado_?.nombre || 'Sin estado',
-        fechaFormateada: this.formatearFecha(producto.fechaPublicacion),
-        tiempoTranscurrido: this.calcularTiempoTranscurrido(
-          producto.fechaPublicacion
-        ),
-        imagenes: ['icons/Image-not-found.png'],
-        cuota: cuotaProducto,
-      };
-      this.cargarImagenesProducto(producto.id, productoExtendido);
-
-      return productoExtendido;
     });
   }
 

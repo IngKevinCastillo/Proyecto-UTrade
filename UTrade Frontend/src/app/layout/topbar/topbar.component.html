@@ -1,5 +1,38 @@
 <div class="topbar d-flex align-items-center justify-content-between px-4 py-2">
-  <input class="search-input" type="text" placeholder="Buscar" />
+  <div
+    class="search-container d-flex align-items-center gap-2"
+    *ngIf="mostrarBuscar"
+  >
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Buscar productos o servicios..."
+      [(ngModel)]="terminoBusqueda"
+      (keyup.enter)="onBuscar()"
+      (input)="onInputChange()"
+      [disabled]="deshabilitarBusqueda"
+    />
+    <button
+      class="search-btn btn btn-primary d-flex align-items-center gap-1"
+      (click)="onBuscar()"
+      [disabled]="
+        !terminoBusqueda ||
+        terminoBusqueda.trim() === '' ||
+        deshabilitarBusqueda
+      "
+    >
+      <i class="bi bi-search"></i>
+      <span class="d-none d-md-inline">Buscar</span>
+    </button>
+    <button
+      class="clear-btn btn btn-outline-secondary"
+      (click)="limpiarBusqueda()"
+      *ngIf="terminoBusqueda && terminoBusqueda.trim() !== ''"
+      [disabled]="deshabilitarBusqueda"
+    >
+      <i class="bi bi-x-circle"></i>
+    </button>
+  </div>
 
   <div class="filters d-flex gap-3">
     <button class="filter-btn" routerLink="/compras" routerLinkActive="active">

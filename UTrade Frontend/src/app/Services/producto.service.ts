@@ -60,4 +60,10 @@ export class ProductoService {
       `${this.urlApi}ListarSoloConLongitudLatitud`
     );
   }
+
+  busquedaTexto(texto: string): Observable<RespuestaAPI> {
+    return this.http.get<RespuestaAPI>(
+      `${this.urlApi}BusquedaTexto/${encodeURIComponent(texto)}`
+    );
+  }
 }

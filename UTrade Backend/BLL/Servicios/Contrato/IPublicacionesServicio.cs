@@ -20,5 +20,6 @@ namespace BLL.Servicios.Contrato
         Task<string> ObtenerIdNuevaPublicacion();
         Task<List<PublicacionesDTO>> ListarPorUsuario(string id);
         Task<List<PublicacionesDTO>> listarActivos();
+        Task<List<PublicacionesDTO>> busquedaTexto(string textoBusqueda);
     }
 }

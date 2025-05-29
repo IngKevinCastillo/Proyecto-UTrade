@@ -257,5 +257,24 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public async Task<List<PublicacionesDTO>> busquedaTexto(string textoBusqueda)
+        {
+            var publicaciones = Listar();
+            try
+            {
+                var listaPublicaciones = await publicaciones;
+                if (listaPublicaciones == null || !listaPublicaciones.Any())
+                    throw new TaskCanceledException("No se encontraron publicaciones");
+                var publicacionesFiltradas = listaPublicaciones
+                    .Where(p => p.Titulo.Contains(textoBusqueda, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+                return publicacionesFiltradas;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
