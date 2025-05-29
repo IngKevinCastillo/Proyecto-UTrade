@@ -128,14 +128,7 @@ export class ResenasComponent implements OnInit, OnDestroy {
     if (this.esPropietarioPublicacion()) {
       this.toastr.error(
         'No puedes dejar una reseña en tu propia publicación.',
-        'Error',
-        {
-          timeOut: 3000,
-          positionClass: 'toast-top-center',
-          closeButton: true,
-          progressBar: true,
-          progressAnimation: 'decreasing',
-        }
+        'Error'
       );
       return;
     }
