@@ -260,7 +260,7 @@ namespace BLL.Servicios
 
         public async Task<List<PublicacionesDTO>> busquedaTexto(string textoBusqueda)
         {
-            var publicaciones = Listar();
+            var publicaciones = listarActivos();
             try
             {
                 var listaPublicaciones = await publicaciones;
