@@ -70,6 +70,24 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("BusquedaTexto/{textoBusqueda}")]
+        public async Task<IActionResult> BusquedaTexto(string textoBusqueda)
+        {
+            var rsp = new Respuesta<List<PublicacionesDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.busquedaTexto(textoBusqueda);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
         [Route("Buscar/{id}")]
         public async Task<IActionResult> Buscar(string id)
         {

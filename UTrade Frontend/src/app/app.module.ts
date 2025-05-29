@@ -13,8 +13,8 @@ import { NotificationIconComponent } from './shared/components/notification-icon
 import { UserProfileComponent } from './shared/components/user-profile/user-profile.component';
 import { NoMatchComponent } from './shared/components/no-match/no-match.component';
 import { HomePageComponent } from './features/home/pages/home-page/home-page.component';
-import { ComprasPageComponent } from './features/compras/pages/compras-page/compras-page.component';
-import { RentasPageComponent } from './features/rentas/pages/rentas-page/rentas-page.component';
+import { ComprasComponent } from './features/compras/pages/compras-page/compras-page.component';
+import { RentasComponent } from './features/rentas/pages/rentas-page/rentas-page.component';
 import { ProductosComponent } from './features/productos/productos.component';
 import { VerProductosComponent } from './features/productos/componentes/ver-productos/ver-productos.component';
 import { ModificarProductosComponent } from './features/productos/componentes/modificar-productos/modificar-productos.component';
@@ -65,8 +65,8 @@ import { ResenasComponent } from './features/productos/componentes/resenas/resen
     NotificationIconComponent,
     UserProfileComponent,
     HomePageComponent,
-    ComprasPageComponent,
-    RentasPageComponent,
+    ComprasComponent,
+    RentasComponent,
     VentanaComponent,
     AnuncioPreviewComponent,
     AnuncioDatosComponent,

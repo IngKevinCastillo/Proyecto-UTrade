@@ -1,8 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ConexionBackendService } from '../../Services/conexion-backend.service';
 import { notificacionesLista } from '../simulacionNotificaciones';
+import { BusquedaService } from '../../Services/busqueda.service';
 
 @Component({
   selector: 'app-topbar',
@@ -11,7 +12,9 @@ import { notificacionesLista } from '../simulacionNotificaciones';
 })
 export class TopbarComponent implements OnInit {
   activeFilter: string = 'todo';
-
+  terminoBusqueda: string = '';
+  mostrarBuscar: boolean = true;
+  deshabilitarBusqueda: boolean = false;
   username: string = '';
   userHandle: string = '';
   avatarUrl: string = 'icons/no-photo.webp';
@@ -25,8 +28,15 @@ export class TopbarComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private conexionBackend: ConexionBackendService
-  ) {}
+    private conexionBackend: ConexionBackendService,
+    private busquedaService: BusquedaService
+  ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.actualizarVisibilidadBusqueda(event.url);
+      }
+    });
+  }
 
   ngOnInit(): void {
     const usuario = JSON.parse(localStorage.getItem('usuario')!);
@@ -56,6 +66,42 @@ export class TopbarComponent implements OnInit {
           console.error('Error al obtener datos del usuario:', err);
         },
       });
+    }
+    this.actualizarVisibilidadBusqueda(this.router.url);
+  }
+
+  private actualizarVisibilidadBusqueda(url: string): void {
+    this.deshabilitarBusqueda = !(
+      url.includes('/home') ||
+      url.includes('/compras') ||
+      url.includes('/rentas')
+    );
+  }
+
+  onInputChange(): void {
+    // Opcional pero aja. Esto hace una búsqueda en tiempo real mientras escribe
+  }
+
+  onBuscar(): void {
+    const termino = this.terminoBusqueda.trim();
+
+    if (termino === '') {
+      this.limpiarBusqueda();
+      return;
+    }
+    this.busquedaService.enviarTerminoBusqueda(termino);
+
+    if (this.router.url !== '/home') {
+      this.router.navigate(['/home']);
+    }
+  }
+
+  limpiarBusqueda(): void {
+    this.terminoBusqueda = '';
+    this.busquedaService.enviarTerminoBusqueda('');
+
+    if (this.router.url !== '/home') {
+      this.router.navigate(['/home']);
     }
   }
 
