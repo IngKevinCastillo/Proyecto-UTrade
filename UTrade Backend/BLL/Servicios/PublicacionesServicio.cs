@@ -135,7 +135,9 @@ namespace BLL.Servicios
             try
             {
                 var queryPublicacion = await _publicacionesRepositorio.Consultar();
-                var listaPublicaciones = queryPublicacion.ToList();
+                var listaPublicaciones = queryPublicacion
+                    .OrderByDescending(x => x.FechaPublicacion)
+                    .ToList();
 
                 return _mapper.Map<List<PublicacionesDTO>>(listaPublicaciones);
             }
@@ -176,6 +178,7 @@ namespace BLL.Servicios
                 var queryPublicacion = await _publicacionesRepositorio.Consultar();
                 var listaFiltrada = queryPublicacion
                     .Where(x => x.IdCategoria == idCategoria && x.IdEstado == "EST01")
+                    .OrderByDescending(x => x.FechaPublicacion)
                     .ToList();
 
                 if (listaFiltrada == null || !listaFiltrada.Any())
@@ -241,14 +244,15 @@ namespace BLL.Servicios
         {
             try
             {
-
                 var queryPublicacion = await _publicacionesRepositorio.Consultar();
+
                 var listaFiltrada = queryPublicacion
                     .Where(x => x.IdEstado == "EST01")
+                    .OrderByDescending(x => x.FechaPublicacion)
                     .ToList();
 
                 if (listaFiltrada == null || !listaFiltrada.Any())
-                    throw new TaskCanceledException("No se encontraron publicaciones para el usuario especificada");
+                    throw new TaskCanceledException("No se encontraron publicaciones para el usuario especificado");
 
                 return _mapper.Map<List<PublicacionesDTO>>(listaFiltrada);
             }
@@ -257,6 +261,7 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
 
         public async Task<List<PublicacionesDTO>> busquedaTexto(string textoBusqueda)
         {

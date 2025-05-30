@@ -38,7 +38,7 @@ import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-pe
 import { MisPublicacionesComponent } from './features/cuenta/mis-publicaciones/mis-publicaciones.component';
 import { ReputacionComponent } from './features/cuenta/reputacion/reputacion.component';
 import { VerReporteComponent } from './features/reportes/componentes/ver-reporte/ver-reporte.component';
-import { ResueltoComponent } from './features/reportes/componentes/resuelto/resuelto.component'; 
+import { ResueltoComponent } from './features/reportes/componentes/resuelto/resuelto.component';
 import { MapaComponent } from './features/mapa/mapa.component';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -56,6 +56,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ResenasComponent } from './features/productos/componentes/resenas/resenas/resenas.component';
+
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [
@@ -134,7 +140,7 @@ import { ResenasComponent } from './features/productos/componentes/resenas/resen
     MatDividerModule,
     MatToolbarModule,
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-CO' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
