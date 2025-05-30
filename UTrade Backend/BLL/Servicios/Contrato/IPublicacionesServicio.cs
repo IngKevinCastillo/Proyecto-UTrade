@@ -23,6 +23,6 @@ namespace BLL.Servicios.Contrato
         Task<List<PublicacionesDTO>> busquedaTexto(string textoBusqueda);
         Task<List<PublicacionesDTO>> ListarRangoPrecio(decimal precioMinimo, decimal precioMaximo);
         Task<List<PublicacionesDTO>> ListarMaxOMinPrecio(string tipoFiltro);
-        Task<List<PublicacionesDTO>> ListarPorFecha(string tipoFiltro, DateTime fecha);
+        Task<List<PublicacionesDTO>> ListarPorFecha(string tipoFiltro);
     }
 }

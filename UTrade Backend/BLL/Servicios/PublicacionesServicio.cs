@@ -299,30 +299,33 @@ namespace BLL.Servicios
 
         public async Task<List<PublicacionesDTO>> ListarMaxOMinPrecio(string tipoFiltro)
         {
-            var publicaciones = listarActivos();
             try
             {
-                var listaPublicaciones = await publicaciones;
+                var listaPublicaciones = await listarActivos();
+
                 if (listaPublicaciones == null || !listaPublicaciones.Any())
                     throw new TaskCanceledException("No se encontraron publicaciones");
-                if(tipoFiltro == "max")
+
+                List<PublicacionesDTO> publicacionesOrdenadas;
+
+                if (tipoFiltro == "max")
                 {
-                    var publicacionMaxPrecio = listaPublicaciones
+                    publicacionesOrdenadas = listaPublicaciones
                         .OrderByDescending(p => p.Precio)
-                        .FirstOrDefault();
-                    return _mapper.Map<List<PublicacionesDTO>>(publicacionMaxPrecio);
+                        .ToList();
                 }
                 else if (tipoFiltro == "min")
                 {
-                    var publicacionMinPrecio = listaPublicaciones
+                    publicacionesOrdenadas = listaPublicaciones
                         .OrderBy(p => p.Precio)
-                        .FirstOrDefault();
-                    return _mapper.Map<List<PublicacionesDTO>>(publicacionMinPrecio);
+                        .ToList();
                 }
                 else
                 {
                     throw new ArgumentException("Tipo de filtro no válido. Use 'max' o 'min'.");
                 }
+
+                return _mapper.Map<List<PublicacionesDTO>>(publicacionesOrdenadas);
             }
             catch
             {
@@ -330,24 +333,28 @@ namespace BLL.Servicios
             }
         }
 
-        public async Task<List<PublicacionesDTO>> ListarPorFecha(string tipoFiltro, DateTime fecha)
+
+        public async Task<List<PublicacionesDTO>> ListarPorFecha(string tipoFiltro)
         {
             var listaPublicaciones = await listarActivos();
+            var fechaActual = DateTime.Now;
 
             try
             {
                 if (listaPublicaciones == null || !listaPublicaciones.Any())
                     throw new TaskCanceledException("No se encontraron publicaciones");
+
                 List<PublicacionesDTO> publicacionesFiltradas;
+
                 if (tipoFiltro == "hoy")
                 {
                     publicacionesFiltradas = listaPublicaciones
-                        .Where(p => p.FechaPublicacion.Date == fecha.Date)
+                        .Where(p => p.FechaPublicacion.Date == fechaActual.Date)
                         .ToList();
                 }
                 else if (tipoFiltro == "semana")
                 {
-                    var inicioSemana = fecha.Date.AddDays(-(int)fecha.DayOfWeek);
+                    var inicioSemana = fechaActual.Date.AddDays(-(int)fechaActual.DayOfWeek);
                     var finSemana = inicioSemana.AddDays(6);
 
                     publicacionesFiltradas = listaPublicaciones
@@ -357,25 +364,25 @@ namespace BLL.Servicios
                 else if (tipoFiltro == "mes")
                 {
                     publicacionesFiltradas = listaPublicaciones
-                        .Where(p => p.FechaPublicacion.Month == fecha.Month && p.FechaPublicacion.Year == fecha.Year)
+                        .Where(p => p.FechaPublicacion.Month == fechaActual.Month && p.FechaPublicacion.Year == fechaActual.Year)
                         .ToList();
                 }
                 else if (tipoFiltro == "año")
                 {
                     publicacionesFiltradas = listaPublicaciones
-                        .Where(p => p.FechaPublicacion.Year == fecha.Year)
+                        .Where(p => p.FechaPublicacion.Year == fechaActual.Year)
                         .ToList();
-                }else if(tipoFiltro == "ultimaHora")
+                }
+                else if (tipoFiltro == "ultimaHora")
                 {
-                    var horaLimite = fecha.AddHours(-1);
-
+                    var horaLimite = fechaActual.AddHours(-1);
                     publicacionesFiltradas = listaPublicaciones
-                        .Where(p => p.FechaPublicacion >= horaLimite && p.FechaPublicacion <= fecha)
+                        .Where(p => p.FechaPublicacion >= horaLimite && p.FechaPublicacion <= fechaActual)
                         .ToList();
                 }
                 else
                 {
-                    throw new ArgumentException("Tipo de filtro no válido. Use 'hoy', 'semana', 'mes' o 'año'.");
+                    throw new ArgumentException("Tipo de filtro no válido. Use 'hoy', 'semana', 'mes', 'año' o 'ultimaHora'.");
                 }
 
                 return publicacionesFiltradas;
@@ -385,6 +392,5 @@ namespace BLL.Servicios
                 throw;
             }
         }
-
     }
 }

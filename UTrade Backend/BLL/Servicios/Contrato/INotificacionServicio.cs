@@ -9,10 +9,8 @@ namespace BLL.Servicios.Contrato
 {
     public interface INotificacionServicio
     {
-        Task<List<NotificacionesDTO>> Listar();
         Task<NotificacionesDTO> Crear(NotificacionesDTO modelo);
-        Task<bool> Editar(NotificacionesDTO modelo);
-        Task<NotificacionesDTO> Buscar(string id);
-        Task<bool> Eliminar(string id);
+        Task<List<NotificacionesDTO>> ListarPorIdUsuario(string idUsuario);
+        Task<bool> CambiarEstado(bool estado, NotificacionesDTO notificacion);
     }
 }

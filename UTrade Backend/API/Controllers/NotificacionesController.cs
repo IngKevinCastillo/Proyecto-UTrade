@@ -17,32 +17,14 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("Listar")]
-        public async Task<IActionResult> listar()
+        [Route("ListarPorIdUsuario/{idUsuario}")]
+        public async Task<IActionResult> ListarPorIdUsuario(string idUsuario)
         {
             var rsp = new Respuesta<List<NotificacionesDTO>>();
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _notificacionesServicio.Listar();
-            }
-            catch (Exception ex)
-            {
-                rsp.estado = false;
-                rsp.mgs = ex.Message;
-            }
-            return Ok(rsp);
-        }
-
-        [HttpGet]
-        [Route("Buscar/{id}")]
-        public async Task<IActionResult> Buscar(string id)
-        {
-            var rsp = new Respuesta<NotificacionesDTO>();
-            try
-            {
-                rsp.estado = true;
-                rsp.Valor = await _notificacionesServicio.Buscar(id);
+                rsp.Valor = await _notificacionesServicio.ListarPorIdUsuario(idUsuario);
             }
             catch (Exception ex)
             {
@@ -71,32 +53,14 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [Route("Editar")]
-        public async Task<IActionResult> Editar([FromBody] NotificacionesDTO notificacion)
+        [Route("CambiarEstado")]
+        public async Task<IActionResult> CambiarEstado([FromBody] NotificacionesDTO notificacion, bool estado)
         {
             var rsp = new Respuesta<bool>();
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _notificacionesServicio.Editar(notificacion);
-            }
-            catch (Exception ex)
-            {
-                rsp.estado = false;
-                rsp.mgs = ex.Message;
-            }
-            return Ok(rsp);
-        }
-
-        [HttpDelete]
-        [Route("Eliminar/{id}")]
-        public async Task<IActionResult> Eliminar(string id)
-        {
-            var rsp = new Respuesta<bool>();
-            try
-            {
-                rsp.estado = true;
-                rsp.Valor = await _notificacionesServicio.Eliminar(id);
+                rsp.Valor = await _notificacionesServicio.CambiarEstado(estado, notificacion);
             }
             catch (Exception ex)
             {

@@ -21,13 +21,19 @@ namespace BLL.Servicios
             _mapper = mapper;
         }
 
-        public async Task<NotificacionesDTO> Buscar(string id)
+        public async Task<bool> CambiarEstado(bool estado, NotificacionesDTO notificacion)
         {
             try
             {
-                var queryNotificaciones = await _notificacionesRepositorio.Obtener(x => x.Id == id);
-
-                return _mapper.Map<NotificacionesDTO>(queryNotificaciones);
+                var notifiacionModelo = _mapper.Map<NotificacionesDTO>(notificacion);
+                var notificacionEncontrado = await _notificacionesRepositorio.Obtener(x => x.Id == notificacion.Id);
+                if (notificacionEncontrado == null)
+                    throw new TaskCanceledException("La notificacion no existe");
+                notificacionEncontrado.Estado = notifiacionModelo.Estado;
+                bool respuesta = await _notificacionesRepositorio.Editar(notificacionEncontrado);
+                if (!respuesta)
+                    throw new TaskCanceledException("No se pudo editar");
+                return respuesta;
             }
             catch
             {
@@ -49,57 +55,17 @@ namespace BLL.Servicios
                 throw;
             }
         }
-
-        public async Task<bool> Editar(NotificacionesDTO modelo)
+        public async Task<List<NotificacionesDTO>> ListarPorIdUsuario(string idUsuario)
         {
             try
             {
-                var notificacionModelo = _mapper.Map<Notificaciones>(modelo);
-                var notificacionEncontrada = await _notificacionesRepositorio.Obtener(x => x.Id == modelo.Id);
-                if (notificacionEncontrada == null)
-                    throw new TaskCanceledException("La notificacion no existe");
-                notificacionEncontrada.IdTipoAccion = notificacionModelo.IdTipoAccion;
-                notificacionEncontrada.IdTipoAccionNavigation = notificacionModelo.IdTipoAccionNavigation;
-                notificacionEncontrada.Fecha = notificacionModelo.Fecha;
-                notificacionEncontrada.Hora = notificacionModelo.Hora;
-                notificacionEncontrada.Estado = notificacionModelo.Estado;
-                bool respuesta = await _notificacionesRepositorio.Editar(notificacionEncontrada);
-                if (!respuesta)
-                    throw new TaskCanceledException("No se pudo editar");
-                return respuesta;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<bool> Eliminar(string id)
-        {
-            try
-            {
-                var notificacionEncontrada = await _notificacionesRepositorio.Obtener(x => x.Id == id);
-                if (notificacionEncontrada == null)
-                    throw new TaskCanceledException("El rol no existe");
-                bool respuesta = await _notificacionesRepositorio.Eliminar(notificacionEncontrada);
-                if (!respuesta)
-                    throw new TaskCanceledException("No se pudo eliminar");
-                return respuesta;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<List<NotificacionesDTO>> Listar()
-        {
-            try
-            {
-                var queryNotificaciones = await _notificacionesRepositorio.Consultar();
-                var listaNotificaciones = queryNotificaciones.ToList();
-
-                return _mapper.Map<List<NotificacionesDTO>>(listaNotificaciones);
+                var listaNotificaciones = await _notificacionesRepositorio.Consultar();
+                if (listaNotificaciones == null || !listaNotificaciones.Any())
+                    throw new Exception("No hay notificaciones.");
+                var notificacionesFiltradas = listaNotificaciones.Where(x => x.IdPersona == idUsuario).ToList();
+                if (notificacionesFiltradas == null || !notificacionesFiltradas.Any())
+                    throw new Exception("No hay notificaciones para el usuario especificado.");
+                return _mapper.Map<List<NotificacionesDTO>>(notificacionesFiltradas);
             }
             catch
             {
