@@ -19,21 +19,6 @@
             ¡Bienvenido! Completa tus datos para unirte a nuestra plataforma.
           </p>
 
-          <div class="social-buttons mb-3">
-            <button
-              class="btn btn-outline-secondary"
-              (click)="registerWithGoogle()"
-            >
-              <i class="fab fa-google me-2"></i> Google
-            </button>
-            <button
-              class="btn btn-outline-secondary"
-              (click)="registerWithFacebook()"
-            >
-              <i class="fab fa-facebook-f me-2"></i> Facebook
-            </button>
-          </div>
-
           <div class="separator mb-3">
             <span class="text-muted">o regístrate con tus datos</span>
           </div>
@@ -149,14 +134,14 @@
 
             <div class="form-grid-item">
               <label for="email" class="form-label">
-                <i class="bi bi-envelope me-2"></i> Correo o número telefónico
+                <i class="bi bi-envelope me-2"></i> Correo Electrónico
               </label>
               <input
                 type="text"
                 class="form-control"
                 id="email"
                 name="email"
-                placeholder="Ingresa tu correo o número telefónico"
+                placeholder="Ingresa tu correo"
                 [(ngModel)]="registroData.email"
                 required
               />

@@ -22,133 +22,55 @@ namespace BLL.Servicios
             _mapper = mapper;
         }
 
-        public async Task<FavoritosDTO> Buscar(string id)
+        public async Task<List<FavoritosDTO>> BuscarPorUsuario(string id)
         {
-            try
-            {
-                var favoritosEncontrado = await _favoritosRepositorio.Obtener(x => x.Id == id);
-                if (favoritosEncontrado == null)
-                    throw new TaskCanceledException("El Favorito no existe");
-                return _mapper.Map<FavoritosDTO>(favoritosEncontrado);
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<FavoritosDTO> BuscarPorPublicacion(string id)
-        {
-            try
-            {
-                var favoritosEncontrado = await _favoritosRepositorio.Obtener(x => x.IdPublicacion == id);
-                if (favoritosEncontrado == null)
-                    throw new TaskCanceledException("El Favorito no existe");
-                return _mapper.Map<FavoritosDTO>(favoritosEncontrado);
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<FavoritosDTO> BuscarPorUsuario(string id)
-        {
-            try
-            {
-                var favoritosEncontrado = await _favoritosRepositorio.Obtener(x => x.IdPersona == id);
-                if (favoritosEncontrado == null)
-                    throw new TaskCanceledException("El Favorito no existe");
-                return _mapper.Map<FavoritosDTO>(favoritosEncontrado);
-            }
-            catch
-            {
-                throw;
-            }
+            var favoritos = await _favoritosRepositorio.Consultar(f => f.IdPersona == id);
+            return _mapper.Map<List<FavoritosDTO>>(favoritos);
         }
 
         public async Task<FavoritosDTO> Crear(FavoritosDTO modelo)
         {
-            try
-            {
-                var favoritosCreado = await _favoritosRepositorio.Crear(_mapper.Map<Favoritos>(modelo));
-                if (favoritosCreado.Id == null)
-                    throw new Exception("No se pudo crear");
-                return _mapper.Map<FavoritosDTO>(favoritosCreado);
-            }
-            catch
-            {
-                throw;
-            }
+            modelo.Id = await GenerarId();
+            var favorito = _mapper.Map<Favoritos>(modelo);
+            var creado = await _favoritosRepositorio.Crear(favorito);
+            return _mapper.Map<FavoritosDTO>(creado);
         }
 
-        public async Task<bool> Eliminar(string id)
+        public async Task<bool> EliminarUsuarioPublicacion(string idUsuario, string idPublicacion)
         {
-            try
+            var favorito = await _favoritosRepositorio.Obtener(f => f.IdPersona == idUsuario && f.IdPublicacion == idPublicacion);
+            if (favorito == null)
             {
-                var favoritosEncontrado = await _favoritosRepositorio.Obtener(x => x.Id == id);
-                if (favoritosEncontrado == null)
-                    throw new TaskCanceledException("El Favorito no existe");
-                bool respuesta = await _favoritosRepositorio.Eliminar(favoritosEncontrado);
-                if (!respuesta)
-                    throw new TaskCanceledException("No se pudo eliminar");
-                return respuesta;
+                return false;
             }
-            catch
-            {
-                throw;
-            }
+            return await _favoritosRepositorio.Eliminar(favorito);
         }
 
-        public async Task<bool> EliminarPorPublicacion(string id)
+        public async Task<bool> VerificarFavorito(string idUsuario, string idPublicacion)
         {
-            try
-            {
-                var favoritosEncontrado = await _favoritosRepositorio.Obtener(x => x.IdPublicacion == id);
-                if (favoritosEncontrado == null)
-                    throw new TaskCanceledException("El Favorito no existe");
-                bool respuesta = await _favoritosRepositorio.Eliminar(favoritosEncontrado);
-                if (!respuesta)
-                    throw new TaskCanceledException("No se pudo eliminar");
-                return respuesta;
-            }
-            catch
-            {
-                throw;
-            }
+            var favorito = await _favoritosRepositorio.Obtener(f => f.IdPersona == idUsuario && f.IdPublicacion == idPublicacion);
+            return favorito != null;
         }
 
-        public async Task<bool> EliminarPorUsuario(string id)
+        public async Task<string> GenerarId()
         {
-            try
-            {
-                var favoritosEncontrado = await _favoritosRepositorio.Obtener(x => x.IdPersona == id);
-                if (favoritosEncontrado == null)
-                    throw new TaskCanceledException("El Favorito no existe");
-                bool respuesta = await _favoritosRepositorio.Eliminar(favoritosEncontrado);
-                if (!respuesta)
-                    throw new TaskCanceledException("No se pudo eliminar");
-                return respuesta;
-            }
-            catch
-            {
-                throw;
-            }
-        }
+            var mensajes = await _favoritosRepositorio.Consultar();
 
-        public async Task<List<FavoritosDTO>> Listar()
-        {
-            try
-            {
-                var favoritosListar = await _favoritosRepositorio.Consultar();
-                if (favoritosListar == null)
-                    throw new TaskCanceledException("No se encontraron Favoritos");
-                return _mapper.Map<List<FavoritosDTO>>(favoritosListar.ToList());
-            }
-            catch
-            {
-                throw;
-            }
+            var numerosExistentes = mensajes
+                .Where(m => m.Id != null && m.Id.StartsWith("FAV"))
+                .AsEnumerable()
+                .Select(m => {
+                    var parteNumero = m.Id.Substring(3);
+                    if (int.TryParse(parteNumero, out int numero))
+                        return numero;
+                    return 0;
+                });
+
+            int maxNumero = numerosExistentes.Any() ? numerosExistentes.Max() : 0;
+            int nuevoNumero = maxNumero + 1;
+            string nuevoId = $"FAV{nuevoNumero.ToString("D5")}";
+
+            return nuevoId;
         }
     }
 }
