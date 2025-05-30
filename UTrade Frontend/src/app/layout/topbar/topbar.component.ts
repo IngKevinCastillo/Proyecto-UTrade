@@ -5,7 +5,7 @@ import { ConexionBackendService } from '../../Services/conexion-backend.service'
 import { notificacionesLista } from '../simulacionNotificaciones';
 import { BusquedaService } from '../../Services/busqueda.service';
 import { ProductoService } from '../../Services/producto.service';
-import { FiltrosService } from '../../Services/filtros.service'; // Importar el nuevo servicio
+import { FiltrosService } from '../../Services/filtros.service';
 
 @Component({
   selector: 'app-topbar',
@@ -28,6 +28,8 @@ export class TopbarComponent implements OnInit {
   notificationCount = this.listaNotificaciones.length;
 
   panelFiltros: boolean = false;
+  
+  // Variables locales para manejar los filtros temporalmente
   filtroFechaSeleccionado: string = '';
   precioMinimo: number = 0;
   precioMaximo: number = 2000000;
@@ -40,7 +42,7 @@ export class TopbarComponent implements OnInit {
     private conexionBackend: ConexionBackendService,
     private busquedaService: BusquedaService,
     private productosService: ProductoService,
-    private filtrosService: FiltrosService // Inyectar el servicio
+    private filtrosService: FiltrosService
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -80,7 +82,7 @@ export class TopbarComponent implements OnInit {
     }
     this.actualizarVisibilidadBusqueda(this.router.url);
     
-    // Sincronizar con el servicio al inicializar
+    // Sincronizar con el servicio al inicializar SOLO para mostrar filtros aplicados
     this.sincronizarConServicio();
   }
 
@@ -93,7 +95,7 @@ export class TopbarComponent implements OnInit {
   }
 
   private sincronizarConServicio(): void {
-    // Obtener filtros actuales del servicio
+    // Obtener filtros actuales del servicio para mostrarlos
     const filtrosActivos = this.filtrosService.getFiltrosActivos();
     
     // Mapeo inverso para el frontend
@@ -111,7 +113,7 @@ export class TopbarComponent implements OnInit {
   }
 
   onInputChange(): void {
-    // Opcional pero aja. Esto hace una búsqueda en tiempo real mientras escribe
+    // Opcional: búsqueda en tiempo real mientras escribe
   }
 
   togglePanelFiltros(event: Event) {
@@ -119,64 +121,66 @@ export class TopbarComponent implements OnInit {
     if (!this.panelFiltros) {
       this.menuVisible = false;
       this.notificaciones = false;
+      // Al abrir el panel, sincronizar con los valores actuales del servicio
+      this.sincronizarConServicio();
     }
     this.panelFiltros = !this.panelFiltros;
   }
 
   seleccionarFiltroFecha(filtro: string) {
-    // Limpiar el filtro anterior si es el mismo
+    // Solo actualizar la variable local, NO el servicio
     if (this.filtroFechaSeleccionado === filtro) {
       this.filtroFechaSeleccionado = '';
-      this.filtrosService.setFiltroFecha('');
     } else {
       this.filtroFechaSeleccionado = filtro;
-      this.filtrosService.setFiltroFecha(filtro);
     }
     
-    console.log('Filtro de fecha seleccionado:', this.filtrosService.getFiltroFecha());
+    console.log('Filtro de fecha seleccionado localmente:', this.filtroFechaSeleccionado);
   }
 
   onPrecioMinChange() {
-    // Asegurar que el precio mínimo no sea mayor que el máximo
+    // Solo manejar la lógica local, NO actualizar el servicio
     if (this.filtroPrecioMin >= this.filtroPrecioMax) {
       this.filtroPrecioMin = this.filtroPrecioMax - 10;
     }
-    // Actualizar el servicio
-    this.filtrosService.setFiltroPrecio(this.filtroPrecioMin, this.filtroPrecioMax);
+    console.log('Precio mínimo cambiado localmente:', this.filtroPrecioMin);
   }
 
   onPrecioMaxChange() {
-    // Asegurar que el precio máximo no sea menor que el mínimo
+    // Solo manejar la lógica local, NO actualizar el servicio
     if (this.filtroPrecioMax <= this.filtroPrecioMin) {
       this.filtroPrecioMax = this.filtroPrecioMin + 10;
     }
-    // Actualizar el servicio
-    this.filtrosService.setFiltroPrecio(this.filtroPrecioMin, this.filtroPrecioMax);
+    console.log('Precio máximo cambiado localmente:', this.filtroPrecioMax);
   }
 
   aplicarFiltros() {
+    // AQUÍ es donde actualizamos el servicio con los valores locales
+    this.filtrosService.setFiltroFecha(this.filtroFechaSeleccionado);
+    this.filtrosService.setFiltroPrecio(this.filtroPrecioMin, this.filtroPrecioMax);
+    
     // Aplicar los filtros a través del servicio
     const filtrosAplicados = this.filtrosService.aplicarFiltros();
     
-    console.log('Filtros aplicados:', filtrosAplicados);
+    console.log('Filtros aplicados al servicio:', filtrosAplicados);
   
     // Cerrar el panel de filtros
     this.panelFiltros = false;
     
-    // Navegar a home si no estamos ahí (para asegurar que se vean los productos filtrados)
+    // Navegar a home si no estamos ahí
     if (this.router.url !== '/home') {
       this.router.navigate(['/home']);
     }
   }
 
   limpiarFiltros() {
-    // Limpiar a través del servicio
-    this.filtrosService.limpiarFiltros();
-    
-    // Actualizar variables locales
+    // Limpiar tanto las variables locales como el servicio
     this.filtroFechaSeleccionado = '';
     this.filtroPrecioMin = this.precioMinimo;
     this.filtroPrecioMax = this.precioMaximo;
+    
+    // También limpiar en el servicio
+    this.filtrosService.limpiarFiltros();
     
     console.log('Filtros limpiados');
   }
@@ -234,9 +238,10 @@ export class TopbarComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     if (
-      (this.menuVisible || this.notificaciones) &&
+      (this.menuVisible || this.notificaciones || this.panelFiltros) &&
       event.target instanceof Element &&
-      !event.target.closest('.d-flex')
+      !event.target.closest('.d-flex') &&
+      !event.target.closest('.filter-panel')
     ) {
       this.menuVisible = false;
       this.notificaciones = false;
