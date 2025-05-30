@@ -114,14 +114,10 @@ namespace BLL.Servicios
         {
             try
             {
-                //var publicacion = _mapper.Map<PublicacionesDTO>(await _publicacionesRepositorio.Obtener(x => x.Id == idPublicacion));
                 var queryfotos = await _fotosPublicacionesServicio.BuscarFotosPublicacion(idPublicacion);
 
                 if (queryfotos == null || !queryfotos.Any())
                     throw new TaskCanceledException("No se encontraron fotos para la categoría especificada");
-
-                //publicacion.fotosPublicaciones = queryfotos;
-
                 return _mapper.Map<List<FotosPublicacionesDTO>>(queryfotos);
             }
             catch
@@ -281,5 +277,114 @@ namespace BLL.Servicios
                 throw;
             }
         }
+
+        public Task<List<PublicacionesDTO>> ListarRangoPrecio(decimal precioMinimo, decimal precioMaximo)
+        {
+            try
+            {
+                var publicaciones = listarActivos();
+                var listaPublicaciones = publicaciones.Result;
+                if (listaPublicaciones == null || !listaPublicaciones.Any())
+                    throw new TaskCanceledException("No se encontraron publicaciones");
+                var publicacionesFiltradas = listaPublicaciones
+                    .Where(p => p.Precio >= precioMinimo && p.Precio <= precioMaximo)
+                    .ToList();
+                return Task.FromResult(_mapper.Map<List<PublicacionesDTO>>(publicacionesFiltradas));
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<PublicacionesDTO>> ListarMaxOMinPrecio(string tipoFiltro)
+        {
+            var publicaciones = listarActivos();
+            try
+            {
+                var listaPublicaciones = await publicaciones;
+                if (listaPublicaciones == null || !listaPublicaciones.Any())
+                    throw new TaskCanceledException("No se encontraron publicaciones");
+                if(tipoFiltro == "max")
+                {
+                    var publicacionMaxPrecio = listaPublicaciones
+                        .OrderByDescending(p => p.Precio)
+                        .FirstOrDefault();
+                    return _mapper.Map<List<PublicacionesDTO>>(publicacionMaxPrecio);
+                }
+                else if (tipoFiltro == "min")
+                {
+                    var publicacionMinPrecio = listaPublicaciones
+                        .OrderBy(p => p.Precio)
+                        .FirstOrDefault();
+                    return _mapper.Map<List<PublicacionesDTO>>(publicacionMinPrecio);
+                }
+                else
+                {
+                    throw new ArgumentException("Tipo de filtro no válido. Use 'max' o 'min'.");
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<PublicacionesDTO>> ListarPorFecha(string tipoFiltro, DateTime fecha)
+        {
+            var listaPublicaciones = await listarActivos();
+
+            try
+            {
+                if (listaPublicaciones == null || !listaPublicaciones.Any())
+                    throw new TaskCanceledException("No se encontraron publicaciones");
+                List<PublicacionesDTO> publicacionesFiltradas;
+                if (tipoFiltro == "hoy")
+                {
+                    publicacionesFiltradas = listaPublicaciones
+                        .Where(p => p.FechaPublicacion.Date == fecha.Date)
+                        .ToList();
+                }
+                else if (tipoFiltro == "semana")
+                {
+                    var inicioSemana = fecha.Date.AddDays(-(int)fecha.DayOfWeek);
+                    var finSemana = inicioSemana.AddDays(6);
+
+                    publicacionesFiltradas = listaPublicaciones
+                        .Where(p => p.FechaPublicacion.Date >= inicioSemana && p.FechaPublicacion.Date <= finSemana)
+                        .ToList();
+                }
+                else if (tipoFiltro == "mes")
+                {
+                    publicacionesFiltradas = listaPublicaciones
+                        .Where(p => p.FechaPublicacion.Month == fecha.Month && p.FechaPublicacion.Year == fecha.Year)
+                        .ToList();
+                }
+                else if (tipoFiltro == "año")
+                {
+                    publicacionesFiltradas = listaPublicaciones
+                        .Where(p => p.FechaPublicacion.Year == fecha.Year)
+                        .ToList();
+                }else if(tipoFiltro == "ultimaHora")
+                {
+                    var horaLimite = fecha.AddHours(-1);
+
+                    publicacionesFiltradas = listaPublicaciones
+                        .Where(p => p.FechaPublicacion >= horaLimite && p.FechaPublicacion <= fecha)
+                        .ToList();
+                }
+                else
+                {
+                    throw new ArgumentException("Tipo de filtro no válido. Use 'hoy', 'semana', 'mes' o 'año'.");
+                }
+
+                return publicacionesFiltradas;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }
