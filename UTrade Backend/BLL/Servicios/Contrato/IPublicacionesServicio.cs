@@ -21,5 +21,8 @@ namespace BLL.Servicios.Contrato
         Task<List<PublicacionesDTO>> ListarPorUsuario(string id);
         Task<List<PublicacionesDTO>> listarActivos();
         Task<List<PublicacionesDTO>> busquedaTexto(string textoBusqueda);
+        Task<List<PublicacionesDTO>> ListarRangoPrecio(decimal precioMinimo, decimal precioMaximo);
+        Task<List<PublicacionesDTO>> ListarMaxOMinPrecio(string tipoFiltro);
+        Task<List<PublicacionesDTO>> ListarPorFecha(string tipoFiltro);
     }
 }

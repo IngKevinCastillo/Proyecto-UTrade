@@ -178,29 +178,13 @@ export class VerProductosComponent implements OnInit {
 
   formatearFechaCompleta(fecha: string): string {
     const fechaObj = new Date(fecha);
-    const fechaLocal = new Date(
-      fechaObj.getTime() + fechaObj.getTimezoneOffset() * 60000
-    );
 
-    const meses = [
-      'ene',
-      'feb',
-      'mar',
-      'abr',
-      'may',
-      'jun',
-      'jul',
-      'ago',
-      'sep',
-      'oct',
-      'nov',
-      'dic',
-    ];
+    const formateador = new Intl.DateTimeFormat('es-CO', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
 
-    const dia = fechaLocal.getDate().toString().padStart(2, '0');
-    const mes = meses[fechaLocal.getMonth()];
-    const año = fechaLocal.getFullYear();
-
-    return `${dia} ${mes} ${año}`;
+    return formateador.format(fechaObj);
   }
 }

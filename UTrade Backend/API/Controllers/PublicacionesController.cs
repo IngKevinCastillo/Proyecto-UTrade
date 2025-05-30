@@ -159,6 +159,60 @@ namespace API.Controllers
             return Ok(rsp);
         }
 
+        [HttpGet]
+        [Route("ListarRangoPrecio/{precioMinimo}/{precioMaximo}")]
+        public async Task<IActionResult> ListarRangoPrecio(decimal precioMinimo, decimal precioMaximo)
+        {
+            var rsp = new Respuesta<List<PublicacionesDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.ListarRangoPrecio(precioMinimo, precioMaximo);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
+        [Route("ListarMaxOMinPrecio/{tipoFiltro}")]
+        public async Task<IActionResult> ListarMaxOMinPrecio(string tipoFiltro)
+        {
+            var rsp = new Respuesta<List<PublicacionesDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.ListarMaxOMinPrecio(tipoFiltro);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
+        [HttpGet]
+        [Route("ListarPorFecha/{tipoFiltro}")]
+        public async Task<IActionResult> ListarPorFecha(string tipoFiltro)
+        {
+            var rsp = new Respuesta<List<PublicacionesDTO>>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _publicacionesServicio.ListarPorFecha(tipoFiltro);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
         [HttpPost]
         [Route("Guardar")]
         public async Task<IActionResult> Guardar([FromBody] PublicacionesDTO publicaciones)

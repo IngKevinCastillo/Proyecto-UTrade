@@ -54,6 +54,7 @@ namespace BLL.Servicios
                 personaEncontrado.Contraseña = personaModelo.Contraseña;
                 personaEncontrado.Correo = personaModelo.Correo;
                 personaEncontrado.Telefono = personaModelo.Telefono;
+                personaEncontrado.IdEstado = personaModelo.IdEstado;
                 if (!string.IsNullOrEmpty(modelo.FotoPerfilBase64))
                 {
                     modelo.FotoPerfil = Convert.FromBase64String(modelo.FotoPerfilBase64);

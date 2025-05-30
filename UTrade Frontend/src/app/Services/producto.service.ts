@@ -66,4 +66,25 @@ export class ProductoService {
       `${this.urlApi}BusquedaTexto/${encodeURIComponent(texto)}`
     );
   }
+
+  listarRangoPrecio(
+    precioMinimo: number,
+    precioMaximo: number
+  ): Observable<RespuestaAPI> {
+    return this.http.get<RespuestaAPI>(
+      `${this.urlApi}ListarRangoPrecio/${precioMinimo}/${precioMaximo}`
+    );
+  }
+
+  listarMaxOMinPrecio(tipoFiltro: string): Observable<RespuestaAPI> {
+    return this.http.get<RespuestaAPI>(
+      `${this.urlApi}ListarMaxOMinPrecio/${tipoFiltro}`
+    );
+  }
+
+  listarPorFecha(tipoFiltro: string): Observable<RespuestaAPI> {
+    return this.http.get<RespuestaAPI>(
+      `${this.urlApi}ListarPorFecha/${tipoFiltro}`
+    );
+  }
 }
