@@ -30,12 +30,7 @@ export class FiltrosService {
   
   constructor() { }
   
-  /**
-   * Establece el filtro de fecha
-   * @param filtro - Puede ser: 'ultimaHora', 'hoy', 'semana', 'mes', 'año'
-   */
   setFiltroFecha(filtro: string): void {
-    // Mapeo de los valores del frontend a los del servicio
     const mapeoFiltros: { [key: string]: string } = {
       'ultima-hora': 'ultimaHora',
       'hoy': 'hoy',
@@ -48,32 +43,21 @@ export class FiltrosService {
     this.filtroFechaSubject.next(filtroMapeado);
   }
   
-  /**
-   * Establece el filtro de precio
-   * @param minimo - Precio mínimo
-   * @param maximo - Precio máximo
-   */
   setFiltroPrecio(minimo: number, maximo: number): void {
     this.filtroPrecioSubject.next({ minimo, maximo });
   }
   
-  /**
-   * Obtiene el filtro de fecha actual
-   */
+
   getFiltroFecha(): string {
     return this.filtroFechaSubject.value;
   }
   
-  /**
-   * Obtiene el filtro de precio actual
-   */
+
   getFiltroPrecio(): FiltrosPrecio {
     return this.filtroPrecioSubject.value;
   }
   
-  /**
-   * Obtiene todos los filtros activos
-   */
+
   getFiltrosActivos(): FiltrosActivos {
     return {
       fecha: this.getFiltroFecha(),
@@ -81,9 +65,6 @@ export class FiltrosService {
     };
   }
   
-  /**
-   * Limpia todos los filtros y los restablece a valores por defecto
-   */
   limpiarFiltros(): void {
     this.filtroFechaSubject.next('');
     this.filtroPrecioSubject.next({
@@ -91,19 +72,13 @@ export class FiltrosService {
       maximo: this.PRECIO_MAXIMO_DEFAULT
     });
   }
-  
-  /**
-   * Aplica los filtros actuales (útil para notificar a otros componentes)
-   */
+
   aplicarFiltros(): FiltrosActivos {
     const filtrosActivos = this.getFiltrosActivos();
     console.log('Filtros aplicados desde el servicio:', filtrosActivos);
     return filtrosActivos;
   }
-  
-  /**
-   * Verifica si hay filtros activos
-   */
+
   hayFiltrosActivos(): boolean {
     const filtroFecha = this.getFiltroFecha();
     const filtroPrecio = this.getFiltroPrecio();

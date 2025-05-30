@@ -29,7 +29,6 @@ export class TopbarComponent implements OnInit {
 
   panelFiltros: boolean = false;
   
-  // Variables locales para manejar los filtros temporalmente
   filtroFechaSeleccionado: string = '';
   precioMinimo: number = 0;
   precioMaximo: number = 2000000;
@@ -82,7 +81,6 @@ export class TopbarComponent implements OnInit {
     }
     this.actualizarVisibilidadBusqueda(this.router.url);
     
-    // Sincronizar con el servicio al inicializar SOLO para mostrar filtros aplicados
     this.sincronizarConServicio();
   }
 
@@ -95,10 +93,8 @@ export class TopbarComponent implements OnInit {
   }
 
   private sincronizarConServicio(): void {
-    // Obtener filtros actuales del servicio para mostrarlos
     const filtrosActivos = this.filtrosService.getFiltrosActivos();
     
-    // Mapeo inverso para el frontend
     const mapeoInverso: { [key: string]: string } = {
       'ultimaHora': 'ultima-hora',
       'hoy': 'hoy',
@@ -121,14 +117,12 @@ export class TopbarComponent implements OnInit {
     if (!this.panelFiltros) {
       this.menuVisible = false;
       this.notificaciones = false;
-      // Al abrir el panel, sincronizar con los valores actuales del servicio
       this.sincronizarConServicio();
     }
     this.panelFiltros = !this.panelFiltros;
   }
 
   seleccionarFiltroFecha(filtro: string) {
-    // Solo actualizar la variable local, NO el servicio
     if (this.filtroFechaSeleccionado === filtro) {
       this.filtroFechaSeleccionado = '';
     } else {
@@ -139,7 +133,6 @@ export class TopbarComponent implements OnInit {
   }
 
   onPrecioMinChange() {
-    // Solo manejar la lógica local, NO actualizar el servicio
     if (this.filtroPrecioMin >= this.filtroPrecioMax) {
       this.filtroPrecioMin = this.filtroPrecioMax - 10;
     }
@@ -147,7 +140,6 @@ export class TopbarComponent implements OnInit {
   }
 
   onPrecioMaxChange() {
-    // Solo manejar la lógica local, NO actualizar el servicio
     if (this.filtroPrecioMax <= this.filtroPrecioMin) {
       this.filtroPrecioMax = this.filtroPrecioMin + 10;
     }
@@ -155,42 +147,28 @@ export class TopbarComponent implements OnInit {
   }
 
   aplicarFiltros() {
-    // AQUÍ es donde actualizamos el servicio con los valores locales
     this.filtrosService.setFiltroFecha(this.filtroFechaSeleccionado);
     this.filtrosService.setFiltroPrecio(this.filtroPrecioMin, this.filtroPrecioMax);
     
-    // Aplicar los filtros a través del servicio
     const filtrosAplicados = this.filtrosService.aplicarFiltros();
     
     console.log('Filtros aplicados al servicio:', filtrosAplicados);
   
-    // Cerrar el panel de filtros
     this.panelFiltros = false;
     
-    // MODIFICACIÓN: Solo navegar a home si no estamos en una página válida para filtros
     const rutasValidasParaFiltros = ['/home', '/compras', '/rentas'];
     const rutaActual = this.router.url;
-    
-    // Extraer la ruta base (sin query params)
     const rutaBase = rutaActual.split('?')[0];
     
     if (!rutasValidasParaFiltros.includes(rutaBase)) {
-      // Solo redirigir si no estamos en una página que soporte filtros
       this.router.navigate(['/home']);
     }
-    
-    // Si ya estamos en una página válida (compras, rentas, home), 
-    // no hacemos navegación y los filtros se aplicarán automáticamente
-    // gracias a las suscripciones en cada componente
   }
 
   limpiarFiltros() {
-    // Limpiar tanto las variables locales como el servicio
     this.filtroFechaSeleccionado = '';
     this.filtroPrecioMin = this.precioMinimo;
     this.filtroPrecioMax = this.precioMaximo;
-    
-    // También limpiar en el servicio
     this.filtrosService.limpiarFiltros();
     
     console.log('Filtros limpiados');
@@ -206,7 +184,6 @@ export class TopbarComponent implements OnInit {
     
     this.busquedaService.enviarTerminoBusqueda(termino);
   
-    // MODIFICACIÓN: Solo navegar si no estamos en una página válida para búsqueda
     const rutasValidasParaBusqueda = ['/home', '/compras', '/rentas'];
     const rutaActual = this.router.url;
     const rutaBase = rutaActual.split('?')[0];
@@ -220,7 +197,6 @@ export class TopbarComponent implements OnInit {
     this.terminoBusqueda = '';
     this.busquedaService.enviarTerminoBusqueda('');
   
-    // MODIFICACIÓN: Solo navegar si no estamos en una página válida para búsqueda
     const rutasValidasParaBusqueda = ['/home', '/compras', '/rentas'];
     const rutaActual = this.router.url;
     const rutaBase = rutaActual.split('?')[0];
