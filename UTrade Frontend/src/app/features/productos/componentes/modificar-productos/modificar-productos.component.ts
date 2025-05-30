@@ -1,11 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Inject, Input, Output, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  Output,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConexionBackendService } from '../../../../Services/conexion-backend.service';
-import { CategoriaPublicacionService } from '../../../../Services/categoria-publicacion.service'; 
+import { CategoriaPublicacionService } from '../../../../Services/categoria-publicacion.service';
 import { EstadosService } from '../../../../Services/estados.service';
-import { CategoriaPublicacion } from '../../../../interfaces/categoria-publicacion'; 
+import { CategoriaPublicacion } from '../../../../interfaces/categoria-publicacion';
 import { Publicaciones } from '../../../../interfaces/publicaciones';
 import { ToastrService } from 'ngx-toastr';
 import { ProductoService } from '../../../../Services/producto.service';
@@ -28,21 +36,20 @@ declare var google: any;
 @Component({
   selector: 'app-modificar-productos',
   templateUrl: './modificar-productos.component.html',
-  styleUrl: './modificar-productos.component.css'
+  styleUrl: './modificar-productos.component.css',
 })
 export class ModificarProductosComponent implements OnInit {
-  
   @Input() username: string = '';
   @Input() userHandle: string = '';
   @Input() userAvatar: string = 'icons/no-photo.webp';
-  
+
   @Input() title: string = '';
   @Input() price: string = '';
   @Input() category: string = '';
   @Input() description: string = '';
   @Input() direccion: string = '';
   @Input() estado: string = '';
-  
+
   @Output() titleChange = new EventEmitter<string>();
   @Output() priceChange = new EventEmitter<string>();
   @Output() categoryChange = new EventEmitter<string>();
@@ -51,9 +58,9 @@ export class ModificarProductosComponent implements OnInit {
   @Output() direccionChange = new EventEmitter<string>();
   @Output() closeClicked = new EventEmitter<void>();
   @Output() addPhotosClicked = new EventEmitter<void>();
-  
+
   @Input() fotos: File[] = [];
-  
+
   publicacionOriginal: MiPublicacion | null = null;
   imagenesExistentes: string[] = [];
   fotosPublicaciones: FotosPublicacion[] = [];
@@ -62,7 +69,7 @@ export class ModificarProductosComponent implements OnInit {
   loadingEstado: boolean = true;
   loadingCategorias: boolean = true;
   estadoSeleccionado: string = '';
-  
+
   constructor(
     public dialogRef: MatDialogRef<ModificarProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -74,13 +81,13 @@ export class ModificarProductosComponent implements OnInit {
     private categoriaService: CategoriaPublicacionService,
     private estadosService: EstadosService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.cargarDatosUsuario();
     this.cargarCategorias();
     this.cargarEstados();
-    
+
     if (this.data && this.data.publicacion) {
       this.cargarDatosPublicacion(this.data.publicacion);
     }
@@ -95,8 +102,8 @@ export class ModificarProductosComponent implements OnInit {
           console.log('Categorías cargadas:', this.categories);
         } else {
           this.categories = [
-            {id: 'CAT01', nombre: 'Rentas'}, 
-            {id: 'CAT02', nombre: 'Compras'}
+            { id: 'CAT01', nombre: 'Rentas' },
+            { id: 'CAT02', nombre: 'Compras' },
           ];
         }
         this.loadingCategorias = false;
@@ -105,14 +112,45 @@ export class ModificarProductosComponent implements OnInit {
       error: (error) => {
         console.error('Error cargando categorías:', error);
         this.categories = [
-          {id: 'CAT01', nombre: 'Rentas'}, 
-          {id: 'CAT02', nombre: 'Compras'}
+          { id: 'CAT01', nombre: 'Rentas' },
+          { id: 'CAT02', nombre: 'Compras' },
         ];
         this.loadingCategorias = false;
-        this.toastr.warning('Se cargaron las categorías por defecto', 'Advertencia');
+        this.toastr.warning(
+          'Se cargaron las categorías por defecto',
+          'Advertencia'
+        );
         this.cdr.detectChanges();
-      }
+      },
     });
+  }
+
+  get puedeEditarEstado(): boolean {
+    const estadosEditables = ['Activo', 'Suspendido'];
+    return estadosEditables.includes(this.estadoSeleccionado);
+  }
+
+  get estadosPermitidos(): Estados[] {
+    return this.estados.filter(
+      (estado) => estado.nombre === 'Activo' || estado.nombre === 'Suspendido'
+    );
+  }
+
+  hayModificaciones(): boolean {
+    if (!this.publicacionOriginal) return false;
+
+    return (
+      this.title !== this.publicacionOriginal.titulo ||
+      this.price !== this.publicacionOriginal.precio.toString() ||
+      this.description !== this.publicacionOriginal.descripcion ||
+      this.direccion !== this.publicacionOriginal.direccion ||
+      this.category !==
+        (this.publicacionOriginal.nombreCategoria ||
+          this.publicacionOriginal.tipoServicio) ||
+      this.estadoSeleccionado !==
+        (this.publicacionOriginal.estadoNombre ||
+          this.publicacionOriginal.estado)
+    );
   }
 
   private cargarEstados(): void {
@@ -124,8 +162,8 @@ export class ModificarProductosComponent implements OnInit {
           console.log('Estados cargados:', this.estados);
         } else {
           this.estados = [
-            {id: 'EST01', nombre: 'Activo'}, 
-            {id: 'EST04', nombre: 'Suspendido'}
+            { id: 'EST01', nombre: 'Activo' },
+            { id: 'EST04', nombre: 'Suspendido' },
           ];
         }
         this.loadingEstado = false;
@@ -134,16 +172,19 @@ export class ModificarProductosComponent implements OnInit {
       error: (error) => {
         console.error('Error cargando estados:', error);
         this.estados = [
-          {id: 'EST01', nombre: 'Activo'}, 
-          {id: 'EST02', nombre: 'Baneado'},
-          {id: 'EST03', nombre: 'Eliminado'},
-          {id: 'EST04', nombre: 'Suspendido'},
-          {id: 'EST05', nombre: 'Advertido'}
+          { id: 'EST01', nombre: 'Activo' },
+          { id: 'EST02', nombre: 'Baneado' },
+          { id: 'EST03', nombre: 'Eliminado' },
+          { id: 'EST04', nombre: 'Suspendido' },
+          { id: 'EST05', nombre: 'Advertido' },
         ];
         this.loadingEstado = false;
-        this.toastr.warning('Se cargaron los estados por defecto', 'Advertencia');
+        this.toastr.warning(
+          'Se cargaron los estados por defecto',
+          'Advertencia'
+        );
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -160,8 +201,12 @@ export class ModificarProductosComponent implements OnInit {
             const datos = res.valor;
             this.username = `${datos.nombres} ${datos.apellidos}`;
             this.userHandle = `@${datos.nombreUsuario}`;
-            if (datos.fotoPerfilBase64 && datos.fotoPerfilBase64.trim() !== '') {
-              this.userAvatar = 'data:image/jpeg;base64,' + datos.fotoPerfilBase64;
+            if (
+              datos.fotoPerfilBase64 &&
+              datos.fotoPerfilBase64.trim() !== ''
+            ) {
+              this.userAvatar =
+                'data:image/jpeg;base64,' + datos.fotoPerfilBase64;
             } else {
               this.userAvatar = 'icons/no-photo.webp';
             }
@@ -176,7 +221,7 @@ export class ModificarProductosComponent implements OnInit {
 
   private cargarDatosPublicacion(publicacion: any): void {
     console.log('Datos recibidos de la publicación:', publicacion);
-    
+
     this.publicacionOriginal = {
       id: publicacion.id,
       titulo: publicacion.titulo || publicacion.nombre || '',
@@ -191,54 +236,74 @@ export class ModificarProductosComponent implements OnInit {
       latitud: publicacion.latitud || 0,
       nombre: publicacion.nombre || publicacion.titulo || '',
       estado: publicacion.estado || publicacion.estadoNombre || 'Activo',
-      tipoServicio: publicacion.tipoServicio || publicacion.nombreCategoria || '',
+      tipoServicio:
+        publicacion.tipoServicio || publicacion.nombreCategoria || '',
       imagen: publicacion.imagen || '',
       imagenes: publicacion.imagenes || [],
       nombreCategoria: publicacion.nombreCategoria || '',
-      estadoNombre: publicacion.estadoNombre || publicacion.estado || ''
+      estadoNombre: publicacion.estadoNombre || publicacion.estado || '',
     };
-    
+
     this.title = this.publicacionOriginal.titulo;
     this.price = this.publicacionOriginal.precio.toString();
     this.description = this.publicacionOriginal.descripcion;
     this.direccion = this.publicacionOriginal.direccion;
-    
-    this.estadoSeleccionado = publicacion.estado || publicacion.estadoNombre || 'Activo';
+
+    this.estadoSeleccionado =
+      publicacion.estado || publicacion.estadoNombre || 'Activo';
     this.estado = this.estadoSeleccionado;
-    
+
+    if (!this.puedeEditarEstado) {
+      this.toastr.info(
+        `Esta publicación tiene estado "${this.estadoSeleccionado}" y no puede ser modificada por el usuario.`,
+        'Información'
+      );
+    }
+
     this.mapearCategoria(this.publicacionOriginal.idCategoria);
     this.cargarImagenesExistentes(publicacion);
-    
+
     console.log('Datos cargados correctamente:', {
       id: this.publicacionOriginal.id,
       title: this.title,
       price: this.price,
       category: this.category,
       estado: this.estadoSeleccionado,
+      puedeEditarEstado: this.puedeEditarEstado,
       idEstado: this.publicacionOriginal.idEstado,
-      idCategoria: this.publicacionOriginal.idCategoria
+      idCategoria: this.publicacionOriginal.idCategoria,
     });
   }
 
   private mapearCategoria(idCategoria: string): void {
     const intentarMapeo = () => {
-      const categoriaEncontrada = this.categories.find(cat => cat.id === idCategoria);
-      
+      const categoriaEncontrada = this.categories.find(
+        (cat) => cat.id === idCategoria
+      );
+
       if (categoriaEncontrada) {
         this.category = categoriaEncontrada.nombre;
       } else {
-        switch(idCategoria) {
+        switch (idCategoria) {
           case 'CAT01':
-            this.category = 'Rentas'; 
+            this.category = 'Rentas';
             break;
           case 'CAT02':
-            this.category = 'Compras'; 
+            this.category = 'Compras';
             break;
           default:
-            this.category = this.publicacionOriginal?.tipoServicio || this.publicacionOriginal?.nombreCategoria || '';
+            this.category =
+              this.publicacionOriginal?.tipoServicio ||
+              this.publicacionOriginal?.nombreCategoria ||
+              '';
         }
       }
-      console.log('Categoría mapeada:', this.category, 'desde ID:', idCategoria);
+      console.log(
+        'Categoría mapeada:',
+        this.category,
+        'desde ID:',
+        idCategoria
+      );
     };
 
     if (this.loadingCategorias) {
@@ -250,25 +315,29 @@ export class ModificarProductosComponent implements OnInit {
 
   private cargarImagenesExistentes(publicacion: MiPublicacion): void {
     this.imagenesExistentes = [];
-    
+
     if (publicacion.imagenes && publicacion.imagenes.length > 0) {
       this.imagenesExistentes = [...publicacion.imagenes];
-    } 
-    else if (publicacion.imagen) {
+    } else if (publicacion.imagen) {
       this.imagenesExistentes = [publicacion.imagen];
     }
-    
-    if (publicacion.imagen && !this.imagenesExistentes.includes(publicacion.imagen)) {
+
+    if (
+      publicacion.imagen &&
+      !this.imagenesExistentes.includes(publicacion.imagen)
+    ) {
       this.imagenesExistentes.unshift(publicacion.imagen);
     }
   }
 
   private getCategoryId(): string {
-    const selectedCat = this.categories.find(cat => cat.nombre === this.category);
+    const selectedCat = this.categories.find(
+      (cat) => cat.nombre === this.category
+    );
     if (selectedCat) {
       return selectedCat.id;
     }
-    switch(this.category) {
+    switch (this.category) {
       case 'Rentas':
         return 'CAT01';
       case 'Compras':
@@ -280,11 +349,13 @@ export class ModificarProductosComponent implements OnInit {
   }
 
   private obtenerIdEstado(): string {
-    const estadoEncontrado = this.estados.find(estado => estado.nombre === this.estadoSeleccionado);
+    const estadoEncontrado = this.estados.find(
+      (estado) => estado.nombre === this.estadoSeleccionado
+    );
     if (estadoEncontrado) {
       return estadoEncontrado.id;
     }
-    switch(this.estadoSeleccionado) {
+    switch (this.estadoSeleccionado) {
       case 'Activo':
         return 'EST01';
       case 'Baneado':
@@ -296,7 +367,9 @@ export class ModificarProductosComponent implements OnInit {
       case 'Advertido':
         return 'EST05';
       default:
-        console.warn(`Estado no reconocido: ${this.estadoSeleccionado}, usando estado original o EST01 por defecto`);
+        console.warn(
+          `Estado no reconocido: ${this.estadoSeleccionado}, usando estado original o EST01 por defecto`
+        );
         return this.publicacionOriginal?.idEstado || 'EST01';
     }
   }
@@ -339,8 +412,10 @@ export class ModificarProductosComponent implements OnInit {
 
   get previewUrls(): string[] {
     const imagenesExistentesUrls = this.imagenesExistentes.slice(0, 4);
-    const nuevasFotosUrls = this.fotos.slice(0, 4 - imagenesExistentesUrls.length).map(file => URL.createObjectURL(file));
-    
+    const nuevasFotosUrls = this.fotos
+      .slice(0, 4 - imagenesExistentesUrls.length)
+      .map((file) => URL.createObjectURL(file));
+
     return [...imagenesExistentesUrls, ...nuevasFotosUrls];
   }
 
@@ -353,7 +428,11 @@ export class ModificarProductosComponent implements OnInit {
   }
 
   isInvalidPrice(): Boolean {
-    return this.price === null || this.price === undefined || Number.isNaN(Number(this.price));
+    return (
+      this.price === null ||
+      this.price === undefined ||
+      Number.isNaN(Number(this.price))
+    );
   }
 
   editar(): void {
@@ -362,7 +441,11 @@ export class ModificarProductosComponent implements OnInit {
       return;
     }
 
-    if (this.price === null || this.price === undefined || isNaN(Number(this.price))) {
+    if (
+      this.price === null ||
+      this.price === undefined ||
+      isNaN(Number(this.price))
+    ) {
       this.toastr.error('El precio debe ser un número válido', 'Error');
       return;
     }
@@ -378,7 +461,18 @@ export class ModificarProductosComponent implements OnInit {
     }
 
     if (!this.publicacionOriginal?.id) {
-      this.toastr.error('No se puede modificar: ID de publicación no válido', 'Error');
+      this.toastr.error(
+        'No se puede modificar: ID de publicación no válido',
+        'Error'
+      );
+      return;
+    }
+
+    if (!this.puedeEditarEstado && this.hayModificaciones()) {
+      this.toastr.error(
+        'No se pueden guardar cambios: el estado actual no permite modificaciones',
+        'Error'
+      );
       return;
     }
 
@@ -386,7 +480,7 @@ export class ModificarProductosComponent implements OnInit {
     const idEstado = this.obtenerIdEstado();
 
     const publicacionModificada: Publicaciones = {
-      id: this.publicacionOriginal.id, 
+      id: this.publicacionOriginal.id,
       titulo: this.title?.trim() || '',
       precio: Number(this.price),
       descripcion: this.description?.trim() || '',
@@ -396,27 +490,33 @@ export class ModificarProductosComponent implements OnInit {
       fechaPublicacion: this.publicacionOriginal.fechaPublicacion,
       idUsuario: this.publicacionOriginal.idUsuario,
       altitud: this.publicacionOriginal.altitud,
-      latitud: this.publicacionOriginal.latitud
-    };   
+      latitud: this.publicacionOriginal.latitud,
+    };
 
     this.publicacionService.editar(publicacionModificada).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
         if (response.estado) {
-          this.toastr.success(`Publicación "${this.title}" modificada con éxito`, 'Éxito');
+          this.toastr.success(
+            `Publicación "${this.title}" modificada con éxito`,
+            'Éxito'
+          );
           this.dialogRef.close({
             accion: 'MODIFICAR',
-            publicacionModificada: publicacionModificada
+            publicacionModificada: publicacionModificada,
           });
         } else {
-          this.toastr.error(response.msg || 'Error al modificar la publicación', 'Error');
+          this.toastr.error(
+            response.msg || 'Error al modificar la publicación',
+            'Error'
+          );
           console.error('Error en la respuesta:', response);
         }
       },
       error: (error) => {
         console.error('Error al modificar la publicación:', error);
         this.toastr.error('Error al modificar la publicación', 'Error');
-      }
+      },
     });
   }
 }
