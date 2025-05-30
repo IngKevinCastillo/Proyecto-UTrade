@@ -4,6 +4,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { VentanaReportesComponent } from './componentes/ventana-reportes/ventana-reportes.component';
@@ -15,7 +16,7 @@ import { CategoriaPublicacionService } from '../../Services/categoria-publicacio
 import { PersonaService } from '../../Services/persona.service';
 import { ProductoService } from '../../Services/producto.service';
 import { Publicaciones } from '../../interfaces/publicaciones';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject, combineLatest } from 'rxjs';
 import { EstadosService } from '../../Services/estados.service';
 import { Estados } from '../../interfaces/estados';
 import { ToastrService } from 'ngx-toastr';
@@ -23,6 +24,8 @@ import { FotosPublicacionesService } from '../../Services/fotos-publicaciones.se
 import { FotosPublicacion } from '../../interfaces/fotos-publicacion';
 import { ChatService } from '../../Services/chat.service';
 import { Router } from '@angular/router';
+import { FiltrosService, FiltrosActivos } from '../../Services/filtros.service';
+import { takeUntil } from 'rxjs/operators';
 
 interface ProductoExtendido extends Publicaciones {
   verMas: boolean;
@@ -41,18 +44,25 @@ interface ProductoExtendido extends Publicaciones {
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
 })
-export class ProductosComponent implements OnChanges, OnInit {
+export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
   formularioPublicaciones: FormGroup;
   listaDePersonas: Persona[] = [];
   listaCategorias: CategoriaPublicacion[] = [];
   listaEstados: Estados[] = [];
   datosPublicaciones: Publicaciones | null = null;
   productos: ProductoExtendido[] = [];
+  productosOriginales: ProductoExtendido[] = []; // Para mantener la lista completa
 
   @Input() Filtro?: string;
   @Input() FiltroIdCategoria?: string;
   @Input() FiltroLista?: Publicaciones[];
   @Input() cuota?: string;
+
+  private destroy$ = new Subject<void>();
+  private filtrosActivos: FiltrosActivos = {
+    fecha: '',
+    precio: { minimo: 0, maximo: 2000000 }
+  };
 
   constructor(
     public dialog: MatDialog,
@@ -64,7 +74,8 @@ export class ProductosComponent implements OnChanges, OnInit {
     private toastr: ToastrService,
     private _fotosPublicacionesServicio: FotosPublicacionesService,
     private _chatService: ChatService,
-    private router: Router
+    private router: Router,
+    private filtrosService: FiltrosService
   ) {
     this.formularioPublicaciones = this.fb.group({
       id: ['', Validators.required],
@@ -82,6 +93,7 @@ export class ProductosComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     this.cargarDatosIniciales();
+    this.suscribirseAFiltros();
 
     if (this.datosPublicaciones != null) {
       this.formularioPublicaciones.patchValue({
@@ -95,6 +107,11 @@ export class ProductosComponent implements OnChanges, OnInit {
         idEstado: this.datosPublicaciones.idEstado,
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -117,6 +134,102 @@ export class ProductosComponent implements OnChanges, OnInit {
     } else if (changes['Filtro'] && this.Filtro) {
       this.filtrarPorNombreCategoria();
     }
+  }
+
+  private suscribirseAFiltros(): void {
+    // Escuchar cambios en los filtros
+    combineLatest([
+      this.filtrosService.filtroFecha$,
+      this.filtrosService.filtroPrecio$
+    ])
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(([filtroFecha, filtroPrecio]) => {
+      this.filtrosActivos = {
+        fecha: filtroFecha,
+        precio: filtroPrecio
+      };
+      
+      // Solo aplicar filtros si ya tenemos datos cargados
+      if (this.listaDePersonas.length > 0 && this.listaCategorias.length > 0) {
+        this.aplicarFiltrosActivos();
+      }
+    });
+  }
+
+  private aplicarFiltrosActivos(): void {
+    const hayFiltroFecha = this.filtrosActivos.fecha && this.filtrosActivos.fecha !== '';
+    const hayFiltroPrecio = this.filtrosActivos.precio.minimo !== 0 || 
+                           this.filtrosActivos.precio.maximo !== 2000000;
+
+    if (!hayFiltroFecha && !hayFiltroPrecio) {
+      // No hay filtros activos, cargar datos normales
+      this.determinarDatosACargar();
+      return;
+    }
+
+    // Aplicar filtros según lo que esté activo
+    if (hayFiltroFecha && hayFiltroPrecio) {
+      // Ambos filtros activos - aplicar filtro de fecha primero y luego filtrar por precio localmente
+      this.aplicarFiltroFecha();
+    } else if (hayFiltroFecha) {
+      // Solo filtro de fecha
+      this.aplicarFiltroFecha();
+    } else if (hayFiltroPrecio) {
+      // Solo filtro de precio
+      this.aplicarFiltroPrecio();
+    }
+  }
+
+  private aplicarFiltroFecha(): void {
+    this._productoServicio.listarPorFecha(this.filtrosActivos.fecha).subscribe({
+      next: (respuesta) => {
+        if (respuesta.estado && Array.isArray(respuesta.valor)) {
+          let productosFiltrados = respuesta.valor;
+          
+          // Si también hay filtro de precio, aplicarlo localmente
+          const hayFiltroPrecio = this.filtrosActivos.precio.minimo !== 0 || 
+                                 this.filtrosActivos.precio.maximo !== 2000000;
+          
+          if (hayFiltroPrecio) {
+            productosFiltrados = productosFiltrados.filter(producto => 
+              producto.precio >= this.filtrosActivos.precio.minimo && 
+              producto.precio <= this.filtrosActivos.precio.maximo
+            );
+          }
+          
+          this.procesarProductos(productosFiltrados);
+        } else {
+          this.productos = [];
+          this.toastr.info('No se encontraron productos para el filtro de fecha', 'Filtro');
+        }
+      },
+      error: (error) => {
+        console.error('Error aplicando filtro de fecha:', error);
+        this.productos = [];
+        this.toastr.error('Error al aplicar filtro de fecha', 'Error');
+      },
+    });
+  }
+
+  private aplicarFiltroPrecio(): void {
+    this._productoServicio.listarRangoPrecio(
+      this.filtrosActivos.precio.minimo,
+      this.filtrosActivos.precio.maximo
+    ).subscribe({
+      next: (respuesta) => {
+        if (respuesta.estado && Array.isArray(respuesta.valor)) {
+          this.procesarProductos(respuesta.valor);
+        } else {
+          this.productos = [];
+          this.toastr.info('No se encontraron productos en el rango de precio', 'Filtro');
+        }
+      },
+      error: (error) => {
+        console.error('Error aplicando filtro de precio:', error);
+        this.productos = [];
+        this.toastr.error('Error al aplicar filtro de precio', 'Error');
+      },
+    });
   }
 
   cargarDatosIniciales(): void {
