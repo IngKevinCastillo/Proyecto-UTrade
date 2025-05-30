@@ -1,3 +1,121 @@
-<div class="container-fluid my-3">
-    <p>reputacion works!</p>
+<div class="reputation-container">
+  <!-- Loading State -->
+  <div *ngIf="cargando" class="loading-state">
+    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+    <span>Cargando estado de la cuenta...</span>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !cargando" class="error-state">
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      <div>
+        <strong>Error al cargar el estado</strong><br>
+        <small>No se pudo verificar el estado de tu cuenta.</small>
+      </div>
+      <button class="btn btn-outline-warning btn-sm ms-auto" (click)="recargarReputacion()">
+        <i class="bi bi-arrow-clockwise"></i> Reintentar
+      </button>
+    </div>
+  </div>
+
+  <!-- Reputation Display -->
+  <div *ngIf="configuracionReputacion && !cargando" 
+       class="reputation-card" 
+       [ngClass]="configuracionReputacion.clase">
+    
+    <!-- Header Section -->
+    <div class="reputation-header">
+      <div class="status-icon" [style.color]="configuracionReputacion.color">
+        {{ configuracionReputacion.icono }}
+      </div>
+      <div class="status-info">
+        <h4 class="status-title mb-1">{{ configuracionReputacion.titulo }}</h4>
+        <p class="status-message mb-3">{{ configuracionReputacion.mensaje }}</p>
+      </div>
+    </div>
+
+    <!-- Progress Section -->
+    <div class="reputation-progress">
+      <div class="progress-header d-flex justify-content-between align-items-center mb-2">
+        <div class="progress-labels">
+          <span class="progress-label">{{ textoProgreso }}</span>
+          <small class="progress-subtitle text-muted">{{ subtituloProgreso }}</small>
+        </div>
+        <div class="progress-percentage">
+          <span class="badge rounded-pill" 
+                [style.background]="configuracionReputacion.gradiente">
+            {{ configuracionReputacion.progreso }}%
+          </span>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress reputation-progress-bar" style="height: 8px;">
+        <div class="progress-bar rounded-pill" 
+             role="progressbar" 
+             [style.width.%]="configuracionReputacion.progreso"
+             [style.background]="configuracionReputacion.gradiente"
+             [attr.aria-valuenow]="configuracionReputacion.progreso"
+             aria-valuemin="0" 
+             aria-valuemax="100">
+        </div>
+      </div>
+
+      <!-- Status Indicators -->
+      <div class="status-indicators mt-3">
+        <div class="row g-0">
+          <div class="col-3 text-center">
+            <div class="indicator" 
+                 [class.active]="configuracionReputacion.progreso >= 100"
+                 [style.border-color]="configuracionReputacion.progreso >= 100 ? configuracionReputacion.color : '#dee2e6'">
+              <small>En orden</small>
+            </div>
+          </div>
+          <div class="col-3 text-center">
+            <div class="indicator" 
+                 [class.active]="configuracionReputacion.progreso >= 60 && configuracionReputacion.progreso < 100"
+                 [style.border-color]="configuracionReputacion.progreso >= 60 && configuracionReputacion.progreso < 100 ? '#fdcb6e' : '#dee2e6'">
+              <small>Limitada</small>
+            </div>
+          </div>
+          <div class="col-3 text-center">
+            <div class="indicator" 
+                 [class.active]="configuracionReputacion.progreso >= 25 && configuracionReputacion.progreso < 60"
+                 [style.border-color]="configuracionReputacion.progreso >= 25 && configuracionReputacion.progreso < 60 ? '#e17055' : '#dee2e6'">
+              <small>En peligro</small>
+            </div>
+          </div>
+          <div class="col-3 text-center">
+            <div class="indicator" 
+                 [class.active]="configuracionReputacion.progreso < 25"
+                 [style.border-color]="configuracionReputacion.progreso < 25 ? '#d63031' : '#dee2e6'">
+              <small>Suspendida</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions Section (optional) -->
+    <div class="reputation-actions mt-3" *ngIf="configuracionReputacion.progreso < 100">
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-primary btn-sm flex-fill" 
+                *ngIf="configuracionReputacion.progreso >= 25">
+          <i class="bi bi-book"></i> Ver reglas
+        </button>
+        <button class="btn btn-outline-secondary btn-sm flex-fill"
+                *ngIf="configuracionReputacion.progreso < 60">
+          <i class="bi bi-headset"></i> Contactar soporte
+        </button>
+      </div>
+    </div>
+
+    <!-- Refresh Button -->
+    <div class="text-center mt-2">
+      <button class="btn btn-link btn-sm text-muted" (click)="recargarReputacion()">
+        <i class="bi bi-arrow-clockwise"></i> Actualizar estado
+      </button>
+    </div>
+  </div>
 </div>
