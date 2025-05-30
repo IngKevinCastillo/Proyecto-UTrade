@@ -25,6 +25,13 @@ export class TopbarComponent implements OnInit {
   listaNotificaciones = notificacionesLista;
   notificationCount = this.listaNotificaciones.length;
 
+  panelFiltros: boolean = false;
+  filtroFechaSeleccionado: string = '';
+  precioMinimo: number = 50;
+  precioMaximo: number = 2000;
+  filtroPrecioMin: number = 50;
+  filtroPrecioMax: number = 2000;
+
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -82,6 +89,55 @@ export class TopbarComponent implements OnInit {
     // Opcional pero aja. Esto hace una búsqueda en tiempo real mientras escribe
   }
 
+  togglePanelFiltros(event: Event) {
+    event.stopPropagation();
+    if (!this.panelFiltros) {
+      this.menuVisible = false;
+      this.notificaciones = false;
+    }
+    this.panelFiltros = !this.panelFiltros;
+  }
+
+  seleccionarFiltroFecha(filtro: string) {
+    this.filtroFechaSeleccionado = filtro;
+    console.log('Filtro de fecha seleccionado:', filtro);
+    // Aquí puedes agregar la lógica para aplicar el filtro
+  }
+
+  onPrecioMinChange() {
+    // Asegurar que el precio mínimo no sea mayor que el máximo
+    if (this.filtroPrecioMin >= this.filtroPrecioMax) {
+      this.filtroPrecioMin = this.filtroPrecioMax - 10;
+    }
+  }
+
+  onPrecioMaxChange() {
+    // Asegurar que el precio máximo no sea menor que el mínimo
+    if (this.filtroPrecioMax <= this.filtroPrecioMin) {
+      this.filtroPrecioMax = this.filtroPrecioMin + 10;
+    }
+  }
+
+  aplicarFiltros() {
+    console.log('Aplicando filtros:', {
+      fecha: this.filtroFechaSeleccionado,
+      precioMin: this.filtroPrecioMin,
+      precioMax: this.filtroPrecioMax
+    });
+    
+    // Aquí puedes enviar los filtros al servicio de búsqueda
+    // this.busquedaService.aplicarFiltros({...});
+    
+    this.panelFiltros = false;
+  }
+
+  limpiarFiltros() {
+    this.filtroFechaSeleccionado = '';
+    this.filtroPrecioMin = this.precioMinimo;
+    this.filtroPrecioMax = this.precioMaximo;
+    console.log('Filtros limpiados');
+  }
+
   onBuscar(): void {
     const termino = this.terminoBusqueda.trim();
 
@@ -113,6 +169,7 @@ export class TopbarComponent implements OnInit {
     event.stopPropagation();
     if (!this.menuVisible) {
       this.notificaciones = false;
+      this.panelFiltros = false; 
     }
     this.menuVisible = !this.menuVisible;
   }
@@ -121,6 +178,7 @@ export class TopbarComponent implements OnInit {
     event.stopPropagation();
     if (!this.notificaciones) {
       this.menuVisible = false;
+      this.panelFiltros = false; 
     }
     this.notificaciones = !this.notificaciones;
   }
@@ -139,6 +197,7 @@ export class TopbarComponent implements OnInit {
     ) {
       this.menuVisible = false;
       this.notificaciones = false;
+      this.panelFiltros = false; // Cerrar el panel de filtros al hacer clic fuera
     }
   }
 
