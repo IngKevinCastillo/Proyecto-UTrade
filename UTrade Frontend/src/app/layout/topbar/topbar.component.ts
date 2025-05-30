@@ -167,10 +167,21 @@ export class TopbarComponent implements OnInit {
     // Cerrar el panel de filtros
     this.panelFiltros = false;
     
-    // Navegar a home si no estamos ahí
-    if (this.router.url !== '/home') {
+    // MODIFICACIÓN: Solo navegar a home si no estamos en una página válida para filtros
+    const rutasValidasParaFiltros = ['/home', '/compras', '/rentas'];
+    const rutaActual = this.router.url;
+    
+    // Extraer la ruta base (sin query params)
+    const rutaBase = rutaActual.split('?')[0];
+    
+    if (!rutasValidasParaFiltros.includes(rutaBase)) {
+      // Solo redirigir si no estamos en una página que soporte filtros
       this.router.navigate(['/home']);
     }
+    
+    // Si ya estamos en una página válida (compras, rentas, home), 
+    // no hacemos navegación y los filtros se aplicarán automáticamente
+    // gracias a las suscripciones en cada componente
   }
 
   limpiarFiltros() {
@@ -187,14 +198,20 @@ export class TopbarComponent implements OnInit {
 
   onBuscar(): void {
     const termino = this.terminoBusqueda.trim();
-
+  
     if (termino === '') {
       this.limpiarBusqueda();
       return;
     }
+    
     this.busquedaService.enviarTerminoBusqueda(termino);
-
-    if (this.router.url !== '/home') {
+  
+    // MODIFICACIÓN: Solo navegar si no estamos en una página válida para búsqueda
+    const rutasValidasParaBusqueda = ['/home', '/compras', '/rentas'];
+    const rutaActual = this.router.url;
+    const rutaBase = rutaActual.split('?')[0];
+    
+    if (!rutasValidasParaBusqueda.includes(rutaBase)) {
       this.router.navigate(['/home']);
     }
   }
@@ -202,8 +219,13 @@ export class TopbarComponent implements OnInit {
   limpiarBusqueda(): void {
     this.terminoBusqueda = '';
     this.busquedaService.enviarTerminoBusqueda('');
-
-    if (this.router.url !== '/home') {
+  
+    // MODIFICACIÓN: Solo navegar si no estamos en una página válida para búsqueda
+    const rutasValidasParaBusqueda = ['/home', '/compras', '/rentas'];
+    const rutaActual = this.router.url;
+    const rutaBase = rutaActual.split('?')[0];
+    
+    if (!rutasValidasParaBusqueda.includes(rutaBase)) {
       this.router.navigate(['/home']);
     }
   }
