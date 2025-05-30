@@ -110,37 +110,6 @@
         </div>
       </div>
     </div>
-    <div class="contenedor-seccion">
-      <h3 class="mb-3">Contraseña y autenticación</h3>
-      <div>
-        <button
-          class="btn text-white"
-          style="background-color: #2c258a"
-          (click)="cambiarContrasena()"
-        >
-          Cambiar contraseña
-        </button>
-      </div>
-    </div>
-    <div class="contenedor-seccion">
-      <h3 class="mb-3">Opciones de cuenta</h3>
-      <div class="d-flex gap-3">
-        <button
-          class="btn text-white"
-          style="background-color: #dc3545"
-          (click)="deshabilitarCuenta()"
-        >
-          Deshabilitar cuenta
-        </button>
-        <button
-          class="btn text-white"
-          style="background-color: #b30000"
-          (click)="eliminarCuenta()"
-        >
-          Eliminar cuenta
-        </button>
-      </div>
-    </div>
   </div>
 </div>
 <div *ngIf="seccionActual === 'publicaciones'">
@@ -149,4 +118,3 @@
 <div *ngIf="seccionActual === 'reputacion'">
   <app-reputacion></app-reputacion>
 </div>
-
