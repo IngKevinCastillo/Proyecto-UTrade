@@ -4,5 +4,10 @@ export interface Notificaciones {
   idTipoAccion: string;
   fecha: Date;
   hora: string;
-  estado: true;
+  estado: boolean; 
+  
+  nombre?: string; 
+  descripcion?: string; 
+  tipo?: string; 
+  leido?: boolean; 
 }

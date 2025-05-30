@@ -6,6 +6,9 @@ import { notificacionesLista } from '../simulacionNotificaciones';
 import { BusquedaService } from '../../Services/busqueda.service';
 import { ProductoService } from '../../Services/producto.service';
 import { FiltrosService } from '../../Services/filtros.service';
+import { NotificacionesService } from '../../Services/notificaciones.service';
+import { Notificaciones } from '../../interfaces/notificaciones';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-topbar',
@@ -20,12 +23,11 @@ export class TopbarComponent implements OnInit {
   username: string = '';
   userHandle: string = '';
   avatarUrl: string = 'icons/no-photo.webp';
-
+  
   notificaciones: boolean = false;
   menuVisible: boolean = false;
 
   listaNotificaciones = notificacionesLista;
-  notificationCount = this.listaNotificaciones.length;
 
   panelFiltros: boolean = false;
   
@@ -34,6 +36,16 @@ export class TopbarComponent implements OnInit {
   precioMaximo: number = 2000000;
   filtroPrecioMin: number = 0;
   filtroPrecioMax: number = 2000000;
+
+  showFilterPanel = false;
+  showUserMenu = false;
+  showNotifications = false;
+
+  notificacionesRecientes: Notificaciones[] = [];
+  notificationCount: number = 0;
+  cargandoNotificaciones: boolean = false;
+  private notificacionesSubscription?: Subscription;
+  private actualizacionSubscription?: Subscription;
 
   constructor(
     private router: Router,

@@ -15,7 +15,5 @@ namespace DTO
         public string IdPersonaRemitente { get; set; }
 
         public string IdPersonaReportada { get; set; }
-
-        public string TipoId { get; set; } 
     }
 }
