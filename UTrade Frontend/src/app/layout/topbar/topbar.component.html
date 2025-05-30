@@ -1,148 +1,154 @@
 <div class="topbar d-flex align-items-center justify-content-between px-4 py-2">
-<div
-  class="search-container d-flex align-items-center gap-2 position-relative"
-  *ngIf="mostrarBuscar"
->
-  <!-- Botón de configuración/filtros -->
-  <button
-    class="filter-btn config-btn"
-    (click)="togglePanelFiltros($event)"
-    [disabled]="deshabilitarBusqueda"
-    title="Panel de filtros"
+  <div
+    class="search-container d-flex align-items-center gap-2 position-relative"
+    *ngIf="mostrarBuscar"
   >
-    <i class="bi bi-sliders"></i>
-  </button>
+    <button
+      class="filter-btn config-btn"
+      (click)="togglePanelFiltros($event)"
+      [disabled]="deshabilitarBusqueda"
+      title="Panel de filtros"
+    >
+      <i class="bi bi-sliders"></i>
+    </button>
 
-  <!-- Panel de filtros desplegable -->
-  <div *ngIf="panelFiltros" class="filter-panel">
-    <div class="panel-header">
-      <h6 class="mb-0">Panel de filtros</h6>
-    </div>
-    
-    <div class="panel-content">
-      <div class="row">
-        <!-- Columna de filtro por fecha -->
-        <div class="col-6">
-          <h6 class="filter-subtitle">Filtro por fecha</h6>
-          <div class="filter-buttons">
-            <button 
-              class="mini-filter-btn"
-              [class.active]="filtroFechaSeleccionado === 'ultima-hora'"
-              (click)="seleccionarFiltroFecha('ultima-hora')"
-            >
-              Última hora
-            </button>
-            <button 
-              class="mini-filter-btn"
-              [class.active]="filtroFechaSeleccionado === 'hoy'"
-              (click)="seleccionarFiltroFecha('hoy')"
-            >
-              Hoy
-            </button>
-            <button 
-              class="mini-filter-btn"
-              [class.active]="filtroFechaSeleccionado === 'esta-semana'"
-              (click)="seleccionarFiltroFecha('esta-semana')"
-            >
-              Esta semana
-            </button>
-            <button 
-              class="mini-filter-btn"
-              [class.active]="filtroFechaSeleccionado === 'este-mes'"
-              (click)="seleccionarFiltroFecha('este-mes')"
-            >
-              Este mes
-            </button>
-            <button 
-              class="mini-filter-btn"
-              [class.active]="filtroFechaSeleccionado === 'este-ano'"
-              (click)="seleccionarFiltroFecha('este-ano')"
-            >
-              Este año
-            </button>
-          </div>
-        </div>
-        
-        <!-- Columna de filtro por precio -->
-        <div class="col-6">
-          <h6 class="filter-subtitle">Filtro por Precio</h6>
-          <div class="price-range-container">
-            <div class="price-display mb-2">
-              <span class="price-label">Mostrando todos</span>
-            </div>
-            <div class="range-container">
-              <div class="range-track"></div>
-              <div class="range-fill" [style.left.%]="((filtroPrecioMin - precioMinimo) / (precioMaximo - precioMinimo)) * 100" 
-                  [style.width.%]="((filtroPrecioMax - filtroPrecioMin) / (precioMaximo - precioMinimo)) * 100"></div>
-              <input 
-                type="range" 
-                class="range-input range-min" 
-                [min]="precioMinimo" 
-                [max]="precioMaximo" 
-                [(ngModel)]="filtroPrecioMin" 
-                (input)="onPrecioMinChange()"
+    <div *ngIf="panelFiltros" class="filter-panel">
+      <div class="panel-header">
+        <h6 class="mb-0">Panel de filtros</h6>
+      </div>
+
+      <div class="panel-content">
+        <div class="row">
+          <div class="col-6">
+            <h6 class="filter-subtitle">Filtro por fecha</h6>
+            <div class="filter-buttons">
+              <button
+                class="mini-filter-btn"
+                [class.active]="filtroFechaSeleccionado === 'ultima-hora'"
+                (click)="seleccionarFiltroFecha('ultima-hora')"
               >
-              <input 
-                type="range" 
-                class="range-input range-max" 
-                [min]="precioMinimo" 
-                [max]="precioMaximo" 
-                [(ngModel)]="filtroPrecioMax" 
-                (input)="onPrecioMaxChange()"
+                Última hora
+              </button>
+              <button
+                class="mini-filter-btn"
+                [class.active]="filtroFechaSeleccionado === 'hoy'"
+                (click)="seleccionarFiltroFecha('hoy')"
               >
-            </div>
-            <div class="price-values d-flex justify-content-between mt-2">
-              <span class="price-value">${{ filtroPrecioMin }}</span>
-              <span class="price-value">${{ filtroPrecioMax }}</span>
+                Hoy
+              </button>
+              <button
+                class="mini-filter-btn"
+                [class.active]="filtroFechaSeleccionado === 'esta-semana'"
+                (click)="seleccionarFiltroFecha('esta-semana')"
+              >
+                Esta semana
+              </button>
+              <button
+                class="mini-filter-btn"
+                [class.active]="filtroFechaSeleccionado === 'este-mes'"
+                (click)="seleccionarFiltroFecha('este-mes')"
+              >
+                Este mes
+              </button>
+              <button
+                class="mini-filter-btn"
+                [class.active]="filtroFechaSeleccionado === 'este-ano'"
+                (click)="seleccionarFiltroFecha('este-ano')"
+              >
+                Este año
+              </button>
             </div>
           </div>
+
+          <div class="col-6">
+            <h6 class="filter-subtitle">Filtro por Precio</h6>
+            <div class="price-range-container">
+              <div class="price-display mb-2">
+                <span class="price-label">Mostrando todos</span>
+              </div>
+              <div class="range-container">
+                <div class="range-track"></div>
+                <div
+                  class="range-fill"
+                  [style.left.%]="
+                    ((filtroPrecioMin - precioMinimo) /
+                      (precioMaximo - precioMinimo)) *
+                    100
+                  "
+                  [style.width.%]="
+                    ((filtroPrecioMax - filtroPrecioMin) /
+                      (precioMaximo - precioMinimo)) *
+                    100
+                  "
+                ></div>
+                <input
+                  type="range"
+                  class="range-input range-min"
+                  [min]="precioMinimo"
+                  [max]="precioMaximo"
+                  [(ngModel)]="filtroPrecioMin"
+                  (input)="onPrecioMinChange()"
+                />
+                <input
+                  type="range"
+                  class="range-input range-max"
+                  [min]="precioMinimo"
+                  [max]="precioMaximo"
+                  [(ngModel)]="filtroPrecioMax"
+                  (input)="onPrecioMaxChange()"
+                />
+              </div>
+              <div class="price-values d-flex justify-content-between mt-2">
+                <span class="price-value">${{ filtroPrecioMin }}</span>
+                <span class="price-value">${{ filtroPrecioMax }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-actions mt-3">
+          <button class="filter-btn me-2" (click)="limpiarFiltros()">
+            Limpiar
+          </button>
+          <button class="filter-btn" (click)="aplicarFiltros()">
+            Aplicar filtros
+          </button>
         </div>
       </div>
-      
-      <!-- Botones de acción -->
-      <div class="panel-actions mt-3">
-        <button class="filter-btn me-2" (click)="limpiarFiltros()">
-          Limpiar
-        </button>
-        <button class="filter-btn" (click)="aplicarFiltros()">
-          Aplicar filtros
-        </button>
-      </div>
     </div>
+
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Buscar productos o servicios..."
+      [(ngModel)]="terminoBusqueda"
+      (keyup.enter)="onBuscar()"
+      (input)="onInputChange()"
+      [disabled]="deshabilitarBusqueda"
+    />
+
+    <button
+      class="filter-btn search-btn d-flex align-items-center gap-1"
+      (click)="onBuscar()"
+      [disabled]="
+        !terminoBusqueda ||
+        terminoBusqueda.trim() === '' ||
+        deshabilitarBusqueda
+      "
+    >
+      <i class="bi bi-search"></i>
+      <span class="d-none d-md-inline">Buscar</span>
+    </button>
+
+    <button
+      class="filter-btn clear-btn"
+      (click)="limpiarBusqueda()"
+      *ngIf="terminoBusqueda && terminoBusqueda.trim() !== ''"
+      [disabled]="deshabilitarBusqueda"
+    >
+      <i class="bi bi-x-circle"></i>
+    </button>
   </div>
-
-  <input
-    class="search-input"
-    type="text"
-    placeholder="Buscar productos o servicios..."
-    [(ngModel)]="terminoBusqueda"
-    (keyup.enter)="onBuscar()"
-    (input)="onInputChange()"
-    [disabled]="deshabilitarBusqueda"
-  />
-
-  <button
-    class="filter-btn search-btn d-flex align-items-center gap-1"
-    (click)="onBuscar()"
-    [disabled]="
-      !terminoBusqueda ||
-      terminoBusqueda.trim() === '' ||
-      deshabilitarBusqueda
-    "
-  >
-    <i class="bi bi-search"></i>
-    <span class="d-none d-md-inline">Buscar</span>
-  </button>
-
-  <button
-    class="filter-btn clear-btn"
-    (click)="limpiarBusqueda()"
-    *ngIf="terminoBusqueda && terminoBusqueda.trim() !== ''"
-    [disabled]="deshabilitarBusqueda"
-  >
-    <i class="bi bi-x-circle"></i>
-  </button>
-</div>
 
   <div class="filters d-flex gap-3">
     <button class="filter-btn" routerLink="/compras" routerLinkActive="active">

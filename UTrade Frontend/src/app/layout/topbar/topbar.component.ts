@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { ConexionBackendService } from '../../Services/conexion-backend.service';
 import { notificacionesLista } from '../simulacionNotificaciones';
 import { BusquedaService } from '../../Services/busqueda.service';
+import { ProductoService } from '../../Services/producto.service';
+import { FiltrosService } from '../../Services/filtros.service'; // Importar el nuevo servicio
 
 @Component({
   selector: 'app-topbar',
@@ -27,16 +29,18 @@ export class TopbarComponent implements OnInit {
 
   panelFiltros: boolean = false;
   filtroFechaSeleccionado: string = '';
-  precioMinimo: number = 50;
-  precioMaximo: number = 2000;
-  filtroPrecioMin: number = 50;
-  filtroPrecioMax: number = 2000;
+  precioMinimo: number = 0;
+  precioMaximo: number = 2000000;
+  filtroPrecioMin: number = 0;
+  filtroPrecioMax: number = 2000000;
 
   constructor(
     private router: Router,
     private http: HttpClient,
     private conexionBackend: ConexionBackendService,
-    private busquedaService: BusquedaService
+    private busquedaService: BusquedaService,
+    private productosService: ProductoService,
+    private filtrosService: FiltrosService // Inyectar el servicio
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -75,6 +79,9 @@ export class TopbarComponent implements OnInit {
       });
     }
     this.actualizarVisibilidadBusqueda(this.router.url);
+    
+    // Sincronizar con el servicio al inicializar
+    this.sincronizarConServicio();
   }
 
   private actualizarVisibilidadBusqueda(url: string): void {
@@ -83,6 +90,24 @@ export class TopbarComponent implements OnInit {
       url.includes('/compras') ||
       url.includes('/rentas')
     );
+  }
+
+  private sincronizarConServicio(): void {
+    // Obtener filtros actuales del servicio
+    const filtrosActivos = this.filtrosService.getFiltrosActivos();
+    
+    // Mapeo inverso para el frontend
+    const mapeoInverso: { [key: string]: string } = {
+      'ultimaHora': 'ultima-hora',
+      'hoy': 'hoy',
+      'semana': 'esta-semana',
+      'mes': 'este-mes',
+      'año': 'este-ano'
+    };
+    
+    this.filtroFechaSeleccionado = mapeoInverso[filtrosActivos.fecha] || '';
+    this.filtroPrecioMin = filtrosActivos.precio.minimo;
+    this.filtroPrecioMax = filtrosActivos.precio.maximo;
   }
 
   onInputChange(): void {
@@ -99,9 +124,16 @@ export class TopbarComponent implements OnInit {
   }
 
   seleccionarFiltroFecha(filtro: string) {
-    this.filtroFechaSeleccionado = filtro;
-    console.log('Filtro de fecha seleccionado:', filtro);
-    // Aquí puedes agregar la lógica para aplicar el filtro
+    // Limpiar el filtro anterior si es el mismo
+    if (this.filtroFechaSeleccionado === filtro) {
+      this.filtroFechaSeleccionado = '';
+      this.filtrosService.setFiltroFecha('');
+    } else {
+      this.filtroFechaSeleccionado = filtro;
+      this.filtrosService.setFiltroFecha(filtro);
+    }
+    
+    console.log('Filtro de fecha seleccionado:', this.filtrosService.getFiltroFecha());
   }
 
   onPrecioMinChange() {
@@ -109,6 +141,8 @@ export class TopbarComponent implements OnInit {
     if (this.filtroPrecioMin >= this.filtroPrecioMax) {
       this.filtroPrecioMin = this.filtroPrecioMax - 10;
     }
+    // Actualizar el servicio
+    this.filtrosService.setFiltroPrecio(this.filtroPrecioMin, this.filtroPrecioMax);
   }
 
   onPrecioMaxChange() {
@@ -116,25 +150,34 @@ export class TopbarComponent implements OnInit {
     if (this.filtroPrecioMax <= this.filtroPrecioMin) {
       this.filtroPrecioMax = this.filtroPrecioMin + 10;
     }
+    // Actualizar el servicio
+    this.filtrosService.setFiltroPrecio(this.filtroPrecioMin, this.filtroPrecioMax);
   }
 
   aplicarFiltros() {
-    console.log('Aplicando filtros:', {
-      fecha: this.filtroFechaSeleccionado,
-      precioMin: this.filtroPrecioMin,
-      precioMax: this.filtroPrecioMax
-    });
+    // Aplicar los filtros a través del servicio
+    const filtrosAplicados = this.filtrosService.aplicarFiltros();
     
-    // Aquí puedes enviar los filtros al servicio de búsqueda
-    // this.busquedaService.aplicarFiltros({...});
-    
+    console.log('Filtros aplicados:', filtrosAplicados);
+  
+    // Cerrar el panel de filtros
     this.panelFiltros = false;
+    
+    // Navegar a home si no estamos ahí (para asegurar que se vean los productos filtrados)
+    if (this.router.url !== '/home') {
+      this.router.navigate(['/home']);
+    }
   }
 
   limpiarFiltros() {
+    // Limpiar a través del servicio
+    this.filtrosService.limpiarFiltros();
+    
+    // Actualizar variables locales
     this.filtroFechaSeleccionado = '';
     this.filtroPrecioMin = this.precioMinimo;
     this.filtroPrecioMax = this.precioMaximo;
+    
     console.log('Filtros limpiados');
   }
 
@@ -169,7 +212,7 @@ export class TopbarComponent implements OnInit {
     event.stopPropagation();
     if (!this.menuVisible) {
       this.notificaciones = false;
-      this.panelFiltros = false; 
+      this.panelFiltros = false;
     }
     this.menuVisible = !this.menuVisible;
   }
@@ -178,7 +221,7 @@ export class TopbarComponent implements OnInit {
     event.stopPropagation();
     if (!this.notificaciones) {
       this.menuVisible = false;
-      this.panelFiltros = false; 
+      this.panelFiltros = false;
     }
     this.notificaciones = !this.notificaciones;
   }
@@ -197,7 +240,7 @@ export class TopbarComponent implements OnInit {
     ) {
       this.menuVisible = false;
       this.notificaciones = false;
-      this.panelFiltros = false; // Cerrar el panel de filtros al hacer clic fuera
+      this.panelFiltros = false;
     }
   }
 
