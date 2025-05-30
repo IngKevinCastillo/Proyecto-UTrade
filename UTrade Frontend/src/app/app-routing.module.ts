@@ -15,6 +15,7 @@ import { MiCuentaComponent } from './features/cuenta/mi-cuenta/mi-cuenta.compone
 import { EditarPerfilComponent } from './features/cuenta/editar-perfil/editar-perfil.component';
 import { MapaComponent } from './features/mapa/mapa.component';
 import { ResenasComponent } from './features/productos/componentes/resenas/resenas/resenas.component';
+import { FavoritosComponent } from './features/productos/componentes/favoritos/favoritos/favoritos.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -36,6 +37,7 @@ const routes: Routes = [
       { path: 'mi-cuenta/editar-perfil', component: EditarPerfilComponent },
       { path: 'mapa', component: MapaComponent },
       { path: 'resenas', component: ResenasComponent },
+      { path: 'favoritos', component: FavoritosComponent },
     ],
   },
 

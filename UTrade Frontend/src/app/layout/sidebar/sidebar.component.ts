@@ -61,6 +61,8 @@ export class SidebarComponent implements OnInit {
       this.activeBtn = 'soporte';
     } else if (url.includes('/reportes')) {
       this.activeBtn = 'reportes';
+    } else if (url.includes('/favoritos')) {
+      this.activeBtn = 'favoritos';
     } else {
       this.activeBtn = '';
     }

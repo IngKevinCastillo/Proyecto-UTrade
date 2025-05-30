@@ -189,18 +189,6 @@ export class RegistroComponent implements OnInit {
     });
   }
 
-  registerWithGoogle(): void {
-    console.log('Registro con Google');
-  }
-
-  registerWithFacebook(): void {
-    console.log('Registro con Facebook');
-  }
-
-  registro(): void {
-    console.log('Registro exitoso');
-  }
-
   abrirVentanaConfirmacion(codigo: string): void {
     this.dialog
       .open(VentanaConfirmarComponent, {

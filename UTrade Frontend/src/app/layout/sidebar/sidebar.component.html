@@ -42,4 +42,11 @@
   >
     <mat-icon>description</mat-icon>
   </button>
+  <button
+    class="icon-btn"
+    [class.active]="activeBtn === 'favoritos'"
+    (click)="setActive('favoritos')"
+  >
+    <mat-icon>favorite</mat-icon>
+  </button>
 </aside>
