@@ -15,6 +15,7 @@ import { CategoriaPublicacion } from '../../interfaces/categoria-publicacion';
 import { CategoriaPublicacionService } from '../../Services/categoria-publicacion.service';
 import { PersonaService } from '../../Services/persona.service';
 import { ProductoService } from '../../Services/producto.service';
+import { FavoritosService } from '../../Services/favoritos.service';
 import { Publicaciones } from '../../interfaces/publicaciones';
 import { forkJoin, Subject, combineLatest } from 'rxjs';
 import { EstadosService } from '../../Services/estados.service';
@@ -37,6 +38,7 @@ interface ProductoExtendido extends Publicaciones {
   tiempoTranscurrido?: string;
   imagenes?: string[];
   cuota?: string;
+  esFavorito?: boolean;
 }
 
 @Component({
@@ -51,7 +53,8 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
   listaEstados: Estados[] = [];
   datosPublicaciones: Publicaciones | null = null;
   productos: ProductoExtendido[] = [];
-  productosOriginales: ProductoExtendido[] = []; // Para mantener la lista completa
+  productosOriginales: ProductoExtendido[] = [];
+  favoritosUsuario: string[] = [];
 
   @Input() Filtro?: string;
   @Input() FiltroIdCategoria?: string;
@@ -61,7 +64,7 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private filtrosActivos: FiltrosActivos = {
     fecha: '',
-    precio: { minimo: 0, maximo: 2000000 }
+    precio: { minimo: 0, maximo: 2000000 },
   };
 
   constructor(
@@ -71,6 +74,7 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
     private _personaServicio: PersonaService,
     private _productoServicio: ProductoService,
     private _estadosServicio: EstadosService,
+    private _favoritosService: FavoritosService,
     private toastr: ToastrService,
     private _fotosPublicacionesServicio: FotosPublicacionesService,
     private _chatService: ChatService,
@@ -93,6 +97,7 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cargarDatosIniciales();
+    this.cargarFavoritosUsuario();
     this.suscribirseAFiltros();
 
     if (this.datosPublicaciones != null) {
@@ -107,6 +112,125 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
         idEstado: this.datosPublicaciones.idEstado,
       });
     }
+  }
+
+  private cargarFavoritosUsuario(): void {
+    const usuario = this.obtenerUsuarioActual();
+    if (usuario) {
+      this._favoritosService.buscarPorUsuario(usuario.idUsuario).subscribe({
+        next: (respuesta) => {
+          if (respuesta.estado && respuesta.valor) {
+            this.favoritosUsuario = respuesta.valor.map(
+              (fav) => fav.idPublicacion
+            );
+            this.actualizarEstadoFavoritos();
+          }
+        },
+        error: (error) => {
+          console.error('Error cargando favoritos del usuario:', error);
+        },
+      });
+    }
+  }
+
+  private actualizarEstadoFavoritos(): void {
+    this.productos.forEach((producto) => {
+      producto.esFavorito = this.favoritosUsuario.includes(producto.id);
+    });
+  }
+
+  private obtenerUsuarioActual(): any {
+    const usuarioStorage = localStorage.getItem('usuario');
+    if (usuarioStorage) {
+      try {
+        return JSON.parse(usuarioStorage);
+      } catch (error) {
+        console.error('Error parseando usuario del localStorage:', error);
+      }
+    }
+    return null;
+  }
+
+  toggleFavorito(producto: ProductoExtendido): void {
+    const usuario = this.obtenerUsuarioActual();
+    if (!usuario) {
+      this.toastr.error('Sesión no encontrada', 'Error');
+      return;
+    }
+
+    if (usuario.idUsuario === producto.idUsuario) {
+      this.toastr.warning(
+        'No puedes agregar tu propia publicación a favoritos',
+        'Advertencia'
+      );
+      return;
+    }
+
+    if (producto.esFavorito) {
+      this.eliminarFavorito(producto, usuario.idUsuario);
+    } else {
+      this.agregarFavorito(producto, usuario.idUsuario);
+    }
+  }
+
+  private agregarFavorito(
+    producto: ProductoExtendido,
+    idUsuario: string
+  ): void {
+    const nuevoFavorito = {
+      id: '',
+      idPersona: idUsuario,
+      idPublicacion: producto.id,
+    };
+
+    this._favoritosService.crear(nuevoFavorito).subscribe({
+      next: (respuesta) => {
+        if (respuesta.estado) {
+          producto.esFavorito = true;
+          this.favoritosUsuario.push(producto.id);
+          this.toastr.success(
+            `"${producto.titulo}" agregado a favoritos`,
+            'Favorito agregado'
+          );
+        } else {
+          this.toastr.error('Error al agregar a favoritos', 'Error');
+
+          console.error('Error al agregar favorito:', respuesta.mgs);
+        }
+      },
+      error: (error) => {
+        console.error('Error agregando favorito:', error);
+        this.toastr.error('Error al agregar a favoritos', 'Error');
+      },
+    });
+  }
+
+  private eliminarFavorito(
+    producto: ProductoExtendido,
+    idUsuario: string
+  ): void {
+    this._favoritosService
+      .eliminarUsuarioPublicacion(idUsuario, producto.id)
+      .subscribe({
+        next: (respuesta) => {
+          if (respuesta.estado) {
+            producto.esFavorito = false;
+            this.favoritosUsuario = this.favoritosUsuario.filter(
+              (id) => id !== producto.id
+            );
+            this.toastr.success(
+              `"${producto.titulo}" eliminado de favoritos`,
+              'Favorito eliminado'
+            );
+          } else {
+            this.toastr.error('Error al eliminar de favoritos', 'Error');
+          }
+        },
+        error: (error) => {
+          console.error('Error eliminando favorito:', error);
+          this.toastr.error('Error al eliminar de favoritos', 'Error');
+        },
+      });
   }
 
   ngOnDestroy(): void {
@@ -136,46 +260,81 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  private suscribirseAFiltros(): void {
-    // Escuchar cambios en los filtros
-    combineLatest([
-      this.filtrosService.filtroFecha$,
-      this.filtrosService.filtroPrecio$
-    ])
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(([filtroFecha, filtroPrecio]) => {
-      this.filtrosActivos = {
-        fecha: filtroFecha,
-        precio: filtroPrecio
+  procesarProductos(productos: Publicaciones[]): void {
+    if (!productos || productos.length === 0) {
+      this.productos = [];
+      return;
+    }
+
+    this.productos = productos.map((producto) => {
+      const persona = this.listaDePersonas.find(
+        (p) => p.id === producto.idUsuario
+      );
+      const categoria = this.listaCategorias.find(
+        (c) => c.id === producto.idCategoria
+      );
+      const _estado_ = this.listaEstados.find((c) => c.id == producto.idEstado);
+      const cuotaProducto = producto.idCategoria === 'CAT01' ? ' / MES' : '';
+
+      const productoExtendido: ProductoExtendido = {
+        ...producto,
+        verMas: false,
+        nombreUsuario: persona?.nombreUsuario || 'Usuario desconocido',
+        avatarUsuario: this.procesarAvatar(persona),
+        nombreCategoria: categoria?.nombre || 'Sin categoría',
+        estado: _estado_?.nombre || 'Sin estado',
+        fechaFormateada: this.formatearFecha(producto.fechaPublicacion),
+        tiempoTranscurrido: this.calcularTiempoTranscurrido(
+          producto.fechaPublicacion
+        ),
+        imagenes: ['icons/Image-not-found.png'],
+        cuota: cuotaProducto,
+        esFavorito: this.favoritosUsuario.includes(producto.id),
       };
-      
-      // Solo aplicar filtros si ya tenemos datos cargados
-      if (this.listaDePersonas.length > 0 && this.listaCategorias.length > 0) {
-        this.aplicarFiltrosActivos();
-      }
+      this.cargarImagenesProducto(producto.id, productoExtendido);
+
+      return productoExtendido;
     });
   }
 
+  private suscribirseAFiltros(): void {
+    combineLatest([
+      this.filtrosService.filtroFecha$,
+      this.filtrosService.filtroPrecio$,
+    ])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([filtroFecha, filtroPrecio]) => {
+        this.filtrosActivos = {
+          fecha: filtroFecha,
+          precio: filtroPrecio,
+        };
+
+        if (
+          this.listaDePersonas.length > 0 &&
+          this.listaCategorias.length > 0
+        ) {
+          this.aplicarFiltrosActivos();
+        }
+      });
+  }
+
   private aplicarFiltrosActivos(): void {
-    const hayFiltroFecha = this.filtrosActivos.fecha && this.filtrosActivos.fecha !== '';
-    const hayFiltroPrecio = this.filtrosActivos.precio.minimo !== 0 || 
-                           this.filtrosActivos.precio.maximo !== 2000000;
+    const hayFiltroFecha =
+      this.filtrosActivos.fecha && this.filtrosActivos.fecha !== '';
+    const hayFiltroPrecio =
+      this.filtrosActivos.precio.minimo !== 0 ||
+      this.filtrosActivos.precio.maximo !== 2000000;
 
     if (!hayFiltroFecha && !hayFiltroPrecio) {
-      // No hay filtros activos, cargar datos normales
       this.determinarDatosACargar();
       return;
     }
 
-    // Aplicar filtros según lo que esté activo
     if (hayFiltroFecha && hayFiltroPrecio) {
-      // Ambos filtros activos - aplicar filtro de fecha primero y luego filtrar por precio localmente
       this.aplicarFiltroFecha();
     } else if (hayFiltroFecha) {
-      // Solo filtro de fecha
       this.aplicarFiltroFecha();
     } else if (hayFiltroPrecio) {
-      // Solo filtro de precio
       this.aplicarFiltroPrecio();
     }
   }
@@ -185,22 +344,26 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
       next: (respuesta) => {
         if (respuesta.estado && Array.isArray(respuesta.valor)) {
           let productosFiltrados = respuesta.valor;
-          
-          // Si también hay filtro de precio, aplicarlo localmente
-          const hayFiltroPrecio = this.filtrosActivos.precio.minimo !== 0 || 
-                                 this.filtrosActivos.precio.maximo !== 2000000;
-          
+
+          const hayFiltroPrecio =
+            this.filtrosActivos.precio.minimo !== 0 ||
+            this.filtrosActivos.precio.maximo !== 2000000;
+
           if (hayFiltroPrecio) {
-            productosFiltrados = productosFiltrados.filter(producto => 
-              producto.precio >= this.filtrosActivos.precio.minimo && 
-              producto.precio <= this.filtrosActivos.precio.maximo
+            productosFiltrados = productosFiltrados.filter(
+              (producto) =>
+                producto.precio >= this.filtrosActivos.precio.minimo &&
+                producto.precio <= this.filtrosActivos.precio.maximo
             );
           }
-          
+
           this.procesarProductos(productosFiltrados);
         } else {
           this.productos = [];
-          this.toastr.info('No se encontraron productos para el filtro de fecha', 'Filtro');
+          this.toastr.info(
+            'No se encontraron productos para el filtro de fecha',
+            'Filtro'
+          );
         }
       },
       error: (error) => {
@@ -212,24 +375,29 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   private aplicarFiltroPrecio(): void {
-    this._productoServicio.listarRangoPrecio(
-      this.filtrosActivos.precio.minimo,
-      this.filtrosActivos.precio.maximo
-    ).subscribe({
-      next: (respuesta) => {
-        if (respuesta.estado && Array.isArray(respuesta.valor)) {
-          this.procesarProductos(respuesta.valor);
-        } else {
+    this._productoServicio
+      .listarRangoPrecio(
+        this.filtrosActivos.precio.minimo,
+        this.filtrosActivos.precio.maximo
+      )
+      .subscribe({
+        next: (respuesta) => {
+          if (respuesta.estado && Array.isArray(respuesta.valor)) {
+            this.procesarProductos(respuesta.valor);
+          } else {
+            this.productos = [];
+            this.toastr.info(
+              'No se encontraron productos en el rango de precio',
+              'Filtro'
+            );
+          }
+        },
+        error: (error) => {
+          console.error('Error aplicando filtro de precio:', error);
           this.productos = [];
-          this.toastr.info('No se encontraron productos en el rango de precio', 'Filtro');
-        }
-      },
-      error: (error) => {
-        console.error('Error aplicando filtro de precio:', error);
-        this.productos = [];
-        this.toastr.error('Error al aplicar filtro de precio', 'Error');
-      },
-    });
+          this.toastr.error('Error al aplicar filtro de precio', 'Error');
+        },
+      });
   }
 
   cargarDatosIniciales(): void {
@@ -346,43 +514,6 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  procesarProductos(productos: Publicaciones[]): void {
-    if (!productos || productos.length === 0) {
-      this.productos = [];
-      return;
-    }
-
-    this.productos = productos.map((producto) => {
-      const persona = this.listaDePersonas.find(
-        (p) => p.id === producto.idUsuario
-      );
-      const categoria = this.listaCategorias.find(
-        (c) => c.id === producto.idCategoria
-      );
-      const _estado_ = this.listaEstados.find((c) => c.id == producto.idEstado);
-      const cuotaProducto = producto.idCategoria === 'CAT01' ? ' / MES' : '';
-
-      const productoExtendido: ProductoExtendido = {
-        ...producto,
-        verMas: false,
-        nombreUsuario: persona?.nombreUsuario || 'Usuario desconocido',
-        avatarUsuario: this.procesarAvatar(persona),
-        nombreCategoria: categoria?.nombre || 'Sin categoría',
-        estado: _estado_?.nombre || 'Sin estado',
-        fechaFormateada: this.formatearFecha(producto.fechaPublicacion),
-        tiempoTranscurrido: this.calcularTiempoTranscurrido(
-          producto.fechaPublicacion
-        ),
-        imagenes: ['icons/Image-not-found.png'],
-        cuota: cuotaProducto,
-      };
-      this.cargarImagenesProducto(producto.id, productoExtendido);
-
-      return productoExtendido;
-    });
-  }
-
-  // ... (resto de métodos permanecen igual)
   solicitar(producto: ProductoExtendido): void {
     const usuarioStorage = localStorage.getItem('usuario');
     if (!usuarioStorage) {

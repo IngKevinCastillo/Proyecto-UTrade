@@ -15,70 +15,15 @@ namespace API.Controllers
         {
             _favoritosServicio = favoritosServicio;
         }
-
-        [HttpGet]
-        [Route("Listar")]
-        public async Task<IActionResult> listar()
-        {
-            var rsp = new Respuesta<List<FavoritosDTO>>();
-            try
-            {
-                rsp.estado = true;
-                rsp.Valor = await _favoritosServicio.Listar();
-            }
-            catch (Exception ex)
-            {
-                rsp.estado = false;
-                rsp.mgs = ex.Message;
-            }
-            return Ok(rsp);
-        }
-
-        [HttpGet]
-        [Route("Buscar/{id}")]
-        public async Task<IActionResult> Buscar(string id)
-        {
-            var rsp = new Respuesta<FavoritosDTO>();
-            try
-            {
-                rsp.estado = true;
-                rsp.Valor = await _favoritosServicio.Buscar(id);
-            }
-            catch (Exception ex)
-            {
-                rsp.estado = false;
-                rsp.mgs = ex.Message;
-            }
-            return Ok(rsp);
-        }
-
         [HttpPost]
-        [Route("Guardar")]
-        public async Task<IActionResult> Guardar([FromBody] FavoritosDTO favoritos)
+        [Route("Crear")]
+        public async Task<IActionResult> Crear([FromBody] FavoritosDTO modelo)
         {
             var rsp = new Respuesta<FavoritosDTO>();
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _favoritosServicio.Crear(favoritos);
-            }
-            catch (Exception ex)
-            {
-                rsp.estado = false;
-                rsp.mgs = ex.Message;
-            }
-            return Ok(rsp);
-        }
-
-        [HttpDelete]
-        [Route("Eliminar/{id}")]
-        public async Task<IActionResult> Eliminar(string id)
-        {
-            var rsp = new Respuesta<bool>();
-            try
-            {
-                rsp.estado = true;
-                rsp.Valor = await _favoritosServicio.Eliminar(id);
+                rsp.Valor = await _favoritosServicio.Crear(modelo);
             }
             catch (Exception ex)
             {
@@ -92,7 +37,7 @@ namespace API.Controllers
         [Route("BuscarPorUsuario/{id}")]
         public async Task<IActionResult> BuscarPorUsuario(string id)
         {
-            var rsp = new Respuesta<FavoritosDTO>();
+            var rsp = new Respuesta<List<FavoritosDTO>>();
             try
             {
                 rsp.estado = true;
@@ -106,51 +51,33 @@ namespace API.Controllers
             return Ok(rsp);
         }
 
+        [HttpDelete]
+        [Route("EliminarUsuarioPublicacion/{idUsuario}/{idPublicacion}")]
+        public async Task<IActionResult> EliminarUsuarioPublicacion(string idUsuario, string idPublicacion)
+        {
+            var rsp = new Respuesta<bool>();
+            try
+            {
+                rsp.estado = true;
+                rsp.Valor = await _favoritosServicio.EliminarUsuarioPublicacion(idUsuario, idPublicacion);
+            }
+            catch (Exception ex)
+            {
+                rsp.estado = false;
+                rsp.mgs = ex.Message;
+            }
+            return Ok(rsp);
+        }
+
         [HttpGet]
-        [Route("BuscarPorPublicacion/{id}")]
-        public async Task<IActionResult> BuscarPorPublicacion(string id)
-        {
-            var rsp = new Respuesta<FavoritosDTO>();
-            try
-            {
-                rsp.estado = true;
-                rsp.Valor = await _favoritosServicio.BuscarPorPublicacion(id);
-            }
-            catch (Exception ex)
-            {
-                rsp.estado = false;
-                rsp.mgs = ex.Message;
-            }
-            return Ok(rsp);
-        }
-
-        [HttpDelete]
-        [Route("EliminarPorUsuario/{id}")]
-        public async Task<IActionResult> EliminarPorUsuario(string id)
+        [Route("VerificarFavorito/{idUsuario}/{idPublicacion}")]
+        public async Task<IActionResult> VerificarFavorito(string idUsuario, string idPublicacion)
         {
             var rsp = new Respuesta<bool>();
             try
             {
                 rsp.estado = true;
-                rsp.Valor = await _favoritosServicio.EliminarPorUsuario(id);
-            }
-            catch (Exception ex)
-            {
-                rsp.estado = false;
-                rsp.mgs = ex.Message;
-            }
-            return Ok(rsp);
-        }
-
-        [HttpDelete]
-        [Route("EliminarPorPublicacion/{id}")]
-        public async Task<IActionResult> EliminarPorPublicacion(string id)
-        {
-            var rsp = new Respuesta<bool>();
-            try
-            {
-                rsp.estado = true;
-                rsp.Valor = await _favoritosServicio.EliminarPorPublicacion(id);
+                rsp.Valor = await _favoritosServicio.VerificarFavorito(idUsuario, idPublicacion);
             }
             catch (Exception ex)
             {

@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   username: string = '';
@@ -15,7 +15,11 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
   showPassword: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService, private toastr: ToastrService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     console.log('LoginComponent initialized');
@@ -42,20 +46,15 @@ export class LoginComponent implements OnInit {
           this.toastr.success('Inicio de sesión exitoso', 'Bienvenido 👋');
           this.router.navigate(['/home']);
         } else {
-          this.toastr.error('Usuario o contraseña incorrectos', 'Inténtalo de nuevo 😕');
+          this.toastr.error(
+            'Usuario o contraseña incorrectos',
+            'Inténtalo de nuevo 😕'
+          );
         }
       },
       error: (err: any) => {
         this.toastr.error('Error de conexión con el servidor', 'Ups... 😓');
-      }
+      },
     });
-  }
-
-  loginWithGoogle(): void {
-    this.toastr.info('Login con Google aún no implementado', 'Próximamente 🔧');
-  }
-
-  loginWithFacebook(): void {
-    this.toastr.info('Login con Facebook aún no implementado', 'Próximamente 🔧');
   }
 }

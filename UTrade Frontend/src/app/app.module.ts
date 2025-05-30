@@ -60,6 +60,7 @@ import { ResenasComponent } from './features/productos/componentes/resenas/resen
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { FavoritosComponent } from './features/productos/componentes/favoritos/favoritos/favoritos.component';
 
 registerLocaleData(localeEs);
 
@@ -101,6 +102,7 @@ registerLocaleData(localeEs);
     MapaComponent,
     ResueltoComponent,
     ResenasComponent,
+    FavoritosComponent,
   ],
   imports: [
     BrowserModule,
