@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from'../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { RespuestaAPI } from '../interfaces/respuesta-api';
-import { Observable, forkJoin, map, switchMap, from } from 'rxjs';
+import { Observable, switchMap, from } from 'rxjs';
 import { Notificaciones } from '../interfaces/notificaciones';
 import { MensajeAccionService } from './mensaje-accion.service';
 import { TipoAccionService } from './tipo-accion.service';
@@ -26,7 +26,7 @@ export class NotificacionesService {
     );
   }
 
-  // Método nuevo para obtener notificaciones con datos completos
+  // Método para obtener notificaciones con datos completos
   obtenerNotificacionesCompletas(idUsuario: string): Observable<Notificaciones[]> {
     return this.listarPorIdUsuario(idUsuario).pipe(
       switchMap(async (response: RespuestaAPI) => {
@@ -35,6 +35,9 @@ export class NotificacionesService {
         }
 
         const notificaciones: Notificaciones[] = response.valor;
+        
+        // Ordenar por fecha descendente (más recientes primero)
+        notificaciones.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
         
         // Procesar cada notificación para obtener datos adicionales
         const notificacionesCompletas = await Promise.all(
@@ -45,32 +48,40 @@ export class NotificacionesService {
                 .buscar(notificacion.idTipoAccion)
                 .toPromise();
 
-              let personaRemitente = '';
-              let mensajeDescripcion = '';
+              let personaRemitente = 'Usuario desconocido';
+              let mensajeDescripcion = 'Nueva notificación';
               
               if (tipoAccionResponse?.estado && tipoAccionResponse?.valor) {
                 const tipoAccion = tipoAccionResponse.valor;
                 
                 // Obtener datos de la persona remitente
                 if (tipoAccion.idPersonaRemitente) {
-                  const personaResponse = await this.http
-                    .get<RespuestaAPI>(`${this.urlPersona}Obtener/${tipoAccion.idPersonaRemitente}`)
-                    .toPromise();
-                  
-                  if (personaResponse?.estado && personaResponse?.valor) {
-                    const persona = personaResponse.valor;
-                    personaRemitente = `${persona.nombres} ${persona.apellidos}`;
+                  try {
+                    const personaResponse = await this.http
+                      .get<RespuestaAPI>(`${this.urlPersona}Obtener/${tipoAccion.idPersonaRemitente}`)
+                      .toPromise();
+                    
+                    if (personaResponse?.estado && personaResponse?.valor) {
+                      const persona = personaResponse.valor;
+                      personaRemitente = `${persona.nombres} ${persona.apellidos}`;
+                    }
+                  } catch (error) {
+                    console.warn('Error al obtener datos de persona:', error);
                   }
                 }
 
                 // Obtener descripción del mensaje de acción
                 if (tipoAccion.idTipoMensaje) {
-                  const mensajeResponse = await this.mensajeAccionService
-                    .buscar(tipoAccion.idTipoMensaje)
-                    .toPromise();
-                  
-                  if (mensajeResponse?.estado && mensajeResponse?.valor) {
-                    mensajeDescripcion = mensajeResponse.valor.descripcion;
+                  try {
+                    const mensajeResponse = await this.mensajeAccionService
+                      .buscar(tipoAccion.idTipoMensaje)
+                      .toPromise();
+                    
+                    if (mensajeResponse?.estado && mensajeResponse?.valor) {
+                      mensajeDescripcion = mensajeResponse.valor.descripcion;
+                    }
+                  } catch (error) {
+                    console.warn('Error al obtener mensaje de acción:', error);
                   }
                 }
               }
@@ -87,7 +98,7 @@ export class NotificacionesService {
               return {
                 ...notificacion,
                 nombre: 'Usuario desconocido',
-                descripcion: 'Notificación',
+                descripcion: 'Nueva notificación',
                 tipo: 'general',
                 leido: notificacion.estado
               };
@@ -100,10 +111,24 @@ export class NotificacionesService {
     );
   }
 
+  // Método específico para obtener solo las notificaciones no leídas (para el contador)
+  obtenerContadorNoLeidas(idUsuario: string): Observable<number> {
+    return this.obtenerNotificacionesCompletas(idUsuario).pipe(
+      switchMap(async (notificaciones: Notificaciones[]) => {
+        return notificaciones.filter(n => !n.leido).length;
+      })
+    );
+  }
+
   private determinarTipoNotificacion(descripcion: string): string {
-    if (descripcion.toLowerCase().includes('mensaje')) return 'mensaje';
-    if (descripcion.toLowerCase().includes('solicitud')) return 'solicitud';
-    if (descripcion.toLowerCase().includes('reporte')) return 'reporte';
+    const desc = descripcion.toLowerCase();
+    if (desc.includes('mensaje')) return 'mensaje';
+    if (desc.includes('solicitud')) return 'solicitud';
+    if (desc.includes('reporte')) return 'reporte';
+    if (desc.includes('comentario')) return 'comentario';
+    if (desc.includes('compra')) return 'compra';
+    if (desc.includes('venta')) return 'venta';
+    if (desc.includes('renta')) return 'renta';
     return 'general';
   }
 

@@ -169,21 +169,52 @@
       ></app-notification-icon>
     </div>
 
-    <div *ngIf="notificaciones" class="user-menu">
-      <ul class="menu-list">
-        <li
-          class="menu-item"
-          *ngFor="let noti of listaNotificaciones.slice(0, 5)"
-        >
-          <i class="bi bi-bell menu-icon"></i>
+    <!-- Panel de notificaciones -->
+    <div *ngIf="notificaciones" class="user-menu notifications-menu">
+      <!-- Indicador de carga -->
+      <div *ngIf="cargandoNotificaciones" class="loading-container">
+        <i class="bi bi-arrow-clockwise spin"></i>
+        <span>Cargando notificaciones...</span>
+      </div>
+
+      <!-- Lista de notificaciones -->
+      <ul class="menu-list" *ngIf="!cargandoNotificaciones">
+        <li class="menu-header">
+          <strong>Notificaciones recientes</strong>
+        </li>
+        
+        <!-- Mensaje cuando no hay notificaciones -->
+        <li *ngIf="listaNotificaciones.length === 0" class="menu-item no-notifications">
+          <i class="bi bi-bell-slash menu-icon"></i>
           <div>
-            <div style="font-weight: 600">{{ noti.nombre }}</div>
-            <div style="font-size: 12px; opacity: 0.7">{{ noti.tipo }}</div>
+            <div style="font-weight: 500">No hay notificaciones</div>
+            <div style="font-size: 12px; opacity: 0.7">Estás al día</div>
           </div>
         </li>
+
+        <!-- Lista de notificaciones -->
+        <li
+          class="menu-item notification-item"
+          *ngFor="let noti of listaNotificaciones"
+          [class.unread]="!noti.leido"
+          (click)="marcarComoLeida(noti)"
+        >
+          <i class="bi bi-bell menu-icon" [class.text-primary]="!noti.leido"></i>
+          <div class="notification-content">
+            <div class="notification-sender">{{ noti.nombre || 'Usuario desconocido' }}</div>
+            <div class="notification-message">{{ noti.descripcion || 'Nueva notificación' }}</div>
+            <div class="notification-meta">
+              {{ calcularTiempo(noti.fecha) }} • {{ noti.tipo || 'general' }}
+              <span *ngIf="!noti.leido" class="unread-dot">•</span>
+            </div>
+          </div>
+        </li>
+        
+        <!-- Botón ver todas -->
         <li
           class="menu-item text-center ver-todas-btn"
           (click)="verTodasNotificaciones()"
+          *ngIf="listaNotificaciones.length > 0"
         >
           <button class="btn-ver-todas">Ver todas las notificaciones</button>
         </li>

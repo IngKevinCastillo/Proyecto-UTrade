@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class NotificacionesComponent implements OnInit {
   @Input() titulo: string = '';
   @Input() fecha: string = '';
-  foto: string = 'icons/oceana.png';
+  foto: string = '';
   @Input() tipo: string = '';
   
   listaNotificaciones: Notificaciones[] = [];
@@ -108,6 +108,24 @@ export class NotificacionesComponent implements OnInit {
           } catch (error) {
             console.warn('Error al obtener datos de persona:', error);
           }
+        }
+
+        if (tipoAccion.idPersonaRemitente) {
+          const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${tipoAccion.idPersonaRemitente}`;
+    
+          this.http.get(url).subscribe({
+            next: (res: any) => {
+              if (res?.estado && res?.valor) {
+                const datos = res.valor;
+                this.foto = datos.fotoPerfilBase64?.trim()
+                  ? 'data:image/jpeg;base64,' + datos.fotoPerfilBase64
+                  : 'icons/no-photo.webp';
+              }
+            },
+            error: (err) => {
+              console.error('Error al obtener datos del usuario:', err);
+            },
+          });
         }
 
         // Obtener descripción del mensaje de acción
