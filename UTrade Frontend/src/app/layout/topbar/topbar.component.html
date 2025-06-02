@@ -164,36 +164,36 @@
       class="d-flex align-items-center gap-3 me-4"
       (click)="toggleNotificacion($event)"
     >
-      <app-notification-icon
+      <!-- <app-notification-icon
         [notificationCount]="notificationCount"
       ></app-notification-icon>
-    </div>
+    </div> -->
 
     <!-- Panel de notificaciones -->
-    <div *ngIf="notificaciones" class="user-menu notifications-menu">
+    <!-- <div *ngIf="notificaciones" class="user-menu notifications-menu"> -->
       <!-- Indicador de carga -->
-      <div *ngIf="cargandoNotificaciones" class="loading-container">
+      <!-- <div *ngIf="cargandoNotificaciones" class="loading-container">
         <i class="bi bi-arrow-clockwise spin"></i>
         <span>Cargando notificaciones...</span>
-      </div>
+      </div> -->
 
       <!-- Lista de notificaciones -->
-      <ul class="menu-list" *ngIf="!cargandoNotificaciones">
+      <!-- <ul class="menu-list" *ngIf="!cargandoNotificaciones">
         <li class="menu-header">
           <strong>Notificaciones recientes</strong>
-        </li>
+        </li> -->
         
         <!-- Mensaje cuando no hay notificaciones -->
-        <li *ngIf="listaNotificaciones.length === 0" class="menu-item no-notifications">
+        <!-- <li *ngIf="listaNotificaciones.length === 0" class="menu-item no-notifications">
           <i class="bi bi-bell-slash menu-icon"></i>
           <div>
             <div style="font-weight: 500">No hay notificaciones</div>
             <div style="font-size: 12px; opacity: 0.7">Estás al día</div>
           </div>
-        </li>
+        </li> -->
 
         <!-- Lista de notificaciones -->
-        <li
+        <!-- <li
           class="menu-item notification-item"
           *ngFor="let noti of listaNotificaciones"
           [class.unread]="!noti.leido"
@@ -208,18 +208,18 @@
               <span *ngIf="!noti.leido" class="unread-dot">•</span>
             </div>
           </div>
-        </li>
+        </li> -->
         
         <!-- Botón ver todas -->
-        <li
+        <!-- <li
           class="menu-item text-center ver-todas-btn"
           (click)="verTodasNotificaciones()"
           *ngIf="listaNotificaciones.length > 0"
         >
           <button class="btn-ver-todas">Ver todas las notificaciones</button>
-        </li>
-      </ul>
-    </div>
+        </li> -->
+      <!-- </ul>
+    </div> -->
 
     <div class="d-flex align-items-center gap-3" (click)="toggleMenu($event)">
       <app-user-profile

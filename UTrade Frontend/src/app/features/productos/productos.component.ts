@@ -27,6 +27,10 @@ import { ChatService } from '../../Services/chat.service';
 import { Router } from '@angular/router';
 import { FiltrosService, FiltrosActivos } from '../../Services/filtros.service';
 import { takeUntil } from 'rxjs/operators';
+import { TipoAccionService } from '../../Services/tipo-accion.service';
+import { MensajeAccionService } from '../../Services/mensaje-accion.service';
+import { MensajeAccion } from '../../interfaces/mensaje-accion';
+import { TipoAccion } from '../../interfaces/tipo-accion';
 
 interface ProductoExtendido extends Publicaciones {
   verMas: boolean;
@@ -55,6 +59,10 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
   productos: ProductoExtendido[] = [];
   productosOriginales: ProductoExtendido[] = [];
   favoritosUsuario: string[] = [];
+  idUsuario: string | null = null;
+  idUsuarioSesion: string | null = null;
+  listaDeMensajeAccion: MensajeAccion[] = [];
+  listaDeTipoAccion: TipoAccion[] = [];
 
   @Input() Filtro?: string;
   @Input() FiltroIdCategoria?: string;
@@ -79,7 +87,9 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
     private _fotosPublicacionesServicio: FotosPublicacionesService,
     private _chatService: ChatService,
     private router: Router,
-    private filtrosService: FiltrosService
+    private filtrosService: FiltrosService,
+    private _tipoAccionService: TipoAccionService,
+    private _mensajeAccion: MensajeAccionService
   ) {
     this.formularioPublicaciones = this.fb.group({
       id: ['', Validators.required],
@@ -182,6 +192,40 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
       idPersona: idUsuario,
       idPublicacion: producto.id,
     };
+
+    this._productoServicio.buscar(producto.id).subscribe({
+      next: (respuesta) => {
+        if (respuesta.estado && respuesta.valor) {
+          const publicacion = respuesta.valor;
+          this.idUsuario = publicacion.idUsuario;
+        } else {
+          this.toastr.error('Error al obtener la publicación', 'Error');
+          return;
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener la publicación:', error);
+        this.toastr.error('Error al obtener la publicación', 'Error');
+      },
+    });
+  
+    this.idUsuarioSesion = this.obtenerUsuarioActual()?.idUsuario;
+
+    const nuevoTipoAccion = {
+      id: "",
+      idTipoMensaje: "MG03",
+      idPersonaRemitente: this.idUsuarioSesion ?? '',
+      idPersonaReportada: this.idUsuario ?? '',
+      tipoId: null
+    }
+
+    // this._tipoAccionService.guardar(nuevoTipoAccion).subscribe({
+    //   next: (respuesta) => {
+    //     if (respuesta.estado) {
+            
+    //     }
+    //   }
+    // });
 
     this._favoritosService.crear(nuevoFavorito).subscribe({
       next: (respuesta) => {
@@ -405,6 +449,8 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
       personas: this._personaServicio.listar(),
       categorias: this._categoriaServicio.lista(),
       estados: this._estadosServicio.lista(),
+      mensajeAccion: this._mensajeAccion.listar(),
+      tipoAccion: this._tipoAccionService.listar(),
     }).subscribe({
       next: (respuestas) => {
         if (respuestas.personas.estado) {
@@ -415,6 +461,12 @@ export class ProductosComponent implements OnChanges, OnInit, OnDestroy {
         }
         if (respuestas.estados.estado) {
           this.listaEstados = respuestas.estados.valor;
+        }
+        if (respuestas.mensajeAccion.estado) {
+          this.listaDeMensajeAccion = respuestas.mensajeAccion.valor;
+        }
+        if (respuestas.tipoAccion.estado) {
+          this.listaDeTipoAccion = respuestas.tipoAccion.valor;
         }
 
         this.determinarDatosACargar();
