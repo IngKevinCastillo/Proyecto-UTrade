@@ -143,7 +143,7 @@ export class RegistroComponent implements OnInit {
             telefono: null,
             fotoPerfilBase64: null,
             fotoPerfil: null,
-            idEstado: null,
+            idEstado: 'EST01',
           };
 
           this.registroService.registrarPersona(nuevaPersona).subscribe({
