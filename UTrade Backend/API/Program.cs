@@ -1,40 +1,93 @@
+//using IOC;
+//using API.Hubs;
+
+//var builder = WebApplication.CreateBuilder(args);
+
+//builder.Services.AddControllers();
+//builder.Services.AddSignalR();
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowFrontend", policy =>
+//    {
+//        policy.WithOrigins("http://localhost:4200")
+//              .AllowAnyHeader()
+//              .AllowAnyMethod()
+//              .AllowCredentials();
+//    });
+//});
+
+//builder.Services.InyectarDependencias(builder.Configuration);
+
+//var app = builder.Build();
+
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+//app.UseCors("AllowFrontend");
+
+//app.UseAuthorization();
+
+//app.MapControllers();
+
+//app.MapHub<MensajesHub>("/mensajeshub");
+
+//app.Run();
+
 using IOC;
 using API.Hubs;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddSignalR();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors(options =>
+namespace API
 {
-    options.AddPolicy("AllowFrontend", policy =>
+    public class Program
     {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
-});
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            //builder.Services.AddApplicationInsightsTelemetry();
 
-builder.Services.InyectarDependencias(builder.Configuration);
+            builder.Services.AddControllers();
+            builder.Services.AddSignalR();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();
+                });
+            });
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+            builder.Services.InyectarDependencias(builder.Configuration);
+
+            var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseCors("AllowFrontend");
+
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.MapHub<MensajesHub>("/mensajeshub");
+
+            app.Run();
+        }
+    }
 }
-
-app.UseCors("AllowFrontend");
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.MapHub<MensajesHub>("/mensajeshub");
-
-app.Run();

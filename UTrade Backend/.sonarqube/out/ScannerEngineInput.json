@@ -1,0 +1,376 @@
+{
+  "scannerProperties": [
+    {
+      "key": "sonar.scanner.app",
+      "value": "ScannerMSBuild"
+    },
+    {
+      "key": "sonar.scanner.appVersion",
+      "value": "11.0"
+    },
+    {
+      "key": "sonar.scanner.bootstrapStartTime",
+      "value": "1763337003000"
+    },
+    {
+      "key": "sonar.projectKey",
+      "value": "UTrade-Backend"
+    },
+    {
+      "key": "sonar.working.directory",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\.sonar"
+    },
+    {
+      "key": "sonar.projectBaseDir",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend"
+    },
+    {
+      "key": "sonar.pullrequest.cache.basepath",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend"
+    },
+    {
+      "key": "sonar.sources",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.VSCodeCounter\\2025-10-15_07-44-46\\results.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.VSCodeCounter\\2025-11-16_17-54-08\\results.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\PerformanceTests\\obj\\PerformanceTests.csproj.nuget.dgspec.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\PerformanceTests\\obj\\project.assets.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.vs\\UTrade Backend\\config\\applicationhost.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.vs\\UTrade Backend\\v17\\DocumentLayout.backup.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.vs\\UTrade Backend\\v17\\DocumentLayout.json"
+    },
+    {
+      "key": "sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "sonar.modules",
+      "value": "409FB19F-EA73-45E2-9794-DA269E6FCE1C,CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E,C20467EE-1E98-4A34-BE43-7F96FF610DAD,91A36B53-BADD-462E-B106-AB97B2095A5E,5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2,F1848D64-61D2-40A0-B8F0-B7410E777708,5C954FF7-3C9B-466D-848F-784B8793E8C0,05CC1653-D2FD-495F-83C6-EABDED2D1437"
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.projectKey",
+      "value": "UTrade-Backend:409FB19F-EA73-45E2-9794-DA269E6FCE1C"
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.projectName",
+      "value": "DTO"
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.projectBaseDir",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO"
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.working.directory",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\.sonar\\mod0"
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.sources",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\ArchivosAdjuntosDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\CategoriaPublicacionDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\ChatDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\CodigosVerificacionDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\CodigoVerificacionDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\ContactanosDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\CrearChatDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\CrearMensajeDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\EnviarCorreoSoporteDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\EnviarCorreoVerificacionDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\EstadosDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\EstadosReporteDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\FavoritosDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\FotosPublicacionesDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\LikesDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\LoginDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\MensajeAccionDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\MensajesDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\MotivosReporteDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\NotificacionesDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\PersonaDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\PublicacionesDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\RazonesDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\ReportesDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\ReseñaDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\RolDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\SesionDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\TipoAccionDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\TiposReporteDTO.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\obj\\DTO.csproj.nuget.dgspec.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\obj\\project.assets.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\bin\\Debug\\net8.0\\DTO.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DTO\\obj\\Debug\\net8.0\\DTO.sourcelink.json"
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\0"
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\0\\Issues.json"
+    },
+    {
+      "key": "409FB19F-EA73-45E2-9794-DA269E6FCE1C.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\0\\Telemetry.json"
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.projectKey",
+      "value": "UTrade-Backend:CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E"
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.projectName",
+      "value": "Model"
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.projectBaseDir",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model"
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.working.directory",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\.sonar\\mod1"
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.sources",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\obj\\Model.csproj.nuget.dgspec.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\obj\\project.assets.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\bin\\Debug\\net8.0\\Model.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\bin\\Debug\\net8.0\\Model.runtimeconfig.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\obj\\Debug\\net8.0\\Model.sourcelink.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\ArchivosAdjuntos.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\CategoriaPublicacion.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Chat.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\CodigosVerificacion.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Contactanos.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Estados.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\EstadosReporte.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Favoritos.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\FotosPublicaciones.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Likes.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\MensajeAccion.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Mensajes.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\MotivosReporte.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Notificaciones.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Persona.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Publicaciones.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Razones.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Reportes.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Reseña.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\Rol.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\TipoAccion.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Model\\TiposReporte.cs"
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\1"
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\1\\Issues.json"
+    },
+    {
+      "key": "CFCA82FD-3A8E-4599-9F1B-47CB0CD0D52E.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\1\\Telemetry.json"
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.projectKey",
+      "value": "UTrade-Backend:C20467EE-1E98-4A34-BE43-7F96FF610DAD"
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.projectName",
+      "value": "DAL"
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.projectBaseDir",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DAL"
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.working.directory",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\.sonar\\mod2"
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.sources",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DAL\\obj\\DAL.csproj.nuget.dgspec.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DAL\\obj\\project.assets.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DAL\\bin\\Debug\\net8.0\\DAL.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DAL\\obj\\Debug\\net8.0\\DAL.sourcelink.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DAL\\DBContext\\UtradedbContext.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DAL\\Repositorios\\Contrato\\IRepositorioGenerico.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\DAL\\Repositorios\\RepositorioGenerico.cs"
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\2"
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\2\\Issues.json"
+    },
+    {
+      "key": "C20467EE-1E98-4A34-BE43-7F96FF610DAD.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\2\\Telemetry.json"
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.projectKey",
+      "value": "UTrade-Backend:91A36B53-BADD-462E-B106-AB97B2095A5E"
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.projectName",
+      "value": "Utility"
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.projectBaseDir",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Utility"
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.working.directory",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\.sonar\\mod3"
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.sources",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Utility\\obj\\project.assets.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Utility\\obj\\Utility.csproj.nuget.dgspec.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Utility\\bin\\Debug\\net8.0\\Utility.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Utility\\obj\\Debug\\net8.0\\Utility.sourcelink.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\Utility\\PerfilAutoMapper.cs"
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\3"
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\3\\Issues.json"
+    },
+    {
+      "key": "91A36B53-BADD-462E-B106-AB97B2095A5E.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\3\\Telemetry.json"
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.projectKey",
+      "value": "UTrade-Backend:5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2"
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.projectName",
+      "value": "BLL"
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.projectBaseDir",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL"
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.working.directory",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\.sonar\\mod4"
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.sources",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\obj\\BLL.csproj.nuget.dgspec.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\obj\\project.assets.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\bin\\Debug\\net8.0\\BLL.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\obj\\Debug\\net8.0\\BLL.sourcelink.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\CategoriaPublicacionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\ChatServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\CodigosVerificacionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\ContactanosServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\ICategoriaPublicacionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IChatServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\ICodigosVerificacionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IContactanosServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IEstadoReporteServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IEstadosServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IFavoritosServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IFotosPublicacionesServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\ILikesServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IMensajeAccionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IMensajesServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IMotivoReporteServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\INotificacionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IPersonaServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IPublicacionesServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IRazonServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IRegistroServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IReporteServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IReseniaServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\IRolServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\ITipoAccionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\Contrato\\ITipoReporteServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\EstadoReporteServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\EstadosServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\FavoritosServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\FotosPublicacionesServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\LikesServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\MensajeAccionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\MensajesServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\MotivoReporteServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\NotificacionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\PersonaServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\PublicacionesServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\RazonesServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\RegistroServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\ReporteServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\ReseniasServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\RolServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\TipoAccionServicio.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\BLL\\Servicios\\TipoReporteServicio.cs"
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\4"
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\4\\Issues.json"
+    },
+    {
+      "key": "5D74E1F9-3F01-4FD9-861E-C8B928E3D9B2.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\4\\Telemetry.json"
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.projectKey",
+      "value": "UTrade-Backend:F1848D64-61D2-40A0-B8F0-B7410E777708"
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.projectName",
+      "value": "IOC"
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.projectBaseDir",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\IOC"
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.working.directory",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\.sonar\\mod5"
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.sources",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\IOC\\obj\\IOC.csproj.nuget.dgspec.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\IOC\\obj\\project.assets.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\IOC\\bin\\Debug\\net8.0\\IOC.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\IOC\\obj\\Debug\\net8.0\\IOC.sourcelink.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\IOC\\Dependencias.cs"
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\5"
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\5\\Issues.json"
+    },
+    {
+      "key": "F1848D64-61D2-40A0-B8F0-B7410E777708.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\5\\Telemetry.json"
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.projectKey",
+      "value": "UTrade-Backend:5C954FF7-3C9B-466D-848F-784B8793E8C0"
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.projectName",
+      "value": "API"
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.projectBaseDir",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API"
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.working.directory",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\.sonar\\mod6"
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.sources",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\appsettings.Development.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\appsettings.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\API.csproj.nuget.dgspec.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\project.assets.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Properties\\launchSettings.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\bin\\Debug\\net8.0\\API.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\bin\\Debug\\net8.0\\API.runtimeconfig.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\bin\\Debug\\net8.0\\API.staticwebassets.endpoints.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\bin\\Debug\\net8.0\\appsettings.Development.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\bin\\Debug\\net8.0\\appsettings.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\API.sourcelink.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\ApiEndpoints.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\rbcswa.dswa.cache.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\rjsmcshtml.dswa.cache.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\rjsmrazor.dswa.cache.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\rpswa.dswa.cache.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\staticwebassets.build.endpoints.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\staticwebassets.build.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\EndpointInfo\\API.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\CategoriaPublicacionController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\ChatController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\CodigosVerificacionController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\ContactanosController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\EstadoReporteController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\EstadosController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\FavoritosController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\FotosPublicacionesController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\LikesController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\MensajeAccionController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\MensajesController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\MotivoReporteController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\NotificacionesController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\PersonaController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\PublicacionesController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\RazonesController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\ReporteController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\ReseniaController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\RolController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\TipoAccionController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\TipoReporteController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Controllers\\VerificacionController.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Hubs\\MensajesHub.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Program.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\Utilidad\\Respuesta.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\API.GlobalUsings.g.cs,\"C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs\",C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\API.AssemblyInfo.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\obj\\Debug\\net8.0\\API.MvcApplicationPartsAssemblyInfo.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\API\\API.http"
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\6"
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\6\\Issues.json"
+    },
+    {
+      "key": "5C954FF7-3C9B-466D-848F-784B8793E8C0.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\6\\Telemetry.json"
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.projectKey",
+      "value": "UTrade-Backend:05CC1653-D2FD-495F-83C6-EABDED2D1437"
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.projectName",
+      "value": "AuthTest"
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.projectBaseDir",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest"
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.working.directory",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\.sonar\\mod7"
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.sources",
+      "value": ""
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.tests",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\obj\\AuthTest.csproj.nuget.dgspec.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\obj\\project.assets.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\API.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\API.runtimeconfig.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\API.staticwebassets.endpoints.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\appsettings.Development.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\appsettings.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\AuthTest.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\AuthTest.runtimeconfig.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\BLL.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\DAL.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\DTO.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\IOC.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\Model.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\MvcTestingAppManifest.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\Utility.deps.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\obj\\Debug\\net8.0\\AuthTest.sourcelink.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\obj\\Debug\\net8.0\\MvcTestingAppManifest.json,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\linux-musl-x64\\native\\Cov_x64.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\linux-x64\\native\\Cov_x64.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\osx-x64\\native\\Cov_x64.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\win-arm64\\native\\Cov_arm64.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\win-arm64\\native\\Cov_x64.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\win-arm64\\native\\Cov_x86.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\win-x64\\native\\Cov_arm64.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\win-x64\\native\\Cov_x64.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\win-x64\\native\\Cov_x86.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\win-x86\\native\\Cov_arm64.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\win-x86\\native\\Cov_x64.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\bin\\Debug\\net8.0\\runtimes\\win-x86\\native\\Cov_x86.config,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\CategoriaPublicacionApiTests.cs,C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\AuthTest\\MSTestSettings.cs"
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\7"
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\7\\Issues.json"
+    },
+    {
+      "key": "05CC1653-D2FD-495F-83C6-EABDED2D1437.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\kevin\\Downloads\\programacion\\Proyecto web\\Proyecto-UTrade\\UTrade Backend\\.sonarqube\\out\\7\\Telemetry.json"
+    },
+    {
+      "key": "sonar.token",
+      "value": "***"
+    },
+    {
+      "key": "sonar.host.url",
+      "value": "http://localhost:9000"
+    },
+    {
+      "key": "sonar.visualstudio.enable",
+      "value": "false"
+    }
+  ]
+}

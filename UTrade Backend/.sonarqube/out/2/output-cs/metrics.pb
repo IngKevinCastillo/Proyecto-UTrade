@@ -1,0 +1,7 @@
+ó
+yC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\DAL\Repositorios\RepositorioGenerico.cs 8rT
+ !"#$&'()*+,-./012456789:;<=>?@BCDEFGHIJKLMNPQRSTUVWXYZ[\]x‚"*+,089:>FGHLTUYŠ
+rC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\DAL\DBContext\UtradedbContext.cs² 080rÒ	
+!#%')+-/13579;=?ABCDEGHIJKLMOPQRSUVWY[\]^_`abdefhjklmnopqrstuwxyz|}~€‚ƒ„†‡ˆ‰Š‹ŒŽ’“”–—˜™š›œžŸ ¡£¤¥¦¨©ª«¬®¯°±²³´µ¶·¹º»½¿ÀÁÂÃÄÅÆÈÉÊÌÎÏÐÑÒÓÔÕÖØÙÚÛÝÞßàáãäåçèéêëìíïðñòóõö÷øùúûüýþÿ‚ƒ„†‡ˆ‰ŠŒŽ‘’“”•–—˜™š›œž ¡¢£¥¦§¨©«¬­¯°±²³´µ¶¸¹º¼¾¿ÀÁÂÃÄÅÇÈÉËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÝÞßàáãäåçéëíîïðñòóôõö÷øùúûüýþÿ€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”–—˜š›œž ¡¢¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÈÉÊÌÍÎÐÑÒÓÔÖ×ØÚÛÜÝÞßàáãäåçèéêëìíîïðñòóôõö÷øùúûüýþÿ€‚„…†‡‰Š‹ŒŽ‘“”•–—™š›Ÿ ¡¢£¤¥¦§¨©ª«¬­®¯±²³´¶·¸¹º¼½¾ÀÂÃÄÅÆÇÈÉËÌÍÏÑÒÓÔÕÖ×ØÙÚÛÜÝÞßáâãäæçèéëìíîïñòóõ÷øùúûüýþ€ƒ„‚´CEGJKOPQUWY[^dfhjmpswxy|}~‚„†‰’”–™œŸ£¤¥¨©ª®°³¹»½¿ÂÈÊÌÎÑÔØÙÚÝÞßãåçêëïðñõ÷úý‚ƒ†‡ˆŒŽ“–™œ ¡¢¥¦§«­¯²¸º¼¾ÁÇÉËÎÏÐÑÔØÙÚÝÞßãåçéëíðôøüýþƒ†‰‘–—š›œ ¢¤§ª­±´·º½ÀÃÈÉÌÍÐÑÒÖØÚÝãåçêíðóöùüÿ‚„…†‰Š‹Ž“”•™›Ÿ¢£¦©¬¯±²³¶·¸¼¾ÀÂÅËÍÏÑÔ×ÚÝáâãæçèëìíñóõ÷ú€›
+ƒC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\DAL\Repositorios\Contrato\IRepositorioGenerico.csr	
+

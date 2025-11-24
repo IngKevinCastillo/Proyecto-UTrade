@@ -1,0 +1,1 @@
+~RhC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Utility\Utility.csproj¢net8.0òCSharp12

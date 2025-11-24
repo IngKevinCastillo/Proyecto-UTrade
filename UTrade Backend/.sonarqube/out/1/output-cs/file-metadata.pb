@@ -1,0 +1,26 @@
+â
+~C:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\obj\Debug\net8.0\Model.AssemblyInfo.csutf-8£
+óC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.csutf-8å
+ÄC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\obj\Debug\net8.0\Model.GlobalUsings.g.csutf-8p
+gC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\TiposReporte.csutf-8n
+eC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\TipoAccion.csutf-8l
+cC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Reportes.csutf-8g
+^C:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Rol.csutf-8k
+bC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Rese√±a.csutf-8k
+bC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Razones.csutf-8q
+hC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Publicaciones.csutf-8k
+bC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Persona.csutf-8r
+iC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Notificaciones.csutf-8r
+iC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\MotivosReporte.csutf-8l
+cC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Mensajes.csutf-8q
+hC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\MensajeAccion.csutf-8i
+`C:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Likes.csutf-8v
+mC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\FotosPublicaciones.csutf-8m
+dC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Favoritos.csutf-8r
+iC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\EstadosReporte.csutf-8k
+bC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Estados.csutf-8o
+fC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Contactanos.csutf-8h
+_C:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Chat.csutf-8w
+nC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\CodigosVerificacion.csutf-8x
+oC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\CategoriaPublicacion.csutf-8t
+kC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\ArchivosAdjuntos.csutf-8

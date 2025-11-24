@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Compilador de Microsoft (R) Visual C#",
+        "version": "4.14.0.0",
+        "fileVersion": "4.14.0-3.25218.8 (d7bde97e)",
+        "semanticVersion": "4.14.0",
+        "language": "es-ES"
+      },
+      "results": [
+        {
+          "ruleId": "MSTEST0049",
+          "level": "note",
+          "message": "Considere utilizar la sobrecarga que acepta un CancellationToken y pase 'TestContext.CancellationToken'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/AuthTest/CategoriaPublicacionApiTests.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 29,
+                  "endLine": 27,
+                  "endColumn": 14
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "TestContextState": "CouldBeInScopeAsProperty"
+            }
+          }
+        }
+      ],
+      "rules": {
+        "MSTEST0049": {
+          "id": "MSTEST0049",
+          "shortDescription": "Flujo de TestContext.CancellationToken a operaciones asincrónicas",
+          "fullDescription": "Al llamar a métodos asincrónicos que tienen sobrecargas que aceptan un parámetro CancellationToken, es preferible utilizar la sobrecarga con TestContext.CancellationToken para habilitar la cancelación cooperativa y respetar los tiempos de espera de las pruebas.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/core/testing/mstest-analyzers/mstest0049",
+          "properties": {
+            "category": "Usage",
+            "isEnabledByDefault": true
+          }
+        }
+      }
+    }
+  ]
+}

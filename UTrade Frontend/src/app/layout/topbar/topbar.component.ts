@@ -1,18 +1,20 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ConexionBackendService } from '../../Services/conexion-backend.service';
-import { notificacionesLista } from '../simulacionNotificaciones';
 import { BusquedaService } from '../../Services/busqueda.service';
 import { ProductoService } from '../../Services/producto.service';
 import { FiltrosService } from '../../Services/filtros.service';
+import { NotificacionesService } from '../../Services/notificaciones.service';
+import { Notificaciones } from '../../interfaces/notificaciones';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.css'],
 })
-export class TopbarComponent implements OnInit {
+export class TopbarComponent implements OnInit, OnDestroy {
   activeFilter: string = 'todo';
   terminoBusqueda: string = '';
   mostrarBuscar: boolean = true;
@@ -20,12 +22,9 @@ export class TopbarComponent implements OnInit {
   username: string = '';
   userHandle: string = '';
   avatarUrl: string = 'icons/no-photo.webp';
-
+  
   notificaciones: boolean = false;
   menuVisible: boolean = false;
-
-  listaNotificaciones = notificacionesLista;
-  notificationCount = this.listaNotificaciones.length;
 
   panelFiltros: boolean = false;
   
@@ -35,13 +34,25 @@ export class TopbarComponent implements OnInit {
   filtroPrecioMin: number = 0;
   filtroPrecioMax: number = 2000000;
 
+  showFilterPanel = false;
+  showUserMenu = false;
+  showNotifications = false;
+
+  // Propiedades para notificaciones reales
+  listaNotificaciones: Notificaciones[] = [];
+  notificationCount: number = 0;
+  cargandoNotificaciones: boolean = false;
+  private notificacionesSubscription?: Subscription;
+  private actualizacionSubscription?: Subscription;
+
   constructor(
     private router: Router,
     private http: HttpClient,
     private conexionBackend: ConexionBackendService,
     private busquedaService: BusquedaService,
     private productosService: ProductoService,
-    private filtrosService: FiltrosService
+    private filtrosService: FiltrosService,
+    private notificacionesService: NotificacionesService
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -55,33 +66,77 @@ export class TopbarComponent implements OnInit {
     const id = usuario?.idUsuario;
 
     if (id) {
-      const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${id}`;
+      this.cargarDatosUsuario(id);
+      this.cargarNotificaciones();
+      this.iniciarActualizacionPeriodica();
+    }
+    
+    this.actualizarVisibilidadBusqueda(this.router.url);
+    this.sincronizarConServicio();
+  }
 
-      this.http.get(url).subscribe({
-        next: (res: any) => {
-          if (res?.estado && res?.valor) {
-            const datos = res.valor;
-            this.username = `${datos.nombres} ${datos.apellidos}`;
-            this.userHandle = `@${datos.nombreUsuario}`;
-            if (
-              datos.fotoPerfilBase64 &&
-              datos.fotoPerfilBase64.trim() !== ''
-            ) {
-              this.avatarUrl =
-                'data:image/jpeg;base64,' + datos.fotoPerfilBase64;
-            } else {
-              this.avatarUrl = 'icons/no-photo.webp';
-            }
+  ngOnDestroy(): void {
+    if (this.notificacionesSubscription) {
+      this.notificacionesSubscription.unsubscribe();
+    }
+    if (this.actualizacionSubscription) {
+      this.actualizacionSubscription.unsubscribe();
+    }
+  }
+
+  private cargarDatosUsuario(id: string): void {
+    const url = `${this.conexionBackend.baseUrl}/Persona/Obtener/${id}`;
+
+    this.http.get(url).subscribe({
+      next: (res: any) => {
+        if (res?.estado && res?.valor) {
+          const datos = res.valor;
+          this.username = `${datos.nombres} ${datos.apellidos}`;
+          this.userHandle = `@${datos.nombreUsuario}`;
+          if (datos.fotoPerfilBase64 && datos.fotoPerfilBase64.trim() !== '') {
+            this.avatarUrl = 'data:image/jpeg;base64,' + datos.fotoPerfilBase64;
+          } else {
+            this.avatarUrl = 'icons/no-photo.webp';
           }
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener datos del usuario:', err);
+      },
+    });
+  }
+
+  private cargarNotificaciones(): void {
+    const usuario = JSON.parse(localStorage.getItem('usuario')!);
+    const idUsuario = usuario?.idUsuario;
+
+    if (!idUsuario) {
+      console.error('No se encontró información del usuario');
+      return;
+    }
+
+    this.cargandoNotificaciones = true;
+
+    this.notificacionesSubscription = this.notificacionesService
+      .obtenerNotificacionesCompletas(idUsuario)
+      .subscribe({
+        next: (notificaciones) => {
+          this.listaNotificaciones = notificaciones.slice(0, 5); // Solo las 5 más recientes
+          this.notificationCount = notificaciones.filter(n => !n.leido).length;
+          this.cargandoNotificaciones = false;
         },
         error: (err) => {
-          console.error('Error al obtener datos del usuario:', err);
-        },
+          console.error('Error al cargar notificaciones:', err);
+          this.cargandoNotificaciones = false;
+        }
       });
-    }
-    this.actualizarVisibilidadBusqueda(this.router.url);
-    
-    this.sincronizarConServicio();
+  }
+
+  private iniciarActualizacionPeriodica(): void {
+    // Actualizar notificaciones cada 30 segundos
+    this.actualizacionSubscription = interval(30000).subscribe(() => {
+      this.cargarNotificaciones();
+    });
   }
 
   private actualizarVisibilidadBusqueda(url: string): void {
@@ -224,6 +279,8 @@ export class TopbarComponent implements OnInit {
     if (!this.notificaciones) {
       this.menuVisible = false;
       this.panelFiltros = false;
+      // Actualizar notificaciones al abrir el panel
+      this.cargarNotificaciones();
     }
     this.notificaciones = !this.notificaciones;
   }
@@ -231,6 +288,38 @@ export class TopbarComponent implements OnInit {
   verTodasNotificaciones() {
     this.notificaciones = false;
     this.router.navigate(['/notificaciones']);
+  }
+
+  // Método para marcar notificación como leída desde el topbar
+  marcarComoLeida(notificacion: Notificaciones): void {
+    if (!notificacion.leido) {
+      const notificacionActualizada = { ...notificacion, estado: true };
+      
+      this.notificacionesService.CambiarEstado(notificacionActualizada).subscribe({
+        next: (response) => {
+          if (response.estado) {
+            notificacion.leido = true;
+            notificacion.estado = true;
+            // Actualizar contador
+            this.notificationCount = this.listaNotificaciones.filter(n => !n.leido).length;
+          }
+        },
+        error: (err) => {
+          console.error('Error al marcar como leída:', err);
+        }
+      });
+    }
+  }
+
+  // Método para calcular tiempo transcurrido
+  calcularTiempo(fecha: Date): string {
+    const ahora = new Date();
+    const diffMs = ahora.getTime() - new Date(fecha).getTime();
+    const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    if (diffDias === 0) return 'Hoy';
+    if (diffDias === 1) return 'Ayer';
+    return `${diffDias} días`;
   }
 
   @HostListener('document:click', ['$event'])

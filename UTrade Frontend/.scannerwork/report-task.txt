@@ -1,0 +1,6 @@
+projectKey=UTrade
+serverUrl=http://localhost:9000
+serverVersion=25.11.0.114957
+dashboardUrl=http://localhost:9000/dashboard?id=UTrade
+ceTaskId=7326c317-2985-453d-b79d-354631040d3e
+ceTaskUrl=http://localhost:9000/api/ce/task?id=7326c317-2985-453d-b79d-354631040d3e

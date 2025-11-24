@@ -164,31 +164,62 @@
       class="d-flex align-items-center gap-3 me-4"
       (click)="toggleNotificacion($event)"
     >
-      <app-notification-icon
+      <!-- <app-notification-icon
         [notificationCount]="notificationCount"
       ></app-notification-icon>
-    </div>
+    </div> -->
 
-    <div *ngIf="notificaciones" class="user-menu">
-      <ul class="menu-list">
-        <li
-          class="menu-item"
-          *ngFor="let noti of listaNotificaciones.slice(0, 5)"
-        >
-          <i class="bi bi-bell menu-icon"></i>
+    <!-- Panel de notificaciones -->
+    <!-- <div *ngIf="notificaciones" class="user-menu notifications-menu"> -->
+      <!-- Indicador de carga -->
+      <!-- <div *ngIf="cargandoNotificaciones" class="loading-container">
+        <i class="bi bi-arrow-clockwise spin"></i>
+        <span>Cargando notificaciones...</span>
+      </div> -->
+
+      <!-- Lista de notificaciones -->
+      <!-- <ul class="menu-list" *ngIf="!cargandoNotificaciones">
+        <li class="menu-header">
+          <strong>Notificaciones recientes</strong>
+        </li> -->
+        
+        <!-- Mensaje cuando no hay notificaciones -->
+        <!-- <li *ngIf="listaNotificaciones.length === 0" class="menu-item no-notifications">
+          <i class="bi bi-bell-slash menu-icon"></i>
           <div>
-            <div style="font-weight: 600">{{ noti.nombre }}</div>
-            <div style="font-size: 12px; opacity: 0.7">{{ noti.tipo }}</div>
+            <div style="font-weight: 500">No hay notificaciones</div>
+            <div style="font-size: 12px; opacity: 0.7">Estás al día</div>
           </div>
-        </li>
-        <li
+        </li> -->
+
+        <!-- Lista de notificaciones -->
+        <!-- <li
+          class="menu-item notification-item"
+          *ngFor="let noti of listaNotificaciones"
+          [class.unread]="!noti.leido"
+          (click)="marcarComoLeida(noti)"
+        >
+          <i class="bi bi-bell menu-icon" [class.text-primary]="!noti.leido"></i>
+          <div class="notification-content">
+            <div class="notification-sender">{{ noti.nombre || 'Usuario desconocido' }}</div>
+            <div class="notification-message">{{ noti.descripcion || 'Nueva notificación' }}</div>
+            <div class="notification-meta">
+              {{ calcularTiempo(noti.fecha) }} • {{ noti.tipo || 'general' }}
+              <span *ngIf="!noti.leido" class="unread-dot">•</span>
+            </div>
+          </div>
+        </li> -->
+        
+        <!-- Botón ver todas -->
+        <!-- <li
           class="menu-item text-center ver-todas-btn"
           (click)="verTodasNotificaciones()"
+          *ngIf="listaNotificaciones.length > 0"
         >
           <button class="btn-ver-todas">Ver todas las notificaciones</button>
-        </li>
-      </ul>
-    </div>
+        </li> -->
+      <!-- </ul>
+    </div> -->
 
     <div class="d-flex align-items-center gap-3" (click)="toggleMenu($event)">
       <app-user-profile
@@ -204,10 +235,6 @@
         <li class="menu-item" (click)="editProfile()">
           <i class="bi bi-pencil menu-icon"></i>
           <span>Ajustes de usuario</span>
-        </li>
-        <li class="menu-item" (click)="toggleTheme()">
-          <i class="bi bi-brightness-high menu-icon"></i>
-          <span>Alternar tema</span>
         </li>
         <li class="menu-item" (click)="logout()">
           <i class="bi bi-box-arrow-right menu-icon"></i>

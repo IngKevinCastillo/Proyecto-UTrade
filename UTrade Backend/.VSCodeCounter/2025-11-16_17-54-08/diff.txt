@@ -1,0 +1,79 @@
+Date : 2025-11-16 17:54:08
+Directory : c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend
+Total : 36 files,  22692 codes, 41 comments, 62 blanks, all 22795 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |         21 |     21,976 |          0 |          2 |     21,978 |
+| Markdown   |          4 |        360 |          0 |         26 |        386 |
+| XML        |          4 |        280 |          0 |          7 |        287 |
+| C#         |          6 |         60 |         41 |         26 |        127 |
+| Properties |          1 |         16 |          0 |          1 |         17 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                                           | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                                              |         36 |     22,692 |         41 |         62 |     22,795 |
+| .VSCodeCounter                                                                                                                                                 |          5 |        361 |          0 |         26 |        387 |
+| .VSCodeCounter\2025-10-15_07-44-46                                                                                                                             |          5 |        361 |          0 |         26 |        387 |
+| .vs                                                                                                                                                            |          2 |        274 |          0 |          0 |        274 |
+| .vs\UTrade Backend                                                                                                                                             |          2 |        274 |          0 |          0 |        274 |
+| .vs\UTrade Backend\v17                                                                                                                                         |          2 |        274 |          0 |          0 |        274 |
+| API                                                                                                                                                            |          1 |          9 |         29 |         13 |         51 |
+| AuthTest                                                                                                                                                       |         28 |     22,048 |         12 |         23 |     22,083 |
+| AuthTest (Files)                                                                                                                                               |          3 |         54 |          0 |         12 |         66 |
+| AuthTest\bin                                                                                                                                                   |         15 |     14,066 |          0 |          3 |     14,069 |
+| AuthTest\bin\Debug                                                                                                                                             |         15 |     14,066 |          0 |          3 |     14,069 |
+| AuthTest\bin\Debug\net8.0                                                                                                                                      |         15 |     14,066 |          0 |          3 |     14,069 |
+| AuthTest\obj                                                                                                                                                   |         10 |      7,928 |         12 |          8 |      7,948 |
+| AuthTest\obj (Files)                                                                                                                                           |          4 |      7,882 |          0 |          0 |      7,882 |
+| AuthTest\obj\Debug                                                                                                                                             |          6 |         46 |         12 |          8 |         66 |
+| AuthTest\obj\Debug\net8.0                                                                                                                                      |          6 |         46 |         12 |          8 |         66 |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                                                       | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\.VSCodeCounter\2025-10-15_07-44-46\details.md                                | Markdown   |        238 |          0 |          6 |        244 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\.VSCodeCounter\2025-10-15_07-44-46\diff-details.md                           | Markdown   |          9 |          0 |          6 |         15 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\.VSCodeCounter\2025-10-15_07-44-46\diff.md                                   | Markdown   |         12 |          0 |          7 |         19 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\.VSCodeCounter\2025-10-15_07-44-46\results.json                              | JSON       |          1 |          0 |          0 |          1 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\.VSCodeCounter\2025-10-15_07-44-46\results.md                                | Markdown   |        101 |          0 |          7 |        108 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\.vs\UTrade Backend\v17\DocumentLayout.backup.json                            | JSON       |        137 |          0 |          0 |        137 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\.vs\UTrade Backend\v17\DocumentLayout.json                                   | JSON       |        137 |          0 |          0 |        137 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\API\Program.cs                                                               | C#         |          9 |         29 |         13 |         51 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\AuthTest.csproj                                                     | XML        |         23 |          0 |          6 |         29 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\CategoriaPublicacionApiTests.cs                                     | C#         |         30 |          0 |          5 |         35 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\MSTestSettings.cs                                                   | C#         |          1 |          0 |          1 |          2 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\API.deps.json                                      | JSON       |      1,248 |          0 |          0 |      1,248 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\API.runtimeconfig.json                             | JSON       |         20 |          0 |          0 |         20 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\API.staticwebassets.endpoints.json                 | JSON       |          1 |          0 |          0 |          1 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\AuthTest.deps.json                                 | JSON       |      6,539 |          0 |          0 |      6,539 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\AuthTest.runtimeconfig.json                        | JSON       |         20 |          0 |          0 |         20 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\BLL.deps.json                                      | JSON       |      1,122 |          0 |          0 |      1,122 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\DAL.deps.json                                      | JSON       |      1,034 |          0 |          0 |      1,034 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\DTO.deps.json                                      | JSON       |         23 |          0 |          0 |         23 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\IOC.deps.json                                      | JSON       |      1,140 |          0 |          0 |      1,140 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\MSTest.TestFramework.Extensions.xml                | XML        |        203 |          0 |          1 |        204 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\Model.deps.json                                    | JSON       |      1,602 |          0 |          0 |      1,602 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\MvcTestingAppManifest.json                         | JSON       |          9 |          0 |          0 |          9 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\Utility.deps.json                                  | JSON       |      1,087 |          0 |          0 |      1,087 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\appsettings.Development.json                       | JSON       |          8 |          0 |          1 |          9 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\bin\Debug\net8.0\appsettings.json                                   | JSON       |         10 |          0 |          1 |         11 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\AuthTest.csproj.nuget.dgspec.json                               | JSON       |        636 |          0 |          0 |        636 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\AuthTest.csproj.nuget.g.props                                   | XML        |         34 |          0 |          0 |         34 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\AuthTest.csproj.nuget.g.targets                                 | XML        |         20 |          0 |          0 |         20 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs     | C#         |          3 |          1 |          1 |          5 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\Debug\net8.0\AuthTest.AssemblyInfo.cs                           | C#         |          9 |         10 |          5 |         24 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\Debug\net8.0\AuthTest.GeneratedMSBuildEditorConfig.editorconfig | Properties |         16 |          0 |          1 |         17 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\Debug\net8.0\AuthTest.GlobalUsings.g.cs                         | C#         |          8 |          1 |          1 |         10 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\Debug\net8.0\AuthTest.sourcelink.json                           | JSON       |          1 |          0 |          0 |          1 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\Debug\net8.0\MvcTestingAppManifest.json                         | JSON       |          9 |          0 |          0 |          9 |
+| c:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\obj\project.assets.json                                             | JSON       |      7,192 |          0 |          0 |      7,192 |
+| Total                                                                                                                                                          |            |     22,692 |         41 |         62 |     22,795 |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

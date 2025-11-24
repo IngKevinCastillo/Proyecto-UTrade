@@ -1,21 +1,65 @@
 <mat-card class="notificaciones-container my-3">
     <h3 class="notificaciones-titulo">Notificaciones</h3>
-
+    
     <div class="notificaciones-botones">
-        <button mat-stroked-button class="boton-filtro" (click)="notificacionesTodas()">Todas</button>
-        <button mat-stroked-button class="boton-filtro" (click)="notificacionesNoLeidas()">No Leídas</button>
+      <button 
+        mat-stroked-button 
+        class="boton-filtro" 
+        (click)="notificacionesTodas()"
+        [disabled]="cargando">
+        Todas
+      </button>
+      <button 
+        mat-stroked-button 
+        class="boton-filtro" 
+        (click)="notificacionesNoLeidas()"
+        [disabled]="cargando">
+        No Leídas
+      </button>
     </div>
-
-    <ng-container *ngFor="let notificacion of listaNotificaciones">
-        <mat-card class="notificacion-card">
-            <mat-card-content class="notificacion-contenido">
-                <img [src]="imagenRuta()" class="notificacion-avatar" alt="Avatar" />
-                <div class="notificacion-texto">
-                    <strong>{{ notificacion.nombre }}</strong> {{ notificacion.descripcion }}
-                    <div class="notificacion-meta">{{ calcularTiempo(notificacion.fecha) }} / {{ notificacion.tipo }}
-                    </div>
-                </div>
-            </mat-card-content>
+  
+    <!-- Indicador de carga -->
+    <div *ngIf="cargando" class="text-center p-4">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p class="mt-2">Cargando notificaciones...</p>
+    </div>
+  
+    <!-- Mensaje de error -->
+    <div *ngIf="error && !cargando" class="error-container p-4">
+      <mat-icon color="warn">error</mat-icon>
+      <p class="error-message">{{ error }}</p>
+      <button mat-button color="primary" (click)="cargarNotificaciones()">
+        Reintentar
+      </button>
+    </div>
+  
+    <!-- Lista de notificaciones -->
+    <ng-container *ngIf="!cargando && !error">
+      <div *ngIf="listaNotificaciones.length === 0" class="no-notificaciones p-4 text-center">
+        <mat-icon>notifications_none</mat-icon>
+        <p>No hay notificaciones para mostrar</p>
+      </div>
+  
+      <ng-container *ngFor="let notificacion of listaNotificaciones">
+        <mat-card 
+          class="notificacion-card"
+          [class.no-leida]="!notificacion.leido"
+          (click)="marcarComoLeida(notificacion)">
+          <mat-card-content class="notificacion-contenido">
+            <img 
+              [src]="imagenRuta()" 
+              class="notificacion-avatar" 
+              alt="Avatar" />
+            <div class="notificacion-texto">
+              <strong>{{ notificacion.nombre || 'Usuario desconocido' }}</strong> 
+              {{ notificacion.descripcion || 'Nueva notificación' }}
+              <div class="notificacion-meta">
+                {{ calcularTiempo(notificacion.fecha) }} / {{ notificacion.tipo || 'general' }}
+                <span *ngIf="!notificacion.leido" class="badge-no-leida">•</span>
+              </div>
+            </div>
+          </mat-card-content>
         </mat-card>
+      </ng-container>
     </ng-container>
-</mat-card>
+  </mat-card>
