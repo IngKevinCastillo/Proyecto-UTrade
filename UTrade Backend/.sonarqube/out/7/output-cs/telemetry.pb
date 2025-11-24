@@ -1,0 +1,1 @@
+€RjC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\AuthTest\AuthTest.csproj¢net8.0òCSharp13

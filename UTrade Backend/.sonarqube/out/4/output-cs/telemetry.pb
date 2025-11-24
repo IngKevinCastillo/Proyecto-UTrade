@@ -1,0 +1,1 @@
+vR`C:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\BLL\BLL.csproj¢net8.0òCSharp12

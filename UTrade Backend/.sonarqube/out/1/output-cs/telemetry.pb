@@ -1,0 +1,1 @@
+zRdC:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\Model\Model.csproj¢net8.0òCSharp12

@@ -11,7 +11,5 @@ namespace DTO
         public string IdRazon { get; set; }
 
         public string Nombre { get; set; }
-
-        public virtual ICollection<ContactanosDTO> Contactanos { get; set; }
     }
 }

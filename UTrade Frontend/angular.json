@@ -34,7 +34,6 @@
               {
                 "glob": "**/*",
                 "input": "public"
-
               }
             ],
             "styles": [
@@ -73,6 +72,13 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "host": "0.0.0.0",
+            "allowedHosts": [
+              "localhost",
+              "mortarless-birgit-preunion.ngrok-free.dev"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "UTrade:build:production"

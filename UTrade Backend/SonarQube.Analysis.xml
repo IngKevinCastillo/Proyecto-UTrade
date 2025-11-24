@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SonarQubeAnalysisProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                              xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                              xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  
+  <Property Name="sonar.host.url">http://localhost:9000</Property>
+  <Property Name="sonar.token">sqp_11fa974ee37f19e03f42e4ba51fef4ac3b2b021b</Property>
+  <Property Name="sonar.projectKey">UTrade-Backend</Property>
+  <Property Name="sonar.projectName">UTrade-Backend</Property>
+  
+  <!-- Exclusiones comunes para .NET -->
+  <Property Name="sonar.exclusions">
+    **/bin/**,
+    **/obj/**,
+    **/Migrations/**,
+    **/wwwroot/**,
+    **/*.Designer.cs,
+    **/*.generated.cs,
+    **/packages/**,
+    **/node_modules/**,
+    **/.git/**,
+    **/Test/**,
+    **/Tests/**,
+    **/*Test.cs,
+    **/*Tests.cs
+  </Property>
+  
+  <!-- Incluir cobertura de tests (si tienes) -->
+  <Property Name="sonar.cs.opencover.reportsPaths">**/coverage.opencover.xml</Property>
+  
+</SonarQubeAnalysisProperties>

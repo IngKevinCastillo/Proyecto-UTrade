@@ -1,0 +1,3 @@
+﻿C:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\DAL\DBContext\UtradedbContext.cs
+C:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\DAL\Repositorios\Contrato\IRepositorioGenerico.cs
+C:\Users\kevin\Downloads\programacion\Proyecto web\Proyecto-UTrade\UTrade Backend\DAL\Repositorios\RepositorioGenerico.cs

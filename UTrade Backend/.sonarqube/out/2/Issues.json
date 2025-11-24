@@ -1,0 +1,2427 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Compilador de Microsoft (R) Visual C#",
+        "version": "4.14.0.0",
+        "fileVersion": "4.14.0-3.25218.8 (d7bde97e)",
+        "semanticVersion": "4.14.0",
+        "language": "es-ES"
+      },
+      "results": [
+        {
+          "ruleId": "CS8767",
+          "level": "warning",
+          "message": "La nulabilidad de los tipos de referencia del tipo de parámetro\"filtro\" de \"Task<IQueryable<TModelo>> RepositorioGenerico<TModelo>.Consultar(Expression<Func<TModelo, bool>> filtro = null, Func<IQueryable<TModelo>, IQueryable<TModelo>> include = null)\" no coincide con el miembro \"Task<IQueryable<TModelo>> IRepositorioGenerico<TModelo>.Consultar(Expression<Func<TModelo, bool>>? filtro = null, Func<IQueryable<TModelo>, IQueryable<TModelo>>? include = null)\" implementado de forma implícita (posiblemente debido a los atributos de nulabilidad).",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 48,
+                  "endLine": 21,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8767",
+          "level": "warning",
+          "message": "La nulabilidad de los tipos de referencia del tipo de parámetro\"include\" de \"Task<IQueryable<TModelo>> RepositorioGenerico<TModelo>.Consultar(Expression<Func<TModelo, bool>> filtro = null, Func<IQueryable<TModelo>, IQueryable<TModelo>> include = null)\" no coincide con el miembro \"Task<IQueryable<TModelo>> IRepositorioGenerico<TModelo>.Consultar(Expression<Func<TModelo, bool>>? filtro = null, Func<IQueryable<TModelo>, IQueryable<TModelo>>? include = null)\" implementado de forma implícita (posiblemente debido a los atributos de nulabilidad).",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 48,
+                  "endLine": 21,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8625",
+          "level": "warning",
+          "message": "No se puede convertir un literal NULL en un tipo de referencia que no acepta valores NULL.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 99,
+                  "endLine": 21,
+                  "endColumn": 103
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8625",
+          "level": "warning",
+          "message": "No se puede convertir un literal NULL en un tipo de referencia que no acepta valores NULL.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 162,
+                  "endLine": 21,
+                  "endColumn": 166
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"ArchivosAdjuntos\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 44,
+                  "endLine": 19,
+                  "endColumn": 60
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"CategoriaPublicacions\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 48,
+                  "endLine": 21,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Chats\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 32,
+                  "endLine": 23,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"CodigosVerificacions\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 47,
+                  "endLine": 25,
+                  "endColumn": 67
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Contactanos\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 39,
+                  "endLine": 27,
+                  "endColumn": 50
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Estados\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 35,
+                  "endLine": 29,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"EstadosReportes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 42,
+                  "endLine": 31,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Favoritos\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 37,
+                  "endLine": 33,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"FotosPublicaciones\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 46,
+                  "endLine": 35,
+                  "endColumn": 64
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Likes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 33,
+                  "endLine": 37,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Mensajes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 36,
+                  "endLine": 39,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"MensajeAccions\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 41,
+                  "endLine": 41,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"MotivosReportes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 42,
+                  "endLine": 43,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Notificaciones\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 42,
+                  "endLine": 45,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Personas\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 47,
+                  "startColumn": 35,
+                  "endLine": 47,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Publicaciones\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 41,
+                  "endLine": 49,
+                  "endColumn": 54
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Razones\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 35,
+                  "endLine": 51,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Reportes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 53,
+                  "startColumn": 36,
+                  "endLine": 53,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Reseñas\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 34,
+                  "endLine": 55,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Rols\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 31,
+                  "endLine": 57,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"TipoAccions\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 38,
+                  "endLine": 59,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"TiposReportes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 12,
+                  "endLine": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 61,
+                  "startColumn": 40,
+                  "endLine": 61,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"ArchivosAdjuntos\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 44,
+                  "endLine": 19,
+                  "endColumn": 60
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"CategoriaPublicacions\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 48,
+                  "endLine": 21,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Chats\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 32,
+                  "endLine": 23,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"CodigosVerificacions\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 47,
+                  "endLine": 25,
+                  "endColumn": 67
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Contactanos\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 39,
+                  "endLine": 27,
+                  "endColumn": 50
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Estados\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 35,
+                  "endLine": 29,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"EstadosReportes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 42,
+                  "endLine": 31,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Favoritos\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 37,
+                  "endLine": 33,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"FotosPublicaciones\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 46,
+                  "endLine": 35,
+                  "endColumn": 64
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Likes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 33,
+                  "endLine": 37,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Mensajes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 36,
+                  "endLine": 39,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"MensajeAccions\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 41,
+                  "endLine": 41,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"MotivosReportes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 42,
+                  "endLine": 43,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Notificaciones\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 42,
+                  "endLine": 45,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Personas\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 47,
+                  "startColumn": 35,
+                  "endLine": 47,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Publicaciones\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 41,
+                  "endLine": 49,
+                  "endColumn": 54
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Razones\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 35,
+                  "endLine": 51,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Reportes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 53,
+                  "startColumn": 36,
+                  "endLine": 53,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Reseñas\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 34,
+                  "endLine": 55,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Rols\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 31,
+                  "endLine": 57,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"TipoAccions\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 38,
+                  "endLine": 59,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"TiposReportes\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 12,
+                  "endLine": 14,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 61,
+                  "startColumn": 40,
+                  "endLine": 61,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS1998",
+          "level": "warning",
+          "message": "El método asincrónico carece de operadores \"await\" y se ejecutará de forma sincrónica. Puede usar el operador 'await' para esperar llamadas API que no sean de bloqueo o 'await Task.Run(...)' para hacer tareas enlazadas a la CPU en un subproceso en segundo plano.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 48,
+                  "endLine": 21,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8600",
+          "level": "warning",
+          "message": "Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 84,
+                  "startColumn": 34,
+                  "endLine": 84,
+                  "endColumn": 93
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8603",
+          "level": "warning",
+          "message": "Posible tipo de valor devuelto de referencia nulo.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 85,
+                  "startColumn": 24,
+                  "endLine": 85,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3251",
+          "level": "warning",
+          "message": "Supply an implementation for this partial method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 643,
+                  "startColumn": 5,
+                  "endLine": 643,
+                  "endColumn": 12
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1186",
+          "level": "warning",
+          "message": "Add a nested comment explaining why this method is empty, throw a 'NotSupportedException' or complete the implementation.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 29,
+                  "endLine": 63,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S112",
+          "level": "warning",
+          "message": "'System.Exception' should not be thrown by user code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 23,
+                  "endLine": 89,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S112",
+          "level": "warning",
+          "message": "'System.Exception' should not be thrown by user code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 76,
+                  "startColumn": 23,
+                  "endLine": 76,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S112",
+          "level": "warning",
+          "message": "'System.Exception' should not be thrown by user code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 23,
+                  "endLine": 62,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S112",
+          "level": "warning",
+          "message": "'System.Exception' should not be thrown by user code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 23,
+                  "endLine": 48,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S112",
+          "level": "warning",
+          "message": "'System.Exception' should not be thrown by user code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/Repositorios/RepositorioGenerico.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 23,
+                  "endLine": 34,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1192",
+          "level": "warning",
+          "message": "Define a constant instead of using this literal 'nombre' 7 times.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 97,
+                  "startColumn": 32,
+                  "endLine": 97,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 182,
+                  "startColumn": 32,
+                  "endLine": 182,
+                  "endColumn": 40
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 197,
+                  "startColumn": 32,
+                  "endLine": 197,
+                  "endColumn": 40
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 324,
+                  "startColumn": 32,
+                  "endLine": 324,
+                  "endColumn": 40
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 480,
+                  "startColumn": 32,
+                  "endLine": 480,
+                  "endColumn": 40
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 584,
+                  "startColumn": 32,
+                  "endLine": 584,
+                  "endColumn": 40
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 637,
+                  "startColumn": 32,
+                  "endLine": 637,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": null,
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null,
+              "5": null
+            }
+          }
+        },
+        {
+          "ruleId": "S1192",
+          "level": "warning",
+          "message": "Define a constant instead of using this literal 'datetime' 6 times.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 110,
+                  "startColumn": 32,
+                  "endLine": 110,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 282,
+                  "startColumn": 32,
+                  "endLine": 282,
+                  "endColumn": 42
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 434,
+                  "startColumn": 32,
+                  "endLine": 434,
+                  "endColumn": 42
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 494,
+                  "startColumn": 32,
+                  "endLine": 494,
+                  "endColumn": 42
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 497,
+                  "startColumn": 32,
+                  "endLine": 497,
+                  "endColumn": 42
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 551,
+                  "startColumn": 32,
+                  "endLine": 551,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": null,
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          }
+        },
+        {
+          "ruleId": "S1192",
+          "level": "warning",
+          "message": "Define a constant instead of using this literal 'descripcion' 4 times.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 155,
+                  "startColumn": 32,
+                  "endLine": 155,
+                  "endColumn": 45
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 309,
+                  "startColumn": 32,
+                  "endLine": 309,
+                  "endColumn": 45
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 428,
+                  "startColumn": 32,
+                  "endLine": 428,
+                  "endColumn": 45
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 492,
+                  "startColumn": 32,
+                  "endLine": 492,
+                  "endColumn": 45
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": null,
+              "1": null,
+              "2": null
+            }
+          }
+        },
+        {
+          "ruleId": "S1192",
+          "level": "warning",
+          "message": "Define a constant instead of using this literal 'idPersona' 5 times.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 158,
+                  "startColumn": 32,
+                  "endLine": 158,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 211,
+                  "startColumn": 32,
+                  "endLine": 211,
+                  "endColumn": 43
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 252,
+                  "startColumn": 32,
+                  "endLine": 252,
+                  "endColumn": 43
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 339,
+                  "startColumn": 32,
+                  "endLine": 339,
+                  "endColumn": 43
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 555,
+                  "startColumn": 32,
+                  "endLine": 555,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": null,
+              "1": null,
+              "2": null,
+              "3": null
+            }
+          }
+        },
+        {
+          "ruleId": "S3251",
+          "level": "warning",
+          "message": "Supply an implementation for the partial method, otherwise this call will be ignored.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/kevin/Downloads/programacion/Proyecto%20web/Proyecto-UTrade/UTrade%20Backend/DAL/DBContext/UtradedbContext.cs",
+                "region": {
+                  "startLine": 640,
+                  "startColumn": 9,
+                  "endLine": 640,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CS1998": {
+          "id": "CS1998",
+          "shortDescription": "El método asincrónico carece de operadores \"await\" y se ejecutará de forma sincrónica",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1998)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8600": {
+          "id": "CS8600",
+          "shortDescription": "Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8600)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8603": {
+          "id": "CS8603",
+          "shortDescription": "Posible tipo de valor devuelto de referencia nulo",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8603)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8618": {
+          "id": "CS8618",
+          "shortDescription": "Un campo que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required\" o declararlo como un valor que acepta valores NULL.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8618)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8625": {
+          "id": "CS8625",
+          "shortDescription": "No se puede convertir un literal NULL en un tipo de referencia que no acepta valores NULL.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8625)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8767": {
+          "id": "CS8767",
+          "shortDescription": "La nulabilidad de los tipos de referencia del tipo de parámetro no coincide con el miembro implementado de forma implícita (posiblemente debido a los atributos de nulabilidad).",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8767)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "S112": {
+          "id": "S112",
+          "shortDescription": "General or reserved exceptions should never be thrown",
+          "fullDescription": "This rule raises an issue when a general or reserved exception is thrown.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-112",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S1186": {
+          "id": "S1186",
+          "shortDescription": "Methods should not be empty",
+          "fullDescription": "An empty method is generally considered bad practice and can lead to confusion, readability, and maintenance issues. Empty methods bring no functionality and are misleading to others as they might think the method implementation fulfills a specific and identified requirement.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1186",
+          "properties": {
+            "category": "Critical Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S1192": {
+          "id": "S1192",
+          "shortDescription": "String literals should not be duplicated",
+          "fullDescription": "Duplicated string literals make the process of refactoring complex and error-prone, as any change would need to be propagated on all occurrences.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1192",
+          "properties": {
+            "category": "Minor Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S3251": {
+          "id": "S3251",
+          "shortDescription": "Implementations should be provided for \"partial\" methods",
+          "fullDescription": "partial methods allow an increased degree of flexibility in programming a system. Hooks can be added to generated code by invoking methods that define their signature, but might not have an implementation yet. But if the implementation is still missing when the code makes it to production, the compiler silently removes the call. In the best case scenario, such calls simply represent cruft, but in they worst case they are critical, missing functionality, the loss of which will lead to unexpected results at runtime.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3251",
+          "properties": {
+            "category": "Minor Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
